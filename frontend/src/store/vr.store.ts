@@ -128,7 +128,8 @@ const useVRStore = create<VRStore>((set, get) => ({
           Number(currentArea.main_hotspot_id) === hotspot_id;
 
         if (isMainHotspot) {
-          // Get main panorama (click_panorama_id) from each hotspot in the area
+          // MAIN HOTSPOT: Get the main panorama from each hotspot related to this area
+          // This provides an overview of all hotspots in the area
           const mainPanoramaPromises = areaHotspots.map(async (h) => {
             if (h.click_panorama_id) {
               return await getPanoramaByIdFromService(h.click_panorama_id);
@@ -145,7 +146,7 @@ const useVRStore = create<VRStore>((set, get) => ({
             (p): p is Panorama => p !== undefined
           );
         } else {
-          // Get all panoramas belonging to this hotspot
+          // NOT MAIN HOTSPOT: Get all panoramas belonging to this specific hotspot
           panoramas = await getPanoramasByHotspotId(hotspot_id);
         }
 
