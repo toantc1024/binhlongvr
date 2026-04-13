@@ -1,10 +1,33 @@
-import { getApi } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
 import type { VisitorLogs } from "@/types/visitor_logs.service.type";
 
 export const createVisitorLog = async (visitorLog: Partial<VisitorLogs>) => {
-    const response = await getApi().post("/visitor-logs/add", visitorLog);
-    return response.data;
+    // Check if session already logged
+    const { data: existing } = await supabase
+        .from('visitor_logs')
+        .select('id')
+        .eq('session_id', visitorLog.session_id!)
+        .maybeSingle();
+
+    if (existing) {
+        return { status: false };
+    }
+
+    const { data, error } = await supabase
+        .from('visitor_logs')
+        .insert({
+            area_id: visitorLog.area_id,
+            session_id: visitorLog.session_id,
+            metadata: visitorLog.metadata,
+        })
+        .select()
+        .single();
+
+    if (error) {
+        throw new Error("Failed to create visitor log: " + error.message);
+    }
+
+    return { status: true, data };
 }
 
 export const countVisitorLogsByAreaId = async (area_id: number): Promise<number> => {
