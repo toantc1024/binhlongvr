@@ -10,7 +10,6 @@ import { GridPattern } from "../magicui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import useVRStore from "@/store/vr.store";
-import { RiChatAiFill } from "react-icons/ri";
 import { HERO_CONTENT } from "@/constants/content.constants";
 
 export default function HeroSection() {

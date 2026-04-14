@@ -32,7 +32,6 @@ import HotspotInfoDialogBlock from "./HotspotInfoDialogBlock";
 import ShareDialogBlock from "./ShareDialogBlock";
 import SearchDialogBlock from "./SearchDialogBlock";
 import PanoramaCarouselBlock from "./PanoramaCarouselBlock";
-import ChatbotDialogBlock from "./ChatbotDialogBlock";
 import TutorialDialogBlock from "./TutorialDialogBlock";
 import { RiGlobalFill } from "react-icons/ri";
 import MapDialogBlock from "./MapDialogBlock";
