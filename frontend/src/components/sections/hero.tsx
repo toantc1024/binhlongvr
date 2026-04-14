@@ -79,14 +79,14 @@ export default function HeroSection() {
             <span className="sm:hidden">{HERO_CONTENT.buttons.gameShort}</span>
           </Button>
 
-          <Button
+          {/* <Button
             variant="outline"
             size="lg"
             className="rounded-full cursor-pointer backdrop-blur-xl text-base shadow-none w-full sm:w-auto min-w-[130px]"
           >
             <RiChatAiFill className="!h-5 !w-5" />
             <span className="">{HERO_CONTENT.buttons.chatbot}</span>
-          </Button>
+          </Button> */}
           <Button
             variant="outline"
             size="lg"

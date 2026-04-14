@@ -69,13 +69,13 @@ export default function MapItemDrawerBlock({
                             })}
                         >
                             <Drawer.Title className="text-2xl text-white mt-2 font-medium ">{currentHotspot?.title}</Drawer.Title>
-                            <div className="flex items-center mt-2 text-xs text-gray-400">
+                            <div className="flex items-center mt-2 text-sm md:text-base text-white/90">
                                 {currentHotspot?.description}
                             </div>
 
                             {currentHotspot?.address && (
-                                <div className="flex items-center mt-2 text-xs text-gray-400">
-                                    <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+                                <div className="flex items-center mt-2 text-sm md:text-base text-white/80">
+                                    <MapPin className="w-4 h-4 mr-1 flex-shrink-0" />
                                     <span className="truncate text-white">{currentHotspot.address}</span>
                                 </div>
                             )}

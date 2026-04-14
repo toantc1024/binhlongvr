@@ -78,12 +78,7 @@ export default function MapDialogBlock({
 
         mapRef.current = new maplibregl.Map({
             container: mapContainer.current,
-            style: {
-                version: 8,
-                sources: {},
-                layers: [],
-                glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
-            },
+            style: `https://tiles.goong.io/assets/goong_map_dark.json?api_key=${import.meta.env.VITE_GOONG_MAP_KEY}`,
             center,
             zoom,
             pitch: 65,

@@ -203,7 +203,7 @@ const ControlBlock = ({
           opened={isMapDialogOpen}
           setOpened={setIsMapDialogOpen}
         />
-        <ChatbotDialogBlock />
+        {/* <ChatbotDialogBlock /> */}
         <SearchDialogBlock showMedia={showMedia} />
       </div>
 
