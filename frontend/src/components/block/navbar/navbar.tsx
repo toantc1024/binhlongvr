@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
 import { NavMenu } from "./nav-menu";
-import { NavigationSheet } from "./navigation-sheet";
 import { Search } from "lucide-react";
 import MapDialogBlock from "../MapDialogBlock";
 import { useState } from "react";
@@ -63,14 +62,6 @@ const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
                 Tìm kiếm <Search className="!h-4 !w-4" />
               </div>
             </Button>
-
-            {/* Mobile Menu */}
-            <div className="md:hidden">
-              <NavigationSheet
-                activeSection={activeSection}
-                onNavigate={onNavigate}
-              />
-            </div>
           </div>
         </div>
       </header>

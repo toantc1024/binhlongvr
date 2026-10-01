@@ -259,8 +259,8 @@ const SearchDialogBlock: React.FC<SearchDialogBlockProps> = ({ showMedia }) => {
                                 <h2 className="text-xl sm:text-2xl font-bold text-foreground leading-snug tracking-tight text-left">
                                     {activeHotspot.title}
                                 </h2>
-                                <p className="text-xs sm:text-sm text-emerald-700 dark:text-emerald-400 font-medium mt-1 text-left">
-                                    Phường Bình Long, TP. Đồng Nai
+                                <p className="text-xs sm:text-sm text-emerald-700 dark:text-emerald-400 font-medium mt-1 text-left whitespace-nowrap">
+                                    Phường Bình Long, TP.&nbsp;Đồng&nbsp;Nai
                                 </p>
                             </div>
 

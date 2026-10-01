@@ -9,8 +9,8 @@ export const Logo = () => (
       <span className="font-semibold text-base sm:text-lg leading-tight text-foreground tracking-tight group-hover:text-primary transition-colors">
         Bản Đồ Số Bình Long
       </span>
-      <span className="text-[10px] sm:text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
-        Phường Bình Long, TP. Đồng Nai
+      <span className="text-[10px] sm:text-[11px] font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">
+        Phường Bình Long, TP.&nbsp;Đồng&nbsp;Nai
       </span>
     </div>
   </div>

@@ -38,19 +38,19 @@ export default function HeroSection() {
           )}
         />
       </div>
-      <div className="relative z-[20] text-center max-w-4xl px-4 sm:px-6">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold !leading-[1.25] tracking-tight text-foreground">
+      <div className="relative z-[20] text-left sm:text-center max-w-4xl px-4 sm:px-6 w-full">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold !leading-[1.25] tracking-tight text-foreground text-left sm:text-center">
           Bản đồ số khu vực
           <br />
           <AuroraText>Phường Bình Long</AuroraText>
         </h1>
-        <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground font-normal">
+        <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground font-normal text-left sm:text-center">
           Khám phá truyền thống - Lịch sử - văn hoá bằng Công nghệ Số.
         </p>
-        <div className="mt-6 flex flex-col sm:flex-row items-center z-[30] justify-center gap-3 sm:gap-4 w-full">
+        <div className="mt-6 flex flex-row items-center z-[30] justify-start sm:justify-center gap-3 sm:gap-4 w-full">
           <Button
             size="lg"
-            className="rounded-xl cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-xs w-full sm:w-auto min-w-[140px]"
+            className="rounded-xl cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-xs w-auto min-w-[130px] sm:min-w-[140px]"
             onClick={() => {
               navigate("/app");
               setIsLoading(true);
@@ -65,7 +65,7 @@ export default function HeroSection() {
           <Button
             variant="outline"
             size="lg"
-            className="rounded-xl cursor-pointer backdrop-blur-xl border-0 bg-secondary/80 hover:bg-secondary text-foreground text-sm sm:text-base font-normal shadow-xs w-full sm:w-auto min-w-[130px]"
+            className="rounded-xl cursor-pointer backdrop-blur-xl border-0 bg-secondary/80 hover:bg-secondary text-foreground text-sm sm:text-base font-normal shadow-xs w-auto min-w-[120px] sm:min-w-[130px]"
             onClick={() => {
               navigate("/app");
             }}
@@ -83,7 +83,7 @@ export default function HeroSection() {
         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
           {/* Left Column: 3D Goong Map (reduced height by 20%) */}
           <div className="lg:col-span-7 flex flex-col">
-            <Card className="relative overflow-hidden !p-0 h-[384px] sm:h-[432px] lg:h-[496px] w-full border-0 shadow-lg bg-card rounded-xl group">
+            <Card className="relative overflow-hidden !p-0 h-[384px] sm:h-[432px] lg:h-[496px] w-full border-0 shadow-lg bg-card rounded-xl">
               <CardContent className="h-full w-full !p-0 relative">
                 <MapBlock
                   opened={true}

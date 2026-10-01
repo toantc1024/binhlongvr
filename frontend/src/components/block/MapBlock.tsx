@@ -78,7 +78,7 @@ export default function MapBlock({
         // Add standard navigation controls
         mapRef.current.addControl(
             new maplibregl.NavigationControl({ showCompass: true, visualizePitch: true }),
-            "top-right"
+            "bottom-right"
         );
 
         mapRef.current.on("load", async () => {
@@ -117,9 +117,9 @@ export default function MapBlock({
                 const isSelected = selectedHotspotId === hotspot.hotspot_id;
 
                 const element = document.createElement("div");
-                element.className = "cursor-pointer select-none group";
+                element.className = "cursor-pointer select-none group/pin";
                 element.innerHTML = `
-                    <div class="flex flex-col items-center transition-transform duration-200 ease-out origin-bottom group-hover:scale-110">
+                    <div class="flex flex-col items-center transition-transform duration-200 ease-out origin-bottom group-hover/pin:scale-110">
                         <div class="relative w-12 h-12 rounded-full p-[2px] bg-white shadow-xl ${isSelected ? 'ring-4 ring-emerald-500 ring-offset-2' : 'ring-2 ring-emerald-600/50'} transition-all duration-300">
                             <div class="w-full h-full rounded-full overflow-hidden bg-slate-100 flex items-center justify-center">
                                 <img src="${hotspot.preview_image}" alt="${hotspot.title}" class="w-full h-full object-cover object-center pointer-events-none" onerror="this.src='/landmarks/mo_3000_nguoi.jpg'" />
