@@ -14,7 +14,7 @@ SUPABASE_ANON_KEY = os.getenv(
 # Project and Storage Config
 AREA_ID = int(os.getenv("AREA_ID", 25))
 STORAGE_BUCKET = os.getenv("STORAGE_BUCKET", "APP_IMAGES")
-AREA_NAME = "Thị xã Bình Long, Bình Phước"
+AREA_NAME = "Phường Bình Long, TP. Đồng Nai"
 DOMAIN = "bandosobinhlong.vn"
 MAIN_HOTSPOT_ID = 132  # Mộ 3.000 người An Lộc
 

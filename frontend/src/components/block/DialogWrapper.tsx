@@ -9,7 +9,7 @@ import {
 import { Button } from '../ui/button'
 import { DialogClose } from '@radix-ui/react-dialog'
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
-import { X } from 'lucide-react'
+import { X, Minus } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 interface DialogWrapperProps {
@@ -32,9 +32,12 @@ interface DialogWrapperProps {
 
     // Close button
     showCloseButton?: boolean
+    closeButtonType?: 'close' | 'minimize'
+    closeIcon?: ReactNode
+    closeTitle?: string
 
     // Dialog sizing
-    size?: 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'entire'
+    size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full' | 'entire'
     mobileSize?: 'sm' | 'md' | 'lg' | 'full' | 'entire'
 
     // Custom styling
@@ -59,6 +62,9 @@ const DialogWrapper = ({
     showFooter = false,
     footerContent,
     showCloseButton = true,
+    closeButtonType = 'close',
+    closeIcon,
+    closeTitle,
     size = 'lg',
     mobileSize = 'full',
     className = '',
@@ -72,6 +78,7 @@ const DialogWrapper = ({
             sm: 'max-w-sm w-[95vw] h-[70vh]',
             md: 'max-w-md w-[95vw] h-[75vh]',
             lg: 'max-w-lg w-[95vw] h-[85vh]',
+            '2xl': 'max-w-xl w-[95vw] h-[90vh]',
             full: 'w-[95vw] h-[95vh]',
             entire: 'w-screen h-screen'
         }
@@ -82,6 +89,7 @@ const DialogWrapper = ({
             md: 'sm:max-w-md sm:w-[500px] sm:h-[75vh]',
             lg: 'sm:max-w-lg sm:w-[600px] sm:h-[80vh]',
             xl: 'sm:max-w-xl sm:w-[700px] sm:h-[85vh]',
+            '2xl': 'sm:max-w-5xl md:max-w-5xl lg:max-w-6xl sm:w-[94vw] lg:w-[92vw] sm:h-[86vh]',
             full: 'sm:w-[95vw] sm:h-[95vh] sm:max-w-none',
             entire: 'sm:w-screen sm:h-screen sm:max-w-none'
         }
@@ -111,8 +119,8 @@ const DialogWrapper = ({
 
                 {/* Header - Fixed */}
                 {showHeader && (
-                    <DialogHeader className='p-4 sm:p-6 pb-3 sm:pb-4 flex-shrink-0 border-b border-border'>
-                        <div className='flex items-center justify-between'>
+                    <DialogHeader className='p-3 sm:p-4 md:p-5 flex-shrink-0 border-b border-border'>
+                        <div className='flex items-center justify-between gap-3'>
                             {customHeader ? (
                                 // Custom header content
                                 <div className='flex-1 min-w-0'>
@@ -141,13 +149,20 @@ const DialogWrapper = ({
                                 </div>
                             )}
                             {showCloseButton && (
-                                <DialogClose className="h-full" asChild>
+                                <DialogClose asChild>
                                     <Button
                                         variant="ghost"
                                         size="sm"
-                                        className='rounded-full w-7 h-7 sm:w-8 sm:h-8 p-0 bg-secondary hover:bg-secondary/80 text-foreground border border-border flex-shrink-0 ml-2 cursor-pointer'
+                                        title={closeTitle || (closeButtonType === 'minimize' ? 'Thu nhỏ' : 'Đóng')}
+                                        className='rounded-full w-8 h-8 sm:w-9 sm:h-9 p-0 bg-secondary hover:bg-secondary/80 text-foreground border border-border flex-shrink-0 cursor-pointer transition-colors flex items-center justify-center'
                                     >
-                                        <X className="w-3 h-3 sm:w-4 sm:h-4 text-foreground" />
+                                        {closeIcon ? (
+                                            closeIcon
+                                        ) : closeButtonType === 'minimize' ? (
+                                            <Minus className="w-4 h-4 text-foreground" strokeWidth={2.5} />
+                                        ) : (
+                                            <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-foreground" />
+                                        )}
                                     </Button>
                                 </DialogClose>
                             )}

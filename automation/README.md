@@ -26,25 +26,25 @@ automation/
 
 1. **DTT - Di tích Lịch sử Dinh Tỉnh Trưởng Bình Long** (Hotspot ID: `130`)
    - Tên chuẩn hóa: `DTT_0_FLYCAM.jpg`, `DTT_1_CONG.jpg`, `DTT_2_SAN.jpg`, `DTT_3_GIUA.jpg`, ...
-   - Địa chỉ: Phường Phú Đức, Thị xã Bình Long, Tỉnh Bình Phước
+   - Địa chỉ: Phường Bình Long, Thành phố Đồng Nai
    - Tọa độ: `11.652378, 106.607088`
    - Số lượng panorama: 11 điểm nhìn
 
 2. **M7N - Di tích Lịch sử Mộ tập thể Lực lượng vũ trang An ninh An Lộc (Mộ 7 Người)** (Hotspot ID: `131`)
    - Tên chuẩn hóa: `M7N_0_FLYCAM.jpg`, `M7N_1_CONG.jpg`, `M7N_2_BIA.jpg`, `M7N_3_SAN.jpg`, `M7N_4_MO.jpg`
-   - Địa chỉ: Khu phố Bình An, Phường An Lộc, Thị xã Bình Long, Tỉnh Bình Phước
+   - Địa chỉ: Phường Bình Long, Thành phố Đồng Nai
    - Tọa độ: `11.6583201, 106.6057152`
    - Số lượng panorama: 5 điểm nhìn
 
 3. **M3000 - Di tích Lịch sử Quốc gia Mộ 3.000 người An Lộc** (Hotspot ID: `132`)
    - Tên chuẩn hóa: `M3000_0_FLYCAM_1.jpg`, `M3000_1_CONG_PHU.jpg`, `M3000_2_CONG_CHINH.jpg`, `M3000_7_NHA_GIUA.jpg`, ...
-   - Địa chỉ: Đường Phạm Ngọc Thạch, Phường An Lộc, Thị xã Bình Long, Tỉnh Bình Phước
+   - Địa chỉ: Đường Phạm Ngọc Thạch, Phường Bình Long, Thành phố Đồng Nai
    - Tọa độ: `11.6491817, 106.6057461`
    - Số lượng panorama: 22 điểm nhìn
 
 4. **HLT - Di tích Lịch sử - Văn hóa Chùa Hưng Lập Tự** (Hotspot ID: `133`)
    - Tên chuẩn hóa: `HLT_0_FLYCAM.jpg`, `HLT_1_PHAI.jpg`, `HLT_2.jpg`, `HLT_2_1.jpg`, `HLT_2_31.jpg`, ...
-   - Địa chỉ: Khu phố Phú Trọng, Phường Phú Đức, Thị xã Bình Long, Tỉnh Bình Phước
+   - Địa chỉ: Phường Bình Long, Thành phố Đồng Nai
    - Tọa độ: `11.6480133, 106.6117306`
    - Số lượng panorama: 22 điểm nhìn
 
@@ -97,7 +97,7 @@ python automation/fill_data.py
 
 *Quy trình thực hiện:*
 1. Xóa toàn bộ dữ liệu hotspots và panoramas cũ của Area ID `25` trên bản đồ.
-2. Cập nhật bảng `areas`: Area ID `25` -> `Thị xã Bình Long, Bình Phước`, Domain `bandosobinhlong.yhcmute.com`.
+2. Cập nhật bảng `areas`: Area ID `25` -> `Phường Bình Long, TP. Đồng Nai`, Domain `bandosobinhlong.yhcmute.com`.
 3. Tải các ảnh đại diện (16:9), ảnh thumbnail và 4 tệp audio thuyết minh lên Supabase Storage bucket `APP_IMAGES/25/...`.
 4. Upsert 4 Hotspots kèm đầy đủ thông tin lịch sử, tọa độ GPS, đường dẫn Audio và URL ảnh đại diện.
 5. Upsert 60 Panoramas tương ứng với từng điểm nhìn VR 360°.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Automation Script: Điền dữ liệu Bản đồ số Bình Long vào Supabase
-1. Đồng bộ thông tin khu vực (areas): Area ID 25 -> Thị xã Bình Long, Bình Phước
+1. Đồng bộ thông tin khu vực (areas): Area ID 25 -> Phường Bình Long, TP. Đồng Nai
 2. Xóa sạch dữ liệu cũ của Bình Long trên bản đồ (hotspots và panoramas)
 3. Tải các ảnh đại diện (preview) và audio thuyết minh lên Supabase Storage (APP_IMAGES/25/...)
 4. Upsert thông tin 4 di tích chính (hotspots) kèm tọa độ, thuyết minh audio và hình ảnh

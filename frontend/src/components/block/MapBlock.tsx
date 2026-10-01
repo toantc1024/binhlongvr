@@ -35,6 +35,12 @@ export default function MapBlock({
         : [106.6042, 11.6483];
     const zoom = 14.8;
 
+    // Giới hạn bản đồ trong khung Phường Bình Long, không cho zoom out quá mức
+    const BINH_LONG_BOUNDS: [[number, number], [number, number]] = [
+        [106.5600, 11.6100], // Tây Nam [lng, lat]
+        [106.6500, 11.6900], // Đông Bắc [lng, lat]
+    ];
+
     const mapContainer = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
     const hotspotMarkersRef = useRef<maplibregl.Marker[]>([]);
@@ -60,6 +66,9 @@ export default function MapBlock({
             style: goongStyleUrl,
             center,
             zoom,
+            minZoom: 13.5,
+            maxZoom: 20,
+            maxBounds: BINH_LONG_BOUNDS,
             pitch: 62,
             bearing: -24,
             maxPitch: 85,
