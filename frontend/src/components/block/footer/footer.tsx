@@ -13,10 +13,10 @@ const FooterSection = () => {
             href="/"
             className="font-semibold text-primary hover:text-primary/80 hover:underline"
           >
-            bandoso.yhcmute.com
+            bandosobinhlong.vn
           </a>
           <br />
-          Bản quyền thuộc về Đoàn Trường Đại học Công nghệ Kỹ thuật TP. Hồ Chí Minh & Thị đoàn Bình Long.
+          Bản quyền thuộc về Thị đoàn Bình Long & UBND Thị xã Bình Long, Tỉnh Bình Phước.
         </p>
       </div>
     </footer>

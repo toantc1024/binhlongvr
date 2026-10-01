@@ -69,16 +69,16 @@ const NavbarBlock = () => {
       <div className="container bg-white px-4 py-2 rounded-full border-1">
         <nav className="flex items-center justify-between">
           <a
-            href="https://www.shadcnblocks.com"
+            href="/"
             className="flex items-center gap-2"
           >
             <img
-              src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg"
+              src="/LOGO_VR.png"
               className="max-h-8"
-              alt="Shadcn UI Navbar"
+              alt="Bản đồ số Bình Long"
             />
             <span className="text-lg font-semibold tracking-tighter">
-              bandoso.yhcmute
+              Bản Đồ Số Bình Long
             </span>
           </a>
           <NavigationMenu className="hidden lg:block">
@@ -155,16 +155,16 @@ const NavbarBlock = () => {
               <SheetHeader>
                 <SheetTitle>
                   <a
-                    href="https://www.shadcnblocks.com"
+                    href="/"
                     className="flex items-center gap-2"
                   >
                     <img
-                      src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg"
+                      src="/LOGO_VR.png"
                       className="max-h-8"
-                      alt="Shadcn UI Navbar"
+                      alt="Bản đồ số Bình Long"
                     />
                     <span className="text-lg font-semibold tracking-tighter">
-                      Shadcnblocks.com
+                      Bản Đồ Số Bình Long
                     </span>
                   </a>
                 </SheetTitle>

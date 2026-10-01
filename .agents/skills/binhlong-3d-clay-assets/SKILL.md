@@ -1,50 +1,55 @@
 ---
-name: binhlong-3d-clay-assets
-description: Generate green-based 3D clay icons and visual assets for Binh Long VR historical map and web applications.
+name: binhlong-3d-assets
+description: Generate green-based abstract 3D UI icons and illustrations (HCMUTE abstract style) for Binh Long VR historical map and web applications.
 ---
 
-# Bình Long VR 3D Clay Asset Skill
+# Bình Long VR 3D Abstract Asset Skill (HCMUTE Abstract Style - Green Edition)
 
 Use this skill when generating 3D icon assets, illustrations, or UI visual elements for the **Bình Long Digital VR Map** project (`binhlong-vr`).
 
-## Brand & Visual Direction
+## Visual Identity: Clean Geometric Abstraction (HCMUTE Style)
 
-The visual style is a **Green-Based 3D Clay / Molded-Polymer Render** inspired by the lush rubber plantations, historical green nature of Bình Long, and modern friendly university design (adapted from HCM-UTE design language):
+Directly modeled on the **HCM-UTE 3D UI Icon Design Language** (`hcmute-icon-assets`), adapted with a vibrant **Bình Long Emerald Green** color identity:
 
+- **Style & Material**:
+  - **Minimalist Geometric Abstraction**: Pure, simplified geometric forms (spheres, rounded cubes, smooth torus rings, inflated pill tokens, rounded rectangular cards).
+  - **Satin-Plastic & Polished Polymer**: Tactile, ultra-smooth satin finish, gentle specular highlights, rounded bevels, and subtle ambient occlusion between interlocking pieces.
+  - **NO complex mechanical details**: Never add micro-circuits, realistic gadget parts, intricate wires, or busy textures. Keep shapes bold, iconic, and abstract.
 - **Palette**:
-  - **Dominant Greens**: Emerald Green (`#059669`), Lush Forest Green (`#047857`), Fresh Mint/Sage (`#10B981`, `#6EE7B7`).
-  - **Supporting Accents**: Warm Historical Gold / Ochre (`#D97706`, `#F59E0B`) representing bronze bells, memorial medals, and red-soil heritage.
-  - **Neutrals**: Crisp White (`#FFFFFF`), Soft Clay Tint (`#F0FDF4`), Slate/Navy (`#0F172A`, `rgb(0, 71, 118)`).
-- **Material & Volume**:
-  - Soft inflated clay forms, rounded smooth molded shapes, generous bevels, and tactile rounded thickness.
-  - Satin-matte finish with gentle ambient occlusion and soft specular highlights.
-  - Multi-layer interlocking parts (e.g. envelope flap, map pin needle, monument pedestal).
-- **Perspective**:
-  - Slight three-quarter isometric front view with visible rounded depth.
-  - Clean isolated silhouette with generous padding.
-- **Restrictions**:
-  - No harsh angular spikes, no photorealistic metal, no low-poly wireframes.
-  - No human faces or realistic bodies.
-  - No watermarks, no unreadable text, no baked floor plane or dirty drop shadows.
+  - **Dominant Greens**: Vibrant Emerald Green (`#059669`), Deep Forest Green (`#047857`), Fresh Mint (`#10B981`).
+  - **Supporting Accents**: Warm Golden Amber / Sun Gold (`#F59E0B`, `#D97706`) for focal accent tokens and rings.
+  - **Neutrals**: Crisp Pure White (`#FFFFFF`), Soft Cream / Mint Tint (`#F0FDF4`), Light Slate (`#E2E8F0`).
+- **Perspective & Framing**:
+  - Centered isolated object in slight three-quarter isometric front view.
+  - Generous empty padding (15-20% breathing space) on pure flat white background (`#FFFFFF`).
+  - Clean, instantly recognizable silhouette at small thumbnail sizes (48px - 96px).
+- **STRICT CONSTRAINTS**:
+  - **NO text, NO letters, NO numbers, NO typography, NO labels.**
+  - **NO logos, NO watermarks.**
+  - **NO human faces or realistic bodies.**
+  - **NO rough clay, NO fingerprints, NO play-doh, NO squishy dough.**
+  - **NO dark murky floor shadows, NO floor planes.**
 
-## Standard Prompt Template
+## Standard Abstract Prompt Template
 
 ```text
-Subject: One isolated 3D clay icon of {subject_name} with {supporting_tokens}, representing {semantic_meaning}.
-Style: Premium friendly 3D clay render, rounded soft-clay and molded-polymer forms, tactile inflated volume, smooth generous bevels, layered interlocking parts.
-Palette: Rich emerald green (#059669) and lush forest green (#047857) as dominant colors, warm gold/bronze (#F59E0B) accents, clean white and soft mint details.
-Lighting: Soft studio lighting from the top-left, gentle ambient occlusion between clay parts, broad satin-matte highlights, bright welcoming atmosphere.
-Composition: Centered isometric three-quarter view, isolated on pure white background, substantial 3D depth, 15-20% transparent breathing room, clean readable silhouette at small thumbnail sizes.
-Constraints: No human faces, no photo-realism, no flat 2D icons, no text or typography, no watermarks, no dark murky drop shadows.
+Use case: stylized-abstract-concept
+Asset type: isolated 3D UI card illustration for Binh Long VR platform
+Subject: One cohesive, minimalist abstract 3D object cluster representing {semantic_meaning}: {concise_abstract_shapes, e.g. a rounded emerald lens, floating concentric orbital rings, and a smooth white pill token}. Pure geometric abstraction, iconic and instantly readable.
+Style/medium: Premium satin-plastic and smooth molded-polymer 3D render, rounded geometric forms, minimalist editorial product illustration matching HCMUTE 3D asset style.
+Composition/framing: One centered grouped object in three-quarter isometric view, fully visible, generous empty padding, balanced silhouette.
+Lighting/mood: Soft controlled studio lighting from top-left, gentle ambient occlusion between interlocking parts, bright and modern.
+Color palette: Emerald green #059669, fresh mint #10b981, warm golden amber #f59e0b accents, crisp white #ffffff, soft cream #f0fdf4.
+Scene/backdrop: Perfectly flat uniform solid #ffffff pure white background from edge to edge.
+Constraints: NO text, NO letters, NO numbers, NO logo, NO watermark, NO people, NO floor plane, NO dark dirty shadows, NO rough clay texture, NO fingerprints, crisp opaque edges.
 ```
 
-## Catalog of Binh Long VR 3D Assets
+## Catalog of Active Binh Long VR 3D Assets
 
-1. **Email / Contact (`email`)**: Rounded soft clay green envelope with warm golden wax seal and white letter edge.
-2. **Location / Map Pin (`location`)**: Rounded emerald clay location teardrop pin with a small golden monument star at its center.
-3. **VR Platform (`vr_platform`)**: Rounded soft clay VR headset in emerald and white with a gentle holographic glass visor.
-4. **Historical Monument (`monument_mo3000`)**: Rounded clay commemorative monument stele with a golden laurel leaf badge.
-5. **Digital History Archive (`history_archive`)**: Soft clay historical ledger/book open with glowing data nodes and floating bookmark ribbon.
-6. **Historical Crossroad (`crossroad_nganam`)**: Stylized 5-branch rounded star junction compass with road markers in clay green and gold.
-7. **Memorial Gate (`memorial_gate`)**: Dignified traditional Vietnamese archway gate rendered in soft clay with gentle green glazed-tile curves.
-8. **Memorial Hall (`memorial_hall`)**: Traditional pagoda-roofed memorial hall in miniature soft clay with green tiled roof and golden incense urn.
+1. **View Count / Analytics (`view-count__binhlong-3d-icon.jpg`)**: Minimalist abstract 3D eye lens sphere in glowing emerald and white, surrounded by a smooth floating orbital ring and a rounded status pill token. No numbers, no text.
+2. **Email / Contact (`email__binhlong-3d-icon.jpg`)**: Glossy emerald green envelope casing with white folded sheet and golden notification badge.
+3. **Location / Coordinates (`location__binhlong-3d-icon.jpg`)**: Glossy emerald green teardrop location pin with a warm golden star on a white rounded pedestal.
+4. **History Archives (`history-archive__binhlong-3d-icon.jpg`)**: Glossy emerald green folder tablet with layered white archive sheets, golden ribbon bookmark, and magnifying glass.
+5. **Landmark Exploration (`landmark-explore__binhlong-3d-icon.jpg`)**: Glossy 3D folded map chart with emerald green route lines, green star pin, and golden monument token.
+6. **VR & AI Advanced Tech (`vr-ai-tech__binhlong-3d-icon.jpg`)**: Glossy emerald green and white VR headset with sleek glass visor and a cheerful smiling AI assistant bot with golden stars.
+7. **Easy Interaction (`interaction__binhlong-3d-icon.jpg`)**: Glossy 360-degree panorama globe in emerald green and white with an orbiting golden arrow ring and a glossy cursor pointer.

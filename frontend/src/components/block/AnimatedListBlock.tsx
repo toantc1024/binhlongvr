@@ -48,18 +48,53 @@ const ItemBlock = ({ name, address, preview_image }: Item) => {
     );
 };
 
+const DEFAULT_HOTSPOTS_LIST: Item[] = [
+    {
+        name: "Khuôn viên Nhà tưởng niệm",
+        description: "Gian tưởng niệm trang nghiêm, lưu giữ các tư liệu, hình ảnh lịch sử về sự kiện Bình Long năm 1972.",
+        address: "Nhà giữa Di tích Mộ 3.000 người, TX. Bình Long",
+        preview_image: "/vr_core/thumbnail.png",
+    },
+    {
+        name: "Cổng phụ & Cảnh quan Di tích",
+        description: "Lối vào phụ và hoa viên xanh mát bao quanh khu di tích lịch sử tưởng niệm 3.000 đồng bào.",
+        address: "Khuôn viên Di tích Mộ 3.000 người, TX. Bình Long",
+        preview_image: "/vr_core/thumbnail.png",
+    },
+    {
+        name: "Cổng chính Khu Di tích Mộ 3.000 người",
+        description: "Cổng chính dẫn vào khuôn viên khu tưởng niệm Mộ tập thể 3.000 đồng bào An Lộc trang nghiêm và tôn kính.",
+        address: "Đường Lê Quý Đôn, Phường An Lộc, TX. Bình Long",
+        preview_image: "/vr_core/thumbnail.png",
+    },
+    {
+        name: "Ngã Năm Thị Xã Bình Long",
+        description: "Giao lộ huyết mạch lịch sử kết nối các tuyến đường trọng điểm của Bình Long, chứng nhân lịch sử qua các thời kỳ.",
+        address: "Trung tâm Thị xã Bình Long, Tỉnh Bình Phước",
+        preview_image: "/vr_core/thumbnail.png",
+    },
+    {
+        name: "Di tích Lịch sử Mộ 3.000 người An Lộc",
+        description: "Nơi ghi dấu sự hy sinh anh dũng của hơn 3.000 đồng bào và chiến sĩ trong cuộc chiến đấu bảo vệ quê hương năm 1972. Di tích lịch sử - văn hóa cấp Quốc gia.",
+        address: "Đường Lê Quý Đôn, Phường An Lộc, TX. Bình Long",
+        preview_image: "/vr_core/thumbnail.png",
+    },
+];
+
 export function AnimatedListBlock({
     className,
 }: {
     className?: string;
 }) {
-    const { areaHotspots } = useVRStore((state) => state)
-    let items = areaHotspots?.map((hotspot) => ({
-        name: hotspot.title || 'Untitled',
-        description: hotspot.description || 'No description',
-        address: hotspot.address || 'No address',
-        preview_image: hotspot.preview_image || '',
-    })) || []
+    const { areaHotspots } = useVRStore((state) => state);
+    const items = (areaHotspots && areaHotspots.length > 0)
+        ? areaHotspots.map((hotspot) => ({
+            name: hotspot.title || 'Untitled',
+            description: hotspot.description || 'No description',
+            address: hotspot.address || 'No address',
+            preview_image: hotspot.preview_image || '/vr_core/thumbnail.png',
+        }))
+        : DEFAULT_HOTSPOTS_LIST;
     return (
         <div
             className={cn(

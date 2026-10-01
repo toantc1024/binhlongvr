@@ -69,15 +69,15 @@ const defaultLegalLinks = [
 
 const FooterBlock = ({
     logo = {
-        url: "https://www.shadcnblocks.com",
-        src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
-        alt: "logo",
-        title: "Shadcnblocks.com",
+        url: "/",
+        src: "/LOGO_VR.png",
+        alt: "Bản đồ số Bình Long",
+        title: "Bản Đồ Số Bình Long",
     },
     sections = defaultSections,
-    description = "A collection of components for your startup business or side project.",
+    description = "Khám phá di tích lịch sử và văn hóa Thị xã Bình Long qua công nghệ thực tế ảo tương tác.",
     socialLinks = defaultSocialLinks,
-    copyright = "© 2024 Shadcnblocks.com. All rights reserved.",
+    copyright = "© Bản quyền thuộc về Thị đoàn Bình Long & UBND Thị xã Bình Long, Tỉnh Bình Phước.",
     legalLinks = defaultLegalLinks,
 }: Footer7Props) => {
     return (
