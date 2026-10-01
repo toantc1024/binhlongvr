@@ -322,14 +322,14 @@ const ControlBlock = ({
                         title:
                           currentHotspot?.title ||
                           currentPanorama?.title ||
-                          "VR Experience",
+                          "Bản Đồ Số VR Di Tích Phường Bình Long - Thực Tế Ảo 360°",
                         description:
                           currentHotspot?.description ||
-                          "Khám phá không gian ảo 360° tuyệt đẹp",
+                          "Khám phá các di tích lịch sử và văn hóa Phường Bình Long, Thành phố Đồng Nai qua công nghệ thực tế ảo tương tác đa chiều.",
                         url:
                           typeof window !== "undefined"
                             ? window.location.href
-                            : "",
+                            : "https://bandosobinhlong.vn",
                       }}
                     />
                   );
