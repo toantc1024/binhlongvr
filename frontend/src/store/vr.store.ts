@@ -74,10 +74,9 @@ const useVRStore = create<VRStore>((set, get) => ({
       currentHotspot: BINHLONG_HOTSPOTS[0],
       currentPanorama: BINHLONG_PANORAMAS[0],
       areaHotspots: BINHLONG_HOTSPOTS,
+      panoramas: BINHLONG_PANORAMAS,
       isMapDialogOpen: false,
       mapDialogHotspotId: null,
-    }),
-      panoramas: BINHLONG_PANORAMAS,
     }),
 
   setIsLoading: (isLoading: boolean) => {
