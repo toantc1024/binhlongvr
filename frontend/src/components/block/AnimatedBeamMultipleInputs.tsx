@@ -14,7 +14,7 @@ const Circle = forwardRef<
         <div
             ref={ref}
             className={cn(
-                "z-10 flex size-12 items-center justify-center rounded-full border-2 border-border bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)]",
+                "z-10 flex size-12 items-center justify-center rounded-full border border-border bg-card p-3 shadow-md",
                 className,
             )}
         >
@@ -61,7 +61,7 @@ export function AnimatedBeamMultipleInputs({
 
                 </div>
                 <div className="flex flex-col justify-center">
-                    <Circle ref={div6Ref} className="bg-white border-none text-black/90 !size-16">
+                    <Circle ref={div6Ref} className="bg-card border-2 border-primary/20 text-primary !size-16 shadow-lg">
                         <BrainCircuitIcon />
                     </Circle>
                 </div>

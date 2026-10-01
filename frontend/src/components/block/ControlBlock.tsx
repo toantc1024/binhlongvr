@@ -85,19 +85,20 @@ const ControlBlock = ({
         top="0"
         zIndex={2}
         left="0"
-        customClassName="glass flex m-1 md:m-2 items-center px-1 md:px-2 h-auto rounded-4xl py-1 md:py-2 flex gap-1 md:gap-2 flex-col shadow-sm"
+        customClassName="flex m-1 md:m-2 items-center px-1 md:px-2 h-auto rounded-4xl py-1 md:py-2 flex gap-1 md:gap-2 flex-col shadow-md border border-border bg-white/90 backdrop-blur-xl"
       >
         <Drawer.Root direction="left">
           <Drawer.Trigger asChild>
             <Button
-              className="w-10 h-10 md:w-12 lg:w-14 md:h-12 lg:h-14 shadow-lg rounded-full hover:bg-black/10 bg-black/30 ring-1 ring-black/10 flex items-center justify-center"
+              variant="ghost"
+              className="w-10 h-10 md:w-12 lg:w-14 md:h-12 lg:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer"
               aria-label="Menu"
             >
-              <FiMenu className="!size-5 md:!size-7 lg:!size-9" />
+              <FiMenu className="!size-5 md:!size-7 lg:!size-9 text-foreground" />
             </Button>
           </Drawer.Trigger>
           <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 z-[10] backdrop-blur-xl bg-black/40" />
+            <Drawer.Overlay className="fixed inset-0 z-[10] backdrop-blur-xs bg-black/30" />
             <Drawer.Content
               className="left-1 md:left-2 top-1 md:top-2 bottom-1 md:bottom-2 fixed z-10 outline-none w-[280px] md:w-[310px] flex"
               style={
@@ -106,34 +107,36 @@ const ControlBlock = ({
                 } as React.CSSProperties
               }
             >
-              <div className="h-full w-full grow p-4 md:p-5 flex flex-col rounded-[16px] glass">
+              <div className="h-full w-full grow p-4 md:p-5 flex flex-col rounded-[16px] bg-white/95 text-foreground border border-border backdrop-blur-2xl shadow-2xl">
                 <div className="">
-                  <Drawer.Title className="flex items-center font-medium mb-4 text-white text-lg md:text-xl">
+                  <Drawer.Title className="flex items-center font-medium mb-4 text-foreground text-lg md:text-xl">
                     <Drawer.Close>
-                      <Button className="w-10 h-10 md:w-12 md:h-12 glass-hover glass rounded-full p-2">
-                        <FiArrowLeft className="!size-6 md:!size-8" />
+                      <Button variant="ghost" className="w-10 h-10 md:w-12 md:h-12 bg-secondary hover:bg-secondary/80 text-foreground border border-border rounded-full p-2 cursor-pointer">
+                        <FiArrowLeft className="!size-6 md:!size-8 text-foreground" />
                       </Button>
                     </Drawer.Close>
-                    <div className="ml-3 md:ml-4">Tùy chọn</div>
+                    <div className="ml-3 md:ml-4 font-bold text-foreground">Tùy chọn</div>
                   </Drawer.Title>
                   <div className="space-y-3">
                     <Button
-                      className="w-full h-10 md:h-12 text-left flex items-center justify-start gap-3 glass text-white rounded-full glass glass-hover text-sm md:text-base"
+                      variant="ghost"
+                      className="w-full h-10 md:h-12 text-left flex items-center justify-start gap-3 bg-secondary/80 hover:bg-secondary text-foreground border border-border rounded-full text-sm md:text-base cursor-pointer transition-all font-medium"
                       onClick={() => {
                         navigate("/");
                       }}
                     >
-                      <RiGlobalFill className="size-4 md:size-5" />
+                      <RiGlobalFill className="size-4 md:size-5 text-foreground" />
                       Về trang chủ
                     </Button>
                     <Button
-                      className="w-full h-10 md:h-12 text-left flex items-center justify-start gap-3 glass text-white rounded-full glass glass-hover text-sm md:text-base"
+                      variant="ghost"
+                      className="w-full h-10 md:h-12 text-left flex items-center justify-start gap-3 bg-secondary/80 hover:bg-secondary text-foreground border border-border rounded-full text-sm md:text-base cursor-pointer transition-all font-medium"
                       onClick={() => {
                         // mailto
                         window.location.href = "mailto:vrdiachido@gmail.com";
                       }}
                     >
-                      <Mail className="size-4 md:size-5" />
+                      <Mail className="size-4 md:size-5 text-foreground" />
                       Góp ý
                     </Button>
                   </div>
@@ -148,7 +151,7 @@ const ControlBlock = ({
           {
             icon: (
               <>
-                <FiHome className="!size-5 md:!size-7 lg:!size-9" />
+                <FiHome className="!size-5 md:!size-7 lg:!size-9 text-foreground" />
               </>
             ),
             onClick: () => {
@@ -166,7 +169,8 @@ const ControlBlock = ({
         ].map((item, idx) => (
           <Button
             key={idx}
-            className="w-10 h-10 md:w-12 lg:w-14 md:h-12 lg:h-14 shadow-lg rounded-full glass-hover bg-white/10 flex items-center justify-center cursor-pointer "
+            variant="ghost"
+            className="w-10 h-10 md:w-12 lg:w-14 md:h-12 lg:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer"
             onClick={item.onClick}
             aria-label={item.label}
           >
@@ -175,12 +179,13 @@ const ControlBlock = ({
         ))}
 
         <Button
+          variant="ghost"
           onClick={() => {
             setIsMapDialogOpen(!isMapDialogOpen);
           }}
-          className="w-10 h-10 md:w-12 lg:w-14 md:h-12 lg:h-14 shadow-lg rounded-full glass-hover bg-white/10 flex items-center justify-center cursor-pointer"
+          className="w-10 h-10 md:w-12 lg:w-14 md:h-12 lg:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer"
         >
-          <Map className="!size-5 md:!size-7 lg:!size-9" />
+          <Map className="!size-5 md:!size-7 lg:!size-9 text-foreground" />
         </Button>
 
         {/* Audio Control Button */}
@@ -206,9 +211,9 @@ const ControlBlock = ({
         <SearchDialogBlock showMedia={showMedia} />
       </div>
 
-      <div className="absolute w-full  top-0 flex flex-col items-center justify-center">
+      <div className="absolute w-full top-0 flex flex-col items-center justify-center">
         {currentHotspot && (
-          <div className="py-2 my-1 font-bold text-white text-shadow-xl text-md lg:text-2xl glass rounded-full px-8 border-b border-white/10 max-w-[50vw] overflow-hidden text-ellipsis whitespace-nowrap">
+          <div className="py-2 my-1 font-bold text-foreground text-md lg:text-2xl bg-white/90 rounded-full px-8 border border-border max-w-[50vw] overflow-hidden text-ellipsis whitespace-nowrap shadow-lg backdrop-blur-xl">
             {currentHotspot?.title}
           </div>
         )}
@@ -219,7 +224,7 @@ const ControlBlock = ({
         zIndex={1}
         customClassName="bottom-0 left-0 w-full flex flex-col justify-center items-center rounded-t-xl"
       >
-        <div className="w-full glass-light border-b border-white/10">
+        <div className="w-full bg-white/90 border-t border-border backdrop-blur-xl shadow-lg">
           <div className="relative">
             <div className="z-[1] flex gap-2 py-2 px-2 overflow-x-auto scrollbar-hide justify-start lg:justify-center">
               <Popover open={open} onOpenChange={setOpen}>
@@ -228,36 +233,36 @@ const ControlBlock = ({
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="glass glass-hover hover:text-white text-white rounded-full w-[200px] justify-between overflow-hidden"
+                    className="bg-white hover:bg-secondary text-foreground border border-border rounded-full w-[200px] justify-between overflow-hidden cursor-pointer shadow-xs font-medium"
                   >
-                    <span className="truncate capitalize">
+                    <span className="truncate capitalize text-foreground">
                       Bạn đang ở {currentPanorama?.title}
                     </span>
-                    <ChevronsUpDown className="opacity-50 shrink-0 ml-2" />
+                    <ChevronsUpDown className="text-foreground opacity-70 shrink-0 ml-2" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="border-none w-[250px] !rounded-xl bg-transparent  p-0"
+                  className="border border-border w-[250px] !rounded-xl bg-white/95 backdrop-blur-2xl p-0 shadow-2xl"
                   onOpenAutoFocus={(e) => e.preventDefault()}
                 >
-                  <Command className="glass border-b-none rounded-xl">
+                  <Command className="bg-transparent border-none text-foreground">
                     <CommandInput
                       placeholder="Tìm panorama"
-                      className="h-9 enforce  text-white placeholder:text-white/60 placeholder:font-bold svg:text-white"
+                      className="h-9 text-foreground placeholder:text-muted-foreground"
                     />
                     <CommandList>
-                      <CommandEmpty className="text-white p-4 text-center">
+                      <CommandEmpty className="text-muted-foreground p-4 text-center text-sm">
                         Không tìm thấy panorama
                       </CommandEmpty>
-                      <CommandGroup className="!">
+                      <CommandGroup className="p-1">
                         {panoramas.map((panorama, index) => (
                           <CommandItem
                             className={cn(
-                              `!text-white glass rounded-lg cursor-pointer glass-light border-1 ${
+                              `text-foreground hover:bg-secondary rounded-lg cursor-pointer border border-transparent ${
                                 index === panoramas.length - 1 ? "" : "mb-1"
-                              } font-bold`,
+                              } font-medium px-2 py-1.5 transition-colors`,
                               value === panorama.title
-                                ? "!bg-white/40 text-white"
+                                ? "bg-secondary text-primary font-bold border-border"
                                 : ""
                             )}
                             key={panorama.panorama_id}
@@ -275,10 +280,10 @@ const ControlBlock = ({
                             {panorama.title}
                             <Check
                               className={cn(
-                                "ml-auto",
+                                "ml-auto text-primary",
                                 value === panorama.title
-                                  ? "opacity-0"
-                                  : "opacity-0"
+                                    ? "opacity-100"
+                                    : "opacity-0"
                               )}
                             />
                           </CommandItem>
@@ -332,11 +337,12 @@ const ControlBlock = ({
 
                 return (
                   <Button
+                    variant="outline"
                     key={pill.id}
-                    className=" shadow-lg rounded-full glass glass-hover flex items-center justify-center cursor-pointer "
+                    className="shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer font-medium"
                   >
                     {IconComponent && (
-                      <IconComponent className="w-3 h-3 mr-1" />
+                      <IconComponent className="w-3.5 h-3.5 mr-1 text-foreground" />
                     )}
                     {pill.id === "search" ? currentPanorama?.title : pill.label}
                   </Button>
@@ -345,16 +351,17 @@ const ControlBlock = ({
 
               {/* Carousel Toggle Button */}
               <Button
-                className="shadow-lg rounded-full glass glass-hover flex items-center justify-center cursor-pointer"
+                variant="outline"
+                className="shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer font-medium"
                 onClick={() => setIsBottomNavVisible(!isBottomNavVisible)}
                 aria-label={
                   isBottomNavVisible ? "Hide carousel" : "Show carousel"
                 }
               >
                 {isBottomNavVisible ? (
-                  <FiChevronDown className="w-3 h-3 mr-1" />
+                  <FiChevronDown className="w-3.5 h-3.5 mr-1 text-foreground" />
                 ) : (
-                  <FiChevronUp className="w-3 h-3 mr-1" />
+                  <FiChevronUp className="w-3.5 h-3.5 mr-1 text-foreground" />
                 )}
                 {isBottomNavVisible ? "Ẩn" : "Hiện"}
               </Button>

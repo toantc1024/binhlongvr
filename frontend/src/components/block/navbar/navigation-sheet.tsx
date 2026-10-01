@@ -9,22 +9,15 @@ interface NavigationSheetProps {
   onNavigate?: (sectionId: string) => void;
 }
 
-export const NavigationSheet = ({
-  activeSection,
-  onNavigate,
-}: NavigationSheetProps) => {
+export const NavigationSheet = ({ activeSection, onNavigate }: NavigationSheetProps) => {
   return (
-    <Sheet>
+    <Sheet >
       <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          className="rounded-full glass border-white/90 !text-white text-base shadow-none"
-        >
-          <Menu />
+        <Button variant="outline" size="icon" className="rounded-full border-border text-foreground shadow-xs bg-white/90 hover:bg-secondary">
+          <Menu className="h-5 w-5 text-foreground" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="z-[999] p-4 flex flex-col glass glass-light border-white/90 !text-white text-base shadow-none">
+      <SheetContent className="z-[999] p-4 flex flex-col bg-white text-foreground border-l border-border shadow-2xl">
         <Logo />
         <NavMenu
           orientation="vertical"

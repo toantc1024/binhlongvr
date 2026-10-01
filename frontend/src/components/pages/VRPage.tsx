@@ -108,11 +108,11 @@ const VRPage = () => {
         setActiveSnapPoint={setAssetSnap}
         fadeFromIndex={1}
       >
-        <Drawer.Overlay className="z-[9999] fixed inset-0" />
+        <Drawer.Overlay className="z-[9999] fixed inset-0 bg-black/30 backdrop-blur-xs" />
         <Drawer.Portal>
           <Drawer.Content
             data-testid="asset-content"
-            className="fixed z-[9999] glass-light !border-white/20 mx-[1px] flex flex-col bg-white border border-gray-200 border-b-none rounded-t-4xl bottom-0 left-0 right-0 h-full mx-[-1px]"
+            className="fixed z-[9999] bg-white/95 text-foreground border-t border-border backdrop-blur-2xl rounded-t-4xl bottom-0 left-0 right-0 h-full mx-[-1px] flex flex-col shadow-2xl"
           >
             <AssetDrawerBlock
               currentAsset={currentAsset}
@@ -141,11 +141,11 @@ const VRPage = () => {
           </div>
           {(isLoading || isFadingOut) && (
             <div
-              className={`fixed top-0 left-0 right-0 bottom-0 bg-black  z-50 flex items-center justify-center transition-opacity duration-300 ease-out ${
+              className={`fixed top-0 left-0 right-0 bottom-0 bg-white/80 backdrop-blur-md z-50 flex items-center justify-center transition-opacity duration-300 ease-out ${
                 isFadingOut ? "opacity-0" : "opacity-100"
               }`}
             >
-              <Spinner size={64} className="text-primary" variant="default" />
+              <Spinner size={64} className="text-blue-700" variant="default" />
             </div>
           )}
           <div className="w-full h-full relative">

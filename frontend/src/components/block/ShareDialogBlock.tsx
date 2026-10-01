@@ -88,8 +88,8 @@ const ShareDialogBlock = ({ pill, shareData }: ShareDialogBlockProps) => {
             label: 'Sao chép liên kết',
             icon: copied ? CheckCircle : Copy,
             onClick: copyToClipboard,
-            className: 'text-white',
-            iconBgClass: copied ? 'bg-green-500/20 border-green-500/30' : 'bg-blue-500/20 border-blue-500/30',
+            className: copied ? 'text-emerald-600' : 'text-primary',
+            iconBgClass: copied ? 'bg-emerald-500/15 border-emerald-500/30' : 'bg-primary/10 border-primary/20',
             description: 'Sao chép URL để chia sẻ'
         },
         {
@@ -97,8 +97,8 @@ const ShareDialogBlock = ({ pill, shareData }: ShareDialogBlockProps) => {
             label: 'Messenger',
             icon: MessageCircle,
             onClick: shareToMessenger,
-            className: 'text-white',
-            iconBgClass: 'bg-blue-500/20 border-blue-500/30',
+            className: 'text-primary',
+            iconBgClass: 'bg-primary/10 border-primary/20',
             description: 'Chia sẻ qua Facebook Messenger'
         },
         {
@@ -106,8 +106,8 @@ const ShareDialogBlock = ({ pill, shareData }: ShareDialogBlockProps) => {
             label: 'Facebook',
             icon: Facebook,
             onClick: shareToFacebook,
-            className: 'text-white',
-            iconBgClass: 'bg-blue-600/20 border-blue-600/30',
+            className: 'text-foreground',
+            iconBgClass: 'bg-primary/10 border-primary/20',
             description: 'Chia sẻ lên Facebook'
         }
     ]
@@ -135,11 +135,12 @@ const ShareDialogBlock = ({ pill, shareData }: ShareDialogBlockProps) => {
         <DialogWrapper
             trigger={
                 <Button
+                    variant="outline"
                     key={pill.id}
-                    className="shadow-lg rounded-full glass glass-hover flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105"
+                    className="shadow-lg rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105"
                 >
                     {pill.icon && (
-                        <pill.icon className="w-3 h-3 mr-1" />
+                        <pill.icon className="w-3.5 h-3.5 mr-1 text-primary" />
                     )}
                     {pill.label}
                 </Button>
@@ -157,20 +158,21 @@ const ShareDialogBlock = ({ pill, shareData }: ShareDialogBlockProps) => {
             <div className="space-y-4">
                 {/* Share Options */}
                 <div className="space-y-3">
-                    <h4 className="text-white/80 text-sm font-medium">Chọn phương thức chia sẻ</h4>
+                    <h4 className="text-foreground text-sm font-semibold">Chọn phương thức chia sẻ</h4>
                     <div className="grid grid-cols-1 gap-3">
                         {shareOptions.map((option) => (
                             <Button
+                                variant="ghost"
                                 key={option.id}
                                 onClick={option.onClick}
-                                className="glass-light glass-hover rounded-xl p-4 h-auto flex items-center gap-3 justify-start transition-all hover:scale-[1.02] border border-white/10"
+                                className="bg-secondary/60 hover:bg-secondary rounded-xl p-4 h-auto flex items-center gap-3 justify-start transition-all hover:scale-[1.01] border border-border cursor-pointer text-left"
                             >
-                                <div className={`w-10 h-10 rounded-full flex items-center justify-center border ${option.iconBgClass}`}>
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center border shrink-0 ${option.iconBgClass}`}>
                                     <option.icon className={`w-5 h-5 ${option.className}`} />
                                 </div>
-                                <div className="flex-1 text-left">
-                                    <p className="text-white font-medium text-sm">{option.label}</p>
-                                    <p className="text-white/60 text-xs">{option.description}</p>
+                                <div className="flex-1 text-left min-w-0">
+                                    <p className="text-foreground font-semibold text-sm">{option.label}</p>
+                                    <p className="text-muted-foreground text-xs truncate">{option.description}</p>
                                 </div>
                             </Button>
                         ))}
@@ -179,12 +181,13 @@ const ShareDialogBlock = ({ pill, shareData }: ShareDialogBlockProps) => {
 
                 {/* Native Share (if available) */}
                 {typeof navigator !== 'undefined' && 'share' in navigator && (
-                    <div className="pt-2 border-t border-white/10">
+                    <div className="pt-2 border-t border-border">
                         <Button
+                            variant="ghost"
                             onClick={nativeShare}
-                            className="w-full glass-light glass-hover rounded-xl p-3 text-white/80 hover:text-white transition-colors"
+                            className="w-full bg-secondary/60 hover:bg-secondary border border-border rounded-xl p-3 text-foreground hover:text-primary font-medium transition-colors cursor-pointer"
                         >
-                            <Share2 className="w-4 h-4 mr-2" />
+                            <Share2 className="w-4 h-4 mr-2 text-primary" />
                             Chia sẻ khác
                         </Button>
                     </div>

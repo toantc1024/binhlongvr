@@ -99,7 +99,7 @@ const DialogWrapper = ({
 
 
             <DialogContent
-                className={`glass ${size !== "entire" ? "rounded-2xl !p-0" : "rounded-none"} border border-white/20 p-0 overflow-hidden flex flex-col ${getSizeClasses()} ${className}`}
+                className={`bg-white/95 text-foreground border border-border p-0 overflow-hidden flex flex-col shadow-2xl backdrop-blur-2xl ${size !== "entire" ? "rounded-2xl !p-0" : "rounded-none"} ${getSizeClasses()} ${className}`}
                 showCloseButton={false}
             >
                 {/* Always include DialogTitle for accessibility */}
@@ -111,7 +111,7 @@ const DialogWrapper = ({
 
                 {/* Header - Fixed */}
                 {showHeader && (
-                    <DialogHeader className='p-4 sm:p-6 pb-3 sm:pb-4 flex-shrink-0 border-b border-white/10'>
+                    <DialogHeader className='p-4 sm:p-6 pb-3 sm:pb-4 flex-shrink-0 border-b border-border'>
                         <div className='flex items-center justify-between'>
                             {customHeader ? (
                                 // Custom header content
@@ -122,18 +122,18 @@ const DialogWrapper = ({
                                 // Default header content
                                 <div className='flex items-center gap-2 sm:gap-3 flex-1 min-w-0'>
                                     {headerIcon && (
-                                        <div className='w-8 h-8 sm:w-10 sm:h-10 rounded-xl glass-light flex items-center justify-center flex-shrink-0'>
+                                        <div className='w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-secondary border border-border text-foreground flex items-center justify-center flex-shrink-0'>
                                             {headerIcon}
                                         </div>
                                     )}
                                     <div className='flex-1 min-w-0'>
                                         {title && (
-                                            <DialogTitle className='text-white text-base sm:text-lg font-bold truncate'>
+                                            <DialogTitle className='text-foreground text-base sm:text-lg font-bold truncate'>
                                                 {title}
                                             </DialogTitle>
                                         )}
                                         {description && (
-                                            <DialogDescription className='text-white/60 text-xs sm:text-sm truncate'>
+                                            <DialogDescription className='text-muted-foreground text-xs sm:text-sm truncate'>
                                                 {description}
                                             </DialogDescription>
                                         )}
@@ -145,9 +145,9 @@ const DialogWrapper = ({
                                     <Button
                                         variant="ghost"
                                         size="sm"
-                                        className='rounded-full w-7 h-7  sm:w-8 sm:h-8 p-0 glass-light glass-hover text-white/60 hover:text-white flex-shrink-0 ml-2'
+                                        className='rounded-full w-7 h-7 sm:w-8 sm:h-8 p-0 bg-secondary hover:bg-secondary/80 text-foreground border border-border flex-shrink-0 ml-2 cursor-pointer'
                                     >
-                                        <X className="w-3 h-3 sm:w-4 sm:h-4" />
+                                        <X className="w-3 h-3 sm:w-4 sm:h-4 text-foreground" />
                                     </Button>
                                 </DialogClose>
                             )}
@@ -162,7 +162,7 @@ const DialogWrapper = ({
 
                 {/* Footer - Fixed */}
                 {showFooter && footerContent && (
-                    <div className='p-4 sm:p-6 pt-3 sm:pt-4 flex-shrink-0 border-t border-white/10 bg-black/20 '>
+                    <div className='p-4 sm:p-6 pt-3 sm:pt-4 flex-shrink-0 border-t border-border bg-secondary/40'>
                         {footerContent}
                     </div>
                 )}

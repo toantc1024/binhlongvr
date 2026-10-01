@@ -40,7 +40,7 @@ export default function MapDialogBlock({
         }
     };
 
-    const center: [number, number] = import.meta.env.VITE_CENTER_GPS ? import.meta.env.VITE_CENTER_GPS.split(",").map(Number) : [106.6467328, 10.7577344];
+    const center: [number, number] = import.meta.env.VITE_CENTER_GPS ? import.meta.env.VITE_CENTER_GPS.split(",").map(Number) : [106.6042, 11.6483];
     const zoom = 12;
 
     const mapContainer = useRef<HTMLDivElement | null>(null);
@@ -78,7 +78,12 @@ export default function MapDialogBlock({
 
         mapRef.current = new maplibregl.Map({
             container: mapContainer.current,
-            style: `https://tiles.goong.io/assets/goong_map_dark.json?api_key=${import.meta.env.VITE_GOONG_MAP_KEY}`,
+            style: {
+                version: 8,
+                sources: {},
+                layers: [],
+                glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
+            },
             center,
             zoom,
             pitch: 65,
@@ -114,13 +119,28 @@ export default function MapDialogBlock({
                     "fill-color": [
                         "case",
                         ["boolean", ["feature-state", "hover"], false],
-                        "#2b7fff",
-                        "#000", // normal
+                        "#2563eb",
+                        "#3b82f6",
                     ],
-                    "fill-opacity": 0.65,
+                    "fill-opacity": [
+                        "case",
+                        ["boolean", ["feature-state", "hover"], false],
+                        0.35,
+                        0.18,
+                    ],
                 },
             });
 
+            mapRef.current!.addLayer({
+                id: "custom-geojson-stroke",
+                type: "line",
+                source: "custom-geojson",
+                paint: {
+                    "line-color": "#2563eb",
+                    "line-width": 2,
+                    "line-opacity": 0.7,
+                },
+            });
 
             mapRef.current?.addLayer({
                 id: 'custom-geojson-labels',
@@ -128,12 +148,14 @@ export default function MapDialogBlock({
                 source: 'custom-geojson',
                 layout: {
                     'text-field': ['get', 'ten_xa'],
-                    'text-size': 15,
+                    'text-size': 14,
                     'text-anchor': 'center',
                     'symbol-placement': 'point'
                 },
                 paint: {
-                    'text-color': '#fff'
+                    'text-color': '#1e293b',
+                    'text-halo-color': '#ffffff',
+                    'text-halo-width': 2,
                 }
             });
             let hoveredId: string | number | null = null;
@@ -194,15 +216,15 @@ export default function MapDialogBlock({
                 let element = document.createElement("div");
                 element.className = "marker-container";
                 element.innerHTML = `
-                <div class="map-marker shadow-xl cursor-pointer ${isSelected ? 'ring-[3px] border-[0px] ring-blue-400 border-blue-400 border-none ring-opacity-60 selected' : ''}">
+                <div class="map-marker shadow-xl cursor-pointer ${isSelected ? 'ring-[3px] border-[0px] ring-primary border-primary border-none ring-opacity-60 selected' : ''}">
                     <div class="map-marker-circle ">
                         <div class="map-marker-image">
-                            <img src="${hotspot.preview_image || ''}" alt="place" onerror="this.onerror=null;this.src='/LOGO_VR.png';this.style.objectFit='contain';this.style.padding='4px';" />
+                            <img src="${hotspot.preview_image}" alt="place" />
                         </div>
                     </div>
                 </div>
                 <div class="marker-label">
-                    <span class="marker-title ${isSelected ? 'font-bold text-blue-600' : ''}">${hotspot.title}</span>
+                    <span class="marker-title ${isSelected ? 'font-bold text-primary' : ''}">${hotspot.title}</span>
                 </div>
             `;
 
@@ -247,12 +269,12 @@ export default function MapDialogBlock({
                 <div className="absolute w-full px-4 md:px-8 flex items-start justify-between top-12 md:top-4 left-1/2 -translate-x-1/2 z-10" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
 
                     <div className="flex-1 md:flex md:justify-center relative mr-4">
-                        <div className="bg-white/80 backdrop-blur-xl shadow-md rounded-full w-full md:w-72 flex items-center px-4 py-3">
-                            <Search className="w-5 h-5 text-gray-900 mr-3" />
+                        <div className="bg-white/95 backdrop-blur-xl shadow-lg border border-border rounded-full w-full md:w-72 flex items-center px-4 py-3">
+                            <Search className="w-5 h-5 text-primary mr-3 shrink-0" />
                             <input
                                 type="text"
                                 placeholder="Tìm kiếm địa điểm..."
-                                className="flex-1 outline-none text-gray-700"
+                                className="flex-1 outline-none text-foreground placeholder:text-muted-foreground bg-transparent text-sm font-medium"
                                 value={searchValue}
                                 onChange={(e) => {
                                     setSearchValue(e.target.value);
@@ -272,7 +294,7 @@ export default function MapDialogBlock({
 
                         {/* Search Results - positioned absolutely */}
                         {isSearchOpen && searchValue.trim() !== "" && (
-                            <div className="absolute top-full mt-2 w-full md:w-72 bg-white/80 backdrop-blur-xl rounded-xl shadow-xl border border-white/20 z-50 max-h-64 overflow-y-auto">
+                            <div className="absolute top-full mt-2 w-full md:w-72 bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl border border-border z-50 max-h-64 overflow-y-auto">
                                 {filteredHotspots.length > 0 ? (
                                     <div className="space-y-1 p-2">
                                         {filteredHotspots.map((hotspot) => (
@@ -283,27 +305,27 @@ export default function MapDialogBlock({
                                                     e.preventDefault();
                                                     onMarkerSelectHandler(hotspot);
                                                 }}
-                                                className="w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                                                className="w-full text-left p-3 rounded-lg hover:bg-secondary/70 transition-colors"
                                             >
                                                 <div className="flex items-start space-x-3">
                                                     {hotspot.preview_image && (
                                                         <img
                                                             src={hotspot.preview_image}
                                                             alt={hotspot.title || ''}
-                                                            className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
+                                                            className="w-12 h-12 rounded-lg object-cover flex-shrink-0 border border-border"
                                                         />
                                                     )}
                                                     <div className="flex-1 min-w-0">
-                                                        <h4 className="font-medium text-sm text-gray-900 truncate">
+                                                        <h4 className="font-semibold text-sm text-foreground truncate">
                                                             {hotspot.title}
                                                         </h4>
                                                         {hotspot.address && (
-                                                            <p className="text-xs text-gray-500 truncate mt-1">
+                                                            <p className="text-xs text-muted-foreground truncate mt-1">
                                                                 {hotspot.address}
                                                             </p>
                                                         )}
                                                         {hotspot.description && (
-                                                            <p className="text-xs text-gray-600 line-clamp-2 mt-1">
+                                                            <p className="text-xs text-muted-foreground/80 line-clamp-2 mt-1">
                                                                 {hotspot.description}
                                                             </p>
                                                         )}
@@ -313,7 +335,7 @@ export default function MapDialogBlock({
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className="text-center py-6 text-gray-500 text-sm">
+                                    <div className="text-center py-6 text-muted-foreground text-sm">
                                         Không tìm thấy địa điểm nào
                                     </div>
                                 )}
@@ -323,9 +345,10 @@ export default function MapDialogBlock({
                     <div className="flex-shrink-0">
                         <button
                             onClick={() => setOpened(false)}
-                            className="p-3 glass-hover glass text-white z-20 bg-white/80 backdrop-blur-xl rounded-full shadow-md hover:bg-white/90 transition-colors"
+                            className="p-3 bg-white/95 hover:bg-secondary text-foreground backdrop-blur-xl rounded-full shadow-lg transition-colors cursor-pointer border border-border z-20 flex items-center justify-center"
+                            aria-label="Đóng bản đồ"
                         >
-                            <FiLogOut className="w-5 h-5" />
+                            <FiLogOut className="w-5 h-5 text-foreground" />
                         </button>
                     </div>
                 </div>

@@ -25,7 +25,7 @@ export default function MapDialogBlock({
         }
     };
 
-    const center: [number, number] = import.meta.env.VITE_CENTER_GPS ? import.meta.env.VITE_CENTER_GPS.split(",").map(Number) : [106.6467328, 10.7577344];
+    const center: [number, number] = import.meta.env.VITE_CENTER_GPS ? import.meta.env.VITE_CENTER_GPS.split(",").map(Number) : [106.6042, 11.6483];
     const zoom = 12;
 
     const mapContainer = useRef<HTMLDivElement | null>(null);
@@ -47,7 +47,12 @@ export default function MapDialogBlock({
 
         mapRef.current = new maplibregl.Map({
             container: mapContainer.current,
-            style: `https://tiles.goong.io/assets/goong_map_dark.json?api_key=${import.meta.env.VITE_GOONG_MAP_KEY}`,
+            style: {
+                version: 8,
+                sources: {},
+                layers: [],
+                glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
+            },
             center,
             zoom,
             pitch: 65,
@@ -83,13 +88,28 @@ export default function MapDialogBlock({
                     "fill-color": [
                         "case",
                         ["boolean", ["feature-state", "hover"], false],
-                        "#2b7fff",
-                        "#000", // normal
+                        "#2563eb",
+                        "#3b82f6",
                     ],
-                    "fill-opacity": 0.65,
+                    "fill-opacity": [
+                        "case",
+                        ["boolean", ["feature-state", "hover"], false],
+                        0.35,
+                        0.18,
+                    ],
                 },
             });
 
+            mapRef.current!.addLayer({
+                id: "custom-geojson-stroke",
+                type: "line",
+                source: "custom-geojson",
+                paint: {
+                    "line-color": "#2563eb",
+                    "line-width": 2,
+                    "line-opacity": 0.7,
+                },
+            });
 
             mapRef.current?.addLayer({
                 id: 'custom-geojson-labels',
@@ -97,12 +117,14 @@ export default function MapDialogBlock({
                 source: 'custom-geojson',
                 layout: {
                     'text-field': ['get', 'ten_xa'],
-                    'text-size': 15,
+                    'text-size': 14,
                     'text-anchor': 'center',
                     'symbol-placement': 'point'
                 },
                 paint: {
-                    'text-color': '#fff'
+                    'text-color': '#1e293b',
+                    'text-halo-color': '#ffffff',
+                    'text-halo-width': 2,
                 }
             });
             let hoveredId: string | number | null = null;
@@ -166,7 +188,7 @@ export default function MapDialogBlock({
                 <div class="map-marker shadow-xl cursor-pointer ${isSelected ? 'ring-[3px] border-[0px] ring-blue-400 border-blue-400 border-none ring-opacity-60 selected' : ''}">
                     <div class="map-marker-circle ">
                         <div class="map-marker-image">
-                            <img src="${hotspot.preview_image || ''}" alt="place" onerror="this.onerror=null;this.src='/LOGO_VR.png';this.style.objectFit='contain';this.style.padding='4px';" />
+                            <img src="${hotspot.preview_image}" alt="place" />
                         </div>
                     </div>
                 </div>

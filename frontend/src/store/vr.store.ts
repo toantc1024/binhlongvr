@@ -9,6 +9,12 @@ import {
   getPanoramaByIdFromService,
   getPanoramasByHotspotId,
 } from "@/services/panoramas.service";
+import {
+  BINHLONG_AREA,
+  BINHLONG_HOTSPOTS,
+  BINHLONG_PANORAMAS,
+} from "@/constants/binhlong.constants";
+import { isSupabaseConfigured } from "@/lib/supabase";
 
 interface VRStoreState {
   currentArea: Area | null;
@@ -38,79 +44,118 @@ interface VRStoreActions {
 type VRStore = VRStoreState & VRStoreActions;
 
 const useVRStore = create<VRStore>((set, get) => ({
-  currentArea: null,
-  currentHotspot: null,
-  currentPanorama: null,
-  isLoading: true,
-  areaHotspots: [],
-  panoramas: [],
+  currentArea: BINHLONG_AREA,
+  currentHotspot: BINHLONG_HOTSPOTS[0],
+  currentPanorama: BINHLONG_PANORAMAS[0],
+  isLoading: false,
+  areaHotspots: BINHLONG_HOTSPOTS,
+  panoramas: BINHLONG_PANORAMAS,
   isLoadingPanoramas: false,
+
   setCurrentArea: (area) => set({ currentArea: area }),
   setCurrentHotspot: (hotspot) => set({ currentHotspot: hotspot }),
   setCurrentPanorama: (panorama) => set({ currentPanorama: panorama }),
   setAreaHotspots: (hotspots) => set({ areaHotspots: hotspots }),
+
   clearVRState: () =>
     set({
-      currentArea: null,
-      currentHotspot: null,
-      currentPanorama: null,
-      areaHotspots: [],
+      currentArea: BINHLONG_AREA,
+      currentHotspot: BINHLONG_HOTSPOTS[0],
+      currentPanorama: BINHLONG_PANORAMAS[0],
+      areaHotspots: BINHLONG_HOTSPOTS,
+      panoramas: BINHLONG_PANORAMAS,
     }),
+
   setIsLoading: (isLoading: boolean) => {
     set({ isLoading: isLoading });
   },
+
   setCurrentHotspotById: (hotspot_id: number) => {
-    let hotspot = get().getHotspotById(hotspot_id);
+    const hotspot = get().getHotspotById(hotspot_id);
     if (hotspot) {
       set({ currentHotspot: hotspot });
     }
   },
+
   getHotspotById: (hotspot_id: number) => {
-    let areaHotspots = get().areaHotspots;
-    const hotspot = areaHotspots.find(
-      (hotspot) => hotspot.hotspot_id === hotspot_id
-    );
-    return hotspot;
+    const areaHotspots = get().areaHotspots;
+    return areaHotspots.find((hotspot) => hotspot.hotspot_id === hotspot_id);
   },
+
   loadData: async () => {
+    if (!isSupabaseConfigured || !CURRENT_AREA_ID) {
+      // Standalone mode: already initialized with Binh Long data
+      set({
+        currentArea: BINHLONG_AREA,
+        areaHotspots: BINHLONG_HOTSPOTS,
+        currentHotspot: BINHLONG_HOTSPOTS[0],
+        panoramas: BINHLONG_PANORAMAS,
+        currentPanorama: BINHLONG_PANORAMAS[0],
+        isLoading: false,
+      });
+      return;
+    }
+
     set({ isLoading: true });
     try {
       const currentArea = await getAreaDetailById(CURRENT_AREA_ID);
       const areaHotspots = await getHotspotsByAreaId(CURRENT_AREA_ID);
-      const currentHotspot = areaHotspots.find(
-        (hotspot) => hotspot.hotspot_id === currentArea.main_hotspot_id
-      );
-      if (!currentHotspot) {
-        throw new Error("Main hotspot not found");
-      }
-      // add 1000 time out for little delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      set({ currentArea, areaHotspots, currentHotspot, isLoading: false });
-    } catch (error) {
-      set({ isLoading: false });
-      throw error;
+      const currentHotspot =
+        areaHotspots.find(
+          (hotspot) => hotspot.hotspot_id === currentArea.main_hotspot_id
+        ) || areaHotspots[0];
+
+      set({
+        currentArea,
+        areaHotspots,
+        currentHotspot: currentHotspot || BINHLONG_HOTSPOTS[0],
+        isLoading: false,
+      });
+    } catch {
+      // Safe fallback if Supabase query fails
+      set({
+        currentArea: BINHLONG_AREA,
+        areaHotspots: BINHLONG_HOTSPOTS,
+        currentHotspot: BINHLONG_HOTSPOTS[0],
+        panoramas: BINHLONG_PANORAMAS,
+        currentPanorama: BINHLONG_PANORAMAS[0],
+        isLoading: false,
+      });
     }
   },
+
   getPanoramaById: async (panorama_id: string) => {
-    let panoramas = get().panoramas;
+    const panoramas = get().panoramas;
     let currentPanorama = panoramas.find(
       (panorama) => panorama.panorama_id === panorama_id
     );
-    // if you do not find the panorama, try to search in the cloud service
+
     if (!currentPanorama) {
-      currentPanorama = await getPanoramaByIdFromService(panorama_id);
+      currentPanorama = BINHLONG_PANORAMAS.find(
+        (p) => p.panorama_id === panorama_id
+      );
+    }
+
+    if (!currentPanorama && isSupabaseConfigured) {
+      try {
+        currentPanorama = await getPanoramaByIdFromService(panorama_id);
+      } catch {
+        // Ignore service errors
+      }
     }
     return currentPanorama;
   },
+
   setCurrentPanoramaById: (panorama_id: string) => {
-    let panoramas = get().panoramas;
-    let currentPanorama = panoramas.find(
-      (panorama) => panorama.panorama_id === panorama_id
-    );
+    const panoramas = get().panoramas;
+    const currentPanorama =
+      panoramas.find((p) => p.panorama_id === panorama_id) ||
+      BINHLONG_PANORAMAS.find((p) => p.panorama_id === panorama_id);
     if (currentPanorama) {
-      set({ currentPanorama: currentPanorama });
+      set({ currentPanorama });
     }
   },
+
   setPanoramasByHotspotId: async (hotspot_id: number) => {
     try {
       set({ isLoadingPanoramas: true });
@@ -121,52 +166,54 @@ const useVRStore = create<VRStore>((set, get) => ({
       if (hotspot) {
         let panoramas: Panorama[] = [];
 
-        // Check if this is the main hotspot of the area
-        const isMainHotspot =
-          currentArea?.main_hotspot_id !== null &&
-          currentArea?.main_hotspot_id !== undefined &&
-          Number(currentArea.main_hotspot_id) === hotspot_id;
+        if (isSupabaseConfigured) {
+          try {
+            const isMainHotspot =
+              currentArea?.main_hotspot_id !== null &&
+              currentArea?.main_hotspot_id !== undefined &&
+              Number(currentArea.main_hotspot_id) === hotspot_id;
 
-        if (isMainHotspot) {
-          // MAIN HOTSPOT: Get the main panorama from each hotspot related to this area
-          // This provides an overview of all hotspots in the area
-          const mainPanoramaPromises = areaHotspots.map(async (h) => {
-            if (h.click_panorama_id) {
-              return await getPanoramaByIdFromService(h.click_panorama_id);
+            if (isMainHotspot) {
+              const mainPanoramaPromises = areaHotspots.map(async (h) => {
+                if (h.click_panorama_id) {
+                  return await getPanoramaByIdFromService(h.click_panorama_id);
+                }
+                const hotspotPanoramas = await getPanoramasByHotspotId(
+                  h.hotspot_id
+                );
+                return hotspotPanoramas[0];
+              });
+
+              const mainPanoramas = await Promise.all(mainPanoramaPromises);
+              panoramas = mainPanoramas.filter(
+                (p): p is Panorama => p !== undefined
+              );
+            } else {
+              panoramas = await getPanoramasByHotspotId(hotspot_id);
             }
-            // If hotspot doesn't have click_panorama_id, get its first panorama
-            const hotspotPanoramas = await getPanoramasByHotspotId(
-              h.hotspot_id
-            );
-            return hotspotPanoramas[0];
-          });
-
-          const mainPanoramas = await Promise.all(mainPanoramaPromises);
-          panoramas = mainPanoramas.filter(
-            (p): p is Panorama => p !== undefined
-          );
-        } else {
-          // NOT MAIN HOTSPOT: Get all panoramas belonging to this specific hotspot
-          panoramas = await getPanoramasByHotspotId(hotspot_id);
+          } catch {
+            panoramas = BINHLONG_PANORAMAS;
+          }
         }
 
-        set({
-          panoramas: panoramas,
-        });
+        if (panoramas.length === 0) {
+          panoramas = BINHLONG_PANORAMAS;
+        }
 
-        let currentPanorama = panoramas.find(
-          (panorama) => panorama.panorama_id === hotspot.click_panorama_id
-        );
+        set({ panoramas });
+
+        const currentPanorama =
+          panoramas.find(
+            (p) => p.panorama_id === hotspot.click_panorama_id
+          ) || panoramas[0];
+
         if (currentPanorama) {
-          set({
-            currentPanorama: currentPanorama,
-          });
+          set({ currentPanorama });
         }
         set({ isLoadingPanoramas: false });
       }
-    } catch (error) {
-      set({ isLoadingPanoramas: false });
-      throw error;
+    } catch {
+      set({ isLoadingPanoramas: false, panoramas: BINHLONG_PANORAMAS });
     }
   },
 }));

@@ -10,7 +10,7 @@ import { GridPattern } from "../magicui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import useVRStore from "@/store/vr.store";
-import { HERO_CONTENT } from "@/constants/content.constants";
+import { RiChatAiFill } from "react-icons/ri";
 
 export default function HeroSection() {
   const navigate = useNavigate();
@@ -40,22 +40,24 @@ export default function HeroSection() {
         />
       </div>
       <div className="relative z-[20] text-center max-w-2xl   ">
-        <Badge className="text-white rounded-full py-2 text-md bg-background glass glass-light">
-          {HERO_CONTENT.badge}{" "}
-          <Badge className="text-white py-1  rounded-full !bg-primary">
-            {HERO_CONTENT.badgeHighlight}
+        <Badge className="rounded-full py-2 px-3 text-md bg-white/90 border border-border text-foreground shadow-xs">
+          Công nghệ{" "}
+          <Badge className="text-primary-foreground py-1 rounded-full !bg-primary ml-1">
+            VR
           </Badge>
         </Badge>
-        <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold !leading-[1.2] tracking-tight">
-          {HERO_CONTENT.title}
+        <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold !leading-[1.2] tracking-tight text-foreground">
+          Bản đồ số khu vực
           <br />
-          <AuroraText>{HERO_CONTENT.titleHighlight}</AuroraText>
+          <AuroraText>Phường Bình Long</AuroraText>
         </h1>
-        <p className="mt-6 text-[17px] md:text-lg">{HERO_CONTENT.subtitle}</p>
+        <p className="mt-6 text-[17px] md:text-lg text-muted-foreground">
+          Khám phá truyền thống - Lịch sử - văn hoá bằng Công nghệ Số.
+        </p>
         <div className="mt-6 flex flex-col sm:flex-row items-center z-[30] justify-center gap-3 sm:gap-4 w-full max-w-4xl">
           <Button
             size="lg"
-            className="rounded-full cursor-pointer text-white w-full sm:w-auto min-w-[140px]"
+            className="rounded-full cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md w-full sm:w-auto min-w-[140px]"
             onClick={() => {
               navigate("/app");
               setIsLoading(true);
@@ -64,51 +66,47 @@ export default function HeroSection() {
               }, 2000);
             }}
           >
-            {HERO_CONTENT.buttons.start} <ArrowUpRight className="!h-5 !w-5" />
+            Bắt đầu <ArrowUpRight className="!h-5 !w-5" />
           </Button>
           <Button
             variant="outline"
             size="lg"
-            className="rounded-full cursor-pointer backdrop-blur-xl text-base shadow-none w-full sm:w-auto min-w-[130px]"
+            className="rounded-full cursor-pointer backdrop-blur-xl border border-border bg-white/90 text-foreground hover:bg-secondary/80 hover:text-foreground text-base font-medium shadow-xs w-full sm:w-auto min-w-[130px]"
           >
-            <Gamepad2 className="!h-5 !w-5" />
-            <span className="hidden sm:inline">
-              {HERO_CONTENT.buttons.game}
-            </span>
-            <span className="sm:hidden">{HERO_CONTENT.buttons.gameShort}</span>
+            <Gamepad2 className="!h-5 !w-5 text-primary" />
+            <span className="hidden sm:inline">Trò chơi Lịch sử</span>
+            <span className="sm:hidden">Trò chơi</span>
           </Button>
 
-          {/* <Button
-            variant="outline"
-            size="lg"
-            className="rounded-full cursor-pointer backdrop-blur-xl text-base shadow-none w-full sm:w-auto min-w-[130px]"
-          >
-            <RiChatAiFill className="!h-5 !w-5" />
-            <span className="">{HERO_CONTENT.buttons.chatbot}</span>
-          </Button> */}
           <Button
             variant="outline"
             size="lg"
-            className="rounded-full cursor-pointer backdrop-blur-xl text-base shadow-none w-full sm:w-auto min-w-[130px]"
+            className="rounded-full cursor-pointer backdrop-blur-xl border border-border bg-white/90 text-foreground hover:bg-secondary/80 hover:text-foreground text-base font-medium shadow-xs w-full sm:w-auto min-w-[130px]"
           >
-            <CirclePlay className="!h-5 !w-5" />
-            <span className="hidden sm:inline">
-              {HERO_CONTENT.buttons.video}
-            </span>
-            <span className="sm:hidden">{HERO_CONTENT.buttons.videoShort}</span>
+            <RiChatAiFill className="!h-5 !w-5 text-primary" />
+            <span className="">AI Chatbot</span>
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full cursor-pointer backdrop-blur-xl border border-border bg-white/90 text-foreground hover:bg-secondary/80 hover:text-foreground text-base font-medium shadow-xs w-full sm:w-auto min-w-[130px]"
+          >
+            <CirclePlay className="!h-5 !w-5 text-primary" />
+            <span className="hidden sm:inline">Video 360</span>
+            <span className="sm:hidden">Video</span>
           </Button>
         </div>
       </div>
       <div className="relative mt-6 rounded-3xl w-full  aspect-video">
-        <div className="absolute z-[0] top-2 lg:-top-8 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-80 bg-primary/50 rounded-full blur-3xl"></div>
+        <div className="absolute z-[0] top-2 lg:-top-8 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-80 bg-primary/20 dark:bg-primary/50 rounded-full blur-3xl"></div>
         <div className=" w-full  max-w-screen-xl mx-auto z-[1] absolute left-0 right-0 aspect-video">
-          <Card className="relative overflow-hidden !p-0  h-full  w-full">
+          <Card className="relative overflow-hidden !p-0 h-full w-full border border-border shadow-xl bg-card">
             <ShineBorder
               borderWidth={2}
               shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
             />
 
-            <CardContent className="h-full !p-0">
+            <CardContent className="h-full !p-0 bg-slate-50/50 dark:bg-card">
               <MapBlock
                 opened={true}
                 setOpened={() => {}}

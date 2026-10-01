@@ -139,22 +139,21 @@ const ChatbotDialogBlock = () => {
         <DialogWrapper
 
             trigger={
-                <Button className="w-12 h-12 xl:w-16 xl:h-16 shadow-lg rounded-full glass glass-hover ring-1 ring-black/10 flex items-center justify-center">
-                    <RiChatAiFill className="!size-6 sm:!size-7 xl:!size-9" />
+                <Button variant="outline" className="w-12 h-12 xl:w-16 xl:h-16 shadow-lg rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border backdrop-blur-md flex items-center justify-center cursor-pointer">
+                    <RiChatAiFill className="!size-6 sm:!size-7 xl:!size-9 text-primary" />
                 </Button>
-
             }
             showHeader={true}
             headerIcon={<FiMessageSquare className='text-primary' />}
-            title="Chatbot"
-            description=""
+            title="Chatbot AI"
+            description="Trợ lý ảo hỗ trợ thông tin địa chỉ đỏ"
             showCloseButton={true}
             showFooter={false}
             size="xl"
             mobileSize="lg"
             useCustomScrollbar={true}
         >
-            <div className="flex  h-full w-full flex-col overflow-hidden">
+            <div className="flex h-full w-full flex-col overflow-hidden">
                 <Conversation className="flex-1">
                     <ConversationContent className="space-y-4">
                         {messages.map((message) => (
@@ -163,23 +162,21 @@ const ChatbotDialogBlock = () => {
                                     <MessageContent
                                         className={cn(
                                             message.role !== 'user'
-                                                ? 'glass-light !text-white  border border-border'
-                                                : '!bg-blue-500/30 shadow-inner  !text-white  border border-blue-600/30 hover:bg-blue-600/30 hover:border-blue-600/40 transition-all ease-in-out duration-150'
+                                                ? 'bg-secondary/80 text-foreground border border-border shadow-xs'
+                                                : '!bg-primary shadow-xs !text-primary-foreground border border-primary'
                                         )}
                                     >
                                         {message.content}
                                     </MessageContent>
                                     <Avatar className="size-8">
                                         {message.role === 'user' ? (
-
-                                            <AvatarFallback className='bg-primary flex items-center justify-center'>
-                                                <FiUser className="w-4 h-4 text-primary-foreground" />
+                                            <AvatarFallback className='bg-foreground text-white flex items-center justify-center'>
+                                                <FiUser className="w-4 h-4 text-white" />
                                             </AvatarFallback>
                                         ) : (
-                                            <AvatarFallback className='glass flex items-center justify-center'>
-                                                <RiChatAiFill className="w-4 h-4 text-primary-foreground" />
+                                            <AvatarFallback className='bg-secondary border border-border flex items-center justify-center'>
+                                                <RiChatAiFill className="w-4 h-4 text-primary" />
                                             </AvatarFallback>
-
                                         )}
                                     </Avatar>
                                 </Message>
@@ -190,23 +187,21 @@ const ChatbotDialogBlock = () => {
                             <div className="space-y-3">
                                 <Message from="assistant">
                                     <MessageContent
-                                        className='glass-light !text-white  border border-border'
+                                        className='bg-secondary/80 text-foreground border border-border shadow-xs'
                                     >
                                         <div className="flex items-center gap-2">
-                                            <Spinner className='text-white' size={20} />
-                                            <span className="text-white text-sm">Đang suy nghĩ...</span>
+                                            <Spinner className='text-primary' size={20} />
+                                            <span className="text-foreground text-sm font-medium">Đang suy nghĩ...</span>
                                         </div>
                                     </MessageContent>
                                     <Avatar className="size-8">
-                                        <AvatarFallback className='glass flex items-center justify-center'>
-                                            <RiChatAiFill className="w-4 h-4 text-primary-foreground" />
+                                        <AvatarFallback className='bg-secondary border border-border flex items-center justify-center'>
+                                            <RiChatAiFill className="w-4 h-4 text-primary" />
                                         </AvatarFallback>
                                     </Avatar>
                                 </Message>
                             </div>
                         )}
-
-
                     </ConversationContent>
                     <ConversationScrollButton />
                 </Conversation>
@@ -227,7 +222,7 @@ const ChatbotDialogBlock = () => {
                                         key={index}
                                         variant="outline"
                                         size="sm"
-                                        className="glass glass-hover hover:text-white text-white border-white/20 hover:border-white/40 rounded-full text-xs whitespace-nowrap flex-shrink-0"
+                                        className="bg-white hover:bg-secondary text-foreground border border-border hover:border-primary/50 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0 cursor-pointer shadow-xs"
                                         onClick={() => handleSuggestionClick(suggestion)}
                                     >
                                         {suggestion}
@@ -237,24 +232,19 @@ const ChatbotDialogBlock = () => {
                         </div>
                     )}
 
-                    <PromptInput className='glass text-white' onSubmit={handleFormSubmit}>
+                    <PromptInput className='bg-secondary/50 border border-border text-foreground divide-border rounded-xl shadow-xs' onSubmit={handleFormSubmit}>
                         <PromptInputTextarea
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             placeholder="Hỏi tôi bất cứ điều gì về các địa chỉ đỏ..."
                             disabled={isLoading}
+                            className="text-foreground placeholder:text-muted-foreground"
                         />
                         <PromptInputToolbar>
                             <PromptInputTools>
-                                {/* <PromptInputButton disabled={isLoading}>
-                                    <PaperclipIcon size={16} />
-                                </PromptInputButton> */}
-                                {/* <PromptInputButton disabled={isLoading}>
-                                    <MicIcon size={16} />
-                                    <span>Voice</span>
-                                </PromptInputButton> */}
                             </PromptInputTools>
                             <PromptInputSubmit
+                                className="bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer"
                                 disabled={!inputValue.trim() || isLoading}
                             />
                         </PromptInputToolbar>

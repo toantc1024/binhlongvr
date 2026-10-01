@@ -5,9 +5,9 @@
 
 // Site Info
 export const SITE_INFO = {
-  name: "360 Di Tích Lịch Sử",
-  shortName: "360 DTLS",
-  domain: "360ditichlichsu.yhcmute.com",
+  name: "Bản Đồ VR Bình Long",
+  shortName: "VR Bình Long",
+  domain: "vrapp-binhlong.vercel.app",
   technology: "VR",
 };
 
@@ -15,8 +15,8 @@ export const SITE_INFO = {
 export const HERO_CONTENT = {
   badge: "Công nghệ",
   badgeHighlight: "VR",
-  title: "Bản đồ số",
-  titleHighlight: "Di tích Lịch sử 360",
+  title: "Bản đồ số khu vực",
+  titleHighlight: "Phường Bình Long",
   subtitle: "Khám phá truyền thống - Lịch sử - văn hoá bằng Công nghệ Số.",
   buttons: {
     start: "Bắt đầu",

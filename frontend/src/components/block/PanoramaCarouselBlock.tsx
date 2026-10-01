@@ -34,7 +34,7 @@ const PanoramaCarouselBlock = ({
           isBottomNavVisible ? "max-h-32 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="w-full flex glass flex-col items-center justify-center px-2 py-4">
+        <div className="w-full flex bg-white/95 border-t border-border backdrop-blur-xl shadow-lg flex-col items-center justify-center px-2 py-4">
           <div className="px-12 lg:px-16 w-full">
             <Carousel className="h-16 md:h-20 w-full max-w-full md:max-w-md lg:max-w-[60vw] mx-auto">
               <CarouselContent className="-ml-2 md:-ml-4">
@@ -48,23 +48,23 @@ const PanoramaCarouselBlock = ({
                     key={index}
                   >
                     <div
-                      className={`overflow-hidden object-cover group border-0 !border-white/10 p-0  h-16 relative md:h-20 rounded-xl bg-white/10 ${
+                      className={`overflow-hidden object-cover group border border-border p-0 h-16 relative md:h-20 rounded-xl bg-secondary/50 shadow-xs transition-all ${
                         currentPanorama?.panorama_id === panorama.panorama_id
-                          ? "border-2 border-white"
-                          : ""
+                          ? "border-2 border-primary ring-2 ring-primary/40"
+                          : "hover:border-primary/50"
                       }`}
                     >
                       <img
                         src={panorama.preview_image}
                         alt={panorama.title}
-                        className="rounded-lg group-hover:scale-[1.2] transition-all ease-in-out duration-150 w-full h-full object-cover"
+                        className="rounded-lg group-hover:scale-[1.1] transition-all ease-in-out duration-150 w-full h-full object-cover"
                       />
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="glass glass-hover text-white hover:text-gray-100 w-8 h-8 lg:w-10 lg:h-10" />
-              <CarouselNext className="glass glass-hover text-white hover:text-gray-100 w-8 h-8 lg:w-10 lg:h-10" />
+              <CarouselPrevious className="bg-white/95 hover:bg-secondary border border-border text-foreground hover:text-primary shadow-sm w-8 h-8 lg:w-10 lg:h-10 cursor-pointer" />
+              <CarouselNext className="bg-white/95 hover:bg-secondary border border-border text-foreground hover:text-primary shadow-sm w-8 h-8 lg:w-10 lg:h-10 cursor-pointer" />
             </Carousel>
           </div>
         </div>

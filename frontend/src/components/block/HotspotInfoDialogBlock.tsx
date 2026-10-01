@@ -20,17 +20,18 @@ const HotspotInfoDialogBlock = ({
         <DialogWrapper
             trigger={
                 <Button
+                    variant="outline"
                     key={pill.id}
-                    className="shadow-lg rounded-full glass glass-hover flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105"
+                    className="shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer font-medium transition-all duration-200 hover:scale-105"
                 >
                     {pill.icon && (
-                        <pill.icon className="w-3 h-3 mr-1" />
+                        <pill.icon className="w-3.5 h-3.5 mr-1 text-foreground" />
                     )}
                     {pill.label}
                 </Button>
             }
             showHeader={true}
-            headerIcon={<InfoIcon className="w-5 h-5 text-primary" />}
+            headerIcon={<InfoIcon className="w-5 h-5 text-foreground" />}
             title="Thông tin địa điểm"
             description="Chi tiết về điểm tham quan"
             showCloseButton={true}

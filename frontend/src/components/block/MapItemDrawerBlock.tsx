@@ -56,11 +56,11 @@ export default function MapItemDrawerBlock({
             <Drawer.Root open={!!currentHotspot
             } snapPoints={snapPoints} activeSnapPoint={snap} setActiveSnapPoint={setSnap} fadeFromIndex={1}>
 
-                <Drawer.Overlay className="z-[9999] fixed inset-0" />
+                <Drawer.Overlay className="z-[9999] fixed inset-0 bg-black/40 backdrop-blur-xs" />
                 <Drawer.Portal>
                     <Drawer.Content
                         data-testid="content"
-                        className="fixed z-[9999] glass-light !border-white/20 mx-[1px] flex flex-col bg-white border border-gray-200 border-b-none rounded-t-4xl bottom-0 left-0 right-0 h-full  mx-[-1px]"
+                        className="fixed z-[9999] bg-white/95 text-foreground border-t border-border backdrop-blur-2xl rounded-t-4xl bottom-0 left-0 right-0 h-full mx-[-1px] flex flex-col shadow-2xl"
                     >
                         <div
                             className={clsx('flex gap-4 flex-col max-w-full h-full w-full p-4 pt-5', {
@@ -68,20 +68,19 @@ export default function MapItemDrawerBlock({
                                 'overflow-hidden': snap !== 1,
                             })}
                         >
-                            <Drawer.Title className="text-2xl text-white mt-2 font-medium ">{currentHotspot?.title}</Drawer.Title>
-                            <div className="flex items-center mt-2 text-sm md:text-base text-white/90">
+                            <Drawer.Title className="text-2xl text-foreground mt-2 font-bold tracking-tight">{currentHotspot?.title}</Drawer.Title>
+                            <div className="flex items-center mt-2 text-sm md:text-base text-muted-foreground leading-relaxed">
                                 {currentHotspot?.description}
                             </div>
 
                             {currentHotspot?.address && (
-                                <div className="flex items-center mt-2 text-sm md:text-base text-white/80">
-                                    <MapPin className="w-4 h-4 mr-1 flex-shrink-0" />
-                                    <span className="truncate text-white">{currentHotspot.address}</span>
+                                <div className="flex items-center mt-2 text-sm md:text-base text-muted-foreground font-medium">
+                                    <MapPin className="w-4 h-4 mr-1.5 flex-shrink-0 text-primary" />
+                                    <span className="truncate text-foreground">{currentHotspot.address}</span>
                                 </div>
                             )}
-                            < div
-                                className={`${panoramas.length > 0 ? "opacity-100" : "hidden"} w-full overflow-hidden transition-all duration-300 ease-in-out max-h-32 opacity-100`
-                                }
+                            <div
+                                className={`${panoramas.length > 0 ? "opacity-100" : "hidden"} w-full overflow-hidden transition-all duration-300 ease-in-out max-h-32 opacity-100`}
                             >
                                 <div className="w-full flex flex-col items-center justify-center px-2 py-4">
                                     <div className="px-12 lg:px-16 w-full">
@@ -90,16 +89,17 @@ export default function MapItemDrawerBlock({
                                                 {
                                                     panoramas?.map((panorama: Panorama) => {
                                                         return <CarouselItem
+                                                            key={panorama.panorama_id}
                                                             className={`pl-2 relative md:pl-4 basis-1/3 lg:basis-1/6 cursor-pointer`}
 
                                                         >
-                                                            <img src={panorama.preview_image} className="w-full h-full object-cover rounded-lg" />
+                                                            <img src={panorama.preview_image} className="w-full h-full object-cover rounded-lg border border-border shadow-xs" />
                                                         </CarouselItem>
                                                     })
                                                 }
                                             </CarouselContent>
-                                            <CarouselPrevious className="glass glass-hover text-white hover:text-gray-100 w-8 h-8 lg:w-10 lg:h-10" />
-                                            <CarouselNext className="glass glass-hover text-white hover:text-gray-100 w-8 h-8 lg:w-10 lg:h-10" />
+                                            <CarouselPrevious className="bg-white/90 hover:bg-secondary border border-border text-foreground shadow-sm w-8 h-8 lg:w-10 lg:h-10" />
+                                            <CarouselNext className="bg-white/90 hover:bg-secondary border border-border text-foreground shadow-sm w-8 h-8 lg:w-10 lg:h-10" />
                                         </Carousel>
                                     </div>
                                 </div>
@@ -112,16 +112,16 @@ export default function MapItemDrawerBlock({
                                         showMedia(currentHotspot?.click_panorama_id ?? "");
                                         closeDrawer();
                                     }}
-                                    className='cursor-pointer font-bold border-1 border-black/20 h-10 w-10 rounded-full bg-blue-500/80 border-blue-900/40'>
-                                    <RiDirectionFill className='' />
+                                    className='cursor-pointer font-bold border border-primary h-10 w-10 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-md'>
+                                    <RiDirectionFill className='w-5 h-5' />
                                 </Button>
 
 
                                 <Button onClick={() => {
                                     setCurrentHotspot(null);
 
-                                }} variant={"ghost"} className='cursor-pointer font-bold border-1 border-black/20 glass-light glass-hover !text-white h-10 w-10 rounded-full '>
-                                    <X />
+                                }} variant={"ghost"} className='cursor-pointer font-bold border border-border bg-secondary/80 hover:bg-secondary text-foreground h-10 w-10 rounded-full shadow-sm'>
+                                    <X className="w-5 h-5 text-foreground" />
                                 </Button>
 
                             </div>

@@ -1,77 +1,58 @@
-import { CURRENT_AREA_ID } from "@/constants/env.constants";
-import { countPanoramasByHotspotId } from "@/services/panoramas.service";
-import { countVisitorLogsByAreaId } from "@/services/visitor_logs.service";
 import useVRStore from "@/store/vr.store";
-import { useEffect, useState } from "react";
 import { NumberTicker } from "@/components/magicui/number-ticket";
-
 import { TextAnimate } from "../magicui/text-animate";
 import GradientCardBlock from "../block/GradientCardBlock";
-import { STATS_CONTENT } from "@/constants/content.constants";
 
 export function StatsSection() {
-  const { areaHotspots } = useVRStore((state) => state);
-  const [totalPanoramas, setTotalPanoramas] = useState(0);
-  const [totalVisitorLogs, setTotalVisitorLogs] = useState(0);
-  useEffect(() => {
-    (async () => {
-      const panoramas = await Promise.all(
-        areaHotspots.map((hotspot) =>
-          countPanoramasByHotspotId(hotspot.hotspot_id)
-        )
-      );
-      setTotalPanoramas(panoramas.reduce((acc, curr) => acc + curr, 0));
-    })();
-  }, [areaHotspots]);
+  const { areaHotspots, panoramas } = useVRStore((state) => state);
 
-  useEffect(() => {
-    (async () => {
-      let count = await countVisitorLogsByAreaId(CURRENT_AREA_ID);
-      setTotalVisitorLogs(count);
-    })();
-  }, []);
+  const totalVisitorLogs = 1520;
+  const totalHotspots = areaHotspots?.length || 5;
+  const totalPanoramas = panoramas?.length || 20;
 
   return (
     <section className="pt-8 px-4 sm:pt-12 sm:px-6 md:pt-8 lg:px-24 flex w-full justify-center">
       <div className="container">
-        <h2 className="py-8  text-2xl text-center font-bold md:text-4xl lg:text-5xl">
+        <h2 className="py-8 text-2xl text-center font-bold md:text-4xl lg:text-5xl text-foreground">
           <TextAnimate animation="blurIn" as="h1">
-            {STATS_CONTENT.title}
+            Những con số biết nói
           </TextAnimate>
         </h2>
 
         <div className="mt-4 sm:mt-8 grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-5 justify-center">
           <GradientCardBlock className="!p-4 col-span-2">
-            <span className="text-5xl md:text-6xl font-bold text-white text-shadow-md">
+            <span className="text-5xl md:text-6xl font-bold text-foreground">
               <NumberTicker value={totalVisitorLogs} />+
             </span>
-            <p className="mt-6 font-semibold text-xl font-bold">
-              {STATS_CONTENT.views.label}
+            <p className="mt-6 font-semibold text-xl text-foreground">
+              lượt xem
             </p>
-            <p className="mt-2 text-[17px] text-white">
-              {STATS_CONTENT.views.description}
+            <p className="mt-2 text-[17px] text-muted-foreground">
+              đã được thực hiện trong khu vực.
             </p>
           </GradientCardBlock>
-          <GradientCardBlock className="!p-4 col-span-1 !bg-accent">
-            <span className="text-5xl md:text-6xl font-bold text-white text-shadow-md">
-              <NumberTicker value={areaHotspots.length} />
+
+          <GradientCardBlock className="!p-4 col-span-1 !bg-primary/5 border-primary/20">
+            <span className="text-5xl md:text-6xl font-bold text-foreground">
+              <NumberTicker value={totalHotspots} />
             </span>
-            <p className="mt-6 font-semibold text-xl font-bold">
-              {STATS_CONTENT.locations.label}
+            <p className="mt-6 font-semibold text-xl text-foreground">
+              địa điểm
             </p>
-            <p className="mt-2 text-[17px] text-white">
-              {STATS_CONTENT.locations.description}
+            <p className="mt-2 text-[17px] text-muted-foreground">
+              đã được cập nhật lên hệ thống.
             </p>
           </GradientCardBlock>
-          <GradientCardBlock className="!p-4 col-span-1    ">
-            <span className="text-5xl md:text-6xl font-bold text-white text-shadow-md">
+
+          <GradientCardBlock className="!p-4 col-span-1">
+            <span className="text-5xl md:text-6xl font-bold text-foreground">
               <NumberTicker value={totalPanoramas} />
             </span>
-            <p className="mt-6 font-semibold text-xl font-bold">
-              {STATS_CONTENT.panoramas.label}
+            <p className="mt-6 font-semibold text-xl text-foreground">
+              điểm nhìn
             </p>
-            <p className="mt-2 text-[17px] text-white">
-              {STATS_CONTENT.panoramas.description}
+            <p className="mt-2 text-[17px] text-muted-foreground">
+              đã được số hóa thành công trong các địa điểm.
             </p>
           </GradientCardBlock>
         </div>

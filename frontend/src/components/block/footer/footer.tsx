@@ -23,12 +23,13 @@ const FooterSection = () => {
                 </li>
               ))}
             </ul> */}
-            <span className="pt-4 text-center text-muted-foreground">
+            <span className="pt-4 text-center text-muted-foreground text-sm leading-relaxed">
               &copy; {new Date().getFullYear()}{" "}
-              <a href="/" target="_blank">
+              <a href="/" className="font-semibold text-primary hover:text-primary/80 hover:underline">
                 bandoso.yhcmute.com
               </a>
               <br />
+              Bản quyền thuộc về Đoàn Trường Đại học Công nghệ Kỹ thuật TP. Hồ Chí Minh & Thị đoàn Bình Long.
             </span>
           </div>
         </div>

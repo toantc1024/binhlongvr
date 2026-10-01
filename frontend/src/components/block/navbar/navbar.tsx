@@ -38,7 +38,7 @@ const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
       />
       <nav
         ref={ref}
-        className="glass glass-light hover:border-none fixed top-0 mt-4 inset-x-4 h-16 bg-background border dark:border-slate-700/70 max-w-screen-xl  mx-auto rounded-full z-[40]"
+        className="glass glass-light fixed top-0 mt-4 inset-x-4 h-16 bg-background/85 border border-border/80 max-w-screen-xl mx-auto rounded-full z-[40] shadow-sm backdrop-blur-md"
       >
         <div className=" h-full flex items-center justify-between mx-auto px-4">
           <Logo />
@@ -54,13 +54,13 @@ const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
             <Button
               onClick={() => setIsMapDialogOpen(true)}
               size="lg"
-              className="px-2 cursor-pointer rounded-full glass  glass-hover border-white/90 !text-white text-base shadow-none"
+              className="px-4 cursor-pointer rounded-full bg-primary hover:bg-primary/90 text-white text-sm font-medium shadow-xs transition-all"
             >
               <div className="hidden sm:flex items-center gap-2">
-                Tìm kiếm địa điểm <Search className="!h-5 !w-5" />
+                Tìm kiếm địa điểm <Search className="!h-4 !w-4" />
               </div>
               <div className="sm:hidden flex items-center gap-2">
-                Tìm kiếm <Search className=" !h-5 !w-5" />
+                Tìm kiếm <Search className="!h-4 !w-4" />
               </div>
             </Button>
 
