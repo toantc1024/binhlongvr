@@ -49,7 +49,7 @@ export function AnimatedBeamMultipleInputs({
         >
             <div className="flex size-full max-w-lg flex-row items-stretch justify-between gap-10">
                 <div className="flex flex-col justify-center gap-2">
-                    <Circle ref={div1Ref} className="bg-gradient-to-r border-none text-white from-blue-400 to-blue-600">
+                    <Circle ref={div1Ref} className="bg-gradient-to-r border-none text-white from-emerald-500 to-teal-600">
                         <FileIcon />
                     </Circle>
                     <Circle ref={div2Ref} className="bg-gradient-to-r border-none text-white from-green-500 to-emerald-400">

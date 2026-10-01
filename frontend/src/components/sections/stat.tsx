@@ -1,7 +1,42 @@
+import { useEffect, useState } from "react";
 import useVRStore from "@/store/vr.store";
-import { NumberTicker } from "@/components/magicui/number-ticket";
 import { TextAnimate } from "../magicui/text-animate";
-import GradientCardBlock from "../block/GradientCardBlock";
+
+import viewCountIcon from "@/assets/3d-icons/view-count__binhlong-3d-icon.png";
+import locationIcon from "@/assets/3d-icons/location__binhlong-3d-icon.png";
+import interactionIcon from "@/assets/3d-icons/interaction__binhlong-3d-icon.png";
+
+function StatNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const [count, setCount] = useState(value);
+
+  useEffect(() => {
+    let startTimestamp: number | null = null;
+    const duration = 1200;
+
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // smooth easeOutExpo
+      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      setCount(Math.floor(ease * value));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(value);
+      }
+    };
+
+    const animId = window.requestAnimationFrame(step);
+    return () => window.cancelAnimationFrame(animId);
+  }, [value]);
+
+  return (
+    <span className="tabular-nums tracking-tight">
+      {count.toLocaleString("en-US")}
+      {suffix}
+    </span>
+  );
+}
 
 export function StatsSection() {
   const { areaHotspots, panoramas } = useVRStore((state) => state);
@@ -10,51 +45,79 @@ export function StatsSection() {
   const totalHotspots = areaHotspots?.length || 5;
   const totalPanoramas = panoramas?.length || 20;
 
+  const statsList = [
+    {
+      value: totalVisitorLogs,
+      suffix: "+",
+      label: "lượt xem",
+      description: "đã được thực hiện trong khu vực.",
+      icon: viewCountIcon,
+    },
+    {
+      value: totalHotspots,
+      suffix: "",
+      label: "địa điểm",
+      description: "đã được cập nhật lên hệ thống.",
+      icon: locationIcon,
+    },
+    {
+      value: totalPanoramas,
+      suffix: "",
+      label: "điểm nhìn",
+      description: "đã được số hóa thành công trong các địa điểm.",
+      icon: interactionIcon,
+    },
+  ];
+
   return (
-    <section className="pt-8 px-4 sm:pt-12 sm:px-6 md:pt-8 lg:px-24 flex w-full justify-center">
-      <div className="container">
-        <h2 className="py-8 text-2xl text-center font-bold md:text-4xl lg:text-5xl text-foreground">
-          <TextAnimate animation="blurIn" as="h1">
-            Những con số biết nói
-          </TextAnimate>
-        </h2>
+    <section className="py-12 w-full px-4 sm:px-6 lg:px-8">
+      <div className="w-full">
+        {/* Header: Align Two Side */}
+        <div className="w-full mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left">
+              <TextAnimate animation="blurIn" as="span">
+                Những con số biết nói
+              </TextAnimate>
+            </h2>
+            <p className="mt-2 text-base text-muted-foreground text-left font-normal max-w-2xl">
+              Thống kê tổng quan dữ liệu số hóa và tương tác trực tuyến trên hệ thống bản đồ số Bình Long.
+            </p>
+          </div>
+        </div>
 
-        <div className="mt-4 sm:mt-8 grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-5 justify-center">
-          <GradientCardBlock className="!p-4 col-span-2">
-            <span className="text-5xl md:text-6xl font-bold text-foreground">
-              <NumberTicker value={totalVisitorLogs} />+
-            </span>
-            <p className="mt-6 font-semibold text-xl text-foreground">
-              lượt xem
-            </p>
-            <p className="mt-2 text-[17px] text-muted-foreground">
-              đã được thực hiện trong khu vực.
-            </p>
-          </GradientCardBlock>
+        {/* 3 Symmetrical Stat Cards: Align Two Side */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+          {statsList.map((stat, idx) => (
+            <div
+              key={idx}
+              className="relative overflow-hidden rounded-xl border-0 shadow-md bg-card p-6 sm:p-7 flex flex-col justify-between group hover:shadow-xl transition-all duration-300"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <span className="text-4xl sm:text-5xl font-semibold text-foreground tracking-tight">
+                    <StatNumber value={stat.value} suffix={stat.suffix} />
+                  </span>
+                  <p className="mt-3 text-lg font-semibold text-emerald-600 dark:text-emerald-400">
+                    {stat.label}
+                  </p>
+                </div>
 
-          <GradientCardBlock className="!p-4 col-span-1 !bg-primary/5 border-primary/20">
-            <span className="text-5xl md:text-6xl font-bold text-foreground">
-              <NumberTicker value={totalHotspots} />
-            </span>
-            <p className="mt-6 font-semibold text-xl text-foreground">
-              địa điểm
-            </p>
-            <p className="mt-2 text-[17px] text-muted-foreground">
-              đã được cập nhật lên hệ thống.
-            </p>
-          </GradientCardBlock>
+                {/* Transparent 3D Asset: No border, no background shadow */}
+                <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center -mr-2 -mt-2 pointer-events-none">
+                  <img
+                    src={stat.icon}
+                    alt={stat.label}
+                    className="w-full h-full object-contain filter drop-shadow-md"
+                  />
+                </div>
+              </div>
 
-          <GradientCardBlock className="!p-4 col-span-1">
-            <span className="text-5xl md:text-6xl font-bold text-foreground">
-              <NumberTicker value={totalPanoramas} />
-            </span>
-            <p className="mt-6 font-semibold text-xl text-foreground">
-              điểm nhìn
-            </p>
-            <p className="mt-2 text-[17px] text-muted-foreground">
-              đã được số hóa thành công trong các địa điểm.
-            </p>
-          </GradientCardBlock>
+              <p className="mt-4 text-sm text-muted-foreground font-normal leading-relaxed">
+                {stat.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

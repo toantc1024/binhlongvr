@@ -10,6 +10,7 @@ import "./VRPage.module.css";
 import { useSearchParams } from "react-router-dom";
 import { Drawer } from "vaul";
 import AssetDrawerBlock from "../block/AssetDrawerBlock";
+import LoaderBlock from "../block/LoaderBlock";
 const VRPage = () => {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -141,11 +142,11 @@ const VRPage = () => {
           </div>
           {(isLoading || isFadingOut) && (
             <div
-              className={`fixed top-0 left-0 right-0 bottom-0 bg-white/80 backdrop-blur-md z-50 flex items-center justify-center transition-opacity duration-300 ease-out ${
-                isFadingOut ? "opacity-0" : "opacity-100"
+              className={`fixed inset-0 z-50 transition-opacity duration-500 ease-out ${
+                isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
               }`}
             >
-              <Spinner size={64} className="text-blue-700" variant="default" />
+              <LoaderBlock />
             </div>
           )}
           <div className="w-full h-full relative">

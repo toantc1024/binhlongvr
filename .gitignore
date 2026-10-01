@@ -3,3 +3,5 @@ images/
 .DS_Store
 frontend/dist/
 frontend/node_modules/
+automation/temp/
+automation/processed_images/

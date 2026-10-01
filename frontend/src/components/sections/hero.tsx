@@ -1,16 +1,15 @@
-import { ArrowUpRight, CirclePlay, Gamepad2 } from "lucide-react";
+import { ArrowUpRight, CirclePlay } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 import MapBlock from "../block/MapBlock";
 import BinhLongImageCarousel from "../block/BinhLongImageCarousel";
-import viewCountIcon from "@/assets/3d-icons/view-count__binhlong-3d-icon.jpg";
+import viewCountIcon from "@/assets/3d-icons/view-count__binhlong-3d-icon.png";
 import { AuroraText } from "@/components/magicui/aurora-text";
 import { GridPattern } from "../magicui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import useVRStore from "@/store/vr.store";
-import { RiChatAiFill } from "react-icons/ri";
 
 export default function HeroSection() {
   const navigate = useNavigate();
@@ -62,28 +61,14 @@ export default function HeroSection() {
           >
             Bắt đầu <ArrowUpRight className="!h-5 !w-5" />
           </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="rounded-xl cursor-pointer backdrop-blur-xl border-0 bg-secondary/80 hover:bg-secondary text-foreground text-sm sm:text-base font-normal shadow-xs w-full sm:w-auto min-w-[130px]"
-          >
-            <Gamepad2 className="!h-5 !w-5 text-primary" />
-            <span className="hidden sm:inline">Trò chơi Lịch sử</span>
-            <span className="sm:hidden">Trò chơi</span>
-          </Button>
 
           <Button
             variant="outline"
             size="lg"
             className="rounded-xl cursor-pointer backdrop-blur-xl border-0 bg-secondary/80 hover:bg-secondary text-foreground text-sm sm:text-base font-normal shadow-xs w-full sm:w-auto min-w-[130px]"
-          >
-            <RiChatAiFill className="!h-5 !w-5 text-primary" />
-            <span className="">AI Chatbot</span>
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="rounded-xl cursor-pointer backdrop-blur-xl border-0 bg-secondary/80 hover:bg-secondary text-foreground text-sm sm:text-base font-normal shadow-xs w-full sm:w-auto min-w-[130px]"
+            onClick={() => {
+              navigate("/app");
+            }}
           >
             <CirclePlay className="!h-5 !w-5 text-primary" />
             <span className="hidden sm:inline">Video 360</span>
@@ -96,9 +81,9 @@ export default function HeroSection() {
 
         {/* 2-Column Split: Map on Left, Carousel & View Count on Right */}
         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
-          {/* Left Column: 3D Goong Map */}
+          {/* Left Column: 3D Goong Map (reduced height by 20%) */}
           <div className="lg:col-span-7 flex flex-col">
-            <Card className="relative overflow-hidden !p-0 h-[480px] sm:h-[540px] lg:h-[620px] w-full border-0 shadow-lg bg-card rounded-xl group">
+            <Card className="relative overflow-hidden !p-0 h-[384px] sm:h-[432px] lg:h-[496px] w-full border-0 shadow-lg bg-card rounded-xl group">
               <CardContent className="h-full w-full !p-0 relative">
                 <MapBlock
                   opened={true}
@@ -112,8 +97,8 @@ export default function HeroSection() {
 
           {/* Right Column: 4K Carousel + View Count */}
           <div className="lg:col-span-5 flex flex-col gap-5 justify-between">
-            {/* Top: 4K Carousel of Bình Long */}
-            <Card className="relative overflow-hidden !p-0 flex-1 min-h-[320px] sm:min-h-[380px] border-0 shadow-lg bg-card rounded-xl flex flex-col">
+            {/* Top: 4K Carousel of Bình Long (reduced height by 20%) */}
+            <Card className="relative overflow-hidden !p-0 flex-1 min-h-[256px] sm:min-h-[304px] border-0 shadow-lg bg-card rounded-xl flex flex-col">
               <BinhLongImageCarousel />
             </Card>
 
@@ -137,11 +122,12 @@ export default function HeroSection() {
                     Khám phá di tích & thực tế ảo 360°
                   </div>
                 </div>
-                <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-emerald-500/5 p-1 group-hover:scale-105 transition-transform duration-300">
+                {/* 3D Asset: Transparent, no border or shadow behind */}
+                <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center">
                   <img
                     src={viewCountIcon}
                     alt="3D View Count Icon"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain filter drop-shadow-md"
                   />
                 </div>
               </div>

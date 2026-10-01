@@ -3,28 +3,28 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const BINHLONG_LANDMARK_SLIDES = [
   {
-    image: "/landmarks/mo_3000_nguoi.jpg",
-    title: "Di tích Lịch sử Mộ 3.000 người",
+    image: "/landmarks/m3000_preview.jpg",
+    title: "Di tích Quốc gia Mộ 3.000 người",
     subtitle: "Khu tưởng niệm cấp Quốc gia - An Lộc, Bình Long",
+    tag: "Di tích Quốc gia",
+  },
+  {
+    image: "/landmarks/dtt_preview.jpg",
+    title: "Dinh Tỉnh Trưởng Bình Long",
+    subtitle: "Di tích Lịch sử cấp Tỉnh - Nhà và Đường hầm An Lộc",
     tag: "Di tích Lịch sử",
   },
   {
-    image: "/landmarks/nga_nam_binh_long.jpg",
-    title: "Ngã Năm Thị Xã Bình Long",
-    subtitle: "Giao lộ lịch sử chứng nhân qua các thời kỳ",
-    tag: "Đô thị & Văn hoá",
+    image: "/landmarks/m7n_preview.jpg",
+    title: "Khu Di tích Mộ 7 Người",
+    subtitle: "Mộ tập thể Lực lượng vũ trang An ninh An Lộc",
+    tag: "Di tích Cấp tỉnh",
   },
   {
-    image: "/landmarks/phat_quoc_van_thanh.jpg",
-    title: "Chùa Phật Quốc Vạn Thành",
-    subtitle: "Quần thể tâm linh hùng vĩ giữa rừng xanh Bình Long",
-    tag: "Thắng cảnh Tâm linh",
-  },
-  {
-    image: "/landmarks/binh_long_sunset.jpg",
-    title: "Toàn cảnh Thị xã Bình Long",
-    subtitle: "Bình yên giữa bạt ngàn vườn cao su xanh mát",
-    tag: "Thiên nhiên & Đất trời",
+    image: "/landmarks/hlt_preview.jpg",
+    title: "Chùa Hưng Lập Tự",
+    subtitle: "Cổ tự linh thiêng & Phòng thuốc Nam phước thiện",
+    tag: "Di tích Văn hóa",
   },
 ];
 
@@ -52,7 +52,7 @@ export default function BinhLongImageCarousel() {
 
   return (
     <div
-      className="relative w-full h-full min-h-[300px] sm:min-h-[360px] lg:min-h-[400px] overflow-hidden rounded-xl bg-slate-900 group select-none"
+      className="relative w-full h-full min-h-[240px] sm:min-h-[288px] lg:min-h-[320px] overflow-hidden rounded-xl bg-slate-900 group select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -85,21 +85,21 @@ export default function BinhLongImageCarousel() {
         </div>
       ))}
 
-      {/* Navigation arrows */}
+      {/* Big prominent green-white navigation chevrons */}
       <button
         onClick={prevSlide}
         aria-label="Hình trước"
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black/40 hover:bg-black/75 text-white backdrop-blur-md border-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-pointer shadow-lg hover:scale-105"
+        className="absolute left-3.5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border-2 border-white/90 shadow-xl backdrop-blur-md flex items-center justify-center opacity-90 hover:opacity-100 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
       >
-        <ChevronLeft className="w-5 h-5" />
+        <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5]" />
       </button>
 
       <button
         onClick={nextSlide}
         aria-label="Hình tiếp theo"
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black/40 hover:bg-black/75 text-white backdrop-blur-md border-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-pointer shadow-lg hover:scale-105"
+        className="absolute right-3.5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border-2 border-white/90 shadow-xl backdrop-blur-md flex items-center justify-center opacity-90 hover:opacity-100 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
       >
-        <ChevronRight className="w-5 h-5" />
+        <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5]" />
       </button>
 
       {/* Dot indicators */}

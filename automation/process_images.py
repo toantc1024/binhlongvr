@@ -104,31 +104,38 @@ def crop_thumbnail_16_9(src_path: str, dest_path: str, target_width: int = 800, 
     return dest_path
 
 
-def find_source_image(folder_path: str, filename: str) -> str:
+def find_source_image(folder_path: str, filename_or_pan) -> str:
     """
-    Tìm ảnh nguồn có tính đến sai khác tên mã hóa Unicode tiếng Việt (NFC vs NFD) hoặc chữ hoa/thường.
+    Tìm ảnh nguồn có tính đến việc tệp đã được đổi tên sang tên chuẩn hóa (standardized_file)
+    hoặc tên gốc (raw_file) kèm giải quyết sai khác mã hóa Unicode.
     """
     import unicodedata
-    target_norm = unicodedata.normalize('NFC', filename).lower()
-    
-    # Check exact
-    direct = os.path.join(folder_path, filename)
-    if os.path.exists(direct):
-        return direct
 
-    for f in os.listdir(folder_path):
-        f_norm = unicodedata.normalize('NFC', f).lower()
-        if f_norm == target_norm:
-            return os.path.join(folder_path, f)
+    candidates = []
+    if isinstance(filename_or_pan, dict):
+        if filename_or_pan.get("standardized_file"):
+            candidates.append(filename_or_pan["standardized_file"])
+        if filename_or_pan.get("raw_file"):
+            candidates.append(filename_or_pan["raw_file"])
+    elif isinstance(filename_or_pan, str):
+        candidates.append(filename_or_pan)
 
-    # Check without spaces or relaxed
-    target_clean = "".join(target_norm.split())
-    for f in os.listdir(folder_path):
-        f_clean = "".join(unicodedata.normalize('NFC', f).lower().split())
-        if f_clean == target_clean:
-            return os.path.join(folder_path, f)
+    for c in candidates:
+        direct = os.path.join(folder_path, c)
+        if os.path.exists(direct):
+            return direct
 
-    return direct
+    # Duyệt file trong thư mục đối chiếu
+    for target in candidates:
+        target_norm = unicodedata.normalize('NFC', target).lower()
+        target_clean = "".join(target_norm.split())
+
+        for f in os.listdir(folder_path):
+            f_norm = unicodedata.normalize('NFC', f).lower()
+            if f_norm == target_norm or "".join(f_norm.split()) == target_clean:
+                return os.path.join(folder_path, f)
+
+    return os.path.join(folder_path, candidates[0] if candidates else "")
 
 
 def process_all_images():
@@ -188,13 +195,13 @@ def process_all_images():
         # 2. Xử lý chuẩn hóa tên và cắt Thumbnail cho từng Panorama
         for pan in info["panoramas"]:
             pan_id = pan["id"]
-            pan_raw_path = find_source_image(raw_folder, pan["raw_file"])
+            pan_raw_path = find_source_image(raw_folder, pan)
             pan_std_path = os.path.join(proc_folder, pan["standardized_file"])
             pan_thumb_path = os.path.join(TEMP_DIR, f"pan_{pan_id}_preview.jpg")
 
             if os.path.exists(pan_raw_path):
-                # Tạo bản sao chuẩn hóa tên tệp nếu chưa tồn tại
-                if not os.path.exists(pan_std_path):
+                # Tạo bản sao sang thư mục processed_images nếu khác thư mục
+                if os.path.abspath(pan_raw_path) != os.path.abspath(pan_std_path):
                     import shutil
                     shutil.copy2(pan_raw_path, pan_std_path)
 
@@ -202,7 +209,7 @@ def process_all_images():
                 crop_thumbnail_16_9(pan_raw_path, pan_thumb_path, target_width=800, target_height=450)
                 total_panoramas += 1
             else:
-                print(f"  [WARN] Không tìm thấy ảnh panorama: {pan['raw_file']}")
+                print(f"  [WARN] Không tìm thấy ảnh panorama: {pan.get('standardized_file')} / {pan.get('raw_file')}")
 
         print(f"  [OK] Đã chuẩn hóa {len(info['panoramas'])} panoramas cho {code}")
 

@@ -9,10 +9,10 @@ export default function Component() {
             <div className="flex items-center h-screen px-4 z-20 py-12 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative">
                 <div className="w-full space-y-6 text-center">
                     <div className="space-y-3">
-                        <h1 className="text-8xl font-bold tracking-tighter sm:text-8xl transition-transform text-blue-600">
+                        <h1 className="text-8xl font-bold tracking-tighter sm:text-8xl transition-transform text-primary">
                             404
                         </h1>
-                        <p className="text-gray-500">
+                        <p className="text-muted-foreground font-normal">
                             Trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển.
                         </p>
                     </div>
@@ -20,7 +20,7 @@ export default function Component() {
                         onClick={() => {
                             navigate("/");
                         }}
-                        className="inline-flex h-10 items-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300 cursor-pointer"
+                        className="inline-flex h-10 items-center rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground px-8 text-sm font-medium shadow-xs transition-colors cursor-pointer"
                     >
                         Trở về trang chủ
                     </Button>

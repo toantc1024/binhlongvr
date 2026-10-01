@@ -20,26 +20,40 @@ except ImportError:
     sys.exit(1)
 
 
-async def generate_single_audio(code: str, info: dict, voice: str = TTS_VOICE, rate: str = TTS_RATE, pitch: str = TTS_PITCH):
+def generate_single_audio(code: str, info: dict, voice: str = TTS_VOICE, rate: str = TTS_RATE, pitch: str = TTS_PITCH):
+    import subprocess
+    import tempfile
+
     audio_path = os.path.join(AUDIO_DIR, info["audio_filename"])
     print(f"\n[{code}] Đang tạo audio thuyết minh: {info['title']}...")
     print(f"       Giọng đọc: {voice} | Tốc độ: {rate} | Cao độ: {pitch}")
     print(f"       Độ dài văn bản: {len(info['audio_text'])} ký tự")
 
-    communicate = edge_tts.Communicate(
-        text=info["audio_text"],
-        voice=voice,
-        rate=rate,
-        pitch=pitch
-    )
-    await communicate.save(audio_path)
-    
+    # Use a temporary text file to handle multi-line text cleanly
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, suffix=".txt") as tmp:
+        tmp.write(info["audio_text"])
+        tmp_name = tmp.name
+
+    try:
+        cmd = [
+            "edge-tts",
+            "--voice", voice,
+            "--rate", rate,
+            "--pitch", pitch,
+            "-f", tmp_name,
+            "--write-media", audio_path
+        ]
+        res = subprocess.run(cmd, capture_output=True, text=True, check=True)
+    finally:
+        if os.path.exists(tmp_name):
+            os.remove(tmp_name)
+
     file_size_kb = os.path.getsize(audio_path) / 1024
     print(f"       -> Hoàn thành: {audio_path} ({file_size_kb:.1f} KB)")
     return audio_path
 
 
-async def main_async(selected_code=None, voice=TTS_VOICE, rate=TTS_RATE, pitch=TTS_PITCH):
+def main_sync(selected_code=None, voice=TTS_VOICE, rate=TTS_RATE, pitch=TTS_PITCH):
     os.makedirs(AUDIO_DIR, exist_ok=True)
     targets = {selected_code: LOCATIONS_DATA[selected_code]} if selected_code else LOCATIONS_DATA
 
@@ -48,7 +62,7 @@ async def main_async(selected_code=None, voice=TTS_VOICE, rate=TTS_RATE, pitch=T
     print("==================================================")
 
     for code, info in targets.items():
-        await generate_single_audio(code, info, voice=voice, rate=rate, pitch=pitch)
+        generate_single_audio(code, info, voice=voice, rate=rate, pitch=pitch)
 
     print("\n==================================================")
     print(f"HOÀN THÀNH: Đã tạo thành công {len(targets)} tệp âm thanh thuyết minh!")
@@ -64,12 +78,12 @@ def main():
     parser.add_argument("--pitch", default=TTS_PITCH, help="Cao độ giọng (ví dụ: +0Hz, -2Hz)")
     args = parser.parse_args()
 
-    asyncio.run(main_async(
+    main_sync(
         selected_code=args.code,
         voice=args.voice,
         rate=args.rate,
         pitch=args.pitch
-    ))
+    )
 
 
 if __name__ == "__main__":

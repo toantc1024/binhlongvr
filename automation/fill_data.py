@@ -84,20 +84,22 @@ def clean_existing_data(supabase: Client):
     print("  -> Dọn dẹp dữ liệu cũ hoàn tất!")
 
 
-def sync_area_info(supabase: Client):
+def sync_area_info(supabase: Client, main_hotspot_id=None):
     """
     Cập nhật thông tin chuẩn của khu vực Bình Long trong bảng areas.
     """
-    print(f"\n[BƯỚC 2] Cập nhật thông tin Khu vực Area ID [{AREA_ID}]...")
+    print(f"\n[*] Cập nhật thông tin Khu vực Area ID [{AREA_ID}]...")
     area_payload = {
         "area_id": AREA_ID,
         "area_name": AREA_NAME,
         "domain": DOMAIN,
-        "main_hotspot_id": MAIN_HOTSPOT_ID,
         "chatbot_limit_request": 100
     }
-    res = supabase.table("areas").upsert(area_payload).execute()
-    print(f"  [OK] Đã cập nhật Area: {AREA_NAME} (Domain: {DOMAIN}, Main Hotspot: {MAIN_HOTSPOT_ID})")
+    if main_hotspot_id:
+        area_payload["main_hotspot_id"] = main_hotspot_id
+        
+    supabase.table("areas").upsert(area_payload).execute()
+    print(f"  [OK] Đã cập nhật Area: {AREA_NAME} (Domain: {DOMAIN}, Main Hotspot: {main_hotspot_id})")
 
 
 def fill_hotspots_and_panoramas(supabase: Client):
@@ -215,11 +217,14 @@ def main():
         print("Đã hoàn tất xóa dữ liệu.")
         return
 
-    # 2. Cập nhật thông tin Area
-    sync_area_info(supabase)
+    # 2. Cập nhật thông tin cơ bản Area (chưa gán main_hotspot_id)
+    sync_area_info(supabase, main_hotspot_id=None)
 
     # 3. Nạp dữ liệu Hotspots & Panoramas
     fill_hotspots_and_panoramas(supabase)
+
+    # 4. Gán main_hotspot_id cho Area
+    sync_area_info(supabase, main_hotspot_id=MAIN_HOTSPOT_ID)
 
 
 if __name__ == "__main__":

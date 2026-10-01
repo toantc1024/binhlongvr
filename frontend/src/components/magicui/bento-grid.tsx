@@ -24,7 +24,7 @@ const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
   return (
     <div
       className={cn(
-        "grid w-full auto-rows-[22rem] grid-cols-3 gap-4",
+        "grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-auto lg:auto-rows-[22rem]",
         className,
       )}
       {...props}
@@ -48,37 +48,44 @@ const BentoCard = ({
   <div
     key={name}
     className={cn(
-      "group relative col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
-      // light styles
-      "bg-card text-card-foreground border border-border shadow-xs",
+      "group relative flex flex-col justify-between overflow-hidden rounded-2xl",
+      // light styles - borderless and clean shadow
+      "bg-card text-card-foreground border-0 shadow-md hover:shadow-xl transition-all duration-300",
       // dark styles
-      "transform-gpu dark:bg-background dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
+      "transform-gpu dark:bg-card dark:[box-shadow:0_-20px_80px_-20px_#ffffff15_inset]",
       className,
     )}
     {...props}
   >
-    <div>{background}</div>
-    <div className="p-4">
-      <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 transition-all duration-300 lg:group-hover:-translate-y-10">
+    {/* Background artwork: fully responsive, absolute at z-0 */}
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      {background}
+    </div>
+
+    {/* Content layer: z-10 for perfect legibility and layout */}
+    <div className="relative z-10 p-6 sm:p-7 flex flex-col justify-between h-full pointer-events-none">
+      <div className="flex flex-col gap-2.5">
         {iconImage ? (
-          <div className="size-12 rounded-xl overflow-hidden shadow-xs border border-border/80 bg-white flex items-center justify-center p-0.5 transform-gpu transition-all duration-300 ease-in-out group-hover:scale-105">
-            <img src={iconImage} alt={name} className="w-full h-full object-contain" />
+          <div className="size-20 sm:size-24 flex items-center justify-start transform-gpu transition-all duration-300 ease-in-out group-hover:scale-105 pointer-events-none -ml-2 -mt-2">
+            <img
+              src={iconImage}
+              alt={name}
+              className="w-full h-full object-contain filter drop-shadow-md"
+            />
           </div>
         ) : Icon ? (
           <Icon className="h-12 w-12 origin-left transform-gpu text-primary transition-all duration-300 ease-in-out group-hover:scale-75" />
         ) : null}
-        <h3 className="text-xl font-semibold text-foreground">
+        <h3 className="text-xl sm:text-2xl font-semibold text-foreground text-left tracking-tight">
           {name}
         </h3>
-        <p className="max-w-lg text-muted-foreground text-sm">{description}</p>
+        <p className="max-w-md text-muted-foreground text-sm font-normal leading-relaxed text-left">
+          {description}
+        </p>
       </div>
 
-      {
-        cta && <div
-          className={cn(
-            "lg:hidden pointer-events-none flex w-full translate-y-0 transform-gpu flex-row items-center transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100",
-          )}
-        >
+      {cta && (
+        <div className="lg:hidden pointer-events-none flex w-full translate-y-0 transform-gpu flex-row items-center pt-4 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           <Button
             variant="link"
             asChild
@@ -91,15 +98,11 @@ const BentoCard = ({
             </a>
           </Button>
         </div>
-      }
+      )}
     </div>
 
-    {
-      cta && <div
-        className={cn(
-          "hidden lg:flex pointer-events-none absolute bottom-0 w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100",
-        )}
-      >
+    {cta && (
+      <div className="hidden lg:flex pointer-events-none absolute bottom-0 w-full translate-y-10 transform-gpu flex-row items-center p-6 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 z-20">
         <Button
           variant="link"
           asChild
@@ -112,8 +115,8 @@ const BentoCard = ({
           </a>
         </Button>
       </div>
-    }
-    <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10" />
+    )}
+    <div className="pointer-events-none absolute inset-0 z-10 transform-gpu transition-all duration-300 group-hover:bg-black/[.02] group-hover:dark:bg-neutral-800/10" />
   </div>
 );
 

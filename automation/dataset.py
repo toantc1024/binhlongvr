@@ -34,7 +34,7 @@ LOCATIONS_DATA = {
         "audio_filename": "dtt_thuyet_minh.mp3",
         "folder": "dtt",
         "click_panorama_id": "DTT_0_FLYCAM",
-        "preview_source_image": "dtt 2 sân.jpg",
+        "preview_source_image": "DTT_2_SAN.jpg",
         "perspective_params": {"fov_deg": 80, "yaw_deg": 45, "pitch_deg": 0},
         "panoramas": [
             {"id": "DTT_0_FLYCAM", "title": "Toàn cảnh Dinh Tỉnh Trưởng (Flycam 360°)", "raw_file": "dtt fly.jpg", "standardized_file": "DTT_0_FLYCAM.jpg"},
@@ -74,7 +74,7 @@ LOCATIONS_DATA = {
         "audio_filename": "m7n_thuyet_minh.mp3",
         "folder": "m7n",
         "click_panorama_id": "M7N_0_FLYCAM",
-        "preview_source_image": "m7n 2.jpg",
+        "preview_source_image": "M7N_2_BIA.jpg",
         "perspective_params": {"fov_deg": 85, "yaw_deg": -35, "pitch_deg": 0},
         "panoramas": [
             {"id": "M7N_0_FLYCAM", "title": "Toàn cảnh Khu Di tích Mộ 7 Người (Flycam 360°)", "raw_file": "m7n fly.jpg", "standardized_file": "M7N_0_FLYCAM.jpg"},
@@ -110,7 +110,7 @@ LOCATIONS_DATA = {
         "audio_filename": "m3000_thuyet_minh.mp3",
         "folder": "m3000",
         "click_panorama_id": "M3000_0_FLYCAM_2",
-        "preview_source_image": "2-1cổng chính.jpg",
+        "preview_source_image": "M3000_2_CONG_CHINH.jpg",
         "perspective_params": {"fov_deg": 85, "yaw_deg": 0, "pitch_deg": 0},
         "panoramas": [
             {"id": "M3000_0_FLYCAM_1", "title": "Toàn cảnh Di tích Mộ 3.000 người (Góc Flycam 1)", "raw_file": "fly.jpg", "standardized_file": "M3000_0_FLYCAM_1.jpg"},
@@ -161,7 +161,7 @@ LOCATIONS_DATA = {
         "audio_filename": "hlt_thuyet_minh.mp3",
         "folder": "hlt",
         "click_panorama_id": "HLT_0_FLYCAM",
-        "preview_source_image": "hlt 2 1.jpg",
+        "preview_source_image": "HLT_2_1.jpg",
         "perspective_params": {"fov_deg": 85, "yaw_deg": 0, "pitch_deg": 0},
         "panoramas": [
             {"id": "HLT_0_FLYCAM", "title": "Toàn cảnh Chùa Hưng Lập Tự (Flycam 360°)", "raw_file": "hlt fly.jpg", "standardized_file": "HLT_0_FLYCAM.jpg"},

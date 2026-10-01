@@ -1,31 +1,42 @@
-import email3DIcon from "@/assets/3d-icons/email__binhlong-3d-icon.jpg";
-import location3DIcon from "@/assets/3d-icons/location__binhlong-3d-icon.jpg";
+import email3DIcon from "@/assets/3d-icons/email__binhlong-3d-icon.png";
+import location3DIcon from "@/assets/3d-icons/location__binhlong-3d-icon.png";
 import { TextAnimate } from "../magicui/text-animate";
 
 export function ContactSection() {
     return (
-        <section className="pt-8 px-4 sm:pt-12 sm:px-6 md:pt-16 mb-32 lg:px-8 flex w-full justify-center">
-            <div className="container">
-                <h2 className="py-8 text-2xl text-center font-bold md:text-4xl lg:text-5xl text-foreground">
-                    <TextAnimate animation="blurIn" as="h1">
-                        Liên hệ với chúng tôi
-                    </TextAnimate>
-                </h2>
-                <p className="mt-4 text-base text-center sm:text-lg text-foreground/80 font-medium">
-                    Hãy kết nối để được tư vấn giải pháp, hỗ trợ nhanh chóng
-                </p>
-                <div className="max-w-screen-xl mx-auto py-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 px-6 md:px-0">
+        <section className="py-12 w-full px-4 sm:px-6 lg:px-8 mb-20">
+            <div className="w-full">
+                {/* Header: Align Left */}
+                <div className="w-full mb-8">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left">
+                        <TextAnimate animation="blurIn" as="span">
+                            Liên hệ với chúng tôi
+                        </TextAnimate>
+                    </h2>
+                    <p className="mt-2 text-base text-muted-foreground text-left font-normal max-w-2xl">
+                        Hãy kết nối để được tư vấn giải pháp, hỗ trợ nhanh chóng
+                    </p>
+                </div>
+
+                {/* Left-Aligned Contact Cards */}
+                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Email Card */}
-                    <div className="text-center flex flex-col items-center p-6 rounded-2xl bg-white/90 border border-border shadow-xs hover:shadow-md transition-all">
-                        <div className="h-16 w-16 overflow-hidden rounded-2xl shadow-sm border border-border flex items-center justify-center bg-secondary">
-                            <img src={email3DIcon} alt="Email 3D" className="w-full h-full object-cover" />
+                    <div className="text-left flex flex-col items-start p-6 sm:p-7 rounded-2xl bg-card border-0 shadow-md hover:shadow-xl transition-all">
+                        <div className="h-20 w-20 flex items-center justify-start pointer-events-none -ml-2 -mt-2">
+                            <img
+                                src={email3DIcon}
+                                alt="Email 3D"
+                                className="w-full h-full object-contain filter drop-shadow-md"
+                            />
                         </div>
-                        <h3 className="mt-5 font-bold text-xl text-foreground">Email</h3>
-                        <p className="mt-2 text-foreground/80 font-medium">
+                        <h3 className="mt-4 font-semibold text-xl text-foreground text-left">
+                            Email
+                        </h3>
+                        <p className="mt-1.5 text-muted-foreground text-sm font-normal text-left leading-relaxed">
                             Bạn có thắc mắc hoặc góp ý? Hãy liên hệ với chúng tôi
                         </p>
                         <a
-                            className="mt-4 font-semibold text-foreground hover:text-primary transition-colors hover:underline"
+                            className="mt-4 font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 transition-colors hover:underline text-left text-sm sm:text-base break-all"
                             href="mailto:thidoanbinhlong@binhphuoc.gov.vn"
                         >
                             thidoanbinhlong@binhphuoc.gov.vn
@@ -33,21 +44,27 @@ export function ContactSection() {
                     </div>
 
                     {/* Organization Card */}
-                    <div className="text-center flex flex-col items-center p-6 rounded-2xl bg-white/90 border border-border shadow-xs hover:shadow-md transition-all">
-                        <div className="h-16 w-16 overflow-hidden rounded-2xl shadow-sm border border-border flex items-center justify-center bg-secondary">
-                            <img src={location3DIcon} alt="Location 3D" className="w-full h-full object-cover" />
+                    <div className="text-left flex flex-col items-start p-6 sm:p-7 rounded-2xl bg-card border-0 shadow-md hover:shadow-xl transition-all">
+                        <div className="h-20 w-20 flex items-center justify-start pointer-events-none -ml-2 -mt-2">
+                            <img
+                                src={location3DIcon}
+                                alt="Location 3D"
+                                className="w-full h-full object-contain filter drop-shadow-md"
+                            />
                         </div>
-                        <h3 className="mt-5 font-bold text-xl text-foreground">Đơn vị thực hiện & Quản lý</h3>
-                        <div className="mt-2 text-foreground/80 space-y-1">
-                            <p className="font-semibold text-foreground">
+                        <h3 className="mt-4 font-semibold text-xl text-foreground text-left">
+                            Đơn vị thực hiện & Quản lý
+                        </h3>
+                        <div className="mt-1.5 text-muted-foreground text-sm space-y-1 text-left">
+                            <p className="font-medium text-foreground text-left">
                                 Thị đoàn Bình Long
                             </p>
-                            <p className="text-sm font-medium text-foreground/75">
+                            <p className="text-sm font-normal text-muted-foreground text-left">
                                 Đoàn TNCS Hồ Chí Minh Thị xã Bình Long, Tỉnh Bình Phước
                             </p>
                         </div>
                         <a
-                            className="mt-4 font-semibold text-foreground hover:text-primary transition-colors hover:underline max-w-lg text-sm"
+                            className="mt-4 font-normal text-muted-foreground hover:text-primary transition-colors hover:underline text-left text-sm"
                             href="https://maps.google.com/?q=Thị+Đoàn+Bình+Long,+Bình+Phước"
                             target="_blank"
                             rel="noopener noreferrer"
