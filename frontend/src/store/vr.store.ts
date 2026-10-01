@@ -24,6 +24,8 @@ interface VRStoreState {
   isLoading: boolean;
   panoramas: Panorama[];
   isLoadingPanoramas: boolean;
+  isMapDialogOpen: boolean;
+  mapDialogHotspotId: number | null;
 }
 
 interface VRStoreActions {
@@ -39,6 +41,7 @@ interface VRStoreActions {
   setCurrentPanorama: (panorama: Panorama | null) => void;
   setCurrentPanoramaById: (panorama_id: string) => void;
   getPanoramaById: (panorama_id: string) => Promise<Panorama | undefined>;
+  setIsMapDialogOpen: (open: boolean, hotspotId?: number | null) => void;
 }
 
 type VRStore = VRStoreState & VRStoreActions;
@@ -51,6 +54,14 @@ const useVRStore = create<VRStore>((set, get) => ({
   areaHotspots: BINHLONG_HOTSPOTS,
   panoramas: BINHLONG_PANORAMAS,
   isLoadingPanoramas: false,
+  isMapDialogOpen: false,
+  mapDialogHotspotId: null,
+
+  setIsMapDialogOpen: (open, hotspotId = null) =>
+    set({
+      isMapDialogOpen: open,
+      mapDialogHotspotId: open ? (hotspotId ?? null) : null,
+    }),
 
   setCurrentArea: (area) => set({ currentArea: area }),
   setCurrentHotspot: (hotspot) => set({ currentHotspot: hotspot }),
@@ -63,6 +74,9 @@ const useVRStore = create<VRStore>((set, get) => ({
       currentHotspot: BINHLONG_HOTSPOTS[0],
       currentPanorama: BINHLONG_PANORAMAS[0],
       areaHotspots: BINHLONG_HOTSPOTS,
+      isMapDialogOpen: false,
+      mapDialogHotspotId: null,
+    }),
       panoramas: BINHLONG_PANORAMAS,
     }),
 
