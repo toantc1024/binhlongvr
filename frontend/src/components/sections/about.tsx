@@ -156,7 +156,7 @@ export function AboutSection() {
                             </TextAnimate>
                         </h2>
                         <p className="mt-2 text-base text-muted-foreground text-left font-normal max-w-2xl">
-                            Khám phá không gian văn hóa - lịch sử Bình Long thông qua công nghệ số hóa 3D và thực tế ảo 360° tương tác đa chiều.
+                            Khám phá không gian văn hóa - lịch sử Phường Bình Long thông qua công nghệ số hóa 3D và thực tế ảo 360° tương tác đa chiều.
                         </p>
                     </div>
                 </div>

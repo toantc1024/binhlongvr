@@ -81,7 +81,7 @@ export function StatsSection() {
               </TextAnimate>
             </h2>
             <p className="mt-2 text-base text-muted-foreground text-left font-normal max-w-2xl">
-              Thống kê tổng quan dữ liệu số hóa và tương tác trực tuyến trên hệ thống bản đồ số Bình Long.
+              Thống kê tổng quan dữ liệu số hóa và tương tác trực tuyến trên hệ thống bản đồ số Phường Bình Long.
             </p>
           </div>
         </div>
