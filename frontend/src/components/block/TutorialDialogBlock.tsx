@@ -44,7 +44,7 @@ const TutorialDialogBlock = () => {
                         Điều hướng bên trái
                     </h3>
                     <div className="space-y-2 sm:space-y-3">
-                        <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
+                        <div className="hidden md:flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0">
                                 <FiMenu className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
                             </div>

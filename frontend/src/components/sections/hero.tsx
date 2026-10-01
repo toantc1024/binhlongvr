@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import MapBlock from "../block/MapBlock";
 import BinhLongImageCarousel from "../block/BinhLongImageCarousel";
 import viewCountIcon from "@/assets/3d-icons/view-count__binhlong-3d-icon.png";
-import { AuroraText } from "@/components/magicui/aurora-text";
 import { GridPattern } from "../magicui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
@@ -42,7 +41,7 @@ export default function HeroSection() {
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold !leading-[1.25] tracking-tight text-foreground text-left sm:text-center">
           Bản đồ số khu vực
           <br />
-          <AuroraText>Phường Bình Long</AuroraText>
+          <span className="text-primary">Phường Bình Long</span>
         </h1>
         <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground font-normal text-left sm:text-center">
           Khám phá truyền thống - Lịch sử - văn hoá bằng Công nghệ Số.

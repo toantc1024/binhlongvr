@@ -87,64 +87,66 @@ const ControlBlock = ({
         left="0"
         customClassName="flex m-1 md:m-2 items-center px-1 md:px-2 h-auto rounded-4xl py-1 md:py-2 flex gap-1 md:gap-2 flex-col shadow-md border border-border bg-white/90 backdrop-blur-xl"
       >
-        <Drawer.Root direction="left">
-          <Drawer.Trigger asChild>
-            <Button
-              variant="ghost"
-              className="w-10 h-10 md:w-12 lg:w-14 md:h-12 lg:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer"
-              aria-label="Menu"
-            >
-              <FiMenu className="!size-5 md:!size-7 lg:!size-9 text-foreground" />
-            </Button>
-          </Drawer.Trigger>
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 z-[10] backdrop-blur-xs bg-black/30" />
-            <Drawer.Content
-              className="left-1 md:left-2 top-1 md:top-2 bottom-1 md:bottom-2 fixed z-10 outline-none w-[280px] md:w-[310px] flex"
-              style={
-                {
-                  "--initial-transform": "calc(100% + 8px)",
-                } as React.CSSProperties
-              }
-            >
-              <div className="h-full w-full grow p-4 md:p-5 flex flex-col rounded-[16px] bg-white/95 text-foreground border border-border backdrop-blur-2xl shadow-2xl">
-                <div className="">
-                  <Drawer.Title className="flex items-center font-medium mb-4 text-foreground text-lg md:text-xl">
-                    <Drawer.Close>
-                      <Button variant="ghost" className="w-10 h-10 md:w-12 md:h-12 bg-secondary hover:bg-secondary/80 text-foreground border border-border rounded-full p-2 cursor-pointer">
-                        <FiArrowLeft className="!size-6 md:!size-8 text-foreground" />
+        <div className="hidden md:block">
+          <Drawer.Root direction="left">
+            <Drawer.Trigger asChild>
+              <Button
+                variant="ghost"
+                className="w-10 h-10 md:w-12 lg:w-14 md:h-12 lg:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer"
+                aria-label="Menu"
+              >
+                <FiMenu className="!size-5 md:!size-7 lg:!size-9 text-foreground" />
+              </Button>
+            </Drawer.Trigger>
+            <Drawer.Portal>
+              <Drawer.Overlay className="fixed inset-0 z-[10] backdrop-blur-xs bg-black/30" />
+              <Drawer.Content
+                className="left-1 md:left-2 top-1 md:top-2 bottom-1 md:bottom-2 fixed z-10 outline-none w-[280px] md:w-[310px] flex"
+                style={
+                  {
+                    "--initial-transform": "calc(100% + 8px)",
+                  } as React.CSSProperties
+                }
+              >
+                <div className="h-full w-full grow p-4 md:p-5 flex flex-col rounded-[16px] bg-white/95 text-foreground border border-border backdrop-blur-2xl shadow-2xl">
+                  <div className="">
+                    <Drawer.Title className="flex items-center font-medium mb-4 text-foreground text-lg md:text-xl">
+                      <Drawer.Close>
+                        <Button variant="ghost" className="w-10 h-10 md:w-12 md:h-12 bg-secondary hover:bg-secondary/80 text-foreground border border-border rounded-full p-2 cursor-pointer">
+                          <FiArrowLeft className="!size-6 md:!size-8 text-foreground" />
+                        </Button>
+                      </Drawer.Close>
+                      <div className="ml-3 md:ml-4 font-bold text-foreground">Tùy chọn</div>
+                    </Drawer.Title>
+                    <div className="space-y-3">
+                      <Button
+                        variant="ghost"
+                        className="w-full h-10 md:h-12 text-left flex items-center justify-start gap-3 bg-secondary/80 hover:bg-secondary text-foreground border border-border rounded-full text-sm md:text-base cursor-pointer transition-all font-medium"
+                        onClick={() => {
+                          navigate("/");
+                        }}
+                      >
+                        <RiGlobalFill className="size-4 md:size-5 text-foreground" />
+                        Về trang chủ
                       </Button>
-                    </Drawer.Close>
-                    <div className="ml-3 md:ml-4 font-bold text-foreground">Tùy chọn</div>
-                  </Drawer.Title>
-                  <div className="space-y-3">
-                    <Button
-                      variant="ghost"
-                      className="w-full h-10 md:h-12 text-left flex items-center justify-start gap-3 bg-secondary/80 hover:bg-secondary text-foreground border border-border rounded-full text-sm md:text-base cursor-pointer transition-all font-medium"
-                      onClick={() => {
-                        navigate("/");
-                      }}
-                    >
-                      <RiGlobalFill className="size-4 md:size-5 text-foreground" />
-                      Về trang chủ
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      className="w-full h-10 md:h-12 text-left flex items-center justify-start gap-3 bg-secondary/80 hover:bg-secondary text-foreground border border-border rounded-full text-sm md:text-base cursor-pointer transition-all font-medium"
-                      onClick={() => {
-                        // mailto
-                        window.location.href = "mailto:vrdiachido@gmail.com";
-                      }}
-                    >
-                      <Mail className="size-4 md:size-5 text-foreground" />
-                      Góp ý
-                    </Button>
+                      <Button
+                        variant="ghost"
+                        className="w-full h-10 md:h-12 text-left flex items-center justify-start gap-3 bg-secondary/80 hover:bg-secondary text-foreground border border-border rounded-full text-sm md:text-base cursor-pointer transition-all font-medium"
+                        onClick={() => {
+                          // mailto
+                          window.location.href = "mailto:vrdiachido@gmail.com";
+                        }}
+                      >
+                        <Mail className="size-4 md:size-5 text-foreground" />
+                        Góp ý
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
+              </Drawer.Content>
+            </Drawer.Portal>
+          </Drawer.Root>
+        </div>
 
         {/* Top left nav */}
         {[
