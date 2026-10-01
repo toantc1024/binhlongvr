@@ -4,20 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import useVRStore from "@/store/vr.store";
+import { cn } from "@/lib/utils";
 
-export default function MapDialogBlock({
+export default function MapBlock({
     opened,
+    className,
 }: {
     opened: boolean;
-    setOpened: (opened: boolean) => void;
-    showMedia: (mediaName: string) => void;
+    setOpened?: (opened: boolean) => void;
+    showMedia?: (mediaName: string) => void;
+    className?: string;
 }) {
     const onMarkerSelectHandler = (hotspot: any) => {
         if (hotspot.geolocation?.lon && hotspot.geolocation?.lat) {
             setSelectedHotspotId(hotspot.hotspot_id);
             mapRef.current?.flyTo({
                 center: [hotspot.geolocation.lon, hotspot.geolocation.lat],
-                zoom: 12,
+                zoom: 14,
                 speed: 1.2,
                 curve: 1,
                 easing: (t) => t
@@ -25,12 +28,13 @@ export default function MapDialogBlock({
         }
     };
 
-    const center: [number, number] = import.meta.env.VITE_CENTER_GPS ? import.meta.env.VITE_CENTER_GPS.split(",").map(Number) : [106.6042, 11.6483];
-    const zoom = 12;
+    const center: [number, number] = import.meta.env.VITE_CENTER_GPS 
+        ? import.meta.env.VITE_CENTER_GPS.split(",").map(Number) 
+        : [106.6042, 11.6483];
+    const zoom = 12.8;
 
     const mapContainer = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
-    const markerRef = useRef<maplibregl.Marker | null>(null);
     const hotspotMarkersRef = useRef<maplibregl.Marker[]>([]);
 
     const { areaHotspots } = useVRStore((state) => state);
@@ -39,132 +43,121 @@ export default function MapDialogBlock({
         if (!opened) {
             setSelectedHotspotId(null);
         }
-    }, [opened])
+    }, [opened]);
 
     const [selectedHotspotId, setSelectedHotspotId] = useState<number | null>(null);
+
     useEffect(() => {
         if (!mapContainer.current || mapRef.current) return;
 
+        const goongMapKey = import.meta.env.VITE_GOONG_MAP_KEY || "hkBRTOlzhKDE79Z6WGwQCgI9MTgsGXyUNC7jS8i3";
+        const goongStyleUrl = `https://tiles.goong.io/assets/goong_map_web.json?api_key=${goongMapKey}`;
+
         mapRef.current = new maplibregl.Map({
             container: mapContainer.current,
-            style: {
-                version: 8,
-                sources: {},
-                layers: [],
-                glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
-            },
+            style: goongStyleUrl,
             center,
             zoom,
-            pitch: 65,
+            pitch: 0,
             attributionControl: false,
-
         });
 
-        // Init marker
-
+        // Add standard navigation controls
+        mapRef.current.addControl(
+            new maplibregl.NavigationControl({ showCompass: true, visualizePitch: true }),
+            "top-right"
+        );
 
         mapRef.current.on("load", async () => {
-            let response = await fetch("./map.geojson");
-            let geojson = await response.json();
+            try {
+                const response = await fetch("./map.geojson");
+                const geojson = await response.json();
 
-            if (geojson.features) {
-                geojson.features = geojson.features.map(
-                    (f: any, idx: number) => ({
+                if (geojson.features) {
+                    geojson.features = geojson.features.map((f: any, idx: number) => ({
                         ...f,
-                        id: f.id ?? idx, // assign ID if missing
-                    })
-                );
-            }
-            mapRef.current!.addSource("custom-geojson", {
-                type: "geojson",
-                data: geojson,
-            });
-
-            mapRef.current!.addLayer({
-                id: "custom-geojson-fill",
-                type: "fill",
-                source: "custom-geojson",
-                paint: {
-                    "fill-color": [
-                        "case",
-                        ["boolean", ["feature-state", "hover"], false],
-                        "#2563eb",
-                        "#3b82f6",
-                    ],
-                    "fill-opacity": [
-                        "case",
-                        ["boolean", ["feature-state", "hover"], false],
-                        0.35,
-                        0.18,
-                    ],
-                },
-            });
-
-            mapRef.current!.addLayer({
-                id: "custom-geojson-stroke",
-                type: "line",
-                source: "custom-geojson",
-                paint: {
-                    "line-color": "#2563eb",
-                    "line-width": 2,
-                    "line-opacity": 0.7,
-                },
-            });
-
-            mapRef.current?.addLayer({
-                id: 'custom-geojson-labels',
-                type: 'symbol',
-                source: 'custom-geojson',
-                layout: {
-                    'text-field': ['get', 'ten_xa'],
-                    'text-size': 14,
-                    'text-anchor': 'center',
-                    'symbol-placement': 'point'
-                },
-                paint: {
-                    'text-color': '#1e293b',
-                    'text-halo-color': '#ffffff',
-                    'text-halo-width': 2,
+                        id: f.id ?? idx,
+                    }));
                 }
-            });
-            let hoveredId: string | number | null = null;
 
-            mapRef.current!.on("mousemove", "custom-geojson-fill", (e) => {
-                if (e.features?.length) {
-                    const featureId = e.features[0].id;
+                if (!mapRef.current?.getSource("custom-geojson")) {
+                    mapRef.current?.addSource("custom-geojson", {
+                        type: "geojson",
+                        data: geojson,
+                    });
 
-                    if (featureId !== undefined) {
-                        if (hoveredId !== null && hoveredId !== featureId) {
-                            mapRef.current!.setFeatureState(
+                    // Subtle boundary fill for Binh Long
+                    mapRef.current?.addLayer({
+                        id: "custom-geojson-fill",
+                        type: "fill",
+                        source: "custom-geojson",
+                        paint: {
+                            "fill-color": [
+                                "case",
+                                ["boolean", ["feature-state", "hover"], false],
+                                "#059669",
+                                "#10b981",
+                            ],
+                            "fill-opacity": [
+                                "case",
+                                ["boolean", ["feature-state", "hover"], false],
+                                0.2,
+                                0.08,
+                            ],
+                        },
+                    });
+
+                    // Boundary border line
+                    mapRef.current?.addLayer({
+                        id: "custom-geojson-stroke",
+                        type: "line",
+                        source: "custom-geojson",
+                        paint: {
+                            "line-color": "#059669",
+                            "line-width": 2.5,
+                            "line-opacity": 0.8,
+                        },
+                    });
+                }
+
+                let hoveredId: string | number | null = null;
+
+                mapRef.current?.on("mousemove", "custom-geojson-fill", (e) => {
+                    if (e.features?.length) {
+                        const featureId = e.features[0].id;
+                        if (featureId !== undefined) {
+                            if (hoveredId !== null && hoveredId !== featureId) {
+                                mapRef.current?.setFeatureState(
+                                    { source: "custom-geojson", id: hoveredId },
+                                    { hover: false }
+                                );
+                            }
+                            hoveredId = featureId;
+                            mapRef.current?.setFeatureState(
                                 { source: "custom-geojson", id: hoveredId },
-                                { hover: false }
+                                { hover: true }
                             );
                         }
+                    }
+                });
 
-                        hoveredId = featureId;
-                        mapRef.current!.setFeatureState(
+                mapRef.current?.on("mouseleave", "custom-geojson-fill", () => {
+                    if (hoveredId !== null) {
+                        mapRef.current?.setFeatureState(
                             { source: "custom-geojson", id: hoveredId },
-                            { hover: true }
+                            { hover: false }
                         );
                     }
-                }
-            });
-
-            mapRef.current!.on("mouseleave", "custom-geojson-fill", () => {
-                if (hoveredId !== null) {
-                    mapRef.current!.setFeatureState(
-                        { source: "custom-geojson", id: hoveredId },
-                        { hover: false }
-                    );
-                }
-                hoveredId = null;
-            });
+                    hoveredId = null;
+                });
+            } catch (err) {
+                console.error("Error loading GeoJSON boundary:", err);
+            }
         });
 
         return () => {
             mapRef.current?.remove();
             mapRef.current = null;
-            markerRef.current = null;
             hotspotMarkersRef.current.forEach((marker) => marker.remove());
             hotspotMarkersRef.current = [];
         };
@@ -182,30 +175,29 @@ export default function MapDialogBlock({
             if (hotspot.geolocation?.lon && hotspot.geolocation?.lat) {
                 const isSelected = selectedHotspotId === hotspot.hotspot_id;
 
-                let element = document.createElement("div");
-                element.className = "marker-container";
+                const element = document.createElement("div");
+                element.className = "marker-container cursor-pointer";
                 element.innerHTML = `
-                <div class="map-marker shadow-xl cursor-pointer ${isSelected ? 'ring-[3px] border-[0px] ring-blue-400 border-blue-400 border-none ring-opacity-60 selected' : ''}">
-                    <div class="map-marker-circle ">
+                <div class="map-marker shadow-xl cursor-pointer ${isSelected ? 'ring-3 ring-emerald-500 selected' : ''}">
+                    <div class="map-marker-circle">
                         <div class="map-marker-image">
-                            <img src="${hotspot.preview_image}" alt="place" />
+                            <img src="${hotspot.preview_image}" alt="${hotspot.title}" />
                         </div>
                     </div>
                 </div>
                 <div class="marker-label">
-                    <span class="marker-title ${isSelected ? 'font-bold text-blue-600' : ''}">${hotspot.title}</span>
+                    <span class="marker-title ${isSelected ? 'font-bold text-emerald-700' : ''}">${hotspot.title}</span>
                 </div>
             `;
 
-                // Add click handler to the marker element
                 element.addEventListener('click', () => {
                     onMarkerSelectHandler(hotspot);
                 });
 
-                let marker = new maplibregl.Marker({
+                const marker = new maplibregl.Marker({
                     element: element,
                     anchor: "bottom",
-                })
+                });
 
                 marker.setLngLat([hotspot.geolocation.lon, hotspot.geolocation.lat])
                     .addTo(mapRef.current!);
@@ -214,13 +206,19 @@ export default function MapDialogBlock({
         });
     }, [areaHotspots, selectedHotspotId]);
 
-
-
-
+    useEffect(() => {
+        if (!mapContainer.current) return;
+        const resizeObserver = new ResizeObserver(() => {
+            mapRef.current?.resize();
+        });
+        resizeObserver.observe(mapContainer.current);
+        return () => {
+            resizeObserver.disconnect();
+        };
+    }, []);
 
     return (
-
-        <div className="h-full p-1  rounded-3xl overflow-hidden  w-full relative">
+        <div className={cn("h-full w-full relative overflow-hidden", className)}>
             <div ref={mapContainer} className="w-full h-full" />
         </div>
     );

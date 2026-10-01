@@ -16,16 +16,16 @@ interface NavMenuProps extends NavigationMenuProps {
 export const NavMenu = ({ activeSection, onNavigate, ...props }: NavMenuProps) => {
   return (
     <NavigationMenu {...props}>
-      <NavigationMenuList className="lg:border lg:rounded-full p-1 border-border gap-2 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start">
+      <NavigationMenuList className="flex items-center gap-1 sm:gap-2 border-0 rounded-none p-0 bg-transparent space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start">
         {[SECTIONS_CONFIG[0], SECTIONS_CONFIG[1], SECTIONS_CONFIG[4]].map((section, index) => (
           <NavigationMenuItem key={index}>
             <NavigationMenuLink asChild>
               <Button
                 variant="ghost"
-                className={`rounded-full cursor-pointer transition-all ${
+                className={`rounded-md px-3.5 py-2 cursor-pointer transition-all ${
                   activeSection === section.id
-                    ? "bg-primary text-primary-foreground font-medium shadow-xs hover:bg-primary/90 hover:text-primary-foreground"
-                    : "text-foreground/80 hover:text-foreground hover:bg-secondary/80 font-medium"
+                    ? "bg-primary text-primary-foreground font-semibold shadow-xs hover:bg-primary/90 hover:text-primary-foreground"
+                    : "text-foreground/80 hover:text-foreground hover:bg-secondary font-medium"
                 }`}
                 onClick={() => onNavigate?.(section.id)}
               >

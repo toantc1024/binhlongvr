@@ -604,4 +604,18 @@
       height: calc(var(--vh, 1vh) * 100);
     }
   }
+
+  /* Hide Goong and MapLibre attribution, logo, and watermark letters */
+  .maplibregl-ctrl-attrib,
+  .maplibregl-ctrl-logo,
+  .mapboxgl-ctrl-attrib,
+  .mapboxgl-ctrl-logo,
+  .maplibregl-compact,
+  .mapboxgl-compact,
+  a[href*="goong.io"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 }

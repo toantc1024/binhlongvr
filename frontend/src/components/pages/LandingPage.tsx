@@ -28,7 +28,7 @@ const LandingPage = () => {
                 isLoading &&
                 <LoaderBlock />
             }
-            <div ref={scrollContainerRef} className='bg-background text-foreground w-full h-screen overflow-auto'>
+            <div ref={scrollContainerRef} className='bg-background text-foreground w-full h-screen overflow-x-hidden overflow-y-auto'>
                 <Navbar
                     ref={navbarRef}
                     activeSection={activeSection}

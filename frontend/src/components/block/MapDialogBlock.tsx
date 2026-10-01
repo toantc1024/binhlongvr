@@ -76,88 +76,75 @@ export default function MapDialogBlock({
     useEffect(() => {
         if (!mapContainer.current || mapRef.current) return;
 
+        const goongMapKey = import.meta.env.VITE_GOONG_MAP_KEY || "hkBRTOlzhKDE79Z6WGwQCgI9MTgsGXyUNC7jS8i3";
+        const goongStyleUrl = `https://tiles.goong.io/assets/goong_map_web.json?api_key=${goongMapKey}`;
+
         mapRef.current = new maplibregl.Map({
             container: mapContainer.current,
-            style: {
-                version: 8,
-                sources: {},
-                layers: [],
-                glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
-            },
+            style: goongStyleUrl,
             center,
             zoom,
-            pitch: 65,
+            pitch: 0,
             attributionControl: false,
-
         });
 
-        // Init marker
-
+        // Add standard navigation controls
+        mapRef.current.addControl(
+            new maplibregl.NavigationControl({ showCompass: true, visualizePitch: true }),
+            "top-right"
+        );
 
         mapRef.current.on("load", async () => {
-            let response = await fetch("./map.geojson");
-            let geojson = await response.json();
+            try {
+                let response = await fetch("./map.geojson");
+                let geojson = await response.json();
 
-            if (geojson.features) {
-                geojson.features = geojson.features.map(
-                    (f: any, idx: number) => ({
-                        ...f,
-                        id: f.id ?? idx, // assign ID if missing
-                    })
-                );
-            }
-            mapRef.current!.addSource("custom-geojson", {
-                type: "geojson",
-                data: geojson,
-            });
-
-            mapRef.current!.addLayer({
-                id: "custom-geojson-fill",
-                type: "fill",
-                source: "custom-geojson",
-                paint: {
-                    "fill-color": [
-                        "case",
-                        ["boolean", ["feature-state", "hover"], false],
-                        "#2563eb",
-                        "#3b82f6",
-                    ],
-                    "fill-opacity": [
-                        "case",
-                        ["boolean", ["feature-state", "hover"], false],
-                        0.35,
-                        0.18,
-                    ],
-                },
-            });
-
-            mapRef.current!.addLayer({
-                id: "custom-geojson-stroke",
-                type: "line",
-                source: "custom-geojson",
-                paint: {
-                    "line-color": "#2563eb",
-                    "line-width": 2,
-                    "line-opacity": 0.7,
-                },
-            });
-
-            mapRef.current?.addLayer({
-                id: 'custom-geojson-labels',
-                type: 'symbol',
-                source: 'custom-geojson',
-                layout: {
-                    'text-field': ['get', 'ten_xa'],
-                    'text-size': 14,
-                    'text-anchor': 'center',
-                    'symbol-placement': 'point'
-                },
-                paint: {
-                    'text-color': '#1e293b',
-                    'text-halo-color': '#ffffff',
-                    'text-halo-width': 2,
+                if (geojson.features) {
+                    geojson.features = geojson.features.map(
+                        (f: any, idx: number) => ({
+                            ...f,
+                            id: f.id ?? idx, // assign ID if missing
+                        })
+                    );
                 }
-            });
+                mapRef.current!.addSource("custom-geojson", {
+                    type: "geojson",
+                    data: geojson,
+                });
+
+                mapRef.current!.addLayer({
+                    id: "custom-geojson-fill",
+                    type: "fill",
+                    source: "custom-geojson",
+                    paint: {
+                        "fill-color": [
+                            "case",
+                            ["boolean", ["feature-state", "hover"], false],
+                            "#059669",
+                            "#10b981",
+                        ],
+                        "fill-opacity": [
+                            "case",
+                            ["boolean", ["feature-state", "hover"], false],
+                            0.2,
+                            0.08,
+                        ],
+                    },
+                });
+
+                mapRef.current!.addLayer({
+                    id: "custom-geojson-stroke",
+                    type: "line",
+                    source: "custom-geojson",
+                    paint: {
+                        "line-color": "#059669",
+                        "line-width": 2.5,
+                        "line-opacity": 0.8,
+                    },
+                });
+            } catch (err) {
+                console.error("Error loading geojson:", err);
+            }
             let hoveredId: string | number | null = null;
 
             mapRef.current!.on("mousemove", "custom-geojson-fill", (e) => {

@@ -36,11 +36,11 @@ const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
         }}
         setOpened={setIsMapDialogOpen}
       />
-      <nav
+      <header
         ref={ref}
-        className="glass glass-light fixed top-0 mt-4 inset-x-4 h-16 bg-background/85 border border-border/80 max-w-screen-xl mx-auto rounded-full z-[40] shadow-sm backdrop-blur-md"
+        className="fixed top-0 left-0 right-0 w-full h-16 bg-background/95 border-b border-border z-[40] shadow-xs backdrop-blur-md rounded-none"
       >
-        <div className=" h-full flex items-center justify-between mx-auto px-4">
+        <div className="h-full w-full flex items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo />
 
           {/* Desktop Menu */}
@@ -50,11 +50,11 @@ const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
             onNavigate={onNavigate}
           />
 
-          <div className=" flex items-center gap-3">
+          <div className="flex items-center gap-3">
             <Button
               onClick={() => setIsMapDialogOpen(true)}
               size="lg"
-              className="px-4 cursor-pointer rounded-full bg-primary hover:bg-primary/90 text-white text-sm font-medium shadow-xs transition-all"
+              className="px-4 cursor-pointer rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-medium shadow-xs transition-all"
             >
               <div className="hidden sm:flex items-center gap-2">
                 Tìm kiếm địa điểm <Search className="!h-4 !w-4" />
@@ -73,7 +73,7 @@ const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
             </div>
           </div>
         </div>
-      </nav>
+      </header>
     </>
   );
 };
