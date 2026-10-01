@@ -9,11 +9,13 @@ import { cn } from "@/lib/utils";
 export default function MapBlock({
     opened,
     className,
+    onSelectHotspot,
 }: {
     opened: boolean;
     setOpened?: (opened: boolean) => void;
     showMedia?: (mediaName: string) => void;
     className?: string;
+    onSelectHotspot?: (hotspot: any) => void;
 }) {
     const onMarkerSelectHandler = (hotspot: any) => {
         if (hotspot.geolocation?.lon && hotspot.geolocation?.lat) {
