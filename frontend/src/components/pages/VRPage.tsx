@@ -5,7 +5,6 @@ import { useViewportHeight } from "@/hooks/useViewportHeight";
 import use3DVistaHook from "@/hooks/use3DVistaHook";
 import useVRStore from "@/store/vr.store";
 import useAssetStore from "@/store/asset.store";
-import { Spinner } from "@/components/ui/shadcn-io/spinner";
 import "./VRPage.module.css";
 import { useSearchParams } from "react-router-dom";
 import { Drawer } from "vaul";

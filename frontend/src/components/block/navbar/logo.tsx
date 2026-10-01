@@ -10,7 +10,7 @@ export const Logo = () => (
         Bản Đồ Số Bình Long
       </span>
       <span className="text-[10px] sm:text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
-        Thị xã Bình Long
+        Phường Bình Long, TP. Đồng Nai
       </span>
     </div>
   </div>

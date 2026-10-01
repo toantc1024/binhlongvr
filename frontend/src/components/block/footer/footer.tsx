@@ -16,7 +16,7 @@ const FooterSection = () => {
             bandosobinhlong.vn
           </a>
           <br />
-          Bản quyền thuộc về Thị đoàn Bình Long & UBND Thị xã Bình Long, Tỉnh Bình Phước.
+          BẢN QUYỀN THUỘC VỀ UBND PHƯỜNG BÌNH LONG, THÀNH PHỐ ĐỒNG NAI.
         </p>
       </div>
     </footer>

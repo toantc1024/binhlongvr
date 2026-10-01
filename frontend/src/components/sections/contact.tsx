@@ -37,9 +37,9 @@ export function ContactSection() {
                         </p>
                         <a
                             className="mt-4 font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 transition-colors hover:underline text-left text-sm sm:text-base break-all"
-                            href="mailto:thidoanbinhlong@binhphuoc.gov.vn"
+                            href="mailto:ubnd.phuongbinhlong@dongnai.gov.vn"
                         >
-                            thidoanbinhlong@binhphuoc.gov.vn
+                            ubnd.phuongbinhlong@dongnai.gov.vn
                         </a>
                     </div>
 
@@ -57,19 +57,19 @@ export function ContactSection() {
                         </h3>
                         <div className="mt-1.5 text-muted-foreground text-sm space-y-1 text-left">
                             <p className="font-medium text-foreground text-left">
-                                Thị đoàn Bình Long
+                                UBND Phường Bình Long
                             </p>
                             <p className="text-sm font-normal text-muted-foreground text-left">
-                                Đoàn TNCS Hồ Chí Minh Thị xã Bình Long, Tỉnh Bình Phước
+                                Ủy ban Nhân dân Phường Bình Long, Thành phố Đồng Nai
                             </p>
                         </div>
                         <a
                             className="mt-4 font-normal text-muted-foreground hover:text-primary transition-colors hover:underline text-left text-sm"
-                            href="https://maps.google.com/?q=Thị+Đoàn+Bình+Long,+Bình+Phước"
+                            href="https://maps.google.com/?q=UBND+Phường+Bình+Long,+Đồng+Nai"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            Đường Trần Hưng Đạo, P. An Lộc, TX. Bình Long, Tỉnh Bình Phước
+                            Phường Bình Long, Thành phố Đồng Nai
                         </a>
                     </div>
                 </div>

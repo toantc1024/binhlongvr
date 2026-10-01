@@ -85,11 +85,11 @@ export default function BinhLongImageCarousel() {
         </div>
       ))}
 
-      {/* Big prominent green-white navigation chevrons */}
+      {/* Big prominent green-white navigation chevrons (shown on hover) */}
       <button
         onClick={prevSlide}
         aria-label="Hình trước"
-        className="absolute left-3.5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border-2 border-white/90 shadow-xl backdrop-blur-md flex items-center justify-center opacity-90 hover:opacity-100 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+        className="absolute left-3.5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border-2 border-white/90 shadow-xl backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
       >
         <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5]" />
       </button>
@@ -97,7 +97,7 @@ export default function BinhLongImageCarousel() {
       <button
         onClick={nextSlide}
         aria-label="Hình tiếp theo"
-        className="absolute right-3.5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border-2 border-white/90 shadow-xl backdrop-blur-md flex items-center justify-center opacity-90 hover:opacity-100 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+        className="absolute right-3.5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border-2 border-white/90 shadow-xl backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
       >
         <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5]" />
       </button>

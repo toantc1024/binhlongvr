@@ -2,20 +2,49 @@
 bandoso-api/
 frontend/dist/
 frontend/node_modules/
+node_modules/
+dist/
 
-# Python cache & virtual environments
+# Python cache & bytecode
 __pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
 env/
 venv/
 .venv/
+ENV/
+
+# Automation build & temp directories
 automation/temp/
 automation/processed_images/
 
-# OS metadata
+# OS metadata & local editor configs
 .DS_Store
 **/.DS_Store
+._*
 Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Environment variables & secrets
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

@@ -64,19 +64,19 @@ const DEFAULT_HOTSPOTS_LIST: Item[] = [
     {
         name: "Cổng chính Khu Di tích Mộ 3.000 người",
         description: "Cổng chính dẫn vào khuôn viên khu tưởng niệm Mộ tập thể 3.000 đồng bào An Lộc trang nghiêm và tôn kính.",
-        address: "Đường Lê Quý Đôn, Phường An Lộc, TX. Bình Long",
+        address: "Phường Bình Long, TP. Đồng Nai",
         preview_image: "/vr_core/thumbnail.png",
     },
     {
-        name: "Ngã Năm Thị Xã Bình Long",
+        name: "Ngã Năm Phường Bình Long",
         description: "Giao lộ huyết mạch lịch sử kết nối các tuyến đường trọng điểm của Bình Long, chứng nhân lịch sử qua các thời kỳ.",
-        address: "Trung tâm Thị xã Bình Long, Tỉnh Bình Phước",
+        address: "Trung tâm Phường Bình Long, Thành phố Đồng Nai",
         preview_image: "/vr_core/thumbnail.png",
     },
     {
         name: "Di tích Lịch sử Mộ 3.000 người An Lộc",
         description: "Nơi ghi dấu sự hy sinh anh dũng của hơn 3.000 đồng bào và chiến sĩ trong cuộc chiến đấu bảo vệ quê hương năm 1972. Di tích lịch sử - văn hóa cấp Quốc gia.",
-        address: "Đường Lê Quý Đôn, Phường An Lộc, TX. Bình Long",
+        address: "Phường Bình Long, TP. Đồng Nai",
         preview_image: "/vr_core/thumbnail.png",
     },
 ];

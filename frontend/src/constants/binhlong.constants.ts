@@ -4,10 +4,10 @@ import type { Panorama } from "../types/panoramas.service.type";
 
 export const BINHLONG_AREA: Area = {
   area_id: "25",
-  area_name: "Thị xã Bình Long, Bình Phước",
+  area_name: "Phường Bình Long, TP. Đồng Nai",
   domain: "bandosobinhlong.vn",
   main_hotspot_id: "132",
-  description: "Bản đồ số Di tích Lịch sử và Văn hóa Thị xã Bình Long, Tỉnh Bình Phước",
+  description: "Bản đồ số Di tích Lịch sử và Văn hóa Phường Bình Long, Thành phố Đồng Nai",
   is_active: true,
 };
 
@@ -19,7 +19,7 @@ export const BINHLONG_HOTSPOTS: Hotspot[] = [
     title: "Di tích Lịch sử Dinh Tỉnh Trưởng Bình Long",
     description:
       "Dinh Tỉnh Trưởng Bình Long (Di tích lịch sử Nhà và Đường hầm An Lộc) là cơ quan đầu não thời chính quyền Sài Gòn với hệ thống công sự, lô cốt và đường hầm ngầm kiên cố trong chiến dịch mùa hè 1972.",
-    address: "Phường Phú Đức, Thị xã Bình Long, Tỉnh Bình Phước",
+    address: "Phường Bình Long, Thành phố Đồng Nai",
     website: null,
     geolocation: { lon: 106.607088, lat: 11.652378 },
     preview_image: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/hotspots/hotspot_130_preview.jpg",
@@ -39,7 +39,7 @@ export const BINHLONG_HOTSPOTS: Hotspot[] = [
     title: "Di tích Lịch sử Mộ tập thể Lực lượng vũ trang An ninh An Lộc (Mộ 7 Người)",
     description:
       "Nơi an nghỉ và ghi dấu sự hy sinh anh dũng kiên cường của 7 cán bộ chiến sĩ Đội An ninh vũ trang An Lộc năm 1971 trong kháng chiến chống Mỹ cứu nước. Di tích Lịch sử cấp Tỉnh.",
-    address: "Khu phố Bình An, Phường An Lộc, Thị xã Bình Long, Tỉnh Bình Phước",
+    address: "Phường Bình Long, Thành phố Đồng Nai",
     website: null,
     geolocation: { lon: 106.6057152, lat: 11.6583201 },
     preview_image: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/hotspots/hotspot_131_preview.jpg",
@@ -59,7 +59,7 @@ export const BINHLONG_HOTSPOTS: Hotspot[] = [
     title: "Di tích Lịch sử Quốc gia Mộ 3.000 người An Lộc",
     description:
       "Nơi ghi dấu nỗi đau thương chiến tranh và sự hy sinh to lớn của hơn 3.000 đồng bào tử nạn trong 32 ngày đêm chiến sự năm 1972. Di tích Lịch sử - Văn hóa cấp Quốc gia.",
-    address: "Đường Phạm Ngọc Thạch, Phường An Lộc, Thị xã Bình Long, Tỉnh Bình Phước",
+    address: "Đường Phạm Ngọc Thạch, Phường Bình Long, Thành phố Đồng Nai",
     website: null,
     geolocation: { lon: 106.6057461, lat: 11.6491817 },
     preview_image: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/hotspots/hotspot_132_preview.jpg",
@@ -79,7 +79,7 @@ export const BINHLONG_HOTSPOTS: Hotspot[] = [
     title: "Di tích Lịch sử - Văn hóa Chùa Hưng Lập Tự",
     description:
       "Ngôi chùa cổ kính thuộc Tịnh độ Cư sĩ Phật hội Việt Nam, nổi tiếng với truyền thống y đạo bác ái của Phòng thuốc Nam Phước thiện khám chữa bệnh miễn phí cho nhân dân suốt nhiều thập kỷ.",
-    address: "Khu phố Phú Trọng, Phường Phú Đức, Thị xã Bình Long, Tỉnh Bình Phước",
+    address: "Phường Bình Long, Thành phố Đồng Nai",
     website: null,
     geolocation: { lon: 106.6117306, lat: 11.6480133 },
     preview_image: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/hotspots/hotspot_133_preview.jpg",

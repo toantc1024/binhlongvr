@@ -12,13 +12,12 @@ import { BINHLONG_HOTSPOTS } from "@/constants/binhlong.constants";
 const HotspotCard = ({
     preview_image,
     title,
-    hotspot_id,
     description,
     click_panorama_id,
 }: {
     preview_image: string;
     title: string;
-    hotspot_id: string;
+    hotspot_id?: string;
     description: string;
     click_panorama_id?: string | null;
 }) => {

@@ -75,9 +75,9 @@ const FooterBlock = ({
         title: "Bản Đồ Số Bình Long",
     },
     sections = defaultSections,
-    description = "Khám phá di tích lịch sử và văn hóa Thị xã Bình Long qua công nghệ thực tế ảo tương tác.",
+    description = "Khám phá di tích lịch sử và văn hóa Phường Bình Long qua công nghệ thực tế ảo tương tác.",
     socialLinks = defaultSocialLinks,
-    copyright = "© Bản quyền thuộc về Thị đoàn Bình Long & UBND Thị xã Bình Long, Tỉnh Bình Phước.",
+    copyright = "© BẢN QUYỀN THUỘC VỀ UBND PHƯỜNG BÌNH LONG, THÀNH PHỐ ĐỒNG NAI.",
     legalLinks = defaultLegalLinks,
 }: Footer7Props) => {
     return (
