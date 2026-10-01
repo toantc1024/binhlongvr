@@ -28,8 +28,8 @@ const ShareDialogBlock = ({ pill, shareData }: ShareDialogBlockProps) => {
 
     // Get current page URL or use provided URL
     const currentUrl = shareData?.url || (typeof window !== 'undefined' ? window.location.href : '')
-    const title = shareData?.title || (typeof document !== 'undefined' ? document.title : 'VR Experience')
-    const description = shareData?.description || 'Khám phá không gian ảo 360°'
+    const title = shareData?.title || (typeof document !== 'undefined' ? document.title : 'Bản Đồ Số VR Di Tích Phường Bình Long - Thực Tế Ảo 360°')
+    const description = shareData?.description || 'Khám phá các di tích lịch sử và văn hóa Phường Bình Long, Thành phố Đồng Nai qua công nghệ thực tế ảo tương tác đa chiều.'
 
     const copyToClipboard = async () => {
         try {
