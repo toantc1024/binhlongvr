@@ -137,6 +137,7 @@ export default function MapBlock({
                 element.addEventListener('click', (e) => {
                     e.stopPropagation();
                     onMarkerSelectHandler(hotspot);
+                    onSelectHotspot?.(hotspot);
                 });
 
                 const marker = new maplibregl.Marker({
