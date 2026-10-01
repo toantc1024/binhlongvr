@@ -1,7 +1,21 @@
+# Dependencies & Build
 bandoso-api/
-images/
-.DS_Store
 frontend/dist/
 frontend/node_modules/
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
 automation/temp/
 automation/processed_images/
+
+# OS metadata
+.DS_Store
+**/.DS_Store
+Thumbs.db
