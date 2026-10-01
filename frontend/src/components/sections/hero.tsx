@@ -1,4 +1,4 @@
-import { ArrowUpRight, CirclePlay } from "lucide-react";
+import { ArrowUpRight, CirclePlay, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -12,7 +12,7 @@ import useVRStore from "@/store/vr.store";
 
 export default function HeroSection() {
   const navigate = useNavigate();
-  const { setIsLoading } = useVRStore((state) => state);
+  const { setIsLoading, setIsMapDialogOpen } = useVRStore((state) => state);
   return (
     <div className="relative pt-24 pb-10 w-full flex flex-col gap-6 items-center justify-center">
       <div className="top-0 z-[0] flex h-screen w-full flex-col items-center justify-center overflow-hidden absolute">
@@ -89,7 +89,20 @@ export default function HeroSection() {
                   setOpened={() => {}}
                   showMedia={() => {}}
                   className="rounded-xl h-full w-full"
+                  onSelectHotspot={(hotspot) => {
+                    setIsMapDialogOpen(true, hotspot.hotspot_id);
+                  }}
                 />
+                {/* Maximize Map Button */}
+                <button
+                  onClick={() => setIsMapDialogOpen(true)}
+                  className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded-lg bg-white/95 dark:bg-card/95 hover:bg-white text-foreground text-xs font-medium border border-border shadow-md backdrop-blur-md flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 cursor-pointer select-none"
+                  title="Mở toàn màn hình bản đồ"
+                  type="button"
+                >
+                  <Maximize2 className="w-3.5 h-3.5 text-primary stroke-[2.5]" />
+                  <span className="hidden sm:inline text-xs font-semibold">Xem bản đồ lớn</span>
+                </button>
               </CardContent>
             </Card>
           </div>

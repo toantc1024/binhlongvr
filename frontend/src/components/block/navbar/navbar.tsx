@@ -3,7 +3,6 @@ import { Logo } from "./logo";
 import { NavMenu } from "./nav-menu";
 import { Search } from "lucide-react";
 import MapDialogBlock from "../MapDialogBlock";
-import { useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import useVRStore from "@/store/vr.store";
 
@@ -14,13 +13,13 @@ interface NavbarProps {
 }
 
 const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
-  const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
   const navigate = useNavigate();
-  const { setIsLoading } = useVRStore((state) => state);
+  const { setIsLoading, isMapDialogOpen, setIsMapDialogOpen, mapDialogHotspotId } = useVRStore((state) => state);
   return (
     <>
       <MapDialogBlock
         opened={isMapDialogOpen}
+        initialHotspotId={mapDialogHotspotId}
         showMedia={(item) => {
           navigate({
             pathname: "/app",
@@ -33,7 +32,7 @@ const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
             setIsLoading(false);
           }, 5000);
         }}
-        setOpened={setIsMapDialogOpen}
+        setOpened={(open) => setIsMapDialogOpen(open)}
       />
       <header
         ref={ref}

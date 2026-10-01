@@ -24,16 +24,18 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import type { Hotspot } from "@/types/hotspots.service.type";
 import type { Panorama } from "@/types/panoramas.service.type";
-import { BINHLONG_PANORAMAS } from "@/constants/binhlong.constants";
+import { BINHLONG_PANORAMAS, BINHLONG_HOTSPOTS } from "@/constants/binhlong.constants";
 
 export default function MapDialogBlock({
     opened,
     setOpened,
-    showMedia
+    showMedia,
+    initialHotspotId,
 }: {
     opened: boolean;
     setOpened: (opened: boolean) => void;
     showMedia: (mediaName: string) => void;
+    initialHotspotId?: number | null;
 }) {
     const center: [number, number] = import.meta.env.VITE_CENTER_GPS
         ? import.meta.env.VITE_CENTER_GPS.split(",").map(Number)
@@ -51,7 +53,7 @@ export default function MapDialogBlock({
     const hotspotMarkersRef = useRef<maplibregl.Marker[]>([]);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    const { areaHotspots } = useVRStore((state) => state);
+    const { areaHotspots, mapDialogHotspotId } = useVRStore((state) => state);
 
     const [searchValue, setSearchValue] = useState("");
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -137,8 +139,43 @@ export default function MapDialogBlock({
             setTimeout(() => {
                 mapRef.current?.resize();
             }, 100);
+
+            const activeId = initialHotspotId ?? mapDialogHotspotId;
+            if (activeId) {
+                const hotspotsSource = areaHotspots && areaHotspots.length > 0 ? areaHotspots : BINHLONG_HOTSPOTS;
+                const target = hotspotsSource.find((h) => Number(h.hotspot_id) === Number(activeId));
+                if (target) {
+                    setSelectedHotspotId(target.hotspot_id);
+                    setSelectedMarker(target);
+                    setIsSearchOpen(false);
+                    setSearchValue("");
+
+                    const flyToHotspot = () => {
+                        if (mapRef.current && target.geolocation?.lon && target.geolocation?.lat) {
+                            mapRef.current.flyTo({
+                                center: [target.geolocation.lon, target.geolocation.lat],
+                                zoom: 16.2,
+                                pitch: 65,
+                                bearing: -24,
+                                speed: 1.2,
+                                curve: 1.4,
+                                easing: (t) => t,
+                            });
+                        }
+                    };
+
+                    if (mapRef.current?.isStyleLoaded()) {
+                        setTimeout(flyToHotspot, 150);
+                    } else if (mapRef.current) {
+                        mapRef.current.once("load", flyToHotspot);
+                        setTimeout(flyToHotspot, 350);
+                    } else {
+                        setTimeout(flyToHotspot, 400);
+                    }
+                }
+            }
         }
-    }, [opened]);
+    }, [opened, initialHotspotId, mapDialogHotspotId, areaHotspots]);
 
     // Init map only once
     useEffect(() => {
