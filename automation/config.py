@@ -22,9 +22,9 @@ MAIN_HOTSPOT_ID = 132  # Mộ 3.000 người An Lộc
 GOONG_API_KEY = os.getenv("GOONG_API_KEY", "7bWT40gj8VTkZ1INXSPPQk3CJG5tLg9jIgMayy3f")
 
 # TTS Voice Configuration
-TTS_VOICE = "vi-VN-HoaiMyNeural"  # Giọng nữ tiếng Việt truyền cảm, tự nhiên
-TTS_RATE = "+0%"
-TTS_PITCH = "+0Hz"
+TTS_VOICE = "vi-VN-HoaiMyNeural"  # Giọng nữ tiếng Việt truyền cảm, dịu dàng, tự nhiên
+TTS_RATE = "-8%"   # Tốc độ đọc từ tốn, lắng đọng, truyền cảm
+TTS_PITCH = "-2Hz"  # Cao độ hơi trầm ấm, dịu dàng, không bị the thé
 
 # Path configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

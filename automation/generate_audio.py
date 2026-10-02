@@ -20,37 +20,22 @@ except ImportError:
     sys.exit(1)
 
 
-def generate_single_audio(code: str, info: dict, voice: str = TTS_VOICE, rate: str = TTS_RATE, pitch: str = TTS_PITCH):
-    import subprocess
-    import tempfile
-
+async def _generate_single_audio_async(code: str, info: dict, voice: str = TTS_VOICE, rate: str = TTS_RATE, pitch: str = TTS_PITCH):
     audio_path = os.path.join(AUDIO_DIR, info["audio_filename"])
     print(f"\n[{code}] Đang tạo audio thuyết minh: {info['title']}...")
     print(f"       Giọng đọc: {voice} | Tốc độ: {rate} | Cao độ: {pitch}")
     print(f"       Độ dài văn bản: {len(info['audio_text'])} ký tự")
 
-    # Use a temporary text file to handle multi-line text cleanly
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, suffix=".txt") as tmp:
-        tmp.write(info["audio_text"])
-        tmp_name = tmp.name
-
-    try:
-        cmd = [
-            "edge-tts",
-            "--voice", voice,
-            "--rate", rate,
-            "--pitch", pitch,
-            "-f", tmp_name,
-            "--write-media", audio_path
-        ]
-        res = subprocess.run(cmd, capture_output=True, text=True, check=True)
-    finally:
-        if os.path.exists(tmp_name):
-            os.remove(tmp_name)
+    communicate = edge_tts.Communicate(info["audio_text"], voice=voice, rate=rate, pitch=pitch)
+    await communicate.save(audio_path)
 
     file_size_kb = os.path.getsize(audio_path) / 1024
     print(f"       -> Hoàn thành: {audio_path} ({file_size_kb:.1f} KB)")
     return audio_path
+
+
+def generate_single_audio(code: str, info: dict, voice: str = TTS_VOICE, rate: str = TTS_RATE, pitch: str = TTS_PITCH):
+    return asyncio.run(_generate_single_audio_async(code, info, voice=voice, rate=rate, pitch=pitch))
 
 
 def main_sync(selected_code=None, voice=TTS_VOICE, rate=TTS_RATE, pitch=TTS_PITCH):
