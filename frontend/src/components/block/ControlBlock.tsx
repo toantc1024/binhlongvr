@@ -24,7 +24,6 @@ import PanoramaCarouselBlock from "./PanoramaCarouselBlock";
 import TutorialDialogBlock from "./TutorialDialogBlock";
 import MapDialogBlock from "./MapDialogBlock";
 import { useNavigate } from "react-router-dom";
-import AssetActionPillBlock from "./AssetActionPillBlock";
 import { PiInfoFill } from "react-icons/pi";
 import { FiShare2 } from "react-icons/fi";
 import useVRStore from "@/store/vr.store";
@@ -86,7 +85,7 @@ const ControlBlock = ({
   }, []);
 
   // Helper function to play audio with small volume (0.35) and handle browser autoplay policy
-  const playAudioWithSmallVolume = (url: string, title?: string | null) => {
+  const playAudioWithSmallVolume = (url: string) => {
     if (!audioRef.current || userPausedRef.current) return;
 
     audioRef.current.volume = 0.35;
@@ -97,10 +96,6 @@ const ControlBlock = ({
       playPromise
         .then(() => {
           setIsPlayingAudio(true);
-          toast.info(`Thuyết minh: ${title || "Di tích"} (Âm lượng nhỏ)`, {
-            id: "audio-info",
-            duration: 3000,
-          });
         })
         .catch((err) => {
           console.log("Autoplay waiting for user gesture:", err);
@@ -114,10 +109,6 @@ const ControlBlock = ({
                 .play()
                 .then(() => {
                   setIsPlayingAudio(true);
-                  toast.info(`Thuyết minh: ${title || "Di tích"} (Âm lượng nhỏ)`, {
-                    id: "audio-info",
-                    duration: 3000,
-                  });
                 })
                 .catch(() => {});
             }
@@ -140,7 +131,7 @@ const ControlBlock = ({
     if (!currentAudioUrl || userPausedRef.current) return;
 
     const timer = setTimeout(() => {
-      playAudioWithSmallVolume(currentAudioUrl, currentHotspot?.title);
+      playAudioWithSmallVolume(currentAudioUrl);
     }, 600);
 
     return () => clearTimeout(timer);
@@ -156,7 +147,7 @@ const ControlBlock = ({
 
       if (currentAudioUrl && !userPausedRef.current) {
         const timer = setTimeout(() => {
-          playAudioWithSmallVolume(currentAudioUrl, currentHotspot.title);
+          playAudioWithSmallVolume(currentAudioUrl);
         }, 500);
 
         return () => clearTimeout(timer);
@@ -176,7 +167,6 @@ const ControlBlock = ({
       audioRef.current.pause();
       userPausedRef.current = true;
       setIsPlayingAudio(false);
-      toast.info("Đã tắt thuyết minh âm thanh");
     } else {
       if (!currentAudioUrl) {
         toast.warning("Địa điểm này chưa có bản thu thuyết minh");
@@ -189,14 +179,10 @@ const ControlBlock = ({
         .play()
         .then(() => {
           setIsPlayingAudio(true);
-          toast.success(
-            `Đang phát thuyết minh: ${currentHotspot?.title || "Di tích"} (Âm lượng nhỏ)`
-          );
         })
         .catch((err) => {
           console.error("Audio playback error:", err);
           setIsPlayingAudio(false);
-          toast.error("Không thể phát âm thanh. Vui lòng thử lại!");
         });
     }
   };
@@ -333,7 +319,7 @@ const ControlBlock = ({
       >
         <div className="w-full bg-white/95 border-t border-border backdrop-blur-2xl shadow-2xl py-2.5 sm:py-3 px-2 sm:px-4">
           <div className="relative">
-            <div className="z-[1] flex items-center justify-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none w-full max-w-full mx-auto px-1">
+            <div className="z-[1] flex items-center justify-start md:justify-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none w-full max-w-full mx-auto px-2 sm:px-4">
               {/* Centered Panorama Selector Popover with Wide Width on Mobile */}
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
@@ -343,7 +329,7 @@ const ControlBlock = ({
                     aria-expanded={open}
                     className="bg-white hover:bg-secondary text-foreground border border-border rounded-full h-12 sm:h-13 px-4 sm:px-5 min-w-[230px] sm:min-w-[270px] max-w-[320px] sm:max-w-[420px] justify-between overflow-hidden cursor-pointer shadow-sm font-bold text-sm sm:text-base shrink-0 active:scale-95 transition-all"
                   >
-                    <span className="truncate text-foreground text-left">
+                    <span className="truncate text-foreground text-center flex-1">
                       Bạn đang ở: {currentPanorama?.title}
                     </span>
                     <ChevronsUpDown className="text-foreground opacity-90 shrink-0 ml-2 !size-5 sm:!size-6 stroke-[2.5]" />
@@ -405,10 +391,6 @@ const ControlBlock = ({
                 </PopoverContent>
               </Popover>
 
-              <AssetActionPillBlock
-                hotspot={currentHotspot}
-                showMedia={showMedia}
-              />
 
               {actionPills.map((pill) => {
                 if (pill.id === "introduction") {
