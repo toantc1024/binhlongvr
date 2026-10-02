@@ -60,11 +60,11 @@ const TutorialDialogBlock = () => {
 
                         <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0">
-                                <FiHome className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
+                                <FiHome className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-foreground font-bold text-sm sm:text-base">Về góc nhìn Flycam ban đầu</p>
-                                <p className="text-muted-foreground text-xs sm:text-sm">Đưa không gian 3D Vista trở về góc nhìn Flycam toàn cảnh</p>
+                                <p className="text-foreground font-bold text-sm sm:text-base">Về Flycam gốc toàn cảnh (Ngã Năm)</p>
+                                <p className="text-muted-foreground text-xs sm:text-sm">Đưa không gian thực tế ảo trở về góc nhìn Flycam trung tâm toàn cảnh Phường Bình Long</p>
                             </div>
                         </div>
 

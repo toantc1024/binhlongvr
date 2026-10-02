@@ -44,6 +44,7 @@ const ControlBlock = ({
     currentHotspot,
     currentPanorama,
     setCurrentPanoramaById,
+    setCurrentHotspotById,
     panoramas,
   } = useVRStore((state) => state);
   const navigate = useNavigate();
@@ -187,26 +188,19 @@ const ControlBlock = ({
     }
   };
 
-  // Home button: Returns to Flycam 360 initial view of the place
+  // Home button: Returns to ROOT Flycam 360 overview of Binh Long (Ngã Năm / Main Hotspot)
   const handleGoToFlycamHome = () => {
-    const currentHotspotFlycam = panoramas.find((p) =>
-      p.panorama_id.toLowerCase().includes("flycam")
-    );
+    const mainHotspotId = currentArea?.main_hotspot_id
+      ? Number(currentArea.main_hotspot_id)
+      : 132;
 
-    const mainHotspot = currentArea?.main_hotspot_id
-      ? getHotspotById(Number(currentArea.main_hotspot_id))
-      : null;
+    const mainHotspot = getHotspotById(mainHotspotId);
+    const targetPanoramaId =
+      mainHotspot?.click_panorama_id || "M3000_0_FLYCAM_1";
 
-    const targetFlycamId =
-      currentHotspotFlycam?.panorama_id ||
-      mainHotspot?.click_panorama_id ||
-      "M3000_0_FLYCAM_2";
-
-    if (targetFlycamId) {
-      setCurrentPanoramaById(targetFlycamId);
-      showMedia(targetFlycamId);
-      toast.info("Đã quay về góc nhìn Flycam toàn cảnh");
-    }
+    setCurrentHotspotById(mainHotspotId);
+    setCurrentPanoramaById(targetPanoramaId);
+    showMedia(targetPanoramaId);
   };
 
   return (
@@ -238,15 +232,15 @@ const ControlBlock = ({
           <RiGlobalFill className="!size-6 sm:!size-7 text-emerald-600 group-hover:scale-110 transition-transform" />
         </Button>
 
-        {/* Nút Home: Về Flycam ban đầu */}
+        {/* Nút Home: Về Flycam gốc toàn cảnh (Ngã Năm / Main Hotspot) */}
         <Button
           variant="ghost"
-          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
+          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-emerald-50 hover:text-emerald-700 bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
           onClick={handleGoToFlycamHome}
-          aria-label="Về góc nhìn Flycam ban đầu"
-          title="Về góc nhìn Flycam ban đầu"
+          aria-label="Về Flycam gốc toàn cảnh (Ngã Năm)"
+          title="Về Flycam gốc toàn cảnh (Ngã Năm)"
         >
-          <FiHome className="!size-6 sm:!size-7 text-foreground group-hover:scale-110 transition-transform" />
+          <FiHome className="!size-6 sm:!size-7 text-emerald-600 group-hover:scale-110 transition-transform" />
         </Button>
 
         {/* Nút Thuyết minh Âm thanh */}
