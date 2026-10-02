@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import AbsoluteWrapper from "../ui/absolute-wrapper";
 import { FiHome, FiChevronUp, FiChevronDown } from "react-icons/fi";
 import { Check, ChevronsUpDown, Search, Volume2, VolumeX } from "lucide-react";
+import { RiGlobalFill } from "react-icons/ri";
 import { cn } from "@/lib/utils";
 import {
   Command,
@@ -39,6 +40,8 @@ const ControlBlock = ({
 }) => {
   const [isBottomNavVisible, setIsBottomNavVisible] = useState(true);
   const {
+    currentArea,
+    getHotspotById,
     currentHotspot,
     currentPanorama,
     setCurrentPanoramaById,
@@ -198,6 +201,28 @@ const ControlBlock = ({
     }
   };
 
+  // Home button: Returns to Flycam 360 initial view of the place
+  const handleGoToFlycamHome = () => {
+    const currentHotspotFlycam = panoramas.find((p) =>
+      p.panorama_id.toLowerCase().includes("flycam")
+    );
+
+    const mainHotspot = currentArea?.main_hotspot_id
+      ? getHotspotById(Number(currentArea.main_hotspot_id))
+      : null;
+
+    const targetFlycamId =
+      currentHotspotFlycam?.panorama_id ||
+      mainHotspot?.click_panorama_id ||
+      "M3000_0_FLYCAM_2";
+
+    if (targetFlycamId) {
+      setCurrentPanoramaById(targetFlycamId);
+      showMedia(targetFlycamId);
+      toast.info("Đã quay về góc nhìn Flycam toàn cảnh");
+    }
+  };
+
   return (
     <>
       {/* Hidden HTML5 audio element for place-based narration */}
@@ -209,25 +234,36 @@ const ControlBlock = ({
         preload="auto"
       />
 
-      {/* Top Left Navigation: Home, Audio Toggle, Tutorial */}
+      {/* Top Left Navigation: Website, Flycam Home, Audio Narration, Guide */}
       <AbsoluteWrapper
         top="0"
         zIndex={2}
         left="0"
         customClassName="flex m-2 sm:m-3 items-center px-1.5 py-1.5 sm:px-2 sm:py-2 h-auto rounded-full gap-2 sm:gap-2.5 flex-col shadow-xl border border-border/80 bg-white/95 backdrop-blur-2xl"
       >
-        {/* Home / Back to website button */}
+        {/* Nút trở về Website */}
         <Button
           variant="ghost"
-          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95"
+          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-emerald-50 hover:text-emerald-700 bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
           onClick={() => navigate("/")}
-          aria-label="Về trang chủ website"
-          title="Về trang chủ website"
+          aria-label="Trở về website"
+          title="Trở về website"
         >
-          <FiHome className="!size-6 sm:!size-7 text-foreground" />
+          <RiGlobalFill className="!size-6 sm:!size-7 text-emerald-600 group-hover:scale-110 transition-transform" />
         </Button>
 
-        {/* Audio Narration Toggle Button */}
+        {/* Nút Home: Về Flycam ban đầu */}
+        <Button
+          variant="ghost"
+          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
+          onClick={handleGoToFlycamHome}
+          aria-label="Về góc nhìn Flycam ban đầu"
+          title="Về góc nhìn Flycam ban đầu"
+        >
+          <FiHome className="!size-6 sm:!size-7 text-foreground group-hover:scale-110 transition-transform" />
+        </Button>
+
+        {/* Nút Thuyết minh Âm thanh */}
         <Button
           variant="ghost"
           className={cn(
@@ -241,7 +277,9 @@ const ControlBlock = ({
             isPlayingAudio ? "Tắt thuyết minh âm thanh" : "Bật thuyết minh âm thanh"
           }
           title={
-            isPlayingAudio ? "Tắt thuyết minh âm thanh" : "Bật thuyết minh âm thanh"
+            isPlayingAudio
+              ? "Tắt thuyết minh âm thanh (Âm lượng nhỏ 35%)"
+              : "Bật thuyết minh âm thanh"
           }
         >
           {isPlayingAudio ? (
@@ -257,10 +295,9 @@ const ControlBlock = ({
           )}
         </Button>
 
-        {/* Tutorial Dialog */}
+        {/* Nút Hướng dẫn */}
         <TutorialDialogBlock />
       </AbsoluteWrapper>
-
       {/* Top Right Navigation: Search (opens Map Dialog) */}
       <div className="fixed top-2 right-2 sm:top-3 sm:right-3 z-50 flex flex-col gap-2">
         <Button
@@ -283,7 +320,7 @@ const ControlBlock = ({
       {/* Top Center Location Title Banner */}
       <div className="absolute w-full top-2 sm:top-3 flex flex-col items-center justify-center pointer-events-none px-16 z-20">
         {currentHotspot && (
-          <div className="pointer-events-auto py-1.5 px-4 sm:py-2 sm:px-6 font-bold text-foreground text-xs sm:text-sm md:text-base lg:text-lg bg-white/95 rounded-full border border-border max-w-[70vw] sm:max-w-[50vw] overflow-hidden text-ellipsis whitespace-nowrap shadow-xl backdrop-blur-2xl">
+          <div className="pointer-events-auto py-2 px-5 sm:py-2.5 sm:px-7 font-bold text-foreground text-sm sm:text-base md:text-lg lg:text-xl bg-white/95 rounded-full border border-border max-w-[75vw] sm:max-w-[55vw] overflow-hidden text-ellipsis whitespace-nowrap shadow-xl backdrop-blur-2xl">
             {currentHotspot?.title}
           </div>
         )}
@@ -294,47 +331,49 @@ const ControlBlock = ({
         zIndex={1}
         customClassName="bottom-0 left-0 w-full flex flex-col justify-center items-center"
       >
-        <div className="w-full bg-white/95 border-t border-border backdrop-blur-2xl shadow-2xl py-2 sm:py-2.5 px-2 sm:px-4">
+        <div className="w-full bg-white/95 border-t border-border backdrop-blur-2xl shadow-2xl py-2.5 sm:py-3 px-2 sm:px-4">
           <div className="relative">
             <div className="z-[1] flex items-center justify-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none w-full max-w-full mx-auto px-1">
-              {/* Centered Panorama Selector Popover */}
+              {/* Centered Panorama Selector Popover with Wide Width on Mobile */}
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="bg-white hover:bg-secondary text-foreground border border-border rounded-full h-11 sm:h-12 px-3 sm:px-4 min-w-[210px] sm:min-w-[250px] max-w-[280px] sm:max-w-[340px] justify-between overflow-hidden cursor-pointer shadow-xs font-semibold text-xs sm:text-sm shrink-0"
+                    className="bg-white hover:bg-secondary text-foreground border border-border rounded-full h-12 sm:h-13 px-4 sm:px-5 min-w-[230px] sm:min-w-[270px] max-w-[320px] sm:max-w-[420px] justify-between overflow-hidden cursor-pointer shadow-sm font-bold text-sm sm:text-base shrink-0 active:scale-95 transition-all"
                   >
-                    <span className="truncate capitalize text-foreground text-left">
-                      Bạn đang ở {currentPanorama?.title}
+                    <span className="truncate text-foreground text-left">
+                      Bạn đang ở: {currentPanorama?.title}
                     </span>
-                    <ChevronsUpDown className="text-foreground opacity-80 shrink-0 ml-2 !size-5 stroke-[2.5]" />
+                    <ChevronsUpDown className="text-foreground opacity-90 shrink-0 ml-2 !size-5 sm:!size-6 stroke-[2.5]" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
                   align="center"
-                  className="border border-border w-[280px] sm:w-[320px] !rounded-2xl bg-white/95 backdrop-blur-2xl p-0 shadow-2xl"
+                  side="top"
+                  sideOffset={12}
+                  className="border border-border w-[calc(100vw-24px)] max-w-md sm:w-[440px] !rounded-2xl bg-white/98 dark:bg-slate-900/98 backdrop-blur-2xl p-2 sm:p-2.5 shadow-2xl z-[100]"
                   onOpenAutoFocus={(e) => e.preventDefault()}
                 >
-                  <Command className="bg-transparent border-none text-foreground">
+                  <Command className="bg-transparent border-none text-foreground w-full">
                     <CommandInput
-                      placeholder="Tìm panorama..."
-                      className="h-11 text-foreground placeholder:text-muted-foreground text-sm font-medium"
+                      placeholder="Tìm kiếm góc nhìn panorama..."
+                      className="h-12 text-foreground placeholder:text-muted-foreground text-sm sm:text-base font-medium px-3"
                     />
-                    <CommandList>
-                      <CommandEmpty className="text-muted-foreground p-4 text-center text-sm">
-                        Không tìm thấy panorama
+                    <CommandList className="max-h-72 sm:max-h-80 overflow-y-auto mt-1">
+                      <CommandEmpty className="text-muted-foreground p-5 text-center text-sm sm:text-base font-medium">
+                        Không tìm thấy góc nhìn nào
                       </CommandEmpty>
-                      <CommandGroup className="p-1.5 max-h-60 overflow-y-auto">
+                      <CommandGroup className="p-1 space-y-1">
                         {panoramas.map((panorama, index) => (
                           <CommandItem
                             className={cn(
-                              `text-foreground hover:bg-secondary rounded-xl cursor-pointer border border-transparent ${
+                              `text-foreground hover:bg-secondary rounded-xl cursor-pointer border border-transparent font-semibold px-3.5 py-3 text-sm sm:text-base transition-colors flex items-center justify-between ${
                                 index === panoramas.length - 1 ? "" : "mb-1"
-                              } font-medium px-3 py-2 text-sm transition-colors`,
+                              }`,
                               value === panorama.title
-                                ? "bg-secondary text-primary font-bold border-border"
+                                ? "bg-secondary text-primary font-bold border-border shadow-xs"
                                 : ""
                             )}
                             key={panorama.panorama_id}
@@ -352,7 +391,7 @@ const ControlBlock = ({
                             <span className="truncate flex-1">{panorama.title}</span>
                             <Check
                               className={cn(
-                                "ml-2 text-primary !size-5 shrink-0",
+                                "ml-2.5 text-primary !size-5 sm:!size-6 shrink-0 stroke-[2.5]",
                                 value === panorama.title
                                   ? "opacity-100"
                                   : "opacity-0"
@@ -411,16 +450,16 @@ const ControlBlock = ({
               {/* Carousel Toggle Button */}
               <Button
                 variant="outline"
-                className="h-11 sm:h-12 px-3.5 sm:px-4 shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer font-semibold text-xs sm:text-sm shrink-0 transition-all active:scale-95"
+                className="h-12 sm:h-13 px-4 sm:px-5 shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer font-bold text-sm sm:text-base shrink-0 transition-all active:scale-95"
                 onClick={() => setIsBottomNavVisible(!isBottomNavVisible)}
                 aria-label={
                   isBottomNavVisible ? "Ẩn danh sách ảnh" : "Hiện danh sách ảnh"
                 }
               >
                 {isBottomNavVisible ? (
-                  <FiChevronDown className="!size-5 sm:!size-5.5 mr-1.5 text-foreground stroke-[2.5]" />
+                  <FiChevronDown className="!size-5 sm:!size-6 mr-1.5 text-foreground stroke-[2.5]" />
                 ) : (
-                  <FiChevronUp className="!size-5 sm:!size-5.5 mr-1.5 text-foreground stroke-[2.5]" />
+                  <FiChevronUp className="!size-5 sm:!size-6 mr-1.5 text-foreground stroke-[2.5]" />
                 )}
                 <span>{isBottomNavVisible ? "Ẩn" : "Hiện"}</span>
               </Button>
