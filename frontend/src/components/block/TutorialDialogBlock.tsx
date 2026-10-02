@@ -63,8 +63,8 @@ const TutorialDialogBlock = () => {
                                 <FiHome className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-foreground font-bold text-sm sm:text-base">Về Flycam gốc toàn cảnh (Ngã Năm)</p>
-                                <p className="text-muted-foreground text-xs sm:text-sm">Đưa không gian thực tế ảo trở về góc nhìn Flycam trung tâm toàn cảnh Phường Bình Long</p>
+                                <p className="text-foreground font-bold text-sm sm:text-base">Về toàn cảnh Mộ 3.000 người</p>
+                                <p className="text-muted-foreground text-xs sm:text-sm">Đưa không gian thực tế ảo trở về góc nhìn toàn cảnh Di tích Lịch sử Quốc gia Mộ 3.000 người</p>
                             </div>
                         </div>
 

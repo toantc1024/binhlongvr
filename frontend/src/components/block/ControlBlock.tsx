@@ -188,15 +188,14 @@ const ControlBlock = ({
     }
   };
 
-  // Home button: Returns to ROOT Flycam 360 overview of Binh Long (Ngã Năm / Main Hotspot)
+  // Home button: Returns to main panorama of Mộ 3.000 người (Hotspot 132)
   const handleGoToFlycamHome = () => {
     const mainHotspotId = currentArea?.main_hotspot_id
       ? Number(currentArea.main_hotspot_id)
       : 132;
-
     const mainHotspot = getHotspotById(mainHotspotId);
     const targetPanoramaId =
-      mainHotspot?.click_panorama_id || "M3000_0_FLYCAM_1";
+      mainHotspot?.click_panorama_id || "M3000_0_FLYCAM_2";
 
     setCurrentHotspotById(mainHotspotId);
     setCurrentPanoramaById(targetPanoramaId);
@@ -232,13 +231,13 @@ const ControlBlock = ({
           <RiGlobalFill className="!size-6 sm:!size-7 text-emerald-600 group-hover:scale-110 transition-transform" />
         </Button>
 
-        {/* Nút Home: Về Flycam gốc toàn cảnh (Ngã Năm / Main Hotspot) */}
+        {/* Nút Home: Về main panorama Mộ 3.000 người */}
         <Button
           variant="ghost"
           className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-emerald-50 hover:text-emerald-700 bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
           onClick={handleGoToFlycamHome}
-          aria-label="Về Flycam gốc toàn cảnh (Ngã Năm)"
-          title="Về Flycam gốc toàn cảnh (Ngã Năm)"
+          aria-label="Về toàn cảnh Mộ 3.000 người"
+          title="Về toàn cảnh Mộ 3.000 người"
         >
           <FiHome className="!size-6 sm:!size-7 text-emerald-600 group-hover:scale-110 transition-transform" />
         </Button>
