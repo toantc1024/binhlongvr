@@ -7,7 +7,8 @@ export const getPanoramasByHotspotId = async (
     const { data, error } = await supabase
         .from("panoramas")
         .select("*")
-        .eq("hotspot_id", hotspot_id);
+        .eq("hotspot_id", hotspot_id)
+        .order("panorama_id", { ascending: true });
 
     if (error) {
         throw new Error("Failed to fetch panoramas: " + (error as Error).message);

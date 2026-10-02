@@ -64,7 +64,35 @@ const use3DVistaHook = ({
   });
 
   const showMedia = (mediaName: string): void => {
-    ref.current?.contentWindow?.tour?.setMediaByName(mediaName);
+    if (!mediaName) return;
+
+    const iframe = ref.current || (document.getElementById("vr_core") as HTMLIFrameElement | null);
+    if (iframe?.contentWindow) {
+      try {
+        const win = iframe.contentWindow as any;
+        if (typeof win.setMediaByName === "function") {
+          win.setMediaByName(mediaName);
+        } else if (win.tour?.setMediaByName) {
+          win.tour.setMediaByName(mediaName);
+        } else if (win.vrTourBridge?.setMediaByName) {
+          win.vrTourBridge.setMediaByName(mediaName);
+        }
+      } catch (err) {
+        console.warn("Direct showMedia invocation error:", err);
+      }
+
+      try {
+        iframe.contentWindow.postMessage(
+          {
+            type: "set_media",
+            payload: { name: mediaName },
+          },
+          "*"
+        );
+      } catch (err) {
+        console.warn("PostMessage showMedia error:", err);
+      }
+    }
   };
 
   const sendMessage = (message: any): void => {

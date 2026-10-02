@@ -46,13 +46,22 @@ interface VRStoreActions {
 
 type VRStore = VRStoreState & VRStoreActions;
 
+const defaultMainHotspot =
+  BINHLONG_HOTSPOTS.find((h) => h.hotspot_id === 132) || BINHLONG_HOTSPOTS[0];
+const defaultMainPanoramas = BINHLONG_PANORAMAS.filter(
+  (p) => p.hotspot_id === 132
+);
+const defaultMainPanorama =
+  defaultMainPanoramas.find((p) => p.panorama_id === "M3000_0_FLYCAM_1") ||
+  defaultMainPanoramas[0];
+
 const useVRStore = create<VRStore>((set, get) => ({
   currentArea: BINHLONG_AREA,
-  currentHotspot: BINHLONG_HOTSPOTS[0],
-  currentPanorama: BINHLONG_PANORAMAS[0],
+  currentHotspot: defaultMainHotspot,
+  currentPanorama: defaultMainPanorama,
   isLoading: false,
   areaHotspots: BINHLONG_HOTSPOTS,
-  panoramas: BINHLONG_PANORAMAS,
+  panoramas: defaultMainPanoramas,
   isLoadingPanoramas: false,
   isMapDialogOpen: false,
   mapDialogHotspotId: null,
@@ -71,10 +80,10 @@ const useVRStore = create<VRStore>((set, get) => ({
   clearVRState: () =>
     set({
       currentArea: BINHLONG_AREA,
-      currentHotspot: BINHLONG_HOTSPOTS[0],
-      currentPanorama: BINHLONG_PANORAMAS[0],
+      currentHotspot: defaultMainHotspot,
+      currentPanorama: defaultMainPanorama,
       areaHotspots: BINHLONG_HOTSPOTS,
-      panoramas: BINHLONG_PANORAMAS,
+      panoramas: defaultMainPanoramas,
       isMapDialogOpen: false,
       mapDialogHotspotId: null,
     }),
@@ -101,9 +110,9 @@ const useVRStore = create<VRStore>((set, get) => ({
       set({
         currentArea: BINHLONG_AREA,
         areaHotspots: BINHLONG_HOTSPOTS,
-        currentHotspot: BINHLONG_HOTSPOTS[0],
-        panoramas: BINHLONG_PANORAMAS,
-        currentPanorama: BINHLONG_PANORAMAS[0],
+        currentHotspot: defaultMainHotspot,
+        panoramas: defaultMainPanoramas,
+        currentPanorama: defaultMainPanorama,
         isLoading: false,
       });
       return;
@@ -113,15 +122,32 @@ const useVRStore = create<VRStore>((set, get) => ({
     try {
       const currentArea = await getAreaDetailById(CURRENT_AREA_ID);
       const areaHotspots = await getHotspotsByAreaId(CURRENT_AREA_ID);
+      const mainId = currentArea.main_hotspot_id
+        ? Number(currentArea.main_hotspot_id)
+        : 132;
       const currentHotspot =
-        areaHotspots.find(
-          (hotspot) => hotspot.hotspot_id === currentArea.main_hotspot_id
-        ) || areaHotspots[0];
+        areaHotspots.find((hotspot) => hotspot.hotspot_id === mainId) ||
+        areaHotspots[0] ||
+        defaultMainHotspot;
+
+      const hotspotPanoramas = await getPanoramasByHotspotId(
+        currentHotspot.hotspot_id
+      );
+      const panoramas =
+        hotspotPanoramas.length > 0 ? hotspotPanoramas : defaultMainPanoramas;
+      const currentPanorama =
+        panoramas.find(
+          (p) => p.panorama_id === currentHotspot.click_panorama_id
+        ) ||
+        panoramas.find((p) => p.panorama_id === "M3000_0_FLYCAM_1") ||
+        panoramas[0];
 
       set({
         currentArea,
         areaHotspots,
-        currentHotspot: currentHotspot || BINHLONG_HOTSPOTS[0],
+        currentHotspot,
+        panoramas,
+        currentPanorama,
         isLoading: false,
       });
     } catch {
@@ -129,9 +155,9 @@ const useVRStore = create<VRStore>((set, get) => ({
       set({
         currentArea: BINHLONG_AREA,
         areaHotspots: BINHLONG_HOTSPOTS,
-        currentHotspot: BINHLONG_HOTSPOTS[0],
-        panoramas: BINHLONG_PANORAMAS,
-        currentPanorama: BINHLONG_PANORAMAS[0],
+        currentHotspot: defaultMainHotspot,
+        panoramas: defaultMainPanoramas,
+        currentPanorama: defaultMainPanorama,
         isLoading: false,
       });
     }
@@ -173,44 +199,27 @@ const useVRStore = create<VRStore>((set, get) => ({
     try {
       set({ isLoadingPanoramas: true });
       const hotspot = get().getHotspotById(hotspot_id);
-      const currentArea = get().currentArea;
-      const areaHotspots = get().areaHotspots;
 
       if (hotspot) {
         let panoramas: Panorama[] = [];
 
         if (isSupabaseConfigured) {
           try {
-            const isMainHotspot =
-              currentArea?.main_hotspot_id !== null &&
-              currentArea?.main_hotspot_id !== undefined &&
-              Number(currentArea.main_hotspot_id) === hotspot_id;
-
-            if (isMainHotspot) {
-              const mainPanoramaPromises = areaHotspots.map(async (h) => {
-                if (h.click_panorama_id) {
-                  return await getPanoramaByIdFromService(h.click_panorama_id);
-                }
-                const hotspotPanoramas = await getPanoramasByHotspotId(
-                  h.hotspot_id
-                );
-                return hotspotPanoramas[0];
-              });
-
-              const mainPanoramas = await Promise.all(mainPanoramaPromises);
-              panoramas = mainPanoramas.filter(
-                (p): p is Panorama => p !== undefined
-              );
-            } else {
-              panoramas = await getPanoramasByHotspotId(hotspot_id);
-            }
+            panoramas = await getPanoramasByHotspotId(hotspot_id);
           } catch {
-            panoramas = BINHLONG_PANORAMAS;
+            panoramas = BINHLONG_PANORAMAS.filter(
+              (p) => p.hotspot_id === hotspot_id
+            );
           }
         }
 
         if (panoramas.length === 0) {
-          panoramas = BINHLONG_PANORAMAS;
+          panoramas = BINHLONG_PANORAMAS.filter(
+            (p) => p.hotspot_id === hotspot_id
+          );
+          if (panoramas.length === 0) {
+            panoramas = BINHLONG_PANORAMAS;
+          }
         }
 
         set({ panoramas });

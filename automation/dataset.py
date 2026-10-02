@@ -109,7 +109,7 @@ LOCATIONS_DATA = {
         ),
         "audio_filename": "m3000_thuyet_minh.mp3",
         "folder": "m3000",
-        "click_panorama_id": "M3000_0_FLYCAM_2",
+        "click_panorama_id": "M3000_0_FLYCAM_1",
         "preview_source_image": "M3000_2_CONG_CHINH.jpg",
         "perspective_params": {"fov_deg": 85, "yaw_deg": 0, "pitch_deg": 0},
         "panoramas": [

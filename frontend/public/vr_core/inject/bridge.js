@@ -431,14 +431,50 @@ class VRTourBridge {
       return { available: false, error: error.message };
     }
   }
+  // Panorama Navigation Method
+  setMediaByName(mediaName) {
+    if (!mediaName) return false;
+    try {
+      if (typeof window.setMediaByName === "function") {
+        window.setMediaByName(mediaName);
+        return true;
+      }
+      if (this.tour && typeof this.tour.setMediaByName === "function") {
+        this.tour.setMediaByName(mediaName);
+        return true;
+      }
+      if (window.tour && typeof window.tour.setMediaByName === "function") {
+        window.tour.setMediaByName(mediaName);
+        return true;
+      }
+      console.warn("Tour or setMediaByName not available yet for:", mediaName);
+      return false;
+    } catch (err) {
+      console.error("Error setting media by name:", err);
+      return false;
+    }
+  }
 }
 
 // Initialize the bridge
 window.vrTourBridge = new VRTourBridge();
 
-// Listen for audio control messages from parent window
+// Listen for messages from parent window
 window.addEventListener("message", function (event) {
-  if (event.data && event.data.type === "audio_control_command") {
+  if (!event.data) return;
+
+  // Handle panorama switching commands
+  if (event.data.type === "set_media" || event.data.type === "show_media") {
+    const payload = event.data.payload;
+    const mediaName = typeof payload === "string" ? payload : payload?.name;
+    if (mediaName && window.vrTourBridge) {
+      window.vrTourBridge.setMediaByName(mediaName);
+    }
+    return;
+  }
+
+  // Handle audio control commands
+  if (event.data.type === "audio_control_command") {
     const { action } = event.data.payload || {};
 
     switch (action) {

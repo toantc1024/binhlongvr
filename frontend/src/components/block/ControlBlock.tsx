@@ -45,6 +45,7 @@ const ControlBlock = ({
     currentPanorama,
     setCurrentPanoramaById,
     setCurrentHotspotById,
+    setPanoramasByHotspotId,
     panoramas,
   } = useVRStore((state) => state);
   const navigate = useNavigate();
@@ -188,16 +189,17 @@ const ControlBlock = ({
     }
   };
 
-  // Home button: Returns to main panorama of Mộ 3.000 người (Hotspot 132)
-  const handleGoToFlycamHome = () => {
+  // Home button: Returns to main panorama of Mộ 3.000 người (Hotspot 132, M3000_0_FLYCAM_1)
+  const handleGoToFlycamHome = async () => {
     const mainHotspotId = currentArea?.main_hotspot_id
       ? Number(currentArea.main_hotspot_id)
       : 132;
     const mainHotspot = getHotspotById(mainHotspotId);
     const targetPanoramaId =
-      mainHotspot?.click_panorama_id || "M3000_0_FLYCAM_2";
+      mainHotspot?.click_panorama_id || "M3000_0_FLYCAM_1";
 
     setCurrentHotspotById(mainHotspotId);
+    await setPanoramasByHotspotId(mainHotspotId);
     setCurrentPanoramaById(targetPanoramaId);
     showMedia(targetPanoramaId);
   };
