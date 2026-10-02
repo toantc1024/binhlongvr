@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bộ Tài Liệu & Poster Bàn Giao - Bản Đồ Số Bình Long VR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #031710;
+      color: #f1f5f9;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981;
+      color: #6ee7b7;
+      padding: 6px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .header h1 {
+      font-size: 40px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .header p {
+      font-size: 17px;
+      color: #94a3b8;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      margin-bottom: 50px;
+    }
+    .card {
+      background: #06241a;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .card:hover {
+      border-color: #10b981;
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(5, 150, 105, 0.25);
+    }
+    .card-thumb {
+      height: 280px;
+      background: #0f172a;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .card:hover .card-thumb img {
+      transform: scale(1.05);
+    }
+    .card-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #6ee7b7;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #10b981;
+      color: #041f15;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: #34d399;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #64748b;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="header-badge">🏛️ Bản Đồ Số Bình Long VR</div>
+      <h1>HỆ THỐNG TÀI LIỆU & POSTER BÀN GIAO</h1>
+      <p>Tổng hợp đầy đủ Poster quảng cáo thương mại, Poster hướng dẫn sử dụng, Giới thiệu ứng dụng và Hồ sơ bàn giao kỹ thuật AI theo yêu cầu.</p>
+    </div>
+
+    <div class="grid">
+      <!-- 1. POSTER QUẢNG CÁO -->
+      <div class="card">
+        <div class="card-thumb">
+          <span class="card-badge">Mục 1</span>
+          <img src="poster_quang_cao_showcase_devices.jpg" alt="Poster Quảng Cáo Showcase">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">1. Poster Quảng Cáo</h2>
+          <p class="card-desc">Thiết kế quảng cáo thương mại với hình ảnh thực tế của ứng dụng trên mockup điện thoại và máy tính bảng (Tour 360°, Thuyết minh, Bản đồ số).</p>
+          <div class="card-actions">
+            <a href="poster_quang_cao.html" class="btn">🖼️ Xem & In Poster Quảng Cáo</a>
+            <a href="poster_quang_cao_showcase_devices.jpg" class="btn btn-secondary" download>⬇️ Tải Ảnh Gốc (Devices Mockup)</a>
+            <a href="poster_tinh_nang_quang_cao.jpg" class="btn btn-secondary" download>⬇️ Tải Ảnh (Tính Năng Đột Phá)</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. POSTER HƯỚNG DẪN SỬ DỤNG -->
+      <div class="card">
+        <div class="card-thumb">
+          <span class="card-badge">Mục 2</span>
+          <img src="poster_huong_dan_binhlong_vr.jpg" alt="Poster Hướng Dẫn Sử Dụng">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">2. Poster Hướng Dẫn Sử Dụng</h2>
+          <p class="card-desc">Infographic 4 bước chi tiết: Quét QR ➔ Chọn di tích ➔ Tham quan VR 360° ➔ Lắng nghe thuyết minh AI & tương tác Chatbot.</p>
+          <div class="card-actions">
+            <a href="poster_huong_dan.html" class="btn">📖 Xem & In Poster Hướng Dẫn</a>
+            <a href="poster_huong_dan_binhlong_vr.jpg" class="btn btn-secondary" download>⬇️ Tải Ảnh Gốc Master</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. GIỚI THIỆU ỨNG DỤNG -->
+      <div class="card">
+        <div class="card-thumb">
+          <span class="card-badge">Mục 3</span>
+          <img src="poster_quang_cao_binhlong_vr.jpg" alt="Giới Thiệu Ứng Dụng">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">3. Giới Thiệu Về Ứng Dụng</h2>
+          <p class="card-desc">Brochure và hồ sơ giới thiệu tổng thể dự án Bản Đồ Số Bình Long VR: Sứ mệnh, tính năng công nghệ, danh mục di tích và kiến trúc kỹ thuật.</p>
+          <div class="card-actions">
+            <a href="gioi_thieu_ung_dung.html" class="btn">🌐 Xem Trang Profile & Brochure</a>
+            <a href="gioi_thieu_ung_dung.md" class="btn btn-secondary">📄 Xem Bản Markdown</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. DOCUMENT BÀN GIAO AI -->
+      <div class="card">
+        <div class="card-thumb" style="display: flex; align-items: center; justify-content: center; background: #fff; padding: 20px;">
+          <span class="card-badge" style="background: #059669; color: #fff;">Mục 4 • Times New Roman</span>
+          <div style="font-family: 'Times New Roman', serif; color: #000; text-align: center; border: 1px solid #ccc; padding: 16px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%;">
+            <div style="font-size: 11px; font-weight: bold;">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+            <div style="font-size: 10px; font-style: italic; border-bottom: 1px solid #000; padding-bottom: 2px; margin-bottom: 8px;">Độc lập - Tự do - Hạnh phúc</div>
+            <div style="font-size: 12px; font-weight: bold; color: #0f4b23;">HỒ SƠ BÀN GIAO KỸ THUẬT AI</div>
+            <div style="font-size: 10px; color: #555; margin-top: 4px;">Font: Times New Roman 100%</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">4. Document Bàn Giao AI</h2>
+          <p class="card-desc">Hồ sơ bàn giao kỹ thuật chính thức theo thể thức văn bản hành chính (Nghị định 30/2020/NĐ-CP), 100% font <strong>Times New Roman</strong>, đầy đủ bảng biểu và chữ ký.</p>
+          <div class="card-actions">
+            <a href="bien_ban_ban_giao_ai.docx" class="btn" download>📥 Tải File Word (.DOCX) Đã Định Dạng</a>
+            <a href="bien_ban_ban_giao_ai.html" class="btn btn-secondary">🖨️ Xem Bản Web & In Sang PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Bản Quyền Dự Án Thuộc UBND Phường Bình Long, TP. Đồng Nai & Đội Ngũ Phát Triển HCMUTE © 2026
+    </div>
+  </div>
+
+</body>
+</html>

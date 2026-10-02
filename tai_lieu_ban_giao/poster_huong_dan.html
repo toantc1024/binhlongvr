@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poster Hướng Dẫn Sử Dụng - Bản Đồ Số Bình Long VR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A3 portrait;
+      margin: 0;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #062319;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+    .top-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 40px;
+      backdrop-filter: blur(10px);
+    }
+    .btn {
+      background: #10b981;
+      color: #062419;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: #34d399;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+    }
+    .tab-btn.active {
+      background: #f59e0b;
+      color: #000;
+    }
+    .poster-container {
+      width: 840px;
+      min-height: 1188px;
+      background: #ffffff;
+      color: #1e293b;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    /* VIEW 1: Poster Art Image */
+    #view-art {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #view-art img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* VIEW 2: Real App Screenshots Infographic */
+    #view-infographic {
+      display: none;
+      padding: 36px 36px 25px 36px;
+      background: radial-gradient(circle at 50% 0%, #ecfdf5 0%, #ffffff 40%);
+    }
+    .info-header {
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+    }
+    .info-header .badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #059669;
+      color: white;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .info-header h1 {
+      font-size: 30px;
+      font-weight: 900;
+      color: #064e3b;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .info-header p {
+      font-size: 15px;
+      color: #4b5563;
+      font-weight: 500;
+    }
+
+    .steps-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .step-card {
+      display: flex;
+      background: white;
+      border: 1.5px solid #d1fae5;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(5, 150, 105, 0.08);
+      transition: all 0.2s ease;
+    }
+    .step-number {
+      width: 80px;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+    .step-number span {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+    .step-body {
+      flex: 1;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .step-body h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #065f46;
+      margin-bottom: 6px;
+    }
+    .step-body p {
+      font-size: 13.5px;
+      color: #475569;
+      line-height: 1.45;
+    }
+    .step-img-box {
+      width: 170px;
+      background: #f8fafc;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid #e2e8f0;
+      flex-shrink: 0;
+    }
+    .step-img-box img {
+      max-width: 100%;
+      max-height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .info-footer {
+      margin-top: 25px;
+      padding-top: 18px;
+      border-top: 2px dashed #a7f3d0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-brand img {
+      height: 44px;
+    }
+    .footer-brand-text {
+      text-align: left;
+    }
+    .footer-brand-text .title {
+      font-weight: 800;
+      font-size: 14px;
+      color: #064e3b;
+    }
+    .footer-brand-text .sub {
+      font-size: 12px;
+      color: #64748b;
+    }
+    .footer-qr {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #ecfdf5;
+      padding: 8px 16px;
+      border-radius: 12px;
+      border: 1px solid #10b981;
+    }
+    .footer-qr svg {
+      width: 44px;
+      height: 44px;
+    }
+    .footer-qr-text {
+      text-align: left;
+      font-size: 12px;
+      color: #065f46;
+      font-weight: 700;
+    }
+
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+      }
+      .top-actions {
+        display: none !important;
+      }
+      .poster-container {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-actions">
+    <button class="btn tab-btn active" onclick="switchGuide('art', this)">🎨 Poster Đồ Họa Master</button>
+    <button class="btn tab-btn btn-secondary" onclick="switchGuide('infographic', this)">📱 Poster Infographic Ảnh Thực Tế</button>
+    <button class="btn" onclick="window.print()">🖨️ In / Tải PDF Poster</button>
+  </div>
+
+  <div class="poster-container">
+    <!-- VIEW 1: MASTER ART -->
+    <div id="view-art">
+      <img src="poster_huong_dan_binhlong_vr.jpg" alt="Poster Hướng Dẫn Sử Dụng Bình Long VR">
+    </div>
+
+    <!-- VIEW 2: DETAILED INFOGRAPHIC WITH REAL APP SCREENSHOTS -->
+    <div id="view-infographic">
+      <div class="info-header">
+        <div class="badge-top">🌟 CÔNG TRÌNH THANH NIÊN SỐ HÓA DI SẢN</div>
+        <h1>HƯỚNG DẪN TRẢI NGHIỆM BẢN ĐỒ SỐ BÌNH LONG VR</h1>
+        <p>Khám phá không gian thực tế ảo di tích lịch sử và văn hóa chỉ với 4 bước đơn giản</p>
+      </div>
+
+      <div class="steps-grid">
+        <!-- STEP 1 -->
+        <div class="step-card">
+          <div class="step-number">
+            1
+            <span>Bước</span>
+          </div>
+          <div class="step-body">
+            <h3>QUÉT MÃ QR HOẶC TRUY CẬP ĐỊA CHỈ WEB</h3>
+            <p>Mở camera điện thoại quét mã QR tại các bảng tin, trường học, điểm di tích hoặc truy cập trực tiếp tên miền <strong>bandosobinhlong.yhcmute.com</strong> từ mọi trình duyệt trên điện thoại hoặc máy tính.</p>
+          </div>
+          <div class="step-img-box">
+            <img src="assets/landing_page.png" alt="Trang chủ Bản Đồ Số">
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step-card">
+          <div class="step-number">
+            2
+            <span>Bước</span>
+          </div>
+          <div class="step-body">
+            <h3>CHỌN ĐIỂM DI TÍCH TRÊN BẢN ĐỒ SỐ TƯƠNG TÁC</h3>
+            <p>Khám phá bản đồ toàn cảnh Phường Bình Long. Chạm vào biểu tượng di tích nổi bật (Mộ 3.000 người, Dinh Tỉnh Trưởng, Mộ 7 Người, Chùa Hưng Lập Tự...) để xem vị trí GPS, tư liệu lịch sử và hình ảnh đại diện.</p>
+          </div>
+          <div class="step-img-box">
+            <img src="assets/map_view.png" alt="Bản đồ tương tác di tích">
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step-card">
+          <div class="step-number">
+            3
+            <span>Bước</span>
+          </div>
+          <div class="step-body">
+            <h3>BẮT ĐẦU TOUR KHÁM PHÁ THỰC TẾ ẢO 360° VR</h3>
+            <p>Nhấn nút <strong>"Khám phá không gian VR 360°"</strong>. Dùng ngón tay vuốt hoặc nghiêng điện thoại để xoay 360 độ ngắm nhìn toàn cảnh từ Flycam trên cao xuống từng lối đi, sân hành lễ và công trình ngầm.</p>
+          </div>
+          <div class="step-img-box">
+            <img src="assets/vr360_tour.png" alt="Tour VR 360 độ tương tác">
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="step-card">
+          <div class="step-number">
+            4
+            <span>Bước</span>
+          </div>
+          <div class="step-body">
+            <h3>LẮNG NGHE THUYẾT MINH AI VOICE & TRA CỨU TƯ LIỆU</h3>
+            <p>Chạm vào nút <strong>"Lắng nghe"</strong> để kích hoạt giọng đọc AI truyền cảm giới thiệu chi tiết về sự kiện lịch sử, ý nghĩa văn hóa của từng di tích; chạm vào các điểm ghim để di chuyển giữa các không gian.</p>
+          </div>
+          <div class="step-img-box">
+            <img src="assets/detail_modal.png" alt="Thuyết minh âm thanh AI">
+          </div>
+        </div>
+      </div>
+
+      <div class="info-footer">
+        <div class="footer-brand">
+          <img src="assets/logo_binhlong_3d.png" alt="Logo Bình Long">
+          <div class="footer-brand-text">
+            <div class="title">BẢN ĐỒ SỐ PHƯỜNG BÌNH LONG</div>
+            <div class="sub">Đoàn Trường ĐH Sư phạm Kỹ thuật TP.HCM phối hợp thực hiện</div>
+          </div>
+        </div>
+
+        <div class="footer-qr">
+          <svg viewBox="0 0 100 100" fill="#065f46">
+            <rect x="0" y="0" width="30" height="30" rx="4"/>
+            <rect x="5" y="5" width="20" height="20" fill="#fff" rx="2"/>
+            <rect x="10" y="10" width="10" height="10" rx="1"/>
+            <rect x="70" y="0" width="30" height="30" rx="4"/>
+            <rect x="75" y="5" width="20" height="20" fill="#fff" rx="2"/>
+            <rect x="80" y="10" width="10" height="10" rx="1"/>
+            <rect x="0" y="70" width="30" height="30" rx="4"/>
+            <rect x="5" y="75" width="20" height="20" fill="#fff" rx="2"/>
+            <rect x="10" y="80" width="10" height="10" rx="1"/>
+            <rect x="40" y="10" width="8" height="8"/>
+            <rect x="52" y="10" width="8" height="8"/>
+            <rect x="40" y="40" width="20" height="20" rx="3" fill="#059669"/>
+            <rect x="70" y="45" width="10" height="8"/>
+            <rect x="85" y="55" width="10" height="8"/>
+            <rect x="40" y="75" width="8" height="15"/>
+            <rect x="55" y="70" width="15" height="8"/>
+            <rect x="75" y="75" width="20" height="20"/>
+          </svg>
+          <div class="footer-qr-text">
+            QUÉT ĐỂ TRẢI NGHIỆM NGAY<br>
+            <span style="font-weight: 500; font-size: 11px;">bandosobinhlong.yhcmute.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchGuide(type, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.classList.add('btn-secondary');
+      });
+      btn.classList.add('active');
+      btn.classList.remove('btn-secondary');
+
+      if (type === 'art') {
+        document.getElementById('view-art').style.display = 'block';
+        document.getElementById('view-infographic').style.display = 'none';
+      } else {
+        document.getElementById('view-art').style.display = 'none';
+        document.getElementById('view-infographic').style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>

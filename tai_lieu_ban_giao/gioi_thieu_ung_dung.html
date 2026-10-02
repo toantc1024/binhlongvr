@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giới Thiệu Ứng Dụng Bản Đồ Số Bình Long VR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #064e3b;
+      --primary-light: #10b981;
+      --accent: #f59e0b;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.9);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #041f15;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .header-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(4, 31, 21, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 16px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand img {
+      height: 42px;
+    }
+    .brand-title {
+      font-weight: 800;
+      font-size: 18px;
+      color: #6ee7b7;
+      letter-spacing: -0.5px;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .btn {
+      background: var(--primary-light);
+      color: #041f15;
+      font-weight: 700;
+      padding: 9px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #34d399;
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #6ee7b7;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 80px 20px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px 20px;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #6ee7b7;
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 44px;
+      font-weight: 900;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 18px;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #cbd5e1;
+      max-width: 780px;
+      margin: 0 auto 30px auto;
+    }
+    .hero-banner {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(16, 185, 129, 0.3);
+      margin-bottom: 60px;
+    }
+    .hero-banner img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* GRID SECTIONS */
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #f1f5f9;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 28px;
+      background: #10b981;
+      border-radius: 3px;
+    }
+    .section-desc {
+      font-size: 16px;
+      color: #94a3b8;
+      margin-bottom: 30px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .feature-card {
+      background: rgba(15, 34, 25, 0.7);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 16px;
+      padding: 26px;
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+      border-color: #10b981;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(5, 150, 105, 0.15);
+    }
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      padding: 12px;
+      border-radius: 12px;
+    }
+    .feature-card h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: #6ee7b7;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 14.5px;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    /* LANDMARKS LIST */
+    .landmarks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .landmark-item {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      background: rgba(15, 34, 25, 0.7);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .landmark-item:hover {
+      border-color: #10b981;
+    }
+    .landmark-thumb {
+      background: #0f172a;
+      overflow: hidden;
+    }
+    .landmark-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .landmark-item:hover .landmark-thumb img {
+      transform: scale(1.05);
+    }
+    .landmark-content {
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .landmark-tag {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      width: fit-content;
+    }
+    .landmark-content h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .landmark-content p {
+      font-size: 14.5px;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+    }
+    .landmark-meta {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    /* TECH STACK */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+    .tech-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .tech-box strong {
+      display: block;
+      color: #6ee7b7;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    .tech-box span {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(16, 185, 129, 0.2);
+      padding-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .landmark-item {
+        grid-template-columns: 1fr;
+      }
+      .landmark-thumb {
+        height: 180px;
+      }
+      .hero h1 {
+        font-size: 32px;
+      }
+      .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="header-nav">
+    <div class="brand">
+      <img src="assets/logo_binhlong_3d.png" alt="Logo Bình Long">
+      <div>
+        <div class="brand-title">BẢN ĐỒ SỐ BÌNH LONG VR</div>
+        <div class="brand-sub">UBND Phường Bình Long & ĐH Sư Phạm Kỹ Thuật TP.HCM</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="poster_quang_cao.html" class="btn btn-outline">🖼️ Poster Quảng Cáo</a>
+      <a href="poster_huong_dan.html" class="btn btn-outline">📖 Poster Hướng Dẫn</a>
+      <a href="bien_ban_ban_giao_ai.html" class="btn">📄 Hồ Sơ Bàn Giao AI</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-badge">🌟 CÔNG TRÌNH THANH NIÊN CHUYỂN ĐỔI SỐ DI SẢN</div>
+      <h1>BẢN ĐỒ SỐ DU LỊCH THỰC TẾ ẢO PHƯỜNG BÌNH LONG</h1>
+      <p>Nền tảng số hóa di tích lịch sử và văn hóa tương tác đa chiều trên không gian thực tế ảo 360°, kết hợp thuyết minh giọng đọc Trí tuệ nhân tạo (AI) và bản đồ địa lý thông minh.</p>
+      
+      <div class="hero-banner">
+        <img src="poster_quang_cao_showcase_devices.jpg" alt="Bình Long VR Showcase">
+      </div>
+    </section>
+
+    <!-- HIGHLIGHT FEATURES -->
+    <section>
+      <h2 class="section-title">CÁC TÍNH NĂNG CÔNG NGHỆ NỔI BẬT</h2>
+      <p class="section-desc">Ứng dụng tích hợp các công nghệ số hiện đại nhất phục vụ chuyển đổi số du lịch và giáo dục lịch sử địa phương.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3>Thực Tế Ảo 360° Đa Điểm Nhìn</h3>
+          <p>Tham quan toàn cảnh di tích từ góc nhìn Flycam trên cao xuống đến từng góc sân, lối vào và công sự đường hầm ngầm với hơn 60 góc nhìn panorama chuẩn 4K siêu sắc nét.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎙️</div>
+          <h3>Thuyết Minh Giọng Đọc AI Neural</h3>
+          <p>Tích hợp giọng đọc AI thông minh (Microsoft Edge Neural TTS: vi-VN-HoaiMyNeural) truyền cảm, ấm áp, phát âm tiếng Việt tự nhiên chuẩn văn phong tài liệu lịch sử.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🗺️</div>
+          <h3>Bản Đồ Số Tương Tác GPS</h3>
+          <p>Hệ thống bản đồ số tích hợp định vị GPS chính xác, hỗ trợ tìm kiếm nhanh di tích, chỉ đường, xem hình ảnh đại diện và khởi chạy ngay tour VR tại điểm đến.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔬</div>
+          <h3>Thuật Toán Khử Méo Cầu Unwarping</h3>
+          <p>Ứng dụng thuật toán AI Perspective Rectilinear Unwarping tự động chuyển đổi ảnh cầu 360° thành ảnh phẳng 16:9 sắc nét, chân thực như máy ảnh DSLR chuyên nghiệp.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3>Trợ Lý Ảo Lịch Sử AI Chatbot</h3>
+          <p>Trợ lý ảo thông minh am hiểu tường tận các mốc lịch sử, sự kiện 32 ngày đêm Bình Long 1972, giải đáp thắc mắc 24/7 cho học sinh, người dân và du khách.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">✨</div>
+          <h3>Giao Diện 3D Clay Nghệ Thuật</h3>
+          <p>Ngôn ngữ thiết kế tươi trẻ mang sắc xanh ngọc lục bảo Emerald kết hợp bộ ghim bản đồ 3D chuyển động và huy hiệu điều hướng sang trọng, trực quan.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY LANDMARKS -->
+    <section>
+      <h2 class="section-title">HỆ THỐNG DI TÍCH LỊCH SỬ SỐ HÓA TRỌNG ĐIỂM</h2>
+      <p class="section-desc">Toàn bộ dữ liệu lịch sử, hình ảnh và tư liệu đã được thẩm định và số hóa chuẩn xác.</p>
+
+      <div class="landmarks-list">
+        <!-- 1 -->
+        <div class="landmark-item">
+          <div class="landmark-thumb">
+            <img src="assets/vr360_tour.png" alt="Dinh Tỉnh Trưởng Bình Long">
+          </div>
+          <div class="landmark-content">
+            <span class="landmark-tag">Di tích Lịch sử cấp Tỉnh</span>
+            <h3>Di tích Lịch sử Dinh Tỉnh Trưởng Bình Long</h3>
+            <p>Hay còn gọi là Di tích Nhà và Đường hầm An Lộc, xây dựng từ năm 1920 phục vụ quản lý đồn điền cao su thời Pháp, sau đó trở thành cơ quan đầu não chỉ huy kiên cố thời chính quyền Sài Gòn với hệ thống lô cốt, công sự ngầm hiểm trở.</p>
+            <div class="landmark-meta">
+              <span>📍 Phường Bình Long, TP. Đồng Nai</span>
+              <span>📸 11 Điểm nhìn VR 360°</span>
+              <span>🎧 Thuyết minh âm thanh AI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="landmark-item">
+          <div class="landmark-thumb">
+            <img src="assets/detail_modal.png" alt="Mộ 7 Người">
+          </div>
+          <div class="landmark-content">
+            <span class="landmark-tag">Di tích Lịch sử cấp Tỉnh</span>
+            <h3>Di tích Lịch sử Mộ tập thể Lực lượng vũ trang An ninh An Lộc (Mộ 7 Người)</h3>
+            <p>Nơi an nghỉ và tưởng niệm các chiến sĩ kiên trung thuộc Đội An ninh vũ trang An Lộc đã anh dũng hy sinh năm 1971 trong cuộc kháng chiến chống Mỹ cứu nước, kiên cường bám trụ địa bàn, diệt ác trừ gian bảo vệ cơ sở cách mạng.</p>
+            <div class="landmark-meta">
+              <span>📍 Phường Bình Long, TP. Đồng Nai</span>
+              <span>📸 5 Điểm nhìn VR 360°</span>
+              <span>🎧 Thuyết minh âm thanh AI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="landmark-item">
+          <div class="landmark-thumb">
+            <img src="assets/landing_page.png" alt="Mộ 3000 Người">
+          </div>
+          <div class="landmark-content">
+            <span class="landmark-tag" style="color: #ef4444; border-color: #ef4444; background: rgba(239, 68, 68, 0.1);">Di tích Lịch sử cấp Quốc gia</span>
+            <h3>Di tích Lịch sử Quốc gia Mộ 3.000 người An Lộc</h3>
+            <p>Khuôn viên rộng hơn 4.000m² với tượng đài tưởng niệm cao 12,6m, nơi ghi dấu sự hy sinh to lớn của hơn 3.000 đồng bào và chiến sĩ tử nạn trong 32 ngày đêm chiến sự khốc liệt mùa hè năm 1972, minh chứng sâu sắc về khát vọng hòa bình.</p>
+            <div class="landmark-meta">
+              <span>📍 Đường Phạm Ngọc Thạch, Phường Bình Long</span>
+              <span>📸 22 Điểm nhìn VR 360°</span>
+              <span>🎧 Thuyết minh âm thanh AI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="landmark-item">
+          <div class="landmark-thumb">
+            <img src="assets/vr_features.png" alt="Chùa Hưng Lập Tự">
+          </div>
+          <div class="landmark-content">
+            <span class="landmark-tag">Di tích Lịch sử - Văn hóa cấp Tỉnh</span>
+            <h3>Di tích Lịch sử - Văn hóa Chùa Hưng Lập Tự</h3>
+            <p>Ngôi chùa thanh tịnh thuộc Tịnh độ Cư sĩ Phật hội Việt Nam, nổi bật với Phòng thuốc Nam Phước Thiện khám chữa bệnh và cấp thuốc miễn phí cho nhân dân, từng là cơ sở nuôi giấu cán bộ cách mạng trong thời kỳ kháng chiến.</p>
+            <div class="landmark-meta">
+              <span>📍 Phường Bình Long, TP. Đồng Nai</span>
+              <span>📸 22 Điểm nhìn VR 360°</span>
+              <span>🎧 Thuyết minh âm thanh AI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH ARCHITECTURE -->
+    <section>
+      <h2 class="section-title">KIẾN TRÚC CÔNG NGHỆ HIỆN ĐẠI</h2>
+      <p class="section-desc">Hệ thống ứng dụng các công nghệ tiên tiến nhất đảm bảo tốc độ tải nhanh, mượt mà trên mọi thiết bị di động.</p>
+
+      <div class="tech-grid">
+        <div class="tech-box">
+          <strong>React 19 & TypeScript</strong>
+          <span>Giao diện web hiện đại</span>
+        </div>
+        <div class="tech-box">
+          <strong>3DVista & WebGL</strong>
+          <span>Trình chiếu VR 360 mượt mà</span>
+        </div>
+        <div class="tech-box">
+          <strong>MapLibre GL & GPS</strong>
+          <span>Bản đồ tương tác thời gian thực</span>
+        </div>
+        <div class="tech-box">
+          <strong>Neural Voice AI</strong>
+          <span>Thuyết minh tiếng Việt chuẩn</span>
+        </div>
+        <div class="tech-box">
+          <strong>Perspective Raycasting</strong>
+          <span>Thuật toán khử méo ảnh 360</span>
+        </div>
+        <div class="tech-box">
+          <strong>Supabase PostgreSQL</strong>
+          <span>Cơ sở dữ liệu đám mây</span>
+        </div>
+        <div class="tech-box">
+          <strong>Edge Storage Bucket</strong>
+          <span>Lưu trữ hình ảnh 4K & Audio</span>
+        </div>
+        <div class="tech-box">
+          <strong>Tailwind CSS & MagicUI</strong>
+          <span>Thiết kế tối ưu Mobile First</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <strong>BẢN ĐỒ SỐ BÌNH LONG VR</strong><br>
+        Bản quyền thuộc UBND Phường Bình Long, Thành phố Đồng Nai.<br>
+        Công trình phối hợp: Đoàn Trường Đại học Sư phạm Kỹ thuật TP.HCM (HCMUTE).
+      </div>
+      <div>
+        <a href="bien_ban_ban_giao_ai.html" class="btn">Xem Biên Bản Bàn Giao Kỹ Thuật ➔</a>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

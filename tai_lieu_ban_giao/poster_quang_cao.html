@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poster Quảng Cáo - Bản Đồ Số Bình Long VR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A3 portrait;
+      margin: 0;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #062419;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+    .top-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 40px;
+      backdrop-filter: blur(10px);
+    }
+    .btn {
+      background: #10b981;
+      color: #062419;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: #34d399;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .tab-btn.active {
+      background: #f59e0b;
+      color: #000;
+    }
+    .poster-canvas {
+      width: 840px;
+      height: 1188px; /* Standard A3 aspect ratio */
+      background: radial-gradient(circle at 50% 20%, #0d5337 0%, #06281c 60%, #02140d 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(16, 185, 129, 0.3);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .poster-img-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    .poster-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .poster-overlay {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 30px 40px;
+      background: linear-gradient(180deg, rgba(3, 25, 17, 0.6) 0%, rgba(3, 25, 17, 0) 25%, rgba(3, 25, 17, 0) 75%, rgba(2, 18, 12, 0.85) 100%);
+      pointer-events: none;
+    }
+    .poster-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .org-badge {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+    }
+    .org-badge img {
+      height: 38px;
+      width: auto;
+    }
+    .org-text {
+      text-align: left;
+    }
+    .org-text .title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #6ee7b7;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .org-text .sub {
+      font-size: 11px;
+      color: #e5e7eb;
+    }
+    .qr-badge {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px 16px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      color: #062419;
+      pointer-events: auto;
+    }
+    .qr-badge svg {
+      width: 52px;
+      height: 52px;
+    }
+    .qr-text {
+      text-align: left;
+    }
+    .qr-text .cta {
+      font-size: 12px;
+      font-weight: 800;
+      color: #059669;
+      text-transform: uppercase;
+    }
+    .qr-text .domain {
+      font-size: 11px;
+      color: #4b5563;
+      font-weight: 600;
+    }
+    .poster-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .footer-left {
+      text-align: left;
+    }
+    .footer-left .headline {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fef08a;
+      margin-bottom: 4px;
+    }
+    .footer-left .desc {
+      font-size: 13px;
+      color: #d1fae5;
+      max-width: 480px;
+      line-height: 1.4;
+    }
+    .feature-pills {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .pill {
+      background: rgba(16, 185, 129, 0.25);
+      border: 1px solid #10b981;
+      color: #ecfdf5;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+    }
+    .footer-right {
+      text-align: right;
+      font-size: 11px;
+      color: #9ca3af;
+      line-height: 1.4;
+    }
+    .footer-right strong {
+      color: #fff;
+    }
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+      }
+      .top-actions {
+        display: none !important;
+      }
+      .poster-canvas {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-actions">
+    <button class="btn tab-btn active" onclick="switchPoster('devices', this)">📱 Poster Thiết Bị Mockup</button>
+    <button class="btn tab-btn btn-secondary" onclick="switchPoster('features', this)">✨ Poster Tính Năng Đột Phá</button>
+    <button class="btn tab-btn btn-secondary" onclick="switchPoster('hero', this)">🌟 Poster Heroic 3D</button>
+    <button class="btn" onclick="window.print()">🖨️ In / Tải PDF Poster</button>
+  </div>
+
+  <div class="poster-canvas">
+    <div class="poster-img-container">
+      <img id="poster-img" src="poster_quang_cao_showcase_devices.jpg" alt="Poster Bản Đồ Số Bình Long VR">
+    </div>
+
+    <div class="poster-overlay">
+      <div class="poster-header">
+        <div class="org-badge">
+          <img src="assets/logo_binhlong_3d.png" alt="Logo Bình Long">
+          <div class="org-text">
+            <div class="title">Bản Đồ Số Bình Long VR</div>
+            <div class="sub">UBND Phường Bình Long - ĐH Sư Phạm Kỹ Thuật TP.HCM</div>
+          </div>
+        </div>
+
+        <div class="qr-badge">
+          <!-- Vector QR Code representation -->
+          <svg viewBox="0 0 100 100" fill="#062419">
+            <rect x="0" y="0" width="30" height="30" rx="4"/>
+            <rect x="5" y="5" width="20" height="20" fill="#fff" rx="2"/>
+            <rect x="10" y="10" width="10" height="10" rx="1"/>
+            <rect x="70" y="0" width="30" height="30" rx="4"/>
+            <rect x="75" y="5" width="20" height="20" fill="#fff" rx="2"/>
+            <rect x="80" y="10" width="10" height="10" rx="1"/>
+            <rect x="0" y="70" width="30" height="30" rx="4"/>
+            <rect x="5" y="75" width="20" height="20" fill="#fff" rx="2"/>
+            <rect x="10" y="80" width="10" height="10" rx="1"/>
+            <rect x="40" y="10" width="8" height="8"/>
+            <rect x="52" y="10" width="8" height="8"/>
+            <rect x="40" y="40" width="20" height="20" rx="3" fill="#059669"/>
+            <rect x="70" y="45" width="10" height="8"/>
+            <rect x="85" y="55" width="10" height="8"/>
+            <rect x="40" y="75" width="8" height="15"/>
+            <rect x="55" y="70" width="15" height="8"/>
+            <rect x="75" y="75" width="20" height="20"/>
+          </svg>
+          <div class="qr-text">
+            <div class="cta">Quét QR Trải Nghiệm</div>
+            <div class="domain">bandosobinhlong.yhcmute.com</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="poster-footer">
+        <div class="footer-left">
+          <div class="headline">KHÁM PHÁ LỊCH SỬ - VĂN HÓA TRONG TẦM TAY</div>
+          <div class="desc">Trải nghiệm không gian thực tế ảo 360° tương tác đa chiều, lắng nghe thuyết minh giọng đọc AI và tra cứu thông tin địa chỉ đỏ chính xác.</div>
+          <div class="feature-pills">
+            <span class="pill">🌐 Tour VR 360°</span>
+            <span class="pill">🎙️ Thuyết Minh AI Voice</span>
+            <span class="pill">🗺️ Bản Đồ GPS</span>
+            <span class="pill">🏛️ Di Tích Số Hóa</span>
+          </div>
+        </div>
+
+        <div class="footer-right">
+          <div>Công trình Thanh niên Chuyển đổi số</div>
+          <div><strong>UBND PHƯỜNG BÌNH LONG</strong></div>
+          <div>Bảo trợ công nghệ: HCMUTE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchPoster(type, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.classList.add('btn-secondary');
+      });
+      btn.classList.add('active');
+      btn.classList.remove('btn-secondary');
+
+      const img = document.getElementById('poster-img');
+      if (type === 'devices') {
+        img.src = 'poster_quang_cao_showcase_devices.jpg';
+      } else if (type === 'features') {
+        img.src = 'poster_tinh_nang_quang_cao.jpg';
+      } else if (type === 'hero') {
+        img.src = 'poster_quang_cao_binhlong_vr.jpg';
+      }
+    }
+  </script>
+
+</body>
+</html>
