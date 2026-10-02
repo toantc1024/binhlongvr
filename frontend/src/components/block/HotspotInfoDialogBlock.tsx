@@ -22,12 +22,12 @@ const HotspotInfoDialogBlock = ({
                 <Button
                     variant="outline"
                     key={pill.id}
-                    className="shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer font-medium transition-all duration-200 hover:scale-105"
+                    className="h-11 sm:h-12 px-3.5 sm:px-4 shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer font-semibold text-xs sm:text-sm shrink-0 transition-all active:scale-95"
                 >
                     {pill.icon && (
-                        <pill.icon className="w-3.5 h-3.5 mr-1 text-foreground" />
+                        <pill.icon className="!size-5 sm:!size-5.5 mr-1.5 text-foreground shrink-0" />
                     )}
-                    {pill.label}
+                    <span>{pill.label}</span>
                 </Button>
             }
             showHeader={true}

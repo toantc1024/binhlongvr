@@ -3,9 +3,7 @@ import { Button } from '../ui/button'
 import DialogWrapper from './DialogWrapper'
 import { PiQuestionFill } from 'react-icons/pi'
 import {
-    FiMenu,
     FiHome,
-    FiMap,
     FiSearch,
     FiShare2,
     FiChevronLeft,
@@ -13,15 +11,20 @@ import {
     FiChevronUp,
     FiInfo
 } from 'react-icons/fi'
-import { RiChatAiFill } from 'react-icons/ri'
+import { Volume2 } from 'lucide-react'
 import { PiInfoFill } from 'react-icons/pi'
 
 const TutorialDialogBlock = () => {
     return (
         <DialogWrapper
             trigger={
-                <Button variant="ghost" className="w-10 h-10 md:w-12 lg:w-14 md:h-12 lg:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer">
-                    <PiQuestionFill className="!size-5 md:!size-7 lg:!size-9 text-foreground" />
+                <Button
+                    variant="ghost"
+                    className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95"
+                    title="Hướng dẫn sử dụng"
+                    aria-label="Hướng dẫn sử dụng"
+                >
+                    <PiQuestionFill className="!size-6 sm:!size-7 text-foreground" />
                 </Button>
             }
             showHeader={true}
@@ -39,38 +42,28 @@ const TutorialDialogBlock = () => {
                 <div className="space-y-3 sm:space-y-4">
                     <h3 className="text-foreground font-bold text-lg sm:text-xl flex items-center gap-2">
                         <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-secondary flex items-center justify-center">
-                            <FiMenu className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-foreground" />
+                            <FiHome className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-foreground" />
                         </div>
                         Điều hướng bên trái
                     </h3>
                     <div className="space-y-2 sm:space-y-3">
-                        <div className="hidden md:flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
-                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0">
-                                <FiMenu className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className="text-foreground font-bold text-sm sm:text-base">Menu chính</p>
-                                <p className="text-muted-foreground text-xs sm:text-sm">Mở menu tùy chọn và cài đặt</p>
-                            </div>
-                        </div>
-
                         <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0">
                                 <FiHome className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-foreground font-bold text-sm sm:text-base">Về điểm chính</p>
-                                <p className="text-muted-foreground text-xs sm:text-sm">Quay về điểm panorama chính của khu vực</p>
+                                <p className="text-foreground font-bold text-sm sm:text-base">Về trang chủ</p>
+                                <p className="text-muted-foreground text-xs sm:text-sm">Quay về trang chủ website Bản đồ số Bình Long</p>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0">
-                                <FiMap className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
+                                <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-foreground font-bold text-sm sm:text-base">Bản đồ</p>
-                                <p className="text-muted-foreground text-xs sm:text-sm">Xem bản đồ tổng quan khu vực</p>
+                                <p className="text-foreground font-bold text-sm sm:text-base">Thuyết minh âm thanh</p>
+                                <p className="text-muted-foreground text-xs sm:text-sm">Bật/tắt giọng đọc thuyết minh tự động theo từng di tích hiện tại</p>
                             </div>
                         </div>
 
@@ -90,28 +83,18 @@ const TutorialDialogBlock = () => {
                 <div className="space-y-3 sm:space-y-4">
                     <h3 className="text-foreground font-bold text-lg sm:text-xl flex items-center gap-2">
                         <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-secondary flex items-center justify-center">
-                            <RiChatAiFill className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-foreground" />
+                            <FiSearch className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-foreground" />
                         </div>
                         Điều hướng phía trên bên phải
                     </h3>
                     <div className="space-y-2 sm:space-y-3">
                         <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0">
-                                <RiChatAiFill className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className="text-foreground font-bold text-sm sm:text-base">Chatbot AI</p>
-                                <p className="text-muted-foreground text-xs sm:text-sm">Hỏi đáp với trợ lý ảo về địa điểm</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
-                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0">
                                 <FiSearch className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-foreground font-bold text-sm sm:text-base">Tìm kiếm</p>
-                                <p className="text-muted-foreground text-xs sm:text-sm">Tìm kiếm các địa điểm trong khu vực</p>
+                                <p className="text-foreground font-bold text-sm sm:text-base">Tìm kiếm & Bản đồ số 3D</p>
+                                <p className="text-muted-foreground text-xs sm:text-sm">Mở bản đồ số tương tác và tìm kiếm nhanh các di tích</p>
                             </div>
                         </div>
                     </div>

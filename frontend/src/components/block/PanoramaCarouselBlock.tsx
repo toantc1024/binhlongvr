@@ -5,6 +5,7 @@ import {
   CarouselItem,
   CarouselContent,
 } from "../ui/carousel";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import useVRStore from "@/store/vr.store";
 
 const PanoramaCarouselBlock = ({
@@ -15,27 +16,20 @@ const PanoramaCarouselBlock = ({
   showMedia: (panorama_id: string) => void;
 }) => {
   const {
-    currentHotspot,
-    currentArea,
     currentPanorama,
     panoramas,
     setCurrentPanoramaById,
   } = useVRStore((state) => state);
   return (
     <>
-      {console.log({
-        hotspotId: currentHotspot?.hotspot_id,
-        areaId: currentArea?.main_hotspot_id,
-        panoramas: panoramas,
-      })}
       {/* Carousel Section with Animation */}
       <div
         className={`w-full overflow-hidden transition-all duration-300 ease-in-out ${
-          isBottomNavVisible ? "max-h-32 opacity-100" : "max-h-0 opacity-0"
+          isBottomNavVisible ? "max-h-36 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="w-full flex bg-white/95 border-t border-border backdrop-blur-xl shadow-lg flex-col items-center justify-center px-2 py-4">
-          <div className="px-12 lg:px-16 w-full">
+        <div className="w-full flex bg-white/95 border-t border-border backdrop-blur-xl shadow-lg flex-col items-center justify-center px-2 py-3 sm:py-4">
+          <div className="px-8 sm:px-12 lg:px-16 w-full">
             <Carousel className="h-16 md:h-20 w-full max-w-full md:max-w-md lg:max-w-[60vw] mx-auto">
               <CarouselContent className="-ml-2 md:-ml-4">
                 {panoramas.map((panorama, index) => (
@@ -50,7 +44,7 @@ const PanoramaCarouselBlock = ({
                     <div
                       className={`overflow-hidden object-cover group border border-border p-0 h-16 relative md:h-20 rounded-xl bg-secondary/50 shadow-xs transition-all ${
                         currentPanorama?.panorama_id === panorama.panorama_id
-                          ? "border-2 border-primary ring-2 ring-primary/40"
+                          ? "border-2 border-primary ring-2 ring-primary/40 scale-102"
                           : "hover:border-primary/50"
                       }`}
                     >
@@ -63,8 +57,12 @@ const PanoramaCarouselBlock = ({
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="bg-white/95 hover:bg-secondary border border-border text-foreground hover:text-primary shadow-sm w-8 h-8 lg:w-10 lg:h-10 cursor-pointer" />
-              <CarouselNext className="bg-white/95 hover:bg-secondary border border-border text-foreground hover:text-primary shadow-sm w-8 h-8 lg:w-10 lg:h-10 cursor-pointer" />
+              <CarouselPrevious className="bg-white/95 hover:bg-secondary border border-border text-foreground hover:text-primary shadow-md !w-10 !h-10 sm:!w-11 sm:!h-11 -left-4 sm:-left-10 cursor-pointer transition-transform active:scale-90">
+                <ChevronLeft className="!h-5 !w-5 sm:!h-6 sm:!w-6 stroke-[2.5]" />
+              </CarouselPrevious>
+              <CarouselNext className="bg-white/95 hover:bg-secondary border border-border text-foreground hover:text-primary shadow-md !w-10 !h-10 sm:!w-11 sm:!h-11 -right-4 sm:-right-10 cursor-pointer transition-transform active:scale-90">
+                <ChevronRight className="!h-5 !w-5 sm:!h-6 sm:!w-6 stroke-[2.5]" />
+              </CarouselNext>
             </Carousel>
           </div>
         </div>

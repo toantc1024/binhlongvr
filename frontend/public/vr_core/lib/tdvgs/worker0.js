@@ -1,14 +1,14 @@
 function waitForMsgType(target, type) {
   return new Promise((resolve) => {
     target.addEventListener("message", function onMsg({ data }) {
-      if ((data == null ? void 0 : data.type) !== type) return;
+      if (data?.type !== type) return;
       target.removeEventListener("message", onMsg);
       resolve(data);
     });
   });
 }
 waitForMsgType(self, "wasm_bindgen_worker_init").then(async ({ init, receiver }) => {
-  const pkg = await import("./gslib-Z116Xut7.js");
+  const pkg = await import("./gslib-5j5xvCQl.js");
   await pkg.default(init);
   postMessage({ type: "wasm_bindgen_worker_ready" });
   pkg.wbg_rayon_start_worker(receiver);

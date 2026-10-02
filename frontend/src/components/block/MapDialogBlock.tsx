@@ -7,7 +7,6 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import useVRStore from "@/store/vr.store";
 import {
     Search,
-    Minus,
     X,
     ChevronLeft,
     ChevronRight,
@@ -408,14 +407,14 @@ export default function MapDialogBlock({
                         )}
                     </div>
 
-                    {/* Minimize Button on top right */}
+                    {/* Close / Minimize Button on top right */}
                     <button
                         onClick={() => setOpened(false)}
-                        className="w-11 h-11 sm:w-12 sm:h-12 bg-white/95 dark:bg-slate-900/95 hover:bg-slate-100 dark:hover:bg-slate-800 text-foreground backdrop-blur-xl rounded-full shadow-xl transition-all cursor-pointer border border-border flex items-center justify-center shrink-0 group"
-                        title="Thu nhỏ bản đồ"
-                        aria-label="Thu nhỏ bản đồ"
+                        className="w-11 h-11 sm:w-12 sm:h-12 bg-white/95 dark:bg-slate-900/95 hover:bg-slate-100 dark:hover:bg-slate-800 text-foreground backdrop-blur-xl rounded-full shadow-xl transition-all cursor-pointer border border-border flex items-center justify-center shrink-0 group active:scale-95"
+                        title="Đóng bản đồ"
+                        aria-label="Đóng bản đồ"
                     >
-                        <Minus className="w-5 h-5 sm:w-6 sm:h-6 text-foreground group-hover:scale-110 transition-transform" />
+                        <X className="w-5 h-5 sm:w-6 sm:h-6 text-foreground group-hover:scale-110 transition-transform" />
                     </button>
                 </div>
 
@@ -439,7 +438,7 @@ export default function MapDialogBlock({
 
                             {/* Photo Index Badge */}
                             {selectedPanoramas.length > 0 && (
-                                <div className="absolute top-3 right-12 bg-black/60 backdrop-blur-md text-white text-xs font-medium px-2.5 py-1 rounded-full shadow-md pointer-events-none">
+                                <div className="absolute top-3 right-14 bg-black/60 backdrop-blur-md text-white text-xs font-medium px-2.5 py-1 rounded-full shadow-md pointer-events-none">
                                     {activePanoramaIndex + 1} / {selectedPanoramas.length}
                                 </div>
                             )}
@@ -450,10 +449,10 @@ export default function MapDialogBlock({
                                     setSelectedMarker(null);
                                     setSelectedHotspotId(null);
                                 }}
-                                className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md cursor-pointer"
+                                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md cursor-pointer active:scale-95"
                                 title="Đóng thông tin"
                             >
-                                <X className="w-4 h-4" />
+                                <X className="w-4 h-4 sm:w-5 sm:h-5" />
                             </button>
 
                             {/* Chevrons for Carousel navigation */}
@@ -461,17 +460,17 @@ export default function MapDialogBlock({
                                 <>
                                     <button
                                         onClick={handlePrev}
-                                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 active:scale-95 cursor-pointer"
+                                        className="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 active:scale-95 cursor-pointer"
                                         title="Ảnh trước"
                                     >
-                                        <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
+                                        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
                                     </button>
                                     <button
                                         onClick={handleNext}
-                                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 active:scale-95 cursor-pointer"
+                                        className="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 active:scale-95 cursor-pointer"
                                         title="Ảnh tiếp theo"
                                     >
-                                        <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+                                        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
                                     </button>
                                 </>
                             )}
