@@ -313,7 +313,7 @@ const ControlBlock = ({
       >
         <div className="w-full bg-white/95 border-t border-border backdrop-blur-2xl shadow-2xl py-2.5 sm:py-3 px-2 sm:px-4">
           <div className="relative">
-            <div className="z-[1] flex items-center justify-start md:justify-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none w-full max-w-full mx-auto px-2 sm:px-4">
+            <div className="z-[1] flex items-center justify-start lg:justify-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none w-full max-w-full px-2 sm:px-4">
               {/* Centered Panorama Selector Popover with Wide Width on Mobile */}
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
@@ -321,12 +321,13 @@ const ControlBlock = ({
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="bg-white hover:bg-secondary text-foreground border border-border rounded-full h-12 sm:h-13 px-4 sm:px-5 min-w-[230px] sm:min-w-[270px] max-w-[320px] sm:max-w-[420px] justify-between overflow-hidden cursor-pointer shadow-sm font-bold text-sm sm:text-base shrink-0 active:scale-95 transition-all"
+                    className="bg-white hover:bg-secondary text-foreground border border-border rounded-full h-12 sm:h-13 px-3.5 sm:px-5 min-w-[220px] sm:min-w-[270px] max-w-[320px] sm:max-w-[420px] items-center overflow-hidden cursor-pointer shadow-sm font-bold text-sm sm:text-base shrink-0 active:scale-95 transition-all"
                   >
+                    <span className="!size-5 sm:!size-6 shrink-0 mr-1.5 opacity-0 pointer-events-none select-none" aria-hidden="true" />
                     <span className="truncate text-foreground text-center flex-1">
                       Bạn đang ở: {currentPanorama?.title}
                     </span>
-                    <ChevronsUpDown className="text-foreground opacity-90 shrink-0 ml-2 !size-5 sm:!size-6 stroke-[2.5]" />
+                    <ChevronsUpDown className="text-foreground opacity-90 shrink-0 ml-1.5 !size-5 sm:!size-6 stroke-[2.5]" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
