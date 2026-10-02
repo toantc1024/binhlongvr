@@ -111,7 +111,7 @@ const ControlBlock = ({
                 .then(() => {
                   setIsPlayingAudio(true);
                 })
-                .catch(() => {});
+                .catch(() => { });
             }
             window.removeEventListener("pointerdown", onFirstInteraction);
             window.removeEventListener("keydown", onFirstInteraction);
@@ -350,8 +350,7 @@ const ControlBlock = ({
                         {panoramas.map((panorama, index) => (
                           <CommandItem
                             className={cn(
-                              `text-foreground hover:bg-secondary rounded-xl cursor-pointer border border-transparent font-semibold px-3.5 py-3 text-sm sm:text-base transition-colors flex items-center justify-between ${
-                                index === panoramas.length - 1 ? "" : "mb-1"
+                              `text-foreground hover:bg-secondary rounded-xl cursor-pointer border border-transparent font-semibold px-3.5 py-3 text-sm sm:text-base transition-colors flex items-center justify-between ${index === panoramas.length - 1 ? "" : "mb-1"
                               }`,
                               value === panorama.title
                                 ? "bg-secondary text-primary font-bold border-border shadow-xs"
