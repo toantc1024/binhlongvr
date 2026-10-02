@@ -75,11 +75,11 @@ const DialogWrapper = ({
     const getSizeClasses = () => {
         // Mobile-first sizing (base classes)
         const mobileSizeMap = {
-            sm: 'max-w-sm w-[95vw] h-[70vh]',
-            md: 'max-w-md w-[95vw] h-[75vh]',
-            lg: 'max-w-lg w-[95vw] h-[85vh]',
-            '2xl': 'max-w-xl w-[95vw] h-[90vh]',
-            full: 'w-[95vw] h-[95vh]',
+            sm: 'w-[calc(100vw-16px)] max-w-sm h-[72vh]',
+            md: 'w-[calc(100vw-16px)] max-w-md h-[80vh]',
+            lg: 'w-[calc(100vw-16px)] max-w-lg h-[88vh]',
+            '2xl': 'w-[calc(100vw-16px)] max-w-xl h-[92vh]',
+            full: 'w-[calc(100vw-16px)] h-[94vh]',
             entire: 'w-screen h-screen'
         }
 
@@ -128,20 +128,20 @@ const DialogWrapper = ({
                                 </div>
                             ) : (
                                 // Default header content
-                                <div className='flex items-center gap-2 sm:gap-3 flex-1 min-w-0'>
+                                <div className='flex items-center gap-2.5 sm:gap-3.5 flex-1 min-w-0'>
                                     {headerIcon && (
-                                        <div className='w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-secondary border border-border text-foreground flex items-center justify-center flex-shrink-0'>
+                                        <div className='w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-secondary border border-border text-foreground flex items-center justify-center flex-shrink-0'>
                                             {headerIcon}
                                         </div>
                                     )}
                                     <div className='flex-1 min-w-0'>
                                         {title && (
-                                            <DialogTitle className='text-foreground text-base sm:text-lg font-bold truncate'>
+                                            <DialogTitle className='text-foreground text-base sm:text-lg md:text-xl font-bold truncate'>
                                                 {title}
                                             </DialogTitle>
                                         )}
                                         {description && (
-                                            <DialogDescription className='text-muted-foreground text-xs sm:text-sm truncate'>
+                                            <DialogDescription className='text-muted-foreground text-xs sm:text-sm truncate mt-0.5'>
                                                 {description}
                                             </DialogDescription>
                                         )}
@@ -154,14 +154,14 @@ const DialogWrapper = ({
                                         variant="ghost"
                                         size="sm"
                                         title={closeTitle || (closeButtonType === 'minimize' ? 'Thu nhỏ' : 'Đóng')}
-                                        className='rounded-full w-8 h-8 sm:w-9 sm:h-9 p-0 bg-secondary hover:bg-secondary/80 text-foreground border border-border flex-shrink-0 cursor-pointer transition-colors flex items-center justify-center'
+                                        className='rounded-full w-9 h-9 sm:w-10 sm:h-10 p-0 bg-secondary hover:bg-secondary/80 text-foreground border border-border flex-shrink-0 cursor-pointer transition-colors flex items-center justify-center active:scale-95'
                                     >
                                         {closeIcon ? (
                                             closeIcon
                                         ) : closeButtonType === 'minimize' ? (
                                             <Minus className="w-4 h-4 text-foreground" strokeWidth={2.5} />
                                         ) : (
-                                            <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-foreground" />
+                                            <X className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
                                         )}
                                     </Button>
                                 </DialogClose>

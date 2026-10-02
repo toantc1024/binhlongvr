@@ -115,8 +115,8 @@ const HotspotInfoBlock = ({ hotspot }: { hotspot: Hotspot | null }) => {
             <Info className="w-5 h-5 flex-shrink-0 text-foreground" />
             Giới thiệu{" "}
           </h2>
-          <div className="max-w-full text-muted-foreground py-2">
-            <p className="text-sm sm:text-base leading-relaxed font-normal">{hotspot.description}</p>
+          <div className="max-w-full py-2">
+            <p className="text-base sm:text-lg leading-relaxed font-normal text-foreground/90">{hotspot.description}</p>
           </div>
         </div>
         <div

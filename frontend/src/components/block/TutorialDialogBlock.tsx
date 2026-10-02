@@ -12,6 +12,7 @@ import {
     FiInfo
 } from 'react-icons/fi'
 import { Volume2 } from 'lucide-react'
+import { RiGlobalFill } from 'react-icons/ri'
 import { PiInfoFill } from 'react-icons/pi'
 
 const TutorialDialogBlock = () => {
@@ -49,11 +50,21 @@ const TutorialDialogBlock = () => {
                     <div className="space-y-2 sm:space-y-3">
                         <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0">
+                                <RiGlobalFill className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-foreground font-bold text-sm sm:text-base">Về Website</p>
+                                <p className="text-muted-foreground text-xs sm:text-sm">Trở về trang chủ website Bản đồ số Bình Long</p>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-secondary/70 rounded-xl border border-border">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-secondary border border-border flex items-center justify-center flex-shrink-0">
                                 <FiHome className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-foreground font-bold text-sm sm:text-base">Về trang chủ</p>
-                                <p className="text-muted-foreground text-xs sm:text-sm">Quay về trang chủ website Bản đồ số Bình Long</p>
+                                <p className="text-foreground font-bold text-sm sm:text-base">Về góc nhìn Flycam ban đầu</p>
+                                <p className="text-muted-foreground text-xs sm:text-sm">Đưa không gian 3D Vista trở về góc nhìn Flycam toàn cảnh</p>
                             </div>
                         </div>
 

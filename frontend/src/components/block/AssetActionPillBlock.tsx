@@ -107,9 +107,9 @@ const AssetActionPillBlock = ({
             trigger={<Button
                 variant="outline"
                 key={"assets"}
-                className="h-11 sm:h-12 px-3.5 sm:px-4 shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground hover:text-primary border border-border flex items-center justify-center cursor-pointer font-semibold text-xs sm:text-sm shrink-0 transition-all active:scale-95"
+                className="h-12 sm:h-13 px-4 sm:px-5 shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground hover:text-primary border border-border flex items-center justify-center cursor-pointer font-bold text-sm sm:text-base shrink-0 transition-all active:scale-95"
             >
-                <Blocks className="!size-5 sm:!size-5.5 mr-1.5 text-primary shrink-0" />
+                <Blocks className="!size-5 sm:!size-5.5 mr-2 text-primary shrink-0" />
                 <span>Vật phẩm</span>
             </Button>}
             showHeader={true}
