@@ -4,14 +4,10 @@ import {
   Compass,
   MapPin,
   Landmark,
-  Users,
-  Maximize2,
   ArrowUpRight,
   ShieldCheck,
-  Building2,
   Navigation2,
   Route,
-  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,9 +15,45 @@ import { Card, CardContent } from "@/components/ui/card";
 import { TextAnimate } from "../magicui/text-animate";
 import useVRStore from "@/store/vr.store";
 
-// Project Assets
+// 3D Custom Assets
+import area3DIcon from "@/assets/3d-icons/area__binhlong-3d-icon.png";
+import population3DIcon from "@/assets/3d-icons/population__binhlong-3d-icon.png";
+import admin3DIcon from "@/assets/3d-icons/admin__binhlong-3d-icon.png";
+import highway3DIcon from "@/assets/3d-icons/highway__binhlong-3d-icon.png";
 import landmark3DIcon from "@/assets/3d-icons/landmark-explore__binhlong-3d-icon.png";
 import location3DIcon from "@/assets/3d-icons/location__binhlong-3d-icon.png";
+
+// 4 Key Stats with 3D Assets
+const STATS_DATA = [
+  {
+    title: "Diện tích",
+    value: "49,14",
+    unit: "km² tự nhiên",
+    description: "Tổng diện tích tự nhiên sau sắp xếp",
+    icon: area3DIcon,
+  },
+  {
+    title: "Dân số",
+    value: "> 40.000",
+    unit: "người",
+    description: "Quy mô dân số toàn phường",
+    icon: population3DIcon,
+  },
+  {
+    title: "Hành chính",
+    value: "09",
+    unit: "Khu phố",
+    description: "Hợp nhất từ 04 đơn vị hành chính",
+    icon: admin3DIcon,
+  },
+  {
+    title: "Huyết mạch",
+    value: "QL 13",
+    unit: "TP.HCM - Hoa Lư",
+    description: "Cửa ngõ Đông Nam Bộ – Campuchia",
+    icon: highway3DIcon,
+  },
+];
 
 // Showcase gallery images using authentic high-resolution photos
 const GALLERY_ITEMS = [
@@ -141,14 +173,10 @@ export function OverviewSection() {
       <div className="absolute top-1/4 -left-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="w-full max-w-7xl mx-auto">
-        {/* Section Header: Align Left */}
+      {/* Synchronized full width container matching other components */}
+      <div className="w-full">
+        {/* Section Header: Clean, Bold, Align Left */}
         <div className="w-full mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs sm:text-sm font-medium mb-3 shadow-xs">
-            <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>Nghị quyết số 1662/2025/NQ-UBTVQH • Thành lập ngày 16/6/2025</span>
-          </div>
-
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left !leading-tight">
             <TextAnimate animation="blurIn" as="span">
               Khái Quát Đặc Điểm
@@ -160,70 +188,60 @@ export function OverviewSection() {
           </p>
         </div>
 
-        {/* 2-Column Split: Content on Left, Image Showcase on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        {/* 4 Stat Cards with 3D Assets - Full Width & Mobile Optimized */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 w-full mb-8 sm:mb-10">
+          {STATS_DATA.map((stat, idx) => (
+            <div
+              key={idx}
+              className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-border/60 shadow-md bg-card p-4 sm:p-5 lg:p-6 flex flex-col justify-between group hover:shadow-xl hover:border-primary/40 transition-all duration-300"
+            >
+              <div className="flex items-start justify-between gap-2 sm:gap-4">
+                <div>
+                  <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                    {stat.title}
+                  </span>
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight mt-1">
+                    {stat.value}
+                  </div>
+                  <p className="mt-1 text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                    {stat.unit}
+                  </p>
+                </div>
+
+                {/* Transparent 3D Asset */}
+                <div className="shrink-0 w-14 h-14 sm:w-18 sm:h-18 lg:w-20 lg:h-20 group-hover:scale-108 transition-transform duration-300 flex items-center justify-center pointer-events-none -mr-1 -mt-1">
+                  <img
+                    src={stat.icon}
+                    alt={stat.title}
+                    className="w-full h-full object-contain filter drop-shadow-md"
+                  />
+                </div>
+              </div>
+
+              <p className="mt-3 text-[11px] sm:text-xs text-muted-foreground font-normal leading-relaxed border-t border-border/40 pt-2 line-clamp-1">
+                {stat.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* 2-Column Split: Detailed Content on Left, Image Showcase on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start w-full">
           {/* ================= LEFT COLUMN: DETAILED INFO ================= */}
           <div className="lg:col-span-7 flex flex-col gap-6">
-            {/* Quick 4 Stats Counters */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-              <Card className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow p-4 rounded-xl">
-                <div className="flex items-center gap-2.5 mb-1.5">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                    <Maximize2 className="w-4 h-4" />
-                  </div>
-                  <span className="text-xs font-medium text-muted-foreground">Diện tích</span>
-                </div>
-                <div className="text-xl sm:text-2xl font-bold text-foreground">49,14</div>
-                <div className="text-xs text-emerald-600 font-medium">km² tự nhiên</div>
-              </Card>
-
-              <Card className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow p-4 rounded-xl">
-                <div className="flex items-center gap-2.5 mb-1.5">
-                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                    <Users className="w-4 h-4" />
-                  </div>
-                  <span className="text-xs font-medium text-muted-foreground">Dân số</span>
-                </div>
-                <div className="text-xl sm:text-2xl font-bold text-foreground">&gt; 40.000</div>
-                <div className="text-xs text-blue-600 dark:text-blue-400 font-medium">người</div>
-              </Card>
-
-              <Card className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow p-4 rounded-xl">
-                <div className="flex items-center gap-2.5 mb-1.5">
-                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                    <Building2 className="w-4 h-4" />
-                  </div>
-                  <span className="text-xs font-medium text-muted-foreground">Hành chính</span>
-                </div>
-                <div className="text-xl sm:text-2xl font-bold text-foreground">09</div>
-                <div className="text-xs text-amber-600 dark:text-amber-400 font-medium">Khu phố</div>
-              </Card>
-
-              <Card className="border-0 shadow-sm bg-card hover:shadow-md transition-shadow p-4 rounded-xl">
-                <div className="flex items-center gap-2.5 mb-1.5">
-                  <div className="w-8 h-8 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-600 dark:text-rose-400">
-                    <Route className="w-4 h-4" />
-                  </div>
-                  <span className="text-xs font-medium text-muted-foreground">Huyết mạch</span>
-                </div>
-                <div className="text-xl sm:text-2xl font-bold text-foreground">QL 13</div>
-                <div className="text-xs text-rose-600 dark:text-rose-400 font-medium">TP.HCM - Hoa Lư</div>
-              </Card>
-            </div>
-
             {/* Main Overview Narrative Text Box */}
-            <Card className="border-0 shadow-md bg-card/80 backdrop-blur-sm p-5 sm:p-6 rounded-2xl relative overflow-hidden">
+            <Card className="border border-border/60 shadow-md bg-card/80 backdrop-blur-sm p-5 sm:p-6 rounded-2xl relative overflow-hidden">
               <div className="space-y-3.5 text-sm sm:text-base text-foreground/90 font-normal leading-relaxed text-justify">
                 <p>
                   <strong>Phường Bình Long</strong> được thành lập theo{" "}
                   <span className="font-semibold text-primary">
                     Nghị quyết số 1662/2025/NQ-UBTVQH
                   </span>{" "}
-                  ngày 16/6/2025 của Ủy ban Thường vụ Quốc hội, trên cơ sở sắp xếp, hợp nhất nguyên trạng diện tích tự nhiên và dân số từ các phường <strong>An Lộc, Hưng Chiến, Phú Đức</strong> của thị xã Bình Long và xã <strong>Thanh Bình</strong> của huyện Hớn Quản, với tổng diện tích tự nhiên <strong>49,14 km²</strong>; Phía bắc giáp phường An Lộc; phía nam giáp phường Tân Khai; phía đông giáp xã Tân Quan; phía Tây giáp xã Minh Đức.
+                  ngày 16/6/2025 của Ủy ban Thường vụ Quốc hội, trên cơ sở sắp xếp, hợp nhất nguyên trạng diện tích tự nhiên và dân số từ các phường <strong>An Lộc, Hưng Chiến, Phú Đức</strong> của thị xã Bình Long và xã <strong>Thanh Bình</strong> của huyện Hớn Quản, với tổng diện tích tự nhiên đạt <strong>49,14 km²</strong>; Phía bắc giáp phường An Lộc; phía nam giáp phường Tân Khai; phía đông giáp xã Tân Quan; phía Tây giáp xã Minh Đức.
                 </p>
 
                 <p>
-                  Toàn phường có <strong>09 khu phố</strong>; dân số của toàn phường trên <strong>40.000 người</strong>. Phường Bình Long có vị trí địa lý chiến lược nằm trên <strong>Quốc lộ 13</strong> – tuyến đường giao thông huyết mạch nối Thành phố Hồ Chí Minh với Cửa khẩu Hoa Lư, là cửa ngõ kết nối vùng Đông Nam Bộ với Campuchia.
+                  Toàn phường có <strong>09 khu phố</strong>; dân số của toàn phường trên <strong>40.000 người</strong>. Phường Bình Long có vị trí địa lý chiến lược nằm trên tuyến <strong>Quốc lộ 13</strong> – tuyến đường giao thông huyết mạch nối Thành phố Hồ Chí Minh với Cửa khẩu Hoa Lư, là cửa ngõ kết nối vùng Đông Nam Bộ với Campuchia.
                 </p>
 
                 <p>
@@ -232,7 +250,7 @@ export function OverviewSection() {
               </div>
 
               {/* Administrative Merged Chips */}
-              <div className="mt-5 pt-4 border-t border-border">
+              <div className="mt-5 pt-4 border-t border-border/60">
                 <div className="flex items-center gap-2 mb-2.5">
                   <Landmark className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -255,7 +273,7 @@ export function OverviewSection() {
             </Card>
 
             {/* Tứ Cận Địa Lý (Geographical Boundaries) */}
-            <Card className="border-0 shadow-md bg-card p-5 sm:p-6 rounded-2xl">
+            <Card className="border border-border/60 shadow-md bg-card p-5 sm:p-6 rounded-2xl">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <Compass className="w-5 h-5 text-primary" />
@@ -378,8 +396,8 @@ export function OverviewSection() {
           {/* ================= RIGHT COLUMN: LIVELY IMAGE SHOWCASE ================= */}
           <div className="lg:col-span-5 flex flex-col gap-4">
             {/* Primary Main Showcase Image Card */}
-            <Card className="relative overflow-hidden !p-0 border-0 shadow-xl bg-card rounded-2xl group flex flex-col">
-              <CardContent className="!p-0 relative h-[380px] sm:h-[460px] lg:h-[500px] w-full overflow-hidden">
+            <Card className="relative overflow-hidden !p-0 border border-border/60 shadow-xl bg-card rounded-2xl group flex flex-col">
+              <CardContent className="!p-0 relative h-[340px] sm:h-[420px] lg:h-[460px] w-full overflow-hidden">
                 <img
                   src={activeImage.image}
                   alt={activeImage.title}
@@ -387,7 +405,7 @@ export function OverviewSection() {
                 />
 
                 {/* Subtle vignette gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/20 pointer-events-none" />
 
                 {/* Floating Top-Right 3D Pill Badge */}
                 <div className="absolute top-4 right-4 z-20 flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-white text-xs select-none">
@@ -410,12 +428,6 @@ export function OverviewSection() {
 
                 {/* Bottom Image Caption & Info Overlay */}
                 <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-20 text-white">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                    <span className="text-xs uppercase tracking-wider text-emerald-300 font-semibold">
-                      Toàn cảnh Phường Bình Long
-                    </span>
-                  </div>
                   <h3 className="text-xl sm:text-2xl font-bold leading-tight drop-shadow-md text-white">
                     {activeImage.title}
                   </h3>
@@ -467,7 +479,7 @@ export function OverviewSection() {
             </div>
 
             {/* Bottom Highlight Card with 3D Location Icon */}
-            <Card className="border-0 shadow-md bg-gradient-to-br from-card via-card to-emerald-50/30 dark:to-emerald-950/20 p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-4">
+            <Card className="border border-border/60 shadow-md bg-gradient-to-br from-card via-card to-emerald-50/30 dark:to-emerald-950/20 p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
