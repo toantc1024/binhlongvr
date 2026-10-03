@@ -5,7 +5,6 @@ import {
   MapPin,
   Landmark,
   ArrowUpRight,
-  ShieldCheck,
   Navigation2,
   Route,
   Sparkles,
@@ -444,12 +443,6 @@ export function OverviewSection() {
           {/* Header & Invitation Narrative */}
           <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-border/60">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  Di Sản & Truyền Thống Cách Mạng
-                </span>
-              </div>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-foreground">
                 Di Tích Lịch Sử – Văn Hóa Tiêu Biểu
               </h3>
@@ -524,21 +517,28 @@ export function OverviewSection() {
           </div>
 
           {/* ================= 5. FULL WIDTH ACTION CTA BAR ================= */}
-          <div className="w-full rounded-2xl bg-gradient-to-r from-emerald-950/20 via-card to-card border border-border/70 p-5 sm:p-7 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="space-y-1 text-center sm:text-left">
-              <h4 className="text-base sm:text-lg font-bold text-foreground flex items-center justify-center sm:justify-start gap-2">
-                <Sparkles className="w-4 h-4 text-emerald-500" />
-                Trải nghiệm Bản đồ số Di tích & Đô thị Phường Bình Long
-              </h4>
-              <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl">
-                Khám phá đầy đủ các điểm nhìn toàn cảnh 360°, tư liệu thuyết minh âm thanh tự động và vị trí không gian địa lý trực quan.
-              </p>
+          <div className="w-full rounded-2xl bg-card border border-border/70 p-5 sm:p-7 shadow-md hover:shadow-lg transition-all flex flex-col md:flex-row md:items-center justify-between gap-5 relative overflow-hidden">
+            {/* Subtle background ambient tint */}
+            <div className="absolute -right-12 -top-12 w-48 h-48 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="flex items-start sm:items-center gap-4 relative z-10">
+              <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0">
+                <Sparkles className="w-5 h-5 text-primary" />
+              </div>
+              <div className="space-y-1 text-left">
+                <h4 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
+                  Trải nghiệm Bản đồ số Di tích & Đô thị Phường Bình Long
+                </h4>
+                <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl leading-relaxed">
+                  Khám phá đầy đủ các điểm nhìn toàn cảnh 360°, tư liệu thuyết minh âm thanh tự động và vị trí không gian địa lý trực quan.
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 shrink-0 w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-3 shrink-0 relative z-10 w-full md:w-auto">
               <Button
                 size="lg"
-                className="w-full sm:w-auto rounded-xl cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md px-5"
+                className="w-full sm:w-auto rounded-xl cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-xs px-5"
                 onClick={() => {
                   navigate("/app");
                   setIsLoading(true);
@@ -554,7 +554,7 @@ export function OverviewSection() {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto rounded-xl cursor-pointer bg-card hover:bg-secondary text-foreground text-sm font-semibold shadow-xs px-5 border-border/70"
+                className="w-full sm:w-auto rounded-xl cursor-pointer bg-secondary/80 hover:bg-secondary text-foreground text-sm font-semibold shadow-xs px-5 border-border/70"
                 onClick={() => setIsMapDialogOpen(true)}
               >
                 <MapPin className="!h-4 !w-4 text-primary mr-1" />
