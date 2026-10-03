@@ -16,21 +16,36 @@ export const BINHLONG_HOTSPOTS: Hotspot[] = [
     id: "130",
     hotspot_id: 130,
     area_id: 25,
-    title: "Di tích Lịch sử Dinh Tỉnh Trưởng Bình Long",
+    title: 'Di tích Lịch sử: An Lộc "Nhà và Đường hầm" (Dinh Tỉnh Trưởng Bình Long)',
     description:
-      "Dinh Tỉnh Trưởng Bình Long (Di tích lịch sử Nhà và Đường hầm An Lộc) là cơ quan đầu não thời chính quyền Sài Gòn với hệ thống công sự, lô cốt và đường hầm ngầm kiên cố trong chiến dịch mùa hè 1972.",
-    address: "Phường Bình Long, Thành phố Đồng Nai",
+      'Di tích: An Lộc "Nhà và Đường hầm" (Dinh Tỉnh Trưởng Bình Long) là công trình kiến trúc và quân sự tiêu biểu tọa lạc tại Khu phố Phú Đức, Phường Bình Long, Thành phố Đồng Nai. Ngôi nhà được xây dựng năm 1920 dùng làm trụ sở điều hành việc khai thác mủ cao su ở Bình Long. Sau Hiệp định Geneve năm 1954, chính quyền Ngô Đình Diệm thành lập chính quyền Việt Nam Cộng hòa. Ngày 22/10/1956, tỉnh Bình Long được thành lập gồm ba quận: An Lộc, Chơn Thành và Lộc Ninh. Do có vị trí chiến lược quan trọng, ngôi nhà được lựa chọn làm nơi đặt cơ quan đầu não của chính quyền đương thời tại tỉnh Bình Long và được gọi là Dinh Tỉnh trưởng. Từ năm 1957 đến năm 1974 có 8 đời Tỉnh Trưởng đã làm việc trong căn nhà này. Đây không chỉ là trụ sở hành chính mà còn là một địa điểm có vai trò quan trọng trong việc tổ chức, điều hành các hoạt động quân sự và chính trị. Nhằm phục vụ phòng thủ và chỉ huy, công trình đã được kiên cố hóa với hệ thống công sự, lô cốt và đường hầm ngầm kiên cố. Trong chiến sự mùa hè năm 1972, An Lộc là địa bàn diễn ra nhiều trận đánh ác liệt và Dinh Tỉnh trưởng là một trong những điểm tác chiến then chốt. Sau ngày giải phóng, Dinh Tỉnh trưởng từng được sử dụng làm nơi làm việc của các cơ quan Đảng và Nhà nước. Di tích được xếp hạng Di tích Lịch sử cấp Tỉnh vào năm 1980.',
+    address: "Khu phố Phú Đức, Phường Bình Long, Thành phố Đồng Nai",
     website: null,
     geolocation: { lon: 106.607088, lat: 11.652378 },
-    preview_image: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/hotspots/hotspot_130_preview.jpg",
+    preview_image: "/landmarks/dtt_preview.jpg",
     click_panorama_id: "DTT_0_FLYCAM",
     created_at: new Date().toISOString(),
     metadata: {
       ids: [],
-      audio_url: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/audio/dtt_thuyet_minh.mp3"
+      audio_url: "/audio/dtt_thuyet_minh.mp3"
     },
     documents: null,
-    assets: [],
+    assets: [
+      {
+        asset_id: "dtt_asset_1",
+        title: "Tòa nhà Dinh Tỉnh Trưởng Bình Long (Mặt tiền kiến trúc Pháp)",
+        description: "Kiến trúc Pháp nguyên bản xây dựng từ năm 1920 tại Bình Long, từng là trụ sở làm việc của 8 đời Tỉnh trưởng và cơ quan chỉ huy quân sự.",
+        image_url: "/landmarks/dtt_exterior.jpg",
+        panorama_id: "DTT_2_SAN"
+      },
+      {
+        asset_id: "dtt_asset_2",
+        title: "Khuôn viên Dinh Tỉnh Trưởng và Cổng chính",
+        description: "Góc nhìn toàn cảnh khuôn viên Dinh Tỉnh Trưởng Bình Long (Di tích Lịch sử Nhà và Đường hầm An Lộc).",
+        image_url: "/landmarks/dtt_preview.jpg",
+        panorama_id: "DTT_1_CONG"
+      }
+    ],
   },
   {
     id: "131",
@@ -38,59 +53,104 @@ export const BINHLONG_HOTSPOTS: Hotspot[] = [
     area_id: 25,
     title: "Di tích Lịch sử Mộ tập thể Lực lượng vũ trang An ninh An Lộc (Mộ 7 Người)",
     description:
-      "Nơi an nghỉ và ghi dấu sự hy sinh anh dũng kiên cường của 7 cán bộ chiến sĩ Đội An ninh vũ trang An Lộc năm 1971 trong kháng chiến chống Mỹ cứu nước. Di tích Lịch sử cấp Tỉnh.",
-    address: "Phường Bình Long, Thành phố Đồng Nai",
+      "Di tích Mộ tập thể Lực lượng vũ trang An ninh An Lộc (thường được người dân địa phương gọi thân thương là Di tích Mộ 7 người) tọa lạc tại Khu phố Bình An, Phường Bình Long, Thành phố Đồng Nai. Nơi đây là nơi an nghỉ và tưởng niệm các chiến sĩ kiên trung thuộc Đội An ninh vũ trang An Lộc đã anh dũng hy sinh trong cuộc kháng chiến chống Mỹ cứu nước. Vào ngày 08/07/1970, đoàn công tác gồm 7 đồng chí đang làm nhiệm vụ bám trụ địa bàn thì bị địch phát hiện và phục kích, 03 chiến sĩ anh dũng hy sinh và 4 đồng chí bị thương; kẻ thù đã tàn bạo dùng xe Jeep kéo lê thi thể các liệt sĩ thị uy rồi ném xuống giếng sâu của một người dân làm rẫy. Đến ngày 27/07/1970, tiếp tục có 03 đồng chí hy sinh khi làm nhiệm vụ và bị giặc ném xuống miệng giếng này. Sau ngày non sông thống nhất, nhân dân Bình Long đã xây dựng khu vực này thành mộ tập thể trang nghiêm để tri ân công đức. Ngày 15/12/2011, UBND tỉnh đã ban hành Quyết định số 2764 công nhận Mộ tập thể liệt sĩ lực lượng vũ trang An ninh An Lộc xếp hạng Di tích Lịch sử - Văn hóa cấp Tỉnh.",
+    address: "Khu phố Bình An, Phường Bình Long, Thành phố Đồng Nai",
     website: null,
     geolocation: { lon: 106.6057152, lat: 11.6583201 },
-    preview_image: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/hotspots/hotspot_131_preview.jpg",
+    preview_image: "/landmarks/m7n_preview.jpg",
     click_panorama_id: "M7N_0_FLYCAM",
     created_at: new Date().toISOString(),
     metadata: {
       ids: [],
-      audio_url: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/audio/m7n_thuyet_minh.mp3"
+      audio_url: "/audio/m7n_thuyet_minh.mp3"
     },
     documents: null,
-    assets: [],
+    assets: [
+      {
+        asset_id: "m7n_asset_1",
+        title: "Khuôn viên và Nhà bia Tưởng niệm Mộ 7 Người",
+        description: "Khuôn viên tưởng niệm trang nghiêm 7 cán bộ, chiến sĩ Đội An ninh vũ trang An Lộc anh dũng hy sinh năm 1970.",
+        image_url: "/landmarks/m7n_preview.jpg",
+        panorama_id: "M7N_1_CONG"
+      },
+      {
+        asset_id: "m7n_asset_2",
+        title: "Bia ghi danh Di tích Lịch sử Mộ tập thể Lực lượng vũ trang An ninh An Lộc",
+        description: "Bia tưởng niệm khắc ghi chiến công anh dũng và sự hy sinh bất khuất của các liệt sĩ an ninh vũ trang vì độc lập tự do của Tổ quốc.",
+        image_url: "/landmarks/m7n_monument.jpg",
+        panorama_id: "M7N_2_BIA"
+      }
+    ],
   },
   {
     id: "132",
     hotspot_id: 132,
     area_id: 25,
-    title: "Di tích Lịch sử Quốc gia Mộ 3.000 người An Lộc",
+    title: "Di tích Lịch sử cấp Quốc gia Mộ 3.000 người An Lộc",
     description:
-      "Nơi ghi dấu nỗi đau thương chiến tranh và sự hy sinh to lớn của hơn 3.000 đồng bào tử nạn trong 32 ngày đêm chiến sự năm 1972. Di tích Lịch sử - Văn hóa cấp Quốc gia.",
-    address: "Đường Phạm Ngọc Thạch, Phường Bình Long, Thành phố Đồng Nai",
+      "Di tích lịch sử Quốc gia: Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (còn gọi là Mộ tập thể 3.000 người), tọa lạc tại Khu phố An Lộc, Phường Bình Long, Thành phố Đồng Nai. Suốt 32 ngày đêm (từ 13/04 đến 15/05/1972), chiến sự mùa hè 1972 diễn ra vô cùng ác liệt. Địch tập trung mọi hỏa lực máy bay B-52 thả bom rải thảm cày nát mặt đất, thả bom vào cả bệnh viện thị trấn An Lộc nơi đồng bào tập trung tránh đạn pháo và thương binh đang điều trị khiến hàng ngàn người thương vong. Để giải quyết tang thương trong 32 ngày đêm đó, địch dùng xe ủi khoét bốn hào rãnh lớn chôn các xác chết sau khi gom lại, hình thành ngôi mộ tập thể trên 3.000 người. Với diện tích hơn 4.000m², khu di tích ngày nay được tôn tạo trang nghiêm với tượng đài tưởng niệm cao 12,6m, nhà bia lịch sử và hoa viên xanh mát. Di tích được Bộ Văn hóa công nhận là Di tích Lịch sử cấp Quốc gia vào ngày 01/04/1985.",
+    address: "Khu phố An Lộc, Phường Bình Long, Thành phố Đồng Nai",
     website: null,
     geolocation: { lon: 106.6057461, lat: 11.6491817 },
-    preview_image: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/hotspots/hotspot_132_preview.jpg",
-    click_panorama_id: "M3000_0_FLYCAM_1",
+    preview_image: "/landmarks/m3000_preview.jpg",
+    click_panorama_id: "M3000_0_FLYCAM_2",
     created_at: new Date().toISOString(),
     metadata: {
       ids: [],
-      audio_url: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/audio/m3000_thuyet_minh.mp3"
+      audio_url: "/audio/m3000_thuyet_minh.mp3"
     },
     documents: null,
-    assets: [],
+    assets: [
+      {
+        asset_id: "m3000_asset_1",
+        title: "Đài tưởng niệm Di tích Lịch sử Quốc gia Mộ 3.000 người",
+        description: "Tượng đài uy nghiêm cao 12,6m và nhà bia tưởng niệm hơn 3.000 đồng bào và chiến sĩ tử nạn trong 32 ngày đêm chiến sự năm 1972.",
+        image_url: "/landmarks/m3000_preview.jpg",
+        panorama_id: "M3000_6"
+      },
+      {
+        asset_id: "m3000_asset_2",
+        title: "Khu mộ tập thể và hoa viên tưởng niệm An Lộc",
+        description: "Khuôn viên xanh mát hơn 4.000m² lưu dấu 4 hào rãnh mộ tập thể lịch sử, được xếp hạng Di tích Lịch sử cấp Quốc gia năm 1985.",
+        image_url: "/landmarks/mo_3000_nguoi.jpg",
+        panorama_id: "M3000_9_GIUA"
+      }
+    ],
   },
   {
     id: "133",
     hotspot_id: 133,
     area_id: 25,
-    title: "Di tích Lịch sử - Văn hóa Chùa Hưng Lập Tự",
+    title: "Di tích Lịch sử - Văn hóa cấp thành phố Hưng Lập Tự",
     description:
-      "Ngôi chùa cổ kính thuộc Tịnh độ Cư sĩ Phật hội Việt Nam, nổi tiếng với truyền thống y đạo bác ái của Phòng thuốc Nam Phước thiện khám chữa bệnh miễn phí cho nhân dân suốt nhiều thập kỷ.",
-    address: "Phường Bình Long, Thành phố Đồng Nai",
+      "Hưng Lập Tự (Chi hội Hưng Lập Tự thuộc Tịnh độ Cư sĩ Phật hội Việt Nam) tọa lạc tại Khu phố Phú Đức, Phường Bình Long, Thành phố Đồng Nai. Chùa được xây dựng năm 1958, di tích lúc đó gồm có các công trình: Cổng, chánh điện, giảng đường, phòng thuốc nam. Năm 1972, chiến sự tại Bình Long diễn ra vô cùng ác liệt, hàng ngàn người bị thương vong. Chánh điện của Hưng Lập Tự bị bành dù tiếp tế rơi trúng khiến một phần ngói và nền nhà bị vỡ sập. Trong hoàn cảnh đó, chùa vừa là nơi cứu chữa người bị thương, vừa là nơi che chở tránh bom đạn cho đồng bào. Sau chiến tranh, các y sĩ đã trở về tiếp tục phát triển phòng thuốc nam. Năm 1983, chùa được UBND huyện Bình Long quyết định thành lập tổ chẩn trị Đông y khám bệnh từ thiện. Với tôn chỉ hành đạo 'Phước Huệ Song Tu', Hưng Lập Tự là cơ sở tôn giáo và di tích lịch sử - văn hóa nổi tiếng với truyền thống khám chữa bệnh, cấp phát thuốc miễn phí cho nhân dân suốt nhiều thập kỷ.",
+    address: "Khu phố Phú Đức, Phường Bình Long, Thành phố Đồng Nai",
     website: null,
     geolocation: { lon: 106.6117306, lat: 11.6480133 },
-    preview_image: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/hotspots/hotspot_133_preview.jpg",
+    preview_image: "/landmarks/hlt_preview.jpg",
     click_panorama_id: "HLT_0_FLYCAM",
     created_at: new Date().toISOString(),
     metadata: {
       ids: [],
-      audio_url: "https://jmeiegtjrrdeubwzgder.supabase.co/storage/v1/object/public/APP_IMAGES/25/audio/hlt_thuyet_minh.mp3"
+      audio_url: "/audio/hlt_thuyet_minh.mp3"
     },
     documents: null,
-    assets: [],
+    assets: [
+      {
+        asset_id: "hlt_asset_1",
+        title: "Chánh điện Di tích Lịch sử - Văn hóa Chùa Hưng Lập Tự",
+        description: "Kiến trúc cổ kính thanh tịnh của Chùa Hưng Lập Tự (xây dựng năm 1958) thuộc Tịnh độ Cư sĩ Phật hội Việt Nam.",
+        image_url: "/landmarks/hlt_preview.jpg",
+        panorama_id: "HLT_2"
+      },
+      {
+        asset_id: "hlt_asset_2",
+        title: "Cảnh quan Đô thị Phường Bình Long thanh bình",
+        description: "Toàn cảnh đô thị Phường Bình Long hôm nay, nơi lưu giữ nhiều di tích lịch sử và văn hóa tâm linh hào hùng.",
+        image_url: "/landmarks/do_thi_binh_long.jpg",
+        panorama_id: "HLT_0_FLYCAM"
+      }
+    ],
   },
 ];
 

@@ -5,6 +5,7 @@ export interface SectionConfig {
 }
 
 import HeroSection from '../components/sections/hero';
+import { OverviewSection } from '../components/sections/overview';
 import { AboutSection } from '../components/sections/about';
 import { FeatureSection } from '../components/sections/feature';
 import { ContactSection } from '../components/sections/contact';
@@ -15,6 +16,11 @@ export const SECTIONS_CONFIG: SectionConfig[] = [
         id: 'hero',
         label: 'Trang chủ',
         component: HeroSection,
+    },
+    {
+        id: 'overview',
+        label: 'Khái quát',
+        component: OverviewSection,
     },
     {
         id: 'about',

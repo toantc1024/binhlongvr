@@ -14,11 +14,18 @@ interface NavMenuProps extends NavigationMenuProps {
 }
 
 export const NavMenu = ({ activeSection, onNavigate, ...props }: NavMenuProps) => {
+  const navItems = [
+    SECTIONS_CONFIG.find((s) => s.id === "hero"),
+    SECTIONS_CONFIG.find((s) => s.id === "overview"),
+    SECTIONS_CONFIG.find((s) => s.id === "about"),
+    SECTIONS_CONFIG.find((s) => s.id === "contact"),
+  ].filter(Boolean) as typeof SECTIONS_CONFIG;
+
   return (
     <NavigationMenu {...props}>
       <NavigationMenuList className="flex items-center gap-1 sm:gap-2 border-0 rounded-none p-0 bg-transparent space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start">
-        {[SECTIONS_CONFIG[0], SECTIONS_CONFIG[1], SECTIONS_CONFIG[4]].map((section, index) => (
-          <NavigationMenuItem key={index}>
+        {navItems.map((section) => (
+          <NavigationMenuItem key={section.id}>
             <NavigationMenuLink asChild>
               <Button
                 variant="ghost"

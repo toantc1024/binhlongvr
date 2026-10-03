@@ -3,22 +3,28 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const BINHLONG_LANDMARK_SLIDES = [
   {
-    image: "/landmarks/m3000_preview.jpg",
+    image: "/landmarks/do_thi_binh_long.jpg",
+    title: "Toàn cảnh Đô thị Bình Long",
+    subtitle: "Cửa ngõ chiến lược phía Bắc – Đô thị năng động và phát triển",
+    tag: "Đô thị Bình Long",
+  },
+  {
+    image: "/landmarks/mo_3000_tuong_niem.jpg",
     title: "Di tích Quốc gia Mộ 3.000 người",
-    subtitle: "Khu tưởng niệm cấp Quốc gia - An Lộc, Bình Long",
+    subtitle: "Khu tưởng niệm cấp Quốc gia – Mộ 3.000 đồng bào An Lộc",
     tag: "Di tích Quốc gia",
   },
   {
     image: "/landmarks/dtt_preview.jpg",
     title: "Dinh Tỉnh Trưởng Bình Long",
-    subtitle: "Di tích Lịch sử cấp Tỉnh - Nhà và Đường hầm An Lộc",
+    subtitle: "Di tích Lịch sử cấp Thành phố – Nhà và Đường hầm An Lộc",
     tag: "Di tích Lịch sử",
   },
   {
     image: "/landmarks/m7n_preview.jpg",
     title: "Khu Di tích Mộ 7 Người",
     subtitle: "Mộ tập thể Lực lượng vũ trang An ninh An Lộc",
-    tag: "Di tích Cấp tỉnh",
+    tag: "Di tích Lịch sử",
   },
   {
     image: "/landmarks/hlt_preview.jpg",

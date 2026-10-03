@@ -1,10 +1,69 @@
 import { TextAnimate } from "../magicui/text-animate";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
+import {
+    Camera,
+    Maximize2,
+    ChevronLeft,
+    ChevronRight,
+    X,
+    Sparkles,
+    Eye,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 import historyArchive3DIcon from "@/assets/3d-icons/history-archive__binhlong-3d-icon.png";
 import landmarkExplore3DIcon from "@/assets/3d-icons/landmark-explore__binhlong-3d-icon.png";
 import vrAiTech3DIcon from "@/assets/3d-icons/vr-ai-tech__binhlong-3d-icon.png";
 import interaction3DIcon from "@/assets/3d-icons/interaction__binhlong-3d-icon.png";
+
+// Authentic photos of Phường Bình Long
+const BINHLONG_SHOWCASE_PHOTOS = [
+    {
+        id: "tru_so",
+        title: "Trụ sở Đảng bộ – HĐND – UBND Phường Bình Long",
+        subtitle: "Cổng chào Đại hội Đại biểu Đảng bộ Phường Bình Long lần thứ I, nhiệm kỳ 2025 – 2030",
+        description:
+            "Trụ sở làm việc của Đảng bộ và chính quyền Phường Bình Long được trang hoàng trang trọng, rực rỡ cờ hoa, pano khẩu hiệu nhân dịp Đại hội đại biểu khóa I.",
+        tag: "Trụ sở Hành chính",
+        image: "/images/phuong_binh_long/phuong_binh_long_tru_so_cong_chao.jpg",
+    },
+    {
+        id: "dieu_hanh",
+        title: "Đoàn xe diễu hành chào mừng Đại hội",
+        subtitle: "Khí thế hân hoan, rực rỡ cờ hoa trên các trục lộ giao thông chính",
+        description:
+            "Đoàn xe hoa và lực lượng tuần hành rực rỡ cờ đỏ búa liềm và cờ Tổ quốc diễu hành trên tuyến đại lộ rợp bóng cây xanh của Phường Bình Long.",
+        tag: "Sự kiện lịch sử",
+        image: "/images/phuong_binh_long/phuong_binh_long_dieu_hanh.jpg",
+    },
+    {
+        id: "tuyen_pho",
+        title: "Tuyến phố trung tâm & Cụm biểu tượng Hoa Sen",
+        subtitle: "Không gian đô thị khang trang, năng động và phát triển",
+        description:
+            "Tuyến đường thương mại trung tâm sầm uất với điểm nhấn cụm biểu tượng đóa sen Bình Long vươn cao kiêu hãnh, biểu trưng cho sức sống và sự vươn lên.",
+        tag: "Đô thị trung tâm",
+        image: "/images/phuong_binh_long/phuong_binh_long_tuyen_pho_hoa_sen.jpg",
+    },
+    {
+        id: "duong_co_hoa",
+        title: "Đại lộ rợp bóng cây xanh & cờ đỏ sao vàng",
+        subtitle: "Cảnh quan thanh bình, tươi đẹp rợp bóng mát",
+        description:
+            "Tuyến đường rợp bóng cây cổ thụ xanh mát hòa cùng sắc đỏ thắm tươi của cờ Tổ quốc và cờ Đảng chào đón những ngày hội non sông.",
+        tag: "Cảnh quan đô thị",
+        image: "/images/phuong_binh_long/phuong_binh_long_duong_co_hoa.jpg",
+    },
+    {
+        id: "giao_lo",
+        title: "Giao lộ kết nối Quốc lộ 13 huyết mạch",
+        subtitle: "Hạ tầng giao thông thông thoáng hướng về Cửa khẩu Hoa Lư",
+        description:
+            "Điểm nút giao thông chiến lược nằm trên trục Quốc lộ 13 – tuyến huyết mạch nối liền TP. Hồ Chí Minh với Cửa khẩu Quốc tế Hoa Lư và Campuchia.",
+        tag: "Hạ tầng giao thông",
+        image: "/images/phuong_binh_long/phuong_binh_long_giao_lo_trung_tam.jpg",
+    },
+];
 
 // 1. Simple abstract digital archive art for "Số hóa thông tin lịch sử"
 const HistorySimpleAbstract = () => (
@@ -120,6 +179,8 @@ const InteractionSimpleAbstract = () => (
 );
 
 export function AboutSection() {
+    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
     const features = useMemo(() => [
         {
             iconImage: historyArchive3DIcon,
@@ -151,61 +212,279 @@ export function AboutSection() {
         },
     ], []);
 
+    const handlePrevPhoto = useCallback(() => {
+        setLightboxIndex((prev) =>
+            prev === null ? null : (prev === 0 ? BINHLONG_SHOWCASE_PHOTOS.length - 1 : prev - 1)
+        );
+    }, []);
+
+    const handleNextPhoto = useCallback(() => {
+        setLightboxIndex((prev) =>
+            prev === null ? null : (prev === BINHLONG_SHOWCASE_PHOTOS.length - 1 ? 0 : prev + 1)
+        );
+    }, []);
+
+    useEffect(() => {
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (lightboxIndex === null) return;
+            if (e.key === "ArrowLeft") handlePrevPhoto();
+            if (e.key === "ArrowRight") handleNextPhoto();
+            if (e.key === "Escape") setLightboxIndex(null);
+        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+    }, [lightboxIndex, handlePrevPhoto, handleNextPhoto]);
+
+    const activeLightboxPhoto = lightboxIndex !== null ? BINHLONG_SHOWCASE_PHOTOS[lightboxIndex] : null;
+
     return (
-        <section className="py-12 w-full px-4 sm:px-6 lg:px-8">
-            <div className="w-full">
-                {/* Header: Align Left */}
-                <div className="w-full mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                    <div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left">
-                            <TextAnimate animation="blurIn" as="span">
-                                Nền tảng thực tế ảo
-                            </TextAnimate>
-                        </h2>
-                        <p className="mt-2 text-base text-muted-foreground text-left font-normal max-w-2xl">
-                            Khám phá không gian văn hóa - lịch sử Phường Bình Long thông qua công nghệ số hóa 3D và thực tế ảo 360° tương tác đa chiều.
-                        </p>
+        <section className="py-12 sm:py-16 w-full px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+            {/* Ambient Background Lights */}
+            <div className="absolute top-10 right-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-20 left-10 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="w-full max-w-7xl mx-auto space-y-16">
+                {/* ================= PART 1: NỀN TẢNG THỰC TẾ ẢO ================= */}
+                <div>
+                    {/* Header: Align Left */}
+                    <div className="w-full mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                        <div>
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-medium mb-3 shadow-xs">
+                                <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                                <span>Giải pháp Chuyển đổi số Di tích & Di sản</span>
+                            </div>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left">
+                                <TextAnimate animation="blurIn" as="span">
+                                    Nền tảng thực tế ảo
+                                </TextAnimate>
+                            </h2>
+                            <p className="mt-2 text-base text-muted-foreground text-left font-normal max-w-2xl leading-relaxed">
+                                Khám phá không gian văn hóa - lịch sử Phường Bình Long thông qua công nghệ số hóa 3D và thực tế ảo 360° tương tác đa chiều.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Clean 4-Column Grid: 4 cards side-by-side on desktop, 2x2 on tablet, 1 column on mobile */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 w-full">
+                        {features.map((feature, idx) => (
+                            <div
+                                key={idx}
+                                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-card text-card-foreground border border-border/60 shadow-md hover:shadow-xl transition-all duration-300 p-6 sm:p-7 min-h-[300px] sm:min-h-[320px]"
+                            >
+                                {/* Simple abstract background with soft dreamy blur */}
+                                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                                    {feature.background}
+                                </div>
+
+                                {/* Content Layer */}
+                                <div className="relative z-10 flex flex-col justify-between h-full pointer-events-none">
+                                    <div>
+                                        {/* Transparent 3D Icon */}
+                                        <div className="size-20 sm:size-22 flex items-center justify-start transform-gpu transition-all duration-300 ease-in-out group-hover:scale-105 pointer-events-none -ml-2 -mt-2">
+                                            <img
+                                                src={feature.iconImage}
+                                                alt={feature.name}
+                                                className="w-full h-full object-contain filter drop-shadow-md"
+                                            />
+                                        </div>
+                                        <h3 className="mt-4 text-lg sm:text-xl font-semibold text-foreground text-left tracking-tight">
+                                            {feature.name}
+                                        </h3>
+                                        <p className="mt-2 text-sm text-muted-foreground font-normal leading-relaxed text-left">
+                                            {feature.description}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Subtle hover backlight overlay */}
+                                <div className="pointer-events-none absolute inset-0 z-10 transform-gpu transition-all duration-300 group-hover:bg-black/[.02] dark:group-hover:bg-white/[.02]" />
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                {/* Clean 4-Column Grid: 4 cards side-by-side on desktop, 2x2 on tablet, 1 column on mobile */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 w-full">
-                    {features.map((feature, idx) => (
-                        <div
-                            key={idx}
-                            className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-card text-card-foreground border-0 shadow-md hover:shadow-xl transition-all duration-300 p-6 sm:p-7 min-h-[300px] sm:min-h-[320px]"
-                        >
-                            {/* Simple abstract background with soft dreamy blur */}
-                            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                                {feature.background}
+                {/* ================= PART 2: HÌNH ẢNH & DẤU ẤN PHƯỜNG BÌNH LONG ================= */}
+                <div className="pt-6 border-t border-border/60">
+                    <div className="w-full mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                        <div>
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-medium mb-3 shadow-xs">
+                                <Camera className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                                <span>Hình ảnh thực tế • Phường Bình Long</span>
                             </div>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left">
+                                <TextAnimate animation="blurIn" as="span">
+                                    Dấu Ấn Đổi Mới
+                                </TextAnimate>{" "}
+                                <span className="text-primary font-semibold">Phường Bình Long</span>
+                            </h2>
+                            <p className="mt-2 text-base text-muted-foreground text-left font-normal max-w-3xl leading-relaxed">
+                                Ghi nhận những hình ảnh chân thực, diện mạo đô thị khang trang và các sự kiện chính trị – văn hóa trọng đại của Đảng bộ và Nhân dân Phường Bình Long.
+                            </p>
+                        </div>
+                    </div>
 
-                            {/* Content Layer */}
-                            <div className="relative z-10 flex flex-col justify-between h-full pointer-events-none">
-                                <div>
-                                    {/* Transparent 3D Icon */}
-                                    <div className="size-20 sm:size-22 flex items-center justify-start transform-gpu transition-all duration-300 ease-in-out group-hover:scale-105 pointer-events-none -ml-2 -mt-2">
-                                        <img
-                                            src={feature.iconImage}
-                                            alt={feature.name}
-                                            className="w-full h-full object-contain filter drop-shadow-md"
-                                        />
+                    {/* Responsive Bento Grid with 5 Real Photos */}
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-6">
+                        {/* Top Row: 2 Major Feature Cards (6-6 cols on desktop) */}
+                        {BINHLONG_SHOWCASE_PHOTOS.slice(0, 2).map((photo, idx) => (
+                            <div
+                                key={photo.id}
+                                onClick={() => setLightboxIndex(idx)}
+                                className="group relative md:col-span-6 h-[280px] sm:h-[340px] rounded-2xl overflow-hidden cursor-pointer border border-border/60 hover:border-primary/50 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-end"
+                            >
+                                <img
+                                    src={photo.image}
+                                    alt={photo.title}
+                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                    loading="lazy"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 pointer-events-none" />
+
+                                {/* Top Floating Badges */}
+                                <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none z-10">
+                                    <Badge className="bg-emerald-600/90 hover:bg-emerald-600 text-white border-0 text-xs font-semibold backdrop-blur-md shadow-md">
+                                        {photo.tag}
+                                    </Badge>
+                                    <div className="w-8 h-8 rounded-lg bg-black/50 text-white backdrop-blur-md flex items-center justify-center opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
+                                        <Maximize2 className="w-4 h-4" />
                                     </div>
-                                    <h3 className="mt-4 text-lg sm:text-xl font-semibold text-foreground text-left tracking-tight">
-                                        {feature.name}
+                                </div>
+
+                                {/* Bottom Content Overlay */}
+                                <div className="relative z-10 p-5 sm:p-6 text-white pointer-events-none">
+                                    <h3 className="text-lg sm:text-xl font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
+                                        {photo.title}
                                     </h3>
-                                    <p className="mt-2 text-sm text-muted-foreground font-normal leading-relaxed text-left">
-                                        {feature.description}
+                                    <p className="text-xs sm:text-sm text-slate-200 mt-1 line-clamp-2 drop-shadow-sm font-normal">
+                                        {photo.subtitle}
                                     </p>
+                                    <div className="mt-2.5 flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
+                                        <Eye className="w-3.5 h-3.5" />
+                                        <span>Nhấp để phóng to ảnh chất lượng cao</span>
+                                    </div>
                                 </div>
                             </div>
+                        ))}
 
-                            {/* Subtle hover backlight overlay */}
-                            <div className="pointer-events-none absolute inset-0 z-10 transform-gpu transition-all duration-300 group-hover:bg-black/[.02] dark:group-hover:bg-white/[.02]" />
-                        </div>
-                    ))}
+                        {/* Bottom Row: 3 Feature Cards (4-4-4 cols on desktop) */}
+                        {BINHLONG_SHOWCASE_PHOTOS.slice(2, 5).map((photo, idx) => (
+                            <div
+                                key={photo.id}
+                                onClick={() => setLightboxIndex(idx + 2)}
+                                className="group relative md:col-span-4 h-[240px] sm:h-[280px] rounded-2xl overflow-hidden cursor-pointer border border-border/60 hover:border-primary/50 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-end"
+                            >
+                                <img
+                                    src={photo.image}
+                                    alt={photo.title}
+                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                    loading="lazy"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 pointer-events-none" />
+
+                                {/* Top Floating Badges */}
+                                <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none z-10">
+                                    <Badge className="bg-emerald-600/90 hover:bg-emerald-600 text-white border-0 text-[11px] font-semibold backdrop-blur-md shadow-md">
+                                        {photo.tag}
+                                    </Badge>
+                                    <div className="w-7 h-7 rounded-lg bg-black/50 text-white backdrop-blur-md flex items-center justify-center opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
+                                        <Maximize2 className="w-3.5 h-3.5" />
+                                    </div>
+                                </div>
+
+                                {/* Bottom Content Overlay */}
+                                <div className="relative z-10 p-4 sm:p-5 text-white pointer-events-none">
+                                    <h3 className="text-base sm:text-lg font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
+                                        {photo.title}
+                                    </h3>
+                                    <p className="text-xs text-slate-200 mt-1 line-clamp-2 drop-shadow-sm font-normal">
+                                        {photo.subtitle}
+                                    </p>
+                                    <div className="mt-2 flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium">
+                                        <Eye className="w-3 h-3" />
+                                        <span>Xem ảnh</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
+
+            {/* ================= HIGH-RES LIGHTBOX MODAL ================= */}
+            {activeLightboxPhoto && (
+                <div
+                    className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
+                    onClick={() => setLightboxIndex(null)}
+                >
+                    <div
+                        className="relative w-full max-w-5xl bg-card border border-border/80 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* Header bar */}
+                        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-border bg-card/95 z-10">
+                            <div className="flex items-center gap-2.5">
+                                <Badge className="bg-emerald-600 text-white text-xs">
+                                    {activeLightboxPhoto.tag}
+                                </Badge>
+                                <span className="text-xs text-muted-foreground">
+                                    Ảnh {(lightboxIndex ?? 0) + 1} / {BINHLONG_SHOWCASE_PHOTOS.length}
+                                </span>
+                            </div>
+                            <button
+                                onClick={() => setLightboxIndex(null)}
+                                className="w-9 h-9 rounded-full bg-secondary hover:bg-destructive hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                                aria-label="Đóng ảnh"
+                                type="button"
+                            >
+                                <X className="w-4 h-4" />
+                            </button>
+                        </div>
+
+                        {/* Image Viewer with Nav buttons */}
+                        <div className="relative flex-1 bg-black flex items-center justify-center min-h-[300px] sm:min-h-[420px] max-h-[62vh] overflow-hidden select-none">
+                            <img
+                                src={activeLightboxPhoto.image}
+                                alt={activeLightboxPhoto.title}
+                                className="max-w-full max-h-full object-contain"
+                            />
+
+                            {/* Left Chevron */}
+                            <button
+                                onClick={handlePrevPhoto}
+                                className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border border-white/80 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer"
+                                aria-label="Ảnh trước"
+                                type="button"
+                            >
+                                <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+                            </button>
+
+                            {/* Right Chevron */}
+                            <button
+                                onClick={handleNextPhoto}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border border-white/80 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer"
+                                aria-label="Ảnh kế tiếp"
+                                type="button"
+                            >
+                                <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+                            </button>
+                        </div>
+
+                        {/* Caption & Description Footer */}
+                        <div className="p-4 sm:p-5 bg-card border-t border-border">
+                            <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                                {activeLightboxPhoto.title}
+                            </h3>
+                            <p className="text-xs sm:text-sm font-medium text-emerald-600 dark:text-emerald-400 mt-0.5">
+                                {activeLightboxPhoto.subtitle}
+                            </p>
+                            <p className="text-xs sm:text-sm text-muted-foreground mt-2 leading-relaxed">
+                                {activeLightboxPhoto.description}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
+
