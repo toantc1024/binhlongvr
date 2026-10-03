@@ -55,7 +55,7 @@ export default function HeroSection() {
               setIsLoading(true);
               setTimeout(() => {
                 setIsLoading(false);
-              }, 2000);
+              }, 300);
             }}
           >
             Bắt đầu <ArrowUpRight className="!h-5 !w-5" />

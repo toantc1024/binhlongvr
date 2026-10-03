@@ -10,7 +10,11 @@ import { useSearchParams } from "react-router-dom";
 import { Drawer } from "vaul";
 import AssetDrawerBlock from "../block/AssetDrawerBlock";
 import LoaderBlock from "../block/LoaderBlock";
-const VRPage = () => {
+interface VRPageProps {
+  isActive?: boolean;
+}
+
+const VRPage: React.FC<VRPageProps> = ({ isActive = true }) => {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const {
@@ -30,23 +34,40 @@ const VRPage = () => {
     setPanoramasByHotspotId,
     setCurrentPanorama,
     getPanoramaById,
+    selectHotspotAndPanorama,
   } = useVRStore((state) => state);
   const { currentAsset, setCurrentAsset } = useAssetStore((state) => state);
   let [searchParams, _] = useSearchParams();
 
+  // Handle direct navigation via searchParams when active
   useEffect(() => {
-    let hotspot_id = searchParams.get("hotspot_id");
-    if (hotspot_id) {
-      let hotspot_id_number = Number(hotspot_id);
-      let hotspot = getHotspotById(hotspot_id_number);
-      showMedia(hotspot?.click_panorama_id || "");
-    } else {
-      let panorama_id = searchParams.get("panorama_id");
-      if (panorama_id) {
-        showMedia(panorama_id || "");
+    if (!isActive) return;
+
+    const hotspotIdParam = searchParams.get("hotspot_id");
+    const panoramaIdParam = searchParams.get("panorama_id");
+
+    const hotspotId = hotspotIdParam ? Number(hotspotIdParam) : null;
+    const panoramaId = panoramaIdParam || null;
+
+    if (hotspotId || panoramaId) {
+      selectHotspotAndPanorama(hotspotId, panoramaId);
+      const targetPanorama =
+        panoramaId || (hotspotId ? getHotspotById(hotspotId)?.click_panorama_id : null);
+      if (targetPanorama) {
+        showMedia(targetPanorama);
       }
     }
-  }, [searchParams, isLoading]);
+  }, [searchParams, isActive]);
+
+  // Sync mute state and viewport on active toggle
+  useEffect(() => {
+    if (isActive) {
+      unmuteAllAudio();
+      window.dispatchEvent(new Event("resize"));
+    } else {
+      muteAllAudio();
+    }
+  }, [isActive]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -67,18 +88,23 @@ const VRPage = () => {
         await setPanoramasByHotspotId(currentHotspot.hotspot_id);
       }
     })();
-  }, [currentHotspot]);
+  }, [currentHotspot?.hotspot_id]);
+
   useEffect(() => {
     const handlePanoramaChange = async (panoramaInfo: any) => {
-      const panorama = getPanoramaById(panoramaInfo.data.label);
+      const label = panoramaInfo?.data?.label || panoramaInfo?.label || panoramaInfo?.id;
+      if (!label) return;
+
+      const panorama = await getPanoramaById(label);
       if (panorama) {
-        const resolvedPanorama = await panorama;
-        if (resolvedPanorama) {
-          setCurrentHotspotById(resolvedPanorama.hotspot_id);
-          setCurrentPanorama(resolvedPanorama);
+        if (currentHotspot?.hotspot_id !== panorama.hotspot_id) {
+          setCurrentHotspotById(panorama.hotspot_id);
+          await setPanoramasByHotspotId(panorama.hotspot_id);
         }
+        setCurrentPanorama(panorama);
       }
     };
+
     registerMessageHandler("panorama_change", handlePanoramaChange);
     const handleDirectMessage = async (event: any) => {
       if (event.data && event.data.type === "panorama_change") {
@@ -90,7 +116,7 @@ const VRPage = () => {
     return () => {
       window.removeEventListener("message", handleDirectMessage);
     };
-  }, [registerMessageHandler]);
+  }, [registerMessageHandler, currentHotspot?.hotspot_id]);
 
   const assetSnapPoints = ["400px", 1];
   const [assetSnap, setAssetSnap] = useState<number | string | null>(
@@ -136,6 +162,7 @@ const VRPage = () => {
                 muteAllAudio={muteAllAudio}
                 unmuteAllAudio={unmuteAllAudio}
                 getAudioState={getAudioState}
+                isActive={isActive}
               />
             </div>
           </div>

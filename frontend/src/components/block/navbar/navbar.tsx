@@ -14,23 +14,31 @@ interface NavbarProps {
 
 const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
   const navigate = useNavigate();
-  const { setIsLoading, isMapDialogOpen, setIsMapDialogOpen, mapDialogHotspotId } = useVRStore((state) => state);
+  const {
+    setIsLoading,
+    isMapDialogOpen,
+    setIsMapDialogOpen,
+    mapDialogHotspotId,
+    selectHotspotAndPanorama,
+  } = useVRStore((state) => state);
   return (
     <>
       <MapDialogBlock
         opened={isMapDialogOpen}
         initialHotspotId={mapDialogHotspotId}
-        showMedia={(item) => {
+        showMedia={(item, hotspotId) => {
+          selectHotspotAndPanorama(hotspotId, item);
           navigate({
             pathname: "/app",
             search: createSearchParams({
               panorama_id: item,
+              ...(hotspotId ? { hotspot_id: String(hotspotId) } : {}),
             }).toString(),
           });
           setIsLoading(true);
           setTimeout(() => {
             setIsLoading(false);
-          }, 5000);
+          }, 300);
         }}
         setOpened={(open) => setIsMapDialogOpen(open)}
       />

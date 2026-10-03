@@ -42,6 +42,7 @@ interface VRStoreActions {
   setCurrentPanoramaById: (panorama_id: string) => void;
   getPanoramaById: (panorama_id: string) => Promise<Panorama | undefined>;
   setIsMapDialogOpen: (open: boolean, hotspotId?: number | null) => void;
+  selectHotspotAndPanorama: (hotspotId?: number | null, panoramaId?: string | null) => void;
 }
 
 type VRStore = VRStoreState & VRStoreActions;
@@ -55,13 +56,64 @@ const defaultMainPanorama =
   defaultMainPanoramas.find((p) => p.panorama_id === "M3000_0_FLYCAM_1") ||
   defaultMainPanoramas[0];
 
+const getInitialSelection = () => {
+  if (typeof window !== "undefined") {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const urlHotspotId = params.get("hotspot_id");
+      const urlPanoramaId = params.get("panorama_id");
+
+      if (urlHotspotId) {
+        const hid = Number(urlHotspotId);
+        const hotspot = BINHLONG_HOTSPOTS.find((h) => h.hotspot_id === hid);
+        if (hotspot) {
+          const panas = BINHLONG_PANORAMAS.filter((p) => p.hotspot_id === hid);
+          const pana =
+            (urlPanoramaId && panas.find((p) => p.panorama_id === urlPanoramaId)) ||
+            (hotspot.click_panorama_id && panas.find((p) => p.panorama_id === hotspot.click_panorama_id)) ||
+            panas[0] ||
+            defaultMainPanorama;
+          return {
+            hotspot,
+            panorama: pana,
+            panoramas: panas.length > 0 ? panas : defaultMainPanoramas,
+          };
+        }
+      }
+
+      if (urlPanoramaId) {
+        const pana = BINHLONG_PANORAMAS.find((p) => p.panorama_id === urlPanoramaId);
+        if (pana) {
+          const hotspot = BINHLONG_HOTSPOTS.find((h) => h.hotspot_id === pana.hotspot_id);
+          const panas = BINHLONG_PANORAMAS.filter((p) => p.hotspot_id === pana.hotspot_id);
+          return {
+            hotspot: hotspot || defaultMainHotspot,
+            panorama: pana,
+            panoramas: panas.length > 0 ? panas : defaultMainPanoramas,
+          };
+        }
+      }
+    } catch {
+      // Ignore URL parsing errors
+    }
+  }
+
+  return {
+    hotspot: defaultMainHotspot,
+    panorama: defaultMainPanorama,
+    panoramas: defaultMainPanoramas,
+  };
+};
+
+const initialSelection = getInitialSelection();
+
 const useVRStore = create<VRStore>((set, get) => ({
   currentArea: BINHLONG_AREA,
-  currentHotspot: defaultMainHotspot,
-  currentPanorama: defaultMainPanorama,
+  currentHotspot: initialSelection.hotspot,
+  currentPanorama: initialSelection.panorama,
   isLoading: false,
   areaHotspots: BINHLONG_HOTSPOTS,
-  panoramas: defaultMainPanoramas,
+  panoramas: initialSelection.panoramas,
   isLoadingPanoramas: false,
   isMapDialogOpen: false,
   mapDialogHotspotId: null,
@@ -77,16 +129,61 @@ const useVRStore = create<VRStore>((set, get) => ({
   setCurrentPanorama: (panorama) => set({ currentPanorama: panorama }),
   setAreaHotspots: (hotspots) => set({ areaHotspots: hotspots }),
 
-  clearVRState: () =>
+  selectHotspotAndPanorama: (hotspotId?: number | null, panoramaId?: string | null) => {
+    let targetHotspot: Hotspot | undefined;
+    let targetPanorama: Panorama | undefined;
+
+    if (hotspotId) {
+      targetHotspot = get().getHotspotById(hotspotId);
+    }
+
+    if (panoramaId) {
+      const allPanas = get().panoramas.length > 0 ? get().panoramas : BINHLONG_PANORAMAS;
+      targetPanorama =
+        allPanas.find((p) => p.panorama_id === panoramaId) ||
+        BINHLONG_PANORAMAS.find((p) => p.panorama_id === panoramaId);
+
+      if (!targetHotspot && targetPanorama) {
+        targetHotspot = get().getHotspotById(targetPanorama.hotspot_id);
+      }
+    }
+
+    if (targetHotspot && !targetPanorama) {
+      const panas = BINHLONG_PANORAMAS.filter((p) => p.hotspot_id === targetHotspot!.hotspot_id);
+      targetPanorama =
+        (targetHotspot.click_panorama_id && panas.find((p) => p.panorama_id === targetHotspot!.click_panorama_id)) ||
+        panas[0];
+    }
+
+    const updates: Partial<VRStoreState> = {};
+    if (targetHotspot) {
+      updates.currentHotspot = targetHotspot;
+      const relatedPanas = BINHLONG_PANORAMAS.filter((p) => p.hotspot_id === targetHotspot!.hotspot_id);
+      if (relatedPanas.length > 0) {
+        updates.panoramas = relatedPanas;
+      }
+    }
+    if (targetPanorama) {
+      updates.currentPanorama = targetPanorama;
+    }
+
+    if (Object.keys(updates).length > 0) {
+      set(updates);
+    }
+  },
+
+  clearVRState: () => {
+    const fresh = getInitialSelection();
     set({
       currentArea: BINHLONG_AREA,
-      currentHotspot: defaultMainHotspot,
-      currentPanorama: defaultMainPanorama,
+      currentHotspot: fresh.hotspot,
+      currentPanorama: fresh.panorama,
       areaHotspots: BINHLONG_HOTSPOTS,
-      panoramas: defaultMainPanoramas,
+      panoramas: fresh.panoramas,
       isMapDialogOpen: false,
       mapDialogHotspotId: null,
-    }),
+    });
+  },
 
   setIsLoading: (isLoading: boolean) => {
     set({ isLoading: isLoading });
@@ -105,14 +202,41 @@ const useVRStore = create<VRStore>((set, get) => ({
   },
 
   loadData: async () => {
+    // Check if a specific hotspot was requested via URL query or already chosen by user
+    const urlParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+    const urlHotspotId = urlParams?.get("hotspot_id");
+    const urlPanoramaId = urlParams?.get("panorama_id");
+
     if (!isSupabaseConfigured || !CURRENT_AREA_ID) {
       // Standalone mode: already initialized with Binh Long data
+      let activeHotspot = get().currentHotspot;
+      if (urlHotspotId) {
+        const found = BINHLONG_HOTSPOTS.find((h) => h.hotspot_id === Number(urlHotspotId));
+        if (found) activeHotspot = found;
+      } else if (urlPanoramaId) {
+        const foundPana = BINHLONG_PANORAMAS.find((p) => p.panorama_id === urlPanoramaId);
+        if (foundPana) {
+          const found = BINHLONG_HOTSPOTS.find((h) => h.hotspot_id === foundPana.hotspot_id);
+          if (found) activeHotspot = found;
+        }
+      }
+
+      const activePanas = activeHotspot
+        ? BINHLONG_PANORAMAS.filter((p) => p.hotspot_id === activeHotspot!.hotspot_id)
+        : defaultMainPanoramas;
+
+      const activePana =
+        (urlPanoramaId && activePanas.find((p) => p.panorama_id === urlPanoramaId)) ||
+        (activeHotspot?.click_panorama_id && activePanas.find((p) => p.panorama_id === activeHotspot!.click_panorama_id)) ||
+        activePanas[0] ||
+        defaultMainPanorama;
+
       set({
         currentArea: BINHLONG_AREA,
         areaHotspots: BINHLONG_HOTSPOTS,
-        currentHotspot: defaultMainHotspot,
-        panoramas: defaultMainPanoramas,
-        currentPanorama: defaultMainPanorama,
+        currentHotspot: activeHotspot || defaultMainHotspot,
+        panoramas: activePanas.length > 0 ? activePanas : defaultMainPanoramas,
+        currentPanorama: activePana,
         isLoading: false,
       });
       return;
@@ -122,22 +246,39 @@ const useVRStore = create<VRStore>((set, get) => ({
     try {
       const currentArea = await getAreaDetailById(CURRENT_AREA_ID);
       const areaHotspots = await getHotspotsByAreaId(CURRENT_AREA_ID);
-      const mainId = currentArea.main_hotspot_id
-        ? Number(currentArea.main_hotspot_id)
-        : 132;
-      const currentHotspot =
-        areaHotspots.find((hotspot) => hotspot.hotspot_id === mainId) ||
-        areaHotspots[0] ||
-        defaultMainHotspot;
 
+      let currentHotspot = get().currentHotspot;
+      if (urlHotspotId) {
+        const found = areaHotspots.find((h) => h.hotspot_id === Number(urlHotspotId));
+        if (found) currentHotspot = found;
+      } else if (urlPanoramaId) {
+        const foundPana = BINHLONG_PANORAMAS.find((p) => p.panorama_id === urlPanoramaId);
+        if (foundPana) {
+          const found = areaHotspots.find((h) => h.hotspot_id === foundPana.hotspot_id);
+          if (found) currentHotspot = found;
+        }
+      }
+
+      if (!currentHotspot || (!urlHotspotId && !urlPanoramaId && currentHotspot.hotspot_id === defaultMainHotspot.hotspot_id)) {
+        const mainId = currentArea.main_hotspot_id
+          ? Number(currentArea.main_hotspot_id)
+          : 132;
+        currentHotspot =
+          areaHotspots.find((hotspot) => hotspot.hotspot_id === mainId) ||
+          areaHotspots[0] ||
+          defaultMainHotspot;
+      }
+
+      const safeHotspot = currentHotspot || defaultMainHotspot;
       const hotspotPanoramas = await getPanoramasByHotspotId(
-        currentHotspot.hotspot_id
+        safeHotspot.hotspot_id
       );
       const panoramas =
         hotspotPanoramas.length > 0 ? hotspotPanoramas : defaultMainPanoramas;
       const currentPanorama =
+        (urlPanoramaId && panoramas.find((p) => p.panorama_id === urlPanoramaId)) ||
         panoramas.find(
-          (p) => p.panorama_id === currentHotspot.click_panorama_id
+          (p) => p.panorama_id === safeHotspot.click_panorama_id
         ) ||
         panoramas.find((p) => p.panorama_id === "M3000_0_FLYCAM_1") ||
         panoramas[0];

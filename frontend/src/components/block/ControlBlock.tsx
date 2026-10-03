@@ -31,11 +31,13 @@ import { toast } from "sonner";
 
 const ControlBlock = ({
   showMedia,
+  isActive = true,
 }: {
   showMedia: (mediaName: string) => void;
   muteAllAudio?: () => void;
   unmuteAllAudio?: () => void;
   getAudioState?: () => Promise<any>;
+  isActive?: boolean;
 }) => {
   const [isBottomNavVisible, setIsBottomNavVisible] = useState(true);
   const {
@@ -66,8 +68,9 @@ const ControlBlock = ({
   // Audio narration state & audio element ref
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const prevHotspotIdRef = useRef<number | null>(currentHotspot?.hotspot_id ?? null);
+  const activeAudioHotspotIdRef = useRef<number | null>(null);
   const userPausedRef = useRef<boolean>(false);
+  const playTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const currentAudioUrl = useMemo(() => {
     return (currentHotspot?.metadata as any)?.audio_url || null;
@@ -88,10 +91,12 @@ const ControlBlock = ({
 
   // Helper function to play audio with small volume (0.35) and handle browser autoplay policy
   const playAudioWithSmallVolume = (url: string) => {
-    if (!audioRef.current || userPausedRef.current) return;
+    if (!audioRef.current || userPausedRef.current || !isActive) return;
 
     audioRef.current.volume = 0.35;
-    audioRef.current.src = url;
+    if (audioRef.current.src !== url) {
+      audioRef.current.src = url;
+    }
 
     const playPromise = audioRef.current.play();
     if (playPromise !== undefined) {
@@ -105,7 +110,7 @@ const ControlBlock = ({
 
           // Fallback: auto-play on first user interaction anywhere on screen
           const onFirstInteraction = () => {
-            if (!userPausedRef.current && audioRef.current) {
+            if (!userPausedRef.current && audioRef.current && isActive) {
               audioRef.current.volume = 0.35;
               audioRef.current
                 .play()
@@ -128,39 +133,61 @@ const ControlBlock = ({
     }
   };
 
-  // Auto-play audio on initial load after a small delay (600ms) with small volume
+  // Unified audio controller:
+  // - Plays gently ONLY when active inside /app
+  // - Plays ONCE per hotspot without duplicate or overlapping playback
+  // - Instantly pauses when navigating away from /app
+  // - Respects user manual pause
   useEffect(() => {
-    if (!currentAudioUrl || userPausedRef.current) return;
+    if (!isActive) {
+      if (playTimerRef.current) {
+        clearTimeout(playTimerRef.current);
+        playTimerRef.current = null;
+      }
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      setIsPlayingAudio(false);
+      activeAudioHotspotIdRef.current = null;
+      return;
+    }
 
-    const timer = setTimeout(() => {
-      playAudioWithSmallVolume(currentAudioUrl);
-    }, 600);
-
-    return () => clearTimeout(timer);
-  }, []); // Run on initial load
-
-  // When hotspot changes: automatically play the new place's narration with small volume
-  useEffect(() => {
     if (!currentHotspot) return;
     const currentId = currentHotspot.hotspot_id;
 
-    if (prevHotspotIdRef.current !== currentId) {
-      prevHotspotIdRef.current = currentId;
+    // If audio is already active for this hotspot, do not replay or interrupt!
+    if (activeAudioHotspotIdRef.current === currentId && isPlayingAudio) {
+      return;
+    }
 
-      if (currentAudioUrl && !userPausedRef.current) {
-        const timer = setTimeout(() => {
-          playAudioWithSmallVolume(currentAudioUrl);
-        }, 500);
+    if (activeAudioHotspotIdRef.current !== currentId) {
+      activeAudioHotspotIdRef.current = currentId;
+      userPausedRef.current = false; // Reset pause when entering new hotspot
 
-        return () => clearTimeout(timer);
-      } else if (!currentAudioUrl) {
+      if (playTimerRef.current) {
+        clearTimeout(playTimerRef.current);
+      }
+
+      if (!currentAudioUrl) {
         if (audioRef.current) {
           audioRef.current.pause();
         }
         setIsPlayingAudio(false);
+        return;
       }
+
+      // Small delay (350ms) to ensure smooth transition
+      playTimerRef.current = setTimeout(() => {
+        playAudioWithSmallVolume(currentAudioUrl);
+      }, 350);
+
+      return () => {
+        if (playTimerRef.current) {
+          clearTimeout(playTimerRef.current);
+        }
+      };
     }
-  }, [currentHotspot, currentAudioUrl]);
+  }, [isActive, currentHotspot?.hotspot_id, currentAudioUrl]);
 
   const handleToggleAudio = () => {
     if (!audioRef.current) return;
@@ -175,17 +202,7 @@ const ControlBlock = ({
         return;
       }
       userPausedRef.current = false;
-      audioRef.current.volume = 0.35;
-      audioRef.current.src = currentAudioUrl;
-      audioRef.current
-        .play()
-        .then(() => {
-          setIsPlayingAudio(true);
-        })
-        .catch((err) => {
-          console.error("Audio playback error:", err);
-          setIsPlayingAudio(false);
-        });
+      playAudioWithSmallVolume(currentAudioUrl);
     }
   };
 
@@ -292,7 +309,13 @@ const ControlBlock = ({
         </Button>
 
         <MapDialogBlock
-          showMedia={showMedia}
+          showMedia={(mediaName, hotspotId) => {
+            if (hotspotId) {
+              setCurrentHotspotById(hotspotId);
+              setPanoramasByHotspotId(hotspotId);
+            }
+            showMedia(mediaName);
+          }}
           opened={isMapDialogOpen}
           setOpened={setIsMapDialogOpen}
         />

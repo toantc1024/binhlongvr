@@ -33,7 +33,7 @@ export default function MapDialogBlock({
 }: {
     opened: boolean;
     setOpened: (opened: boolean) => void;
-    showMedia: (mediaName: string) => void;
+    showMedia: (mediaName: string, hotspotId?: number) => void;
     initialHotspotId?: number | null;
 }) {
     const center: [number, number] = import.meta.env.VITE_CENTER_GPS
@@ -591,7 +591,15 @@ export default function MapDialogBlock({
                         <div className="p-3 sm:p-4 bg-white/90 dark:bg-slate-900/90 border-t border-border shrink-0">
                             <Button
                                 onClick={() => {
-                                    showMedia(activePanorama?.panorama_id || selectedMarker.click_panorama_id || "");
+                                    if (audioRef.current) {
+                                        audioRef.current.pause();
+                                        audioRef.current.currentTime = 0;
+                                    }
+                                    setIsPlayingAudio(false);
+                                    showMedia(
+                                        activePanorama?.panorama_id || selectedMarker.click_panorama_id || "",
+                                        selectedMarker.hotspot_id
+                                    );
                                     setOpened(false);
                                 }}
                                 className="w-full h-11 sm:h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm sm:text-base rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 cursor-pointer"

@@ -62,20 +62,26 @@ const use3DVistaHook = ({
   const eventHandlers = useRef<EventHandlers>({
     ready: [onReadyHandler],
   });
+  const pendingMediaRef = useRef<string | null>(null);
+  const isBridgeReadyRef = useRef<boolean>(false);
 
   const showMedia = (mediaName: string): void => {
     if (!mediaName) return;
 
     const iframe = ref.current || (document.getElementById("vr_core") as HTMLIFrameElement | null);
     if (iframe?.contentWindow) {
+      let dispatched = false;
       try {
         const win = iframe.contentWindow as any;
         if (typeof win.setMediaByName === "function") {
           win.setMediaByName(mediaName);
+          dispatched = true;
         } else if (win.tour?.setMediaByName) {
           win.tour.setMediaByName(mediaName);
+          dispatched = true;
         } else if (win.vrTourBridge?.setMediaByName) {
           win.vrTourBridge.setMediaByName(mediaName);
+          dispatched = true;
         }
       } catch (err) {
         console.warn("Direct showMedia invocation error:", err);
@@ -89,9 +95,16 @@ const use3DVistaHook = ({
           },
           "*"
         );
+        dispatched = true;
       } catch (err) {
         console.warn("PostMessage showMedia error:", err);
       }
+
+      if (!isBridgeReadyRef.current && !dispatched) {
+        pendingMediaRef.current = mediaName;
+      }
+    } else {
+      pendingMediaRef.current = mediaName;
     }
   };
 
@@ -192,12 +205,20 @@ const use3DVistaHook = ({
 
   useEffect(() => {
     const messageHandler = (event: MessageEvent<MessageEventData>): void => {
-      // alert('Received message from parent: ' + JSON.stringify(event.data));
-      if (event.source !== parentWindow) return;
+      if (!event.data || typeof event.data !== "object") return;
 
       const { type, payload } = event.data;
-      const callbacks = eventHandlers.current[type];
 
+      if (type === "bridge_ready") {
+        isBridgeReadyRef.current = true;
+        if (pendingMediaRef.current) {
+          const media = pendingMediaRef.current;
+          pendingMediaRef.current = null;
+          showMedia(media);
+        }
+      }
+
+      const callbacks = eventHandlers.current[type];
       if (Array.isArray(callbacks)) {
         callbacks.forEach((cb: EventCallback) => cb(payload));
       }
@@ -207,7 +228,7 @@ const use3DVistaHook = ({
     return () => {
       window.removeEventListener("message", messageHandler);
     };
-  }, [parentWindow]);
+  }, []);
 
   return {
     showMedia,

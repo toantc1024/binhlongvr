@@ -16,6 +16,7 @@ import {
 const HotspotCard = ({
     preview_image,
     title,
+    hotspot_id,
     description,
     click_panorama_id,
 }: {
@@ -26,13 +27,18 @@ const HotspotCard = ({
     click_panorama_id?: string | null;
 }) => {
     const navigate = useNavigate();
-    const { setIsLoading } = useVRStore((state) => state);
+    const { setIsLoading, selectHotspotAndPanorama } = useVRStore((state) => state);
 
     const handleClick = () => {
-        if (click_panorama_id) {
+        const hid = hotspot_id ? Number(hotspot_id) : undefined;
+        if (click_panorama_id || hid) {
+            selectHotspotAndPanorama(hid, click_panorama_id || undefined);
             navigate({
                 pathname: "/app",
-                search: createSearchParams({ panorama_id: click_panorama_id }).toString(),
+                search: createSearchParams({
+                    ...(click_panorama_id ? { panorama_id: click_panorama_id } : {}),
+                    ...(hid ? { hotspot_id: String(hid) } : {}),
+                }).toString(),
             });
         } else {
             navigate("/app");
@@ -40,7 +46,7 @@ const HotspotCard = ({
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
-        }, 2000);
+        }, 300);
     };
 
     return (
@@ -195,7 +201,7 @@ export function FeatureSection() {
                                 setIsLoading(true);
                                 setTimeout(() => {
                                     setIsLoading(false);
-                                }, 2000);
+                                }, 300);
                             }}
                             size="lg"
                             className="cursor-pointer rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-xs"
