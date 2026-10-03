@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   Navigation2,
   Route,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +16,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { TextAnimate } from "../magicui/text-animate";
 import useVRStore from "@/store/vr.store";
 
-// 3D Custom Assets
+// 3D Custom Assets (HCMUTE Green Satin Style)
 import area3DIcon from "@/assets/3d-icons/area__binhlong-3d-icon.png";
 import population3DIcon from "@/assets/3d-icons/population__binhlong-3d-icon.png";
 import admin3DIcon from "@/assets/3d-icons/admin__binhlong-3d-icon.png";
@@ -23,7 +24,7 @@ import highway3DIcon from "@/assets/3d-icons/highway__binhlong-3d-icon.png";
 import landmark3DIcon from "@/assets/3d-icons/landmark-explore__binhlong-3d-icon.png";
 import location3DIcon from "@/assets/3d-icons/location__binhlong-3d-icon.png";
 
-// 4 Key Stats with 3D Assets
+// 4 Key Stats - Clean, no repeated labels, prominent values & 3D icons
 const STATS_DATA = [
   {
     title: "Diện tích",
@@ -103,21 +104,22 @@ const GALLERY_ITEMS = [
 
 // 4 Administrative units merged
 const MERGED_UNITS = [
-  { name: "P. An Lộc", origin: "TX. Bình Long" },
-  { name: "P. Hưng Chiến", origin: "TX. Bình Long" },
-  { name: "P. Phú Đức", origin: "TX. Bình Long" },
-  { name: "X. Thanh Bình", origin: "H. Hớn Quản" },
+  { name: "Phường An Lộc", origin: "Thị xã Bình Long" },
+  { name: "Phường Hưng Chiến", origin: "Thị xã Bình Long" },
+  { name: "Phường Phú Đức", origin: "Thị xã Bình Long" },
+  { name: "Xã Thanh Bình", origin: "Huyện Hớn Quản" },
 ];
 
-// Featured historical sites with corresponding hotspot ID in store
+// 4 Featured historical sites with authentic preview images & hotspot IDs
 const FEATURED_SITES = [
   {
     name: "Di tích Quốc gia Mộ 3.000 người",
     detail: "Mộ 3000 đồng bào An Lộc bị đế quốc Mỹ tàn sát ngày 03/10/1972 (Mộ tập thể 3000 người)",
     type: "Di tích Quốc gia",
     hotspotId: 132,
-    panoramaId: "M3000_0_FLYCAM_1",
-    tagColor: "border-red-500/30 text-red-600 dark:text-red-400 bg-red-500/10",
+    panoramaId: "M3000_0_FLYCAM_2",
+    image: "/landmarks/mo_3000_tuong_niem.jpg",
+    badgeColor: "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30",
   },
   {
     name: "An Lộc Nhà và Đường hầm",
@@ -125,7 +127,8 @@ const FEATURED_SITES = [
     type: "Di tích Cấp thành phố",
     hotspotId: 130,
     panoramaId: "DTT_0_FLYCAM",
-    tagColor: "border-amber-500/30 text-amber-600 dark:text-amber-400 bg-amber-500/10",
+    image: "/landmarks/dtt_preview.jpg",
+    badgeColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
   },
   {
     name: "Mộ tập thể LLVT an ninh An Lộc",
@@ -133,7 +136,8 @@ const FEATURED_SITES = [
     type: "Di tích Cấp thành phố",
     hotspotId: 131,
     panoramaId: "M7N_0_FLYCAM",
-    tagColor: "border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
+    image: "/landmarks/m7n_preview.jpg",
+    badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
   },
   {
     name: "Di tích lịch sử - văn hóa Hưng Lập Tự",
@@ -141,7 +145,8 @@ const FEATURED_SITES = [
     type: "Di tích Văn hóa",
     hotspotId: 133,
     panoramaId: "HLT_0_FLYCAM",
-    tagColor: "border-teal-500/30 text-teal-600 dark:text-teal-400 bg-teal-500/10",
+    image: "/landmarks/hlt_preview.jpg",
+    badgeColor: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/30",
   },
 ];
 
@@ -173,10 +178,10 @@ export function OverviewSection() {
       <div className="absolute top-1/4 -left-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Synchronized full width container matching other components */}
-      <div className="w-full">
-        {/* Section Header: Clean, Bold, Align Left */}
-        <div className="w-full mb-8 sm:mb-10">
+      {/* Main Full-Width Container */}
+      <div className="w-full flex flex-col gap-10 sm:gap-12">
+        {/* ================= 1. SECTION HEADER ================= */}
+        <div className="w-full">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left !leading-tight">
             <TextAnimate animation="blurIn" as="span">
               Khái Quát Đặc Điểm
@@ -188,28 +193,28 @@ export function OverviewSection() {
           </p>
         </div>
 
-        {/* 4 Stat Cards with 3D Assets - Full Width & Mobile Optimized */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 w-full mb-8 sm:mb-10">
+        {/* ================= 2. 4 STAT CARDS (FULL WIDTH, 4 COLUMNS) ================= */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full">
           {STATS_DATA.map((stat, idx) => (
             <div
               key={idx}
-              className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-border/60 shadow-md bg-card p-4 sm:p-5 lg:p-6 flex flex-col justify-between group hover:shadow-xl hover:border-primary/40 transition-all duration-300"
+              className="relative overflow-hidden rounded-2xl border border-border/60 shadow-md bg-card p-4 sm:p-5 lg:p-6 flex flex-col justify-between group hover:shadow-xl hover:border-primary/40 transition-all duration-300"
             >
-              <div className="flex items-start justify-between gap-2 sm:gap-4">
-                <div>
+              <div className="flex items-start justify-between gap-2 sm:gap-3">
+                <div className="flex flex-col">
                   <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
                     {stat.title}
                   </span>
-                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight mt-1">
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight mt-1.5">
                     {stat.value}
                   </div>
-                  <p className="mt-1 text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span className="mt-1 text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                     {stat.unit}
-                  </p>
+                  </span>
                 </div>
 
-                {/* Transparent 3D Asset */}
-                <div className="shrink-0 w-14 h-14 sm:w-18 sm:h-18 lg:w-20 lg:h-20 group-hover:scale-108 transition-transform duration-300 flex items-center justify-center pointer-events-none -mr-1 -mt-1">
+                {/* 3D Satin-Plastic Asset */}
+                <div className="shrink-0 w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 group-hover:scale-108 transition-transform duration-300 flex items-center justify-center pointer-events-none -mr-1 -mt-1">
                   <img
                     src={stat.icon}
                     alt={stat.title}
@@ -218,26 +223,26 @@ export function OverviewSection() {
                 </div>
               </div>
 
-              <p className="mt-3 text-[11px] sm:text-xs text-muted-foreground font-normal leading-relaxed border-t border-border/40 pt-2 line-clamp-1">
+              <div className="mt-3 sm:mt-4 pt-2.5 border-t border-border/40 text-[11px] sm:text-xs text-muted-foreground font-normal leading-relaxed">
                 {stat.description}
-              </p>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* 2-Column Split: Detailed Content on Left, Image Showcase on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start w-full">
-          {/* ================= LEFT COLUMN: DETAILED INFO ================= */}
-          <div className="lg:col-span-7 flex flex-col gap-6">
-            {/* Main Overview Narrative Text Box */}
-            <Card className="border border-border/60 shadow-md bg-card/80 backdrop-blur-sm p-5 sm:p-6 rounded-2xl relative overflow-hidden">
-              <div className="space-y-3.5 text-sm sm:text-base text-foreground/90 font-normal leading-relaxed text-justify">
+        {/* ================= 3. BALANCED 2-COLUMN SPLIT (NARRATIVE & IMAGE SHOWCASE) ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch w-full">
+          {/* LEFT COLUMN: OFFICIAL NARRATIVE, MERGED UNITS & BOUNDARIES */}
+          <div className="lg:col-span-6 flex flex-col justify-between gap-6">
+            {/* Card 1: Official Establishment & Context */}
+            <Card className="border border-border/60 shadow-md bg-card/85 backdrop-blur-sm p-5 sm:p-6 rounded-2xl flex-1 flex flex-col justify-between">
+              <div className="space-y-4 text-sm sm:text-base text-foreground/90 font-normal leading-relaxed text-justify">
                 <p>
                   <strong>Phường Bình Long</strong> được thành lập theo{" "}
                   <span className="font-semibold text-primary">
                     Nghị quyết số 1662/2025/NQ-UBTVQH
                   </span>{" "}
-                  ngày 16/6/2025 của Ủy ban Thường vụ Quốc hội, trên cơ sở sắp xếp, hợp nhất nguyên trạng diện tích tự nhiên và dân số từ các phường <strong>An Lộc, Hưng Chiến, Phú Đức</strong> của thị xã Bình Long và xã <strong>Thanh Bình</strong> của huyện Hớn Quản, với tổng diện tích tự nhiên đạt <strong>49,14 km²</strong>; Phía bắc giáp phường An Lộc; phía nam giáp phường Tân Khai; phía đông giáp xã Tân Quan; phía Tây giáp xã Minh Đức.
+                  ngày 16/6/2025 của Ủy ban Thường vụ Quốc hội, trên cơ sở sắp xếp, hợp nhất nguyên trạng diện tích tự nhiên và dân số từ các phường <strong>An Lộc, Hưng Chiến, Phú Đức</strong> của thị xã Bình Long và xã <strong>Thanh Bình</strong> của huyện Hớn Quản, với tổng diện tích tự nhiên đạt <strong>49,14 km²</strong>.
                 </p>
 
                 <p>
@@ -245,11 +250,11 @@ export function OverviewSection() {
                 </p>
 
                 <p>
-                  Bình Long là vùng đất có bề dày truyền thống cách mạng. Trên địa bàn phường Bình Long có những di tích văn hóa, lịch sử đã ghi dấu một thời hào hùng của Đảng bộ và nhân dân Bình Long. Xin mời quý vị cùng khám phá Bản đồ số Bình Long, cùng tham quan trải nghiệm không gian ảo 3D tìm hiểu các di tích lịch sử - văn hóa tiêu biểu trên địa bàn phường.
+                  Bình Long là vùng đất có bề dày truyền thống cách mạng vẻ vang. Trên địa bàn phường Bình Long có những di tích văn hóa, lịch sử đã ghi dấu một thời hào hùng của Đảng bộ và nhân dân Bình Long.
                 </p>
               </div>
 
-              {/* Administrative Merged Chips */}
+              {/* 04 Administrative Units Merged Chips */}
               <div className="mt-5 pt-4 border-t border-border/60">
                 <div className="flex items-center gap-2 mb-2.5">
                   <Landmark className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -257,22 +262,24 @@ export function OverviewSection() {
                     04 Đơn vị hợp nhất nguyên trạng thành lập Phường
                   </span>
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-2">
                   {MERGED_UNITS.map((unit, idx) => (
                     <div
                       key={idx}
-                      className="px-3 py-1.5 rounded-lg bg-secondary/80 text-foreground text-xs font-medium flex items-center gap-1.5 border border-border/60"
+                      className="px-3 py-2 rounded-xl bg-secondary/70 text-foreground text-xs font-medium flex items-center justify-between border border-border/50"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                      <span className="font-semibold">{unit.name}</span>
-                      <span className="text-muted-foreground text-[11px]">({unit.origin})</span>
+                      <span className="font-semibold flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        {unit.name}
+                      </span>
+                      <span className="text-muted-foreground text-[11px]">{unit.origin}</span>
                     </div>
                   ))}
                 </div>
               </div>
             </Card>
 
-            {/* Tứ Cận Địa Lý (Geographical Boundaries) */}
+            {/* Card 2: Tứ Cận Địa Lý (Geographical Boundaries) */}
             <Card className="border border-border/60 shadow-md bg-card p-5 sm:p-6 rounded-2xl">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
@@ -287,7 +294,7 @@ export function OverviewSection() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3 rounded-xl bg-muted/40 border border-border/50 flex flex-col">
+                <div className="p-3 rounded-xl bg-muted/40 border border-border/50 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1">
                     <Navigation2 className="w-3.5 h-3.5 transform -rotate-45" />
                     Phía Bắc
@@ -295,7 +302,7 @@ export function OverviewSection() {
                   <span className="text-xs sm:text-sm font-medium text-foreground">Giáp phường An Lộc</span>
                 </div>
 
-                <div className="p-3 rounded-xl bg-muted/40 border border-border/50 flex flex-col">
+                <div className="p-3 rounded-xl bg-muted/40 border border-border/50 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1">
                     <Navigation2 className="w-3.5 h-3.5 transform rotate-135" />
                     Phía Nam
@@ -303,7 +310,7 @@ export function OverviewSection() {
                   <span className="text-xs sm:text-sm font-medium text-foreground">Giáp phường Tân Khai</span>
                 </div>
 
-                <div className="p-3 rounded-xl bg-muted/40 border border-border/50 flex flex-col">
+                <div className="p-3 rounded-xl bg-muted/40 border border-border/50 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1">
                     <Navigation2 className="w-3.5 h-3.5 transform rotate-45" />
                     Phía Đông
@@ -311,7 +318,7 @@ export function OverviewSection() {
                   <span className="text-xs sm:text-sm font-medium text-foreground">Giáp xã Tân Quan</span>
                 </div>
 
-                <div className="p-3 rounded-xl bg-muted/40 border border-border/50 flex flex-col">
+                <div className="p-3 rounded-xl bg-muted/40 border border-border/50 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wider mb-1">
                     <Navigation2 className="w-3.5 h-3.5 transform -rotate-135" />
                     Phía Tây
@@ -320,92 +327,21 @@ export function OverviewSection() {
                 </div>
               </div>
             </Card>
-
-            {/* Featured Historical Sites (Di tích văn hóa - lịch sử tiêu biểu) */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                  <h3 className="text-base sm:text-lg font-semibold text-foreground tracking-tight">
-                    Di Tích Lịch Sử – Văn Hóa Tiêu Biểu
-                  </h3>
-                </div>
-                <span className="text-xs text-muted-foreground">Nhấp để xem VR 360°</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {FEATURED_SITES.map((site) => (
-                  <div
-                    key={site.hotspotId}
-                    onClick={() => handleOpenVRSite(site.hotspotId, site.panoramaId)}
-                    className="group cursor-pointer p-3.5 rounded-xl bg-card border border-border/60 hover:border-primary/50 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between gap-2 mb-1.5">
-                        <Badge variant="outline" className={`text-[11px] font-medium ${site.tagColor}`}>
-                          {site.type}
-                        </Badge>
-                        <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                      </div>
-                      <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                        {site.name}
-                      </h4>
-                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">
-                        {site.detail}
-                      </p>
-                    </div>
-
-                    <div className="mt-3 pt-2 border-t border-border/40 flex items-center gap-1.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Khám phá không gian 3D
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Button
-                size="lg"
-                className="rounded-xl cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-xs"
-                onClick={() => {
-                  navigate("/app");
-                  setIsLoading(true);
-                  setTimeout(() => {
-                    setIsLoading(false);
-                  }, 300);
-                }}
-              >
-                Khám phá bản đồ số Bình Long
-                <ArrowUpRight className="!h-5 !w-5" />
-              </Button>
-
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-xl cursor-pointer bg-card hover:bg-secondary text-foreground text-sm font-medium shadow-xs"
-                onClick={() => setIsMapDialogOpen(true)}
-              >
-                <MapPin className="!h-4 !w-4 text-primary" />
-                Mở sơ đồ di tích
-              </Button>
-            </div>
           </div>
 
-          {/* ================= RIGHT COLUMN: LIVELY IMAGE SHOWCASE ================= */}
-          <div className="lg:col-span-5 flex flex-col gap-4">
+          {/* RIGHT COLUMN: LIVELY IMAGE SHOWCASE (BALANCED EQUAL HEIGHT) */}
+          <div className="lg:col-span-6 flex flex-col justify-between gap-4">
             {/* Primary Main Showcase Image Card */}
-            <Card className="relative overflow-hidden !p-0 border border-border/60 shadow-xl bg-card rounded-2xl group flex flex-col">
-              <CardContent className="!p-0 relative h-[340px] sm:h-[420px] lg:h-[460px] w-full overflow-hidden">
+            <Card className="relative overflow-hidden !p-0 border border-border/60 shadow-xl bg-card rounded-2xl group flex-1 min-h-[380px] sm:min-h-[440px] flex flex-col">
+              <CardContent className="!p-0 relative h-full w-full overflow-hidden flex flex-col justify-end">
                 <img
                   src={activeImage.image}
                   alt={activeImage.title}
-                  className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
                 />
 
-                {/* Subtle vignette gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/20 pointer-events-none" />
+                {/* Vignette gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20 pointer-events-none" />
 
                 {/* Floating Top-Right 3D Pill Badge */}
                 <div className="absolute top-4 right-4 z-20 flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-white text-xs select-none">
@@ -427,7 +363,7 @@ export function OverviewSection() {
                 </div>
 
                 {/* Bottom Image Caption & Info Overlay */}
-                <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-20 text-white">
+                <div className="relative p-5 sm:p-6 z-20 text-white">
                   <h3 className="text-xl sm:text-2xl font-bold leading-tight drop-shadow-md text-white">
                     {activeImage.title}
                   </h3>
@@ -438,7 +374,7 @@ export function OverviewSection() {
                   <div className="mt-4 pt-3 border-t border-white/20 flex items-center justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-1.5">
                       <Route className="w-3.5 h-3.5 text-emerald-400" />
-                      Quốc lộ 13 – Cửa khẩu Hoa Lư
+                      Quốc lộ 13 – Tuyến huyết mạch TP.HCM – Hoa Lư
                     </span>
                     <button
                       onClick={() => setIsMapDialogOpen(true)}
@@ -478,21 +414,21 @@ export function OverviewSection() {
               ))}
             </div>
 
-            {/* Bottom Highlight Card with 3D Location Icon */}
+            {/* Highlight Card with 3D Location Icon */}
             <Card className="border border-border/60 shadow-md bg-gradient-to-br from-card via-card to-emerald-50/30 dark:to-emerald-950/20 p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   <h4 className="text-sm font-semibold text-foreground">
-                    Khám phá & Trải nghiệm thực tế
+                    Không Gian Số Hóa & Trải Nghiệm Tương Tác
                   </h4>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Tìm hiểu chi tiết các di tích lịch sử - văn hóa tiêu biểu và không gian 3D tương tác sống động trên Bản đồ số Bình Long.
+                  Trực quan hóa toàn diện hệ thống di tích và không gian đô thị Phường Bình Long qua công nghệ ảnh toàn cảnh 360° và sơ đồ di tích số.
                 </p>
               </div>
 
-              <div className="shrink-0 w-16 h-16 sm:w-18 sm:h-18 flex items-center justify-center pointer-events-none">
+              <div className="shrink-0 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center pointer-events-none">
                 <img
                   src={location3DIcon}
                   alt="3D Location Pin"
@@ -500,6 +436,131 @@ export function OverviewSection() {
                 />
               </div>
             </Card>
+          </div>
+        </div>
+
+        {/* ================= 4. DI TÍCH LỊCH SỬ – VĂN HÓA TIÊU BIỂU (FULL WIDTH 4 CARDS) ================= */}
+        <div className="w-full space-y-6 pt-2">
+          {/* Header & Invitation Narrative */}
+          <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-border/60">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  Di Sản & Truyền Thống Cách Mạng
+                </span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-foreground">
+                Di Tích Lịch Sử – Văn Hóa Tiêu Biểu
+              </h3>
+              <p className="mt-2 text-sm sm:text-base text-muted-foreground max-w-4xl leading-relaxed">
+                Xin mời quý vị cùng khám phá Bản đồ số Bình Long, cùng tham quan trải nghiệm không gian ảo 3D tìm hiểu các di tích lịch sử - văn hóa tiêu biểu trên địa bàn phường để có những trải nghiệm thú vị và càng hiểu thêm về vùng đất và con người Bình Long:
+              </p>
+            </div>
+
+            <div className="shrink-0 flex items-center gap-2">
+              <span className="text-xs text-muted-foreground font-medium px-3 py-1.5 rounded-lg bg-secondary/80 border border-border/50">
+                Nhấp để xem VR 360°
+              </span>
+            </div>
+          </div>
+
+          {/* 4 Full-Width Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
+            {FEATURED_SITES.map((site) => (
+              <div
+                key={site.hotspotId}
+                onClick={() => handleOpenVRSite(site.hotspotId, site.panoramaId)}
+                className="group cursor-pointer rounded-2xl bg-card border border-border/60 hover:border-primary/50 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden"
+              >
+                {/* Image Preview with Category Badge */}
+                <div className="relative h-44 w-full overflow-hidden">
+                  <img
+                    src={site.image}
+                    alt={site.name}
+                    className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+                  {/* Top Badge */}
+                  <div className="absolute top-3 left-3 z-10">
+                    <Badge variant="outline" className={`text-xs font-semibold backdrop-blur-md ${site.badgeColor}`}>
+                      {site.type}
+                    </Badge>
+                  </div>
+
+                  {/* Corner Arrow Icon */}
+                  <div className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors shadow-sm">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </div>
+
+                  {/* Bottom Image Label */}
+                  <div className="absolute bottom-2.5 left-3 right-3 z-10">
+                    <h4 className="text-sm sm:text-base font-bold text-white drop-shadow-md line-clamp-1 group-hover:text-emerald-300 transition-colors">
+                      {site.name}
+                    </h4>
+                  </div>
+                </div>
+
+                {/* Content Description */}
+                <div className="p-4 flex-1 flex flex-col justify-between">
+                  <p className="text-xs sm:text-sm text-muted-foreground line-clamp-3 leading-relaxed">
+                    {site.detail}
+                  </p>
+
+                  <div className="mt-4 pt-3 border-t border-border/40">
+                    <Button
+                      size="sm"
+                      className="w-full rounded-xl cursor-pointer bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground font-semibold text-xs sm:text-sm transition-all duration-200 shadow-none flex items-center justify-center gap-1.5"
+                    >
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 group-hover:bg-white animate-pulse" />
+                      Khám phá không gian 3D
+                      <ArrowUpRight className="w-3.5 h-3.5 ml-0.5" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ================= 5. FULL WIDTH ACTION CTA BAR ================= */}
+          <div className="w-full rounded-2xl bg-gradient-to-r from-emerald-950/20 via-card to-card border border-border/70 p-5 sm:p-7 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <h4 className="text-base sm:text-lg font-bold text-foreground flex items-center justify-center sm:justify-start gap-2">
+                <Sparkles className="w-4 h-4 text-emerald-500" />
+                Trải nghiệm Bản đồ số Di tích & Đô thị Phường Bình Long
+              </h4>
+              <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl">
+                Khám phá đầy đủ các điểm nhìn toàn cảnh 360°, tư liệu thuyết minh âm thanh tự động và vị trí không gian địa lý trực quan.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 shrink-0 w-full sm:w-auto">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto rounded-xl cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md px-5"
+                onClick={() => {
+                  navigate("/app");
+                  setIsLoading(true);
+                  setTimeout(() => {
+                    setIsLoading(false);
+                  }, 300);
+                }}
+              >
+                Khám phá bản đồ số Bình Long
+                <ArrowUpRight className="!h-5 !w-5 ml-1" />
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto rounded-xl cursor-pointer bg-card hover:bg-secondary text-foreground text-sm font-semibold shadow-xs px-5 border-border/70"
+                onClick={() => setIsMapDialogOpen(true)}
+              >
+                <MapPin className="!h-4 !w-4 text-primary mr-1" />
+                Mở sơ đồ di tích
+              </Button>
+            </div>
           </div>
         </div>
       </div>
