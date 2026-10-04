@@ -132,7 +132,6 @@ const FEATURED_SITES = [
     hotspotId: 132,
     panoramaId: "M3000_0_FLYCAM_2",
     image: "/landmarks/mo_3000_tuong_niem.jpg",
-    badgeColor: "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30",
   },
   {
     name: "An Lộc Nhà và Đường hầm",
@@ -141,7 +140,6 @@ const FEATURED_SITES = [
     hotspotId: 130,
     panoramaId: "DTT_0_FLYCAM",
     image: "/landmarks/dtt_preview.jpg",
-    badgeColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
   },
   {
     name: "Mộ tập thể LLVT an ninh An Lộc",
@@ -150,7 +148,6 @@ const FEATURED_SITES = [
     hotspotId: 131,
     panoramaId: "M7N_0_FLYCAM",
     image: "/landmarks/m7n_preview.jpg",
-    badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
   },
   {
     name: "Di tích lịch sử - văn hóa Hưng Lập Tự",
@@ -159,7 +156,6 @@ const FEATURED_SITES = [
     hotspotId: 133,
     panoramaId: "HLT_0_FLYCAM",
     image: "/landmarks/hlt_preview.jpg",
-    badgeColor: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/30",
   },
 ];
 
@@ -546,9 +542,9 @@ export function OverviewSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
-                  {/* Top Badge */}
+                  {/* Top-Left Badge: Xanh chữ trắng đồng bộ */}
                   <div className="absolute top-3 left-3 z-10">
-                    <Badge variant="outline" className={`text-xs font-semibold backdrop-blur-md ${site.badgeColor}`}>
+                    <Badge className="bg-emerald-600 hover:bg-emerald-600 text-white text-xs font-semibold shadow-md border border-emerald-500/30 backdrop-blur-md">
                       {site.type}
                     </Badge>
                   </div>
