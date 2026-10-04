@@ -1,9 +1,11 @@
 import { TextAnimate } from "../magicui/text-animate";
 import { useMemo, useState } from "react";
-import { Maximize2 } from "lucide-react";
+import { Maximize2, Eye } from "lucide-react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Counter from "yet-another-react-lightbox/plugins/counter";
 import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/counter.css";
 import { Badge } from "@/components/ui/badge";
 
 import historyArchive3DIcon from "@/assets/3d-icons/history-archive__binhlong-3d-icon.png";
@@ -329,6 +331,13 @@ export function AboutSection() {
                                     <h3 className="text-lg sm:text-xl font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
                                         {photo.title}
                                     </h3>
+                                    <p className="text-xs sm:text-sm text-slate-200 mt-1 line-clamp-2 drop-shadow-sm font-normal">
+                                        {photo.subtitle}
+                                    </p>
+                                    <div className="mt-2.5 flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
+                                        <Eye className="w-3.5 h-3.5" />
+                                        <span>Nhấp để phóng to ảnh chất lượng cao</span>
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -363,6 +372,13 @@ export function AboutSection() {
                                     <h3 className="text-base sm:text-lg font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
                                         {photo.title}
                                     </h3>
+                                    <p className="text-xs text-slate-200 mt-1 line-clamp-2 drop-shadow-sm font-normal">
+                                        {photo.subtitle}
+                                    </p>
+                                    <div className="mt-2 flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium">
+                                        <Eye className="w-3 h-3" />
+                                        <span>Nhấp để phóng to ảnh</span>
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -376,28 +392,31 @@ export function AboutSection() {
                 close={() => setLightboxIndex(null)}
                 index={lightboxIndex ?? 0}
                 slides={lightboxSlides}
-                plugins={[Zoom]}
+                plugins={[Zoom, Counter]}
                 carousel={{ finite: false }}
                 animation={{ swipe: 300 }}
                 render={{
                     slideFooter: ({ slide }: any) => (
-                        <div className="absolute bottom-0 inset-x-0 bg-black/85 backdrop-blur-md border-t border-white/15 p-4 sm:p-6 text-white z-50 pointer-events-auto">
+                        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/85 to-transparent pt-12 pb-6 px-4 sm:px-8 text-white z-50 pointer-events-auto select-none">
                             <div className="max-w-4xl mx-auto space-y-1.5 text-left">
-                                <div className="flex items-center gap-2.5">
+                                <div className="flex items-center gap-2.5 mb-1">
                                     <span className="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[11px] sm:text-xs font-semibold shadow-xs">
                                         {slide.tag}
                                     </span>
+                                    <span className="text-xs text-slate-300 font-medium">
+                                        Phường Bình Long
+                                    </span>
                                 </div>
-                                <h3 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
+                                <h3 className="text-lg sm:text-2xl font-bold text-white tracking-tight leading-snug drop-shadow-md">
                                     {slide.title}
                                 </h3>
                                 {slide.subtitle && (
-                                    <p className="text-xs sm:text-sm font-medium text-emerald-400">
+                                    <p className="text-xs sm:text-sm font-semibold text-emerald-300">
                                         {slide.subtitle}
                                     </p>
                                 )}
                                 {slide.description && (
-                                    <p className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-0.5">
+                                    <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed font-normal max-w-3xl pt-0.5">
                                         {slide.description}
                                     </p>
                                 )}
