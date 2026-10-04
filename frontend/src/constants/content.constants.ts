@@ -52,11 +52,6 @@ export const ABOUT_FEATURES = {
   },
 };
 
-// Feature Section
-export const FEATURE_CONTENT = {
-  title: "Khám phá ngay các địa điểm",
-  buttonText: "Khám phá",
-};
 
 // Stats Section
 export const STATS_CONTENT = {

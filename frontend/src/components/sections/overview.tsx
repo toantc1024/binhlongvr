@@ -540,7 +540,7 @@ export function OverviewSection() {
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/25 to-transparent pointer-events-none" />
 
                 {/* Top Floating Badge */}
                 <div className="absolute top-4 left-4 pointer-events-none z-10">
@@ -551,7 +551,7 @@ export function OverviewSection() {
 
                 {/* Bottom Content Overlay */}
                 <div className="relative z-10 p-5 sm:p-6 text-white pointer-events-none">
-                  <h3 className="text-lg sm:text-xl font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold leading-snug text-white [text-shadow:_0_1px_3px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.8)] group-hover:text-emerald-300 transition-colors">
                     {photo.title}
                   </h3>
                 </div>
@@ -571,7 +571,7 @@ export function OverviewSection() {
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/25 to-transparent pointer-events-none" />
 
                 {/* Top Floating Badge */}
                 <div className="absolute top-3.5 left-3.5 pointer-events-none z-10">
@@ -582,7 +582,7 @@ export function OverviewSection() {
 
                 {/* Bottom Content Overlay */}
                 <div className="relative z-10 p-4 sm:p-5 text-white pointer-events-none">
-                  <h3 className="text-base sm:text-lg font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
+                  <h3 className="text-base sm:text-lg font-bold leading-snug text-white [text-shadow:_0_1px_3px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.8)] group-hover:text-emerald-300 transition-colors line-clamp-1">
                     {photo.title}
                   </h3>
                 </div>
