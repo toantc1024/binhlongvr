@@ -461,20 +461,10 @@ export function OverviewSection() {
                   alt="Không Gian Di Sản 3D"
                   className="w-full h-full object-cover object-[center_55%] group-hover:scale-108 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-                <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-emerald-600/90 text-white text-[10px] font-semibold backdrop-blur-md">
-                  VR 3D
-                </span>
               </div>
 
               {/* Information & Action */}
-              <div className="flex-1 space-y-1.5 text-left w-full">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                    Trải Nghiệm Toàn Cảnh 360°
-                  </span>
-                </div>
+              <div className="flex-1 space-y-2 text-left w-full">
                 <h4 className="text-base sm:text-lg font-bold text-foreground tracking-tight group-hover:text-primary transition-colors">
                   Khám Phá Di Tích & Đô Thị Phường Bình Long
                 </h4>
