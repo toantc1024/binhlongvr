@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Button } from "../ui/button";
 import AbsoluteWrapper from "../ui/absolute-wrapper";
-import { FiHome, FiChevronUp, FiChevronDown } from "react-icons/fi";
-import { Check, ChevronsUpDown, Search, Volume2, VolumeX } from "lucide-react";
-import { RiGlobalFill } from "react-icons/ri";
+import { FiChevronUp, FiChevronDown } from "react-icons/fi";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Command,
@@ -21,7 +20,6 @@ import {
 import HotspotInfoDialogBlock from "./HotspotInfoDialogBlock";
 import ShareDialogBlock from "./ShareDialogBlock";
 import PanoramaCarouselBlock from "./PanoramaCarouselBlock";
-import TutorialDialogBlock from "./TutorialDialogBlock";
 import MapDialogBlock from "./MapDialogBlock";
 import { useNavigate } from "react-router-dom";
 import { PiInfoFill } from "react-icons/pi";
@@ -29,6 +27,11 @@ import { FiShare2 } from "react-icons/fi";
 import useVRStore from "@/store/vr.store";
 import useAssetStore from "@/store/asset.store";
 import { toast } from "sonner";
+import websiteGlobeIcon from "@/assets/3d-icons/website-globe__binhlong-3d-icon.png";
+import homeMonumentIcon from "@/assets/3d-icons/home-monument__binhlong-3d-icon.png";
+import audioSpeakerIcon from "@/assets/3d-icons/audio-speaker__binhlong-3d-icon.png";
+import questionInfoIcon from "@/assets/3d-icons/question-info__binhlong-3d-icon.png";
+import searchLensIcon from "@/assets/3d-icons/search-lens__binhlong-3d-icon.png";
 
 const ControlBlock = ({
   showMedia,
@@ -259,43 +262,79 @@ const ControlBlock = ({
         preload="auto"
       />
 
-      {/* Top Left Navigation: Website, Flycam Home, Audio Narration, Guide */}
-      <AbsoluteWrapper
-        top="0"
-        zIndex={2}
-        left="0"
-        customClassName="flex m-2 sm:m-3 items-center px-1.5 py-1.5 sm:px-2 sm:py-2 h-auto rounded-full gap-2 sm:gap-2.5 flex-col shadow-xl border border-border/80 bg-white/95 backdrop-blur-2xl"
-      >
-        {/* Nút trở về Website */}
+      {/* Top Header Bar: Place Name (Full Width) + Search Button (to the right of the name, synced height & text 'Tìm kiếm') */}
+      <div className="fixed top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 z-30 flex items-center gap-2 sm:gap-3 pointer-events-auto">
+        {/* Full-Width Place Name */}
+        <div className="flex-1 h-12 sm:h-13 md:h-14 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-2xl sm:rounded-full border border-border shadow-xl px-4 sm:px-6 flex items-center min-w-0 overflow-hidden">
+          <span className="font-bold text-foreground text-sm sm:text-base md:text-lg truncate">
+            {currentHotspot?.title || "Bản đồ số Di tích Lịch sử Phường Bình Long"}
+          </span>
+        </div>
+
+        {/* Right Search Button: in the right of the name with text 'Tìm kiếm' and synced height */}
         <Button
           variant="ghost"
-          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-emerald-50 hover:text-emerald-700 bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
+          onClick={() => setIsMapDialogOpen(true)}
+          className="h-12 sm:h-13 md:h-14 px-3.5 sm:px-5 bg-white/95 dark:bg-slate-900/95 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-foreground border border-border shadow-xl rounded-2xl sm:rounded-full flex items-center gap-2 font-bold text-sm sm:text-base cursor-pointer shrink-0 active:scale-95 transition-all group overflow-hidden"
+          title="Tìm kiếm di tích & Bản đồ số"
+          aria-label="Tìm kiếm di tích & Bản đồ số"
+        >
+          <img
+            src={searchLensIcon}
+            alt="Tìm kiếm"
+            className="w-5 h-5 sm:w-6 sm:h-6 object-contain group-hover:scale-110 transition-transform drop-shadow-xs pointer-events-none select-none"
+          />
+          <span className="whitespace-nowrap font-bold text-foreground group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
+            Tìm kiếm
+          </span>
+        </Button>
+      </div>
+
+      {/* Left Navigation: Positioned UNDER the top header bar & UNDER the search dialog */}
+      <div
+        className={cn(
+          "fixed top-[4.25rem] sm:top-[4.75rem] md:top-[5.25rem] left-2 sm:left-3 z-20 flex items-center px-1.5 py-1.5 sm:px-2 sm:py-2 h-auto rounded-full gap-2 sm:gap-2.5 flex-col shadow-xl border border-border/80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl transition-all duration-300",
+          isMapDialogOpen && "opacity-0 pointer-events-none -z-10 invisible"
+        )}
+      >
+        {/* Nút trở về Website (3D Globe) */}
+        <Button
+          variant="ghost"
+          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 p-2 sm:p-2.5 shadow-xs rounded-full hover:bg-emerald-50 hover:border-emerald-500/50 bg-white/95 dark:bg-slate-900/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group overflow-hidden"
           onClick={handleBackToWebsite}
           aria-label="Trở về website"
           title="Trở về website"
         >
-          <RiGlobalFill className="!size-6 sm:!size-7 text-emerald-600 group-hover:scale-110 transition-transform" />
+          <img
+            src={websiteGlobeIcon}
+            alt="Trở về website"
+            className="w-full h-full object-contain group-hover:scale-110 transition-transform drop-shadow-xs pointer-events-none select-none"
+          />
         </Button>
 
-        {/* Nút Home: Về main panorama Mộ 3.000 người */}
+        {/* Nút Home: Về toàn cảnh Mộ 3.000 người (3D Home Monument) */}
         <Button
           variant="ghost"
-          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-emerald-50 hover:text-emerald-700 bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
+          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 p-2 sm:p-2.5 shadow-xs rounded-full hover:bg-emerald-50 hover:border-emerald-500/50 bg-white/95 dark:bg-slate-900/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group overflow-hidden"
           onClick={handleGoToFlycamHome}
           aria-label="Về toàn cảnh Mộ 3.000 người"
           title="Về toàn cảnh Mộ 3.000 người"
         >
-          <FiHome className="!size-6 sm:!size-7 text-emerald-600 group-hover:scale-110 transition-transform" />
+          <img
+            src={homeMonumentIcon}
+            alt="Về toàn cảnh Mộ 3.000 người"
+            className="w-full h-full object-contain group-hover:scale-110 transition-transform drop-shadow-xs pointer-events-none select-none"
+          />
         </Button>
 
-        {/* Nút Thuyết minh Âm thanh */}
+        {/* Nút Thuyết minh Âm thanh (3D Audio Speaker) */}
         <Button
           variant="ghost"
           className={cn(
-            "w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full border flex items-center justify-center cursor-pointer transition-all active:scale-95 relative",
+            "w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 p-2 sm:p-2.5 shadow-xs rounded-full border flex items-center justify-center cursor-pointer transition-all active:scale-95 relative group overflow-hidden",
             isPlayingAudio
-              ? "bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-500/60 ring-2 ring-emerald-500/20 shadow-md"
-              : "hover:bg-secondary bg-white/95 text-foreground border-border"
+              ? "bg-emerald-50 hover:bg-emerald-100 border-emerald-500/60 ring-2 ring-emerald-500/20 shadow-md"
+              : "hover:bg-secondary bg-white/95 dark:bg-slate-900/95 border-border"
           )}
           onClick={handleToggleAudio}
           aria-label={
@@ -307,55 +346,55 @@ const ControlBlock = ({
               : "Bật thuyết minh âm thanh"
           }
         >
-          {isPlayingAudio ? (
-            <>
-              <Volume2 className="!size-6 sm:!size-7 text-emerald-600 animate-pulse" />
-              <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-              </span>
-            </>
-          ) : (
-            <VolumeX className="!size-6 sm:!size-7 text-muted-foreground" />
+          <img
+            src={audioSpeakerIcon}
+            alt="Thuyết minh âm thanh"
+            className={cn(
+              "w-full h-full object-contain group-hover:scale-110 transition-transform drop-shadow-xs pointer-events-none select-none",
+              isPlayingAudio ? "scale-105 animate-pulse" : "opacity-80 grayscale-[25%]"
+            )}
+          />
+          {isPlayingAudio && (
+            <span className="absolute top-1 right-1 flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
           )}
         </Button>
 
-        {/* Nút Hướng dẫn */}
-        <TutorialDialogBlock />
-      </AbsoluteWrapper>
-      {/* Top Right Navigation: Search (opens Map Dialog) */}
-      <div className="fixed top-2 right-2 sm:top-3 sm:right-3 z-50 flex flex-col gap-2">
-        <Button
-          variant="ghost"
-          onClick={() => setIsMapDialogOpen(true)}
-          className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xl rounded-full hover:bg-secondary bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
-          title="Tìm kiếm di tích & Bản đồ số"
-          aria-label="Tìm kiếm di tích & Bản đồ số"
-        >
-          <Search className="!size-6 sm:!size-7 text-foreground group-hover:scale-110 transition-transform" />
-        </Button>
-
-        <MapDialogBlock
-          showMedia={(mediaName, hotspotId) => {
-            if (hotspotId) {
-              setCurrentHotspotById(hotspotId);
-              setPanoramasByHotspotId(hotspotId);
-            }
-            showMedia(mediaName);
-          }}
-          opened={isMapDialogOpen}
-          setOpened={setIsMapDialogOpen}
+        {/* Nút Thông tin (Dấu hỏi 3D) - Mở thông tin di tích thay vì hướng dẫn */}
+        <HotspotInfoDialogBlock
+          hotspot={currentHotspot}
+          panoramas={panoramas}
+          trigger={
+            <Button
+              variant="ghost"
+              className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 p-2 sm:p-2.5 shadow-xs rounded-full hover:bg-emerald-50 hover:border-emerald-500/50 bg-white/95 dark:bg-slate-900/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group overflow-hidden"
+              title="Thông tin di tích & Địa điểm"
+              aria-label="Thông tin di tích & Địa điểm"
+            >
+              <img
+                src={questionInfoIcon}
+                alt="Thông tin di tích"
+                className="w-full h-full object-contain group-hover:scale-110 transition-transform drop-shadow-xs pointer-events-none select-none"
+              />
+            </Button>
+          }
         />
       </div>
 
-      {/* Top Center Location Title Banner */}
-      <div className="absolute w-full top-2 sm:top-3 flex flex-col items-center justify-center pointer-events-none px-16 z-20">
-        {currentHotspot && (
-          <div className="pointer-events-auto py-2 px-5 sm:py-2.5 sm:px-7 font-bold text-foreground text-sm sm:text-base md:text-lg lg:text-xl bg-white/95 rounded-full border border-border max-w-[75vw] sm:max-w-[55vw] overflow-hidden text-ellipsis whitespace-nowrap shadow-xl backdrop-blur-2xl">
-            {currentHotspot?.title}
-          </div>
-        )}
-      </div>
+      {/* Search & Map Dialog (Renders on top of the left navigation with full z-[999] layer) */}
+      <MapDialogBlock
+        showMedia={(mediaName, hotspotId) => {
+          if (hotspotId) {
+            setCurrentHotspotById(hotspotId);
+            setPanoramasByHotspotId(hotspotId);
+          }
+          showMedia(mediaName);
+        }}
+        opened={isMapDialogOpen}
+        setOpened={setIsMapDialogOpen}
+      />
 
       {/* Bottom Navigation */}
       <AbsoluteWrapper

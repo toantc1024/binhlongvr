@@ -78,7 +78,10 @@ export function AnimatedNumber({
   }
 
   return (
-    <span ref={elementRef} className={className ?? "tabular-nums tracking-tight"}>
+    <span
+      ref={elementRef}
+      className={`tabular-nums tracking-tight whitespace-nowrap ${className ?? ""}`.trim()}
+    >
       {prefix}
       {formatted}
       {suffix}

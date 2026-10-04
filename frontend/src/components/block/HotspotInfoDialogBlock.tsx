@@ -10,25 +10,32 @@ import type { Panorama } from '@/types/panoramas.service.type'
 import HotspotInfoBlock from './HotspotInfoBlock'
 
 const HotspotInfoDialogBlock = ({
-    pill, hotspot
+    pill,
+    hotspot,
+    trigger,
 }: {
-    pill: any
+    pill?: any
     hotspot: Hotspot | null
     panoramas?: Panorama[]
+    trigger?: React.ReactNode
 }) => {
     return (
         <DialogWrapper
             trigger={
-                <Button
-                    variant="outline"
-                    key={pill.id}
-                    className="h-12 sm:h-13 px-4 sm:px-5 shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer font-bold text-sm sm:text-base shrink-0 transition-all active:scale-95"
-                >
-                    {pill.icon && (
-                        <pill.icon className="!size-5 sm:!size-5.5 mr-2 text-foreground shrink-0" />
-                    )}
-                    <span>{pill.label}</span>
-                </Button>
+                trigger ? (
+                    trigger
+                ) : (
+                    <Button
+                        variant="outline"
+                        key={pill?.id}
+                        className="h-12 sm:h-13 px-4 sm:px-5 shadow-xs rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border flex items-center justify-center cursor-pointer font-bold text-sm sm:text-base shrink-0 transition-all active:scale-95"
+                    >
+                        {pill?.icon && (
+                            <pill.icon className="!size-5 sm:!size-5.5 mr-2 text-foreground shrink-0" />
+                        )}
+                        <span>{pill?.label}</span>
+                    </Button>
+                )
             }
             showHeader={true}
             headerIcon={<InfoIcon className="w-5 h-5 text-foreground" />}

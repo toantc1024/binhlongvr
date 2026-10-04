@@ -41,7 +41,7 @@ const STATS_DATA = [
   },
   {
     title: "Dân số",
-    prefix: "> ",
+    prefix: ">\u00A0",
     value: 40000,
     unit: "người",
     description: "Quy mô dân số toàn phường",
@@ -57,7 +57,7 @@ const STATS_DATA = [
   },
   {
     title: "Huyết mạch",
-    prefix: "QL ",
+    prefix: "QL\u00A0",
     value: 13,
     unit: "TP.HCM - Hoa Lư",
     description: "Cửa ngõ Đông Nam Bộ – Campuchia",
@@ -297,30 +297,31 @@ export function OverviewSection() {
               {/* Upper Card Content */}
               <div className="p-4 sm:p-5 lg:p-6 pb-4 sm:pb-5">
                 <div className="flex items-start justify-between gap-2 sm:gap-3">
-                  <div className="flex flex-col">
-                    <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                  <div className="flex flex-col min-w-0 flex-1">
+                    <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground truncate">
                       {stat.title}
                     </span>
-                    <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight mt-1.5 flex items-baseline gap-1">
+                    <div className="text-xl sm:text-2xl md:text-3xl lg:text-[28px] xl:text-4xl font-bold text-foreground tracking-tight mt-1 sm:mt-1.5 flex items-baseline gap-1 whitespace-nowrap">
                       <AnimatedNumber
                         value={stat.value}
                         prefix={stat.prefix}
                         decimals={stat.displayDecimals}
                         padZero={stat.padZero}
                         formatStyle="vi"
+                        className="whitespace-nowrap"
                       />
                     </div>
-                    <span className="mt-1 text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                    <span className="mt-1 text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 whitespace-nowrap truncate">
                       {stat.unit}
                     </span>
                   </div>
 
-                  {/* 3D Satin-Plastic Asset - BIGGER */}
-                  <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center pointer-events-none -mr-2 -mt-2">
+                  {/* 3D Satin-Plastic Asset */}
+                  <div className="shrink-0 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 xl:w-24 xl:h-24 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center pointer-events-none -mr-1 -mt-1 sm:-mr-2 sm:-mt-2">
                     <img
                       src={stat.icon}
                       alt={stat.title}
-                      className="w-full h-full object-contain filter drop-shadow-md"
+                      className="w-full h-full object-contain filter drop-shadow-md select-none"
                     />
                   </div>
                 </div>
@@ -343,7 +344,7 @@ export function OverviewSection() {
           <div className="lg:col-span-6 flex flex-col justify-between gap-5">
             {/* Card 1: Official Establishment & Context */}
             <Card className="border border-border/60 shadow-md bg-card/85 backdrop-blur-sm p-5 sm:p-6 rounded-2xl flex-1 flex flex-col justify-center">
-              <div className="space-y-4 text-sm sm:text-base text-foreground/90 font-normal leading-relaxed text-justify">
+              <div className="space-y-4 text-sm sm:text-base text-foreground/90 font-normal leading-relaxed text-left">
                 <p>
                   <strong>Phường Bình Long</strong> được thành lập theo{" "}
                   <span className="font-semibold text-primary">
@@ -380,21 +381,20 @@ export function OverviewSection() {
                 />
               </picture>
 
-              {/* Center Action Button: Trải nghiệm thực tế ảo */}
-              <div className="relative z-10 p-4">
+              {/* Center Action Button: Trải nghiệm thực tế ảo (Bigger x2) */}
+              <div className="relative z-10 p-3 sm:p-5">
                 <Button
-                  size="lg"
                   onClick={(e) => {
                     e.stopPropagation();
                     navigate("/app");
                     setIsLoading(true);
                     setTimeout(() => setIsLoading(false), 300);
                   }}
-                  className="rounded-xl cursor-pointer bg-emerald-600/90 hover:bg-emerald-600 text-white font-semibold text-sm sm:text-base px-5 sm:px-6 py-3 shadow-2xl backdrop-blur-md border border-white/30 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all duration-200 group/btn"
+                  className="h-auto rounded-2xl sm:rounded-3xl cursor-pointer bg-emerald-600/95 hover:bg-emerald-500 text-white font-bold text-base sm:text-xl md:text-2xl px-6 sm:px-10 md:px-12 py-3.5 sm:py-5 md:py-6 shadow-[0_12px_45px_rgba(5,150,105,0.7)] hover:shadow-[0_18px_60px_rgba(5,150,105,0.9)] backdrop-blur-md border-2 border-white/60 ring-4 ring-emerald-400/30 flex items-center gap-2.5 sm:gap-4 hover:scale-105 active:scale-95 transition-all duration-300 group/btn"
                 >
-                  <Eye className="w-5 h-5 text-white stroke-[2.2]" />
-                  <span>Trải nghiệm thực tế ảo</span>
-                  <ArrowUpRight className="w-4 h-4 text-white stroke-[2.2] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                  <Eye className="size-6 sm:size-8 md:size-9 text-white stroke-[2.4]" />
+                  <span className="tracking-wide">Trải nghiệm thực tế ảo</span>
+                  <ArrowUpRight className="size-5 sm:size-7 md:size-8 text-white stroke-[2.4] group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                 </Button>
               </div>
             </div>
@@ -736,8 +736,8 @@ export function OverviewSection() {
           },
           {
             src: bannerQcMobile,
-            title: "Bản Đồ Số Bình Long VR – Bản Đứng (Mobile)",
-            description: "Thiết kế tối ưu cho trải nghiệm trên thiết bị di động",
+            title: "Bản Đồ Số Bình Long VR – Tối Ưu Mobile (16:9)",
+            description: "Thiết kế trực quan 16:9 sắc nét, tối ưu hiển thị trên màn hình di động",
           },
         ] as any}
         plugins={[Zoom]}

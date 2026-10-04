@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 import type { Hotspot } from "@/types/hotspots.service.type";
 import type { Panorama } from "@/types/panoramas.service.type";
 import { BINHLONG_PANORAMAS, BINHLONG_HOTSPOTS } from "@/constants/binhlong.constants";
+import searchLensIcon from "@/assets/3d-icons/search-lens__binhlong-3d-icon.png";
 
 export default function MapDialogBlock({
     opened,
@@ -52,7 +53,7 @@ export default function MapDialogBlock({
     const hotspotMarkersRef = useRef<maplibregl.Marker[]>([]);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    const { areaHotspots, mapDialogHotspotId } = useVRStore((state) => state);
+    const { areaHotspots, mapDialogHotspotId, currentHotspot } = useVRStore((state) => state);
 
     const [searchValue, setSearchValue] = useState("");
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -139,7 +140,7 @@ export default function MapDialogBlock({
                 mapRef.current?.resize();
             }, 100);
 
-            const activeId = initialHotspotId ?? mapDialogHotspotId;
+            const activeId = initialHotspotId ?? mapDialogHotspotId ?? currentHotspot?.hotspot_id ?? 132;
             if (activeId) {
                 const hotspotsSource = areaHotspots && areaHotspots.length > 0 ? areaHotspots : BINHLONG_HOTSPOTS;
                 const target = hotspotsSource.find((h) => Number(h.hotspot_id) === Number(activeId));
@@ -325,19 +326,19 @@ export default function MapDialogBlock({
             )}
 
             <div className="h-full w-full relative overflow-hidden">
-                {/* Top Bar with Full-Width Search & Minimize Button */}
+                {/* Top Bar with Full-Width Search & Synced Search / Close Buttons */}
                 <div
-                    className="absolute w-full px-3 sm:px-6 md:px-8 flex items-start justify-between gap-3 top-3 md:top-4 left-0 z-40"
+                    className="absolute w-full px-3 sm:px-6 md:px-8 flex items-start justify-between gap-2.5 sm:gap-3 top-3 md:top-4 left-0 z-40"
                     style={{ paddingTop: 'env(safe-area-inset-top)' }}
                 >
-                    {/* Full Width Search Container */}
-                    <div className="flex-1 max-w-xl relative">
-                        <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-xl border border-border/80 rounded-2xl w-full flex items-center px-4 py-3 transition-all focus-within:ring-2 focus-within:ring-emerald-500">
-                            <Search className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mr-3 shrink-0" />
+                    {/* Full Width Search Container with Synced Search Button */}
+                    <div className="flex-1 relative flex items-center gap-2 sm:gap-3 w-full">
+                        <div className="flex-1 h-12 sm:h-13 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-xl border border-border/80 rounded-2xl flex items-center px-3.5 sm:px-4 transition-all focus-within:ring-2 focus-within:ring-emerald-500">
+                            <Search className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mr-2.5 shrink-0" />
                             <input
                                 type="text"
                                 placeholder="Tìm kiếm di tích, địa danh tại Phường Bình Long..."
-                                className="flex-1 outline-none text-foreground placeholder:text-muted-foreground bg-transparent text-sm font-medium"
+                                className="flex-1 h-full outline-none text-foreground placeholder:text-muted-foreground bg-transparent text-sm sm:text-base font-medium"
                                 value={searchValue}
                                 onChange={(e) => {
                                     setSearchValue(e.target.value);
@@ -348,6 +349,11 @@ export default function MapDialogBlock({
                                         setIsSearchOpen(true);
                                     }
                                 }}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" && filteredHotspots.length > 0) {
+                                        onMarkerSelectHandler(filteredHotspots[0]);
+                                    }
+                                }}
                             />
                             {searchValue && (
                                 <button
@@ -355,13 +361,33 @@ export default function MapDialogBlock({
                                         setSearchValue("");
                                         setIsSearchOpen(false);
                                     }}
-                                    className="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-muted-foreground cursor-pointer"
+                                    className="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-muted-foreground cursor-pointer mr-1"
                                     title="Xóa tìm kiếm"
                                 >
                                     <X className="w-4 h-4" />
                                 </button>
                             )}
                         </div>
+
+                        {/* Synced Search Button with text 'Tìm kiếm' and 3D Asset */}
+                        <Button
+                            onClick={() => {
+                                if (filteredHotspots.length > 0) {
+                                    onMarkerSelectHandler(filteredHotspots[0]);
+                                } else if (searchValue.trim() !== "") {
+                                    setIsSearchOpen(true);
+                                }
+                            }}
+                            className="h-12 sm:h-13 px-3.5 sm:px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base rounded-2xl shadow-xl flex items-center gap-2 shrink-0 cursor-pointer active:scale-95 transition-all"
+                            title="Tìm kiếm"
+                        >
+                            <img
+                                src={searchLensIcon}
+                                alt="Tìm kiếm"
+                                className="w-5 h-5 sm:w-6 sm:h-6 object-contain drop-shadow-xs pointer-events-none select-none"
+                            />
+                            <span className="whitespace-nowrap font-bold">Tìm kiếm</span>
+                        </Button>
 
                         {/* Search Results Dropdown */}
                         {isSearchOpen && searchValue.trim() !== "" && (
@@ -410,7 +436,7 @@ export default function MapDialogBlock({
                     {/* Close / Minimize Button on top right */}
                     <button
                         onClick={() => setOpened(false)}
-                        className="w-11 h-11 sm:w-12 sm:h-12 bg-white/95 dark:bg-slate-900/95 hover:bg-slate-100 dark:hover:bg-slate-800 text-foreground backdrop-blur-xl rounded-full shadow-xl transition-all cursor-pointer border border-border flex items-center justify-center shrink-0 group active:scale-95"
+                        className="h-12 w-12 sm:h-13 sm:w-13 bg-white/95 dark:bg-slate-900/95 hover:bg-slate-100 dark:hover:bg-slate-800 text-foreground backdrop-blur-xl rounded-2xl shadow-xl transition-all cursor-pointer border border-border flex items-center justify-center shrink-0 group active:scale-95"
                         title="Đóng bản đồ"
                         aria-label="Đóng bản đồ"
                     >
@@ -420,9 +446,9 @@ export default function MapDialogBlock({
 
                 {/* Google Maps Style Left Info Panel */}
                 {selectedMarker && (
-                    <div className="absolute top-20 md:top-20 left-3 sm:left-6 z-30 w-[calc(100vw-1.5rem)] sm:w-[420px] md:w-[440px] max-h-[calc(100vh-6rem)] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-border/80 flex flex-col overflow-hidden animate-in fade-in slide-in-from-left-4 duration-300">
+                    <div className="absolute top-[4.5rem] sm:top-[5.25rem] left-3 sm:left-6 z-30 w-[calc(100vw-1.5rem)] sm:w-[420px] md:w-[450px] max-h-[calc(100vh-5.25rem)] sm:max-h-[calc(100vh-6.25rem)] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-border/80 flex flex-col overflow-hidden animate-in fade-in slide-in-from-left-4 duration-300">
                         {/* Carousel Hero Photo */}
-                        <div className="relative w-full h-52 sm:h-56 bg-slate-950 overflow-hidden shrink-0 group">
+                        <div className="relative w-full h-40 sm:h-44 md:h-48 bg-slate-950 overflow-hidden shrink-0 group">
                             <img
                                 src={activePanorama?.preview_image || selectedMarker.preview_image || undefined}
                                 alt={activePanorama?.title || selectedMarker.title || ""}
@@ -507,52 +533,46 @@ export default function MapDialogBlock({
                         )}
 
                         {/* Scrollable Information Body */}
-                        <div className="p-4 overflow-y-auto space-y-3.5 flex-1">
+                        <div className="p-4 sm:p-5 pb-6 sm:pb-8 overflow-y-auto space-y-3.5 sm:space-y-4 flex-1">
                             <div>
-                                <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 mb-1.5 whitespace-nowrap">
+                                <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 mb-1.5 whitespace-nowrap">
                                     Phường Bình Long, TP.&nbsp;Đồng&nbsp;Nai
                                 </span>
-                                <h3 className="font-bold text-lg text-foreground leading-snug">
+                                <h3 className="font-bold text-lg md:text-[17px] text-foreground leading-snug">
                                     {selectedMarker.title}
                                 </h3>
-                            </div>
-
-                            {/* Address & GPS */}
-                            <div className="space-y-1.5 text-xs text-muted-foreground">
-                                <div className="flex items-start gap-2">
+                                <div className="flex items-start gap-2 mt-1.5 text-xs text-muted-foreground">
                                     <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                                     <span>{selectedMarker.address || "Phường Bình Long, Thành phố Đồng Nai"}</span>
                                 </div>
-                                {selectedMarker.geolocation && (
-                                    <div className="flex items-center justify-between bg-slate-100 dark:bg-slate-800/60 px-3 py-1.5 rounded-lg border border-border/60">
-                                        <span className="font-mono text-[11px]">
-                                            GPS: {selectedMarker.geolocation.lat.toFixed(5)}, {selectedMarker.geolocation.lon.toFixed(5)}
-                                        </span>
-                                        <button
-                                            onClick={copyCoordinates}
-                                            className="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1 cursor-pointer"
-                                        >
-                                            {copiedCoords ? (
-                                                <>
-                                                    <Check className="w-3.5 h-3.5 text-emerald-600" />
-                                                    <span>Đã chép</span>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Copy className="w-3.5 h-3.5" />
-                                                    <span>Sao chép</span>
-                                                </>
-                                            )}
-                                        </button>
-                                    </div>
-                                )}
                             </div>
+
+                            {/* PRIMARY VR ACTION BUTTON */}
+                            <Button
+                                onClick={() => {
+                                    if (audioRef.current) {
+                                        audioRef.current.pause();
+                                        audioRef.current.currentTime = 0;
+                                    }
+                                    setIsPlayingAudio(false);
+                                    showMedia(
+                                        activePanorama?.panorama_id || selectedMarker.click_panorama_id || "",
+                                        selectedMarker.hotspot_id
+                                    );
+                                    setOpened(false);
+                                }}
+                                className="w-full h-12 md:h-11 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base md:text-sm rounded-xl flex items-center justify-center gap-2.5 shadow-xl shadow-emerald-600/30 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer group/vrbtn"
+                            >
+                                <Compass className="w-5 h-5 md:w-4 md:h-4 text-white stroke-[2.2] animate-pulse" />
+                                <span>Khám phá không gian VR 360°</span>
+                                <ArrowRight className="w-5 h-5 md:w-4 md:h-4 text-white stroke-[2.5] group-hover/vrbtn:translate-x-1 transition-transform" />
+                            </Button>
 
                             {/* Audio Narration Player */}
                             {audioUrl && (
-                                <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-500/20">
+                                <div className="flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-500/20">
                                     <div className="flex items-center gap-2.5">
-                                        <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center">
+                                        <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-xs">
                                             {isPlayingAudio ? (
                                                 <Volume2 className="w-4 h-4 animate-pulse" />
                                             ) : (
@@ -581,32 +601,62 @@ export default function MapDialogBlock({
                                 </div>
                             )}
 
-                            {/* Historical Description */}
-                            <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed">
-                                {selectedMarker.description}
-                            </p>
-                        </div>
+                            {/* GPS Coordinates */}
+                            {selectedMarker.geolocation && (
+                                <div className="flex items-center justify-between bg-slate-100 dark:bg-slate-800/60 px-3 py-1.5 rounded-lg border border-border/60">
+                                    <span className="font-mono text-[11px] text-muted-foreground">
+                                        GPS: {selectedMarker.geolocation.lat.toFixed(5)}, {selectedMarker.geolocation.lon.toFixed(5)}
+                                    </span>
+                                    <button
+                                        onClick={copyCoordinates}
+                                        className="text-emerald-600 hover:text-emerald-700 font-medium text-xs flex items-center gap-1 cursor-pointer"
+                                    >
+                                        {copiedCoords ? (
+                                             <>
+                                                 <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                                 <span>Đã chép</span>
+                                             </>
+                                         ) : (
+                                             <>
+                                                 <Copy className="w-3.5 h-3.5" />
+                                                 <span>Sao chép</span>
+                                             </>
+                                         )}
+                                    </button>
+                                </div>
+                            )}
 
-                        {/* Action Button: Full-Width Solid Emerald */}
-                        <div className="p-3 sm:p-4 bg-white/90 dark:bg-slate-900/90 border-t border-border shrink-0">
-                            <Button
-                                onClick={() => {
-                                    if (audioRef.current) {
-                                        audioRef.current.pause();
-                                        audioRef.current.currentTime = 0;
-                                    }
-                                    setIsPlayingAudio(false);
-                                    showMedia(
-                                        activePanorama?.panorama_id || selectedMarker.click_panorama_id || "",
-                                        selectedMarker.hotspot_id
-                                    );
-                                    setOpened(false);
-                                }}
-                                className="w-full h-11 sm:h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm sm:text-base rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 cursor-pointer"
-                            >
-                                <span>Khám phá không gian VR 360°</span>
-                                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                            </Button>
+                            {/* Historical Description: FULL TEXT */}
+                            <div className="space-y-1.5 pt-2 border-t border-border/60">
+                                <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                                    Tư liệu lịch sử di tích
+                                </h4>
+                                <p className="text-sm md:text-[13.5px] md:leading-relaxed text-foreground/90 leading-relaxed font-normal text-justify whitespace-pre-line">
+                                    {selectedMarker.description}
+                                </p>
+                            </div>
+
+                            {/* Secondary Action Button at bottom of text */}
+                            <div className="pt-2 pb-4 sm:pb-6">
+                                <Button
+                                    onClick={() => {
+                                        if (audioRef.current) {
+                                            audioRef.current.pause();
+                                            audioRef.current.currentTime = 0;
+                                        }
+                                        setIsPlayingAudio(false);
+                                        showMedia(
+                                            activePanorama?.panorama_id || selectedMarker.click_panorama_id || "",
+                                            selectedMarker.hotspot_id
+                                        );
+                                        setOpened(false);
+                                    }}
+                                    className="w-full h-11 md:h-10 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm md:text-xs rounded-xl flex items-center justify-center gap-2 shadow-md cursor-pointer"
+                                >
+                                    <span>Vào không gian VR 360°</span>
+                                    <ArrowRight className="w-4 h-4 md:w-3.5 md:h-3.5" />
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 )}

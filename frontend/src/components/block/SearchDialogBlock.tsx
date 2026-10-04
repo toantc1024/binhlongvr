@@ -283,11 +283,11 @@ const SearchDialogBlock: React.FC<SearchDialogBlockProps> = ({ showMedia }) => {
                             </div>
 
                             {/* Historical Description */}
-                            <div className="text-left">
-                                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+                            <div className="text-left space-y-1.5">
+                                <h4 className="text-xs sm:text-sm font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
                                     Thông tin tóm tắt & Lịch sử
                                 </h4>
-                                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-normal max-h-36 sm:max-h-44 overflow-y-auto pr-1 scrollbar-hide">
+                                <p className="text-sm sm:text-base text-foreground/90 leading-relaxed font-normal max-h-36 sm:max-h-48 overflow-y-auto pr-1 scrollbar-hide text-justify">
                                     {activeHotspot.description}
                                 </p>
                             </div>
@@ -316,7 +316,7 @@ const SearchDialogBlock: React.FC<SearchDialogBlockProps> = ({ showMedia }) => {
                                         size="sm"
                                         variant="outline"
                                         onClick={toggleAudio}
-                                        className="h-8 px-3 text-xs font-medium border-emerald-600/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-600 hover:text-white"
+                                        className="h-8 px-3 text-xs font-medium border-emerald-600/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-600 hover:text-white cursor-pointer"
                                     >
                                         {isPlayingAudio ? 'Tạm dừng' : 'Nghe ngay'}
                                     </Button>
@@ -328,10 +328,10 @@ const SearchDialogBlock: React.FC<SearchDialogBlockProps> = ({ showMedia }) => {
                         <div className="pt-4 mt-2">
                             <Button
                                 onClick={() => handleEnterVR()}
-                                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 sm:py-3.5 px-6 rounded-xl flex items-center justify-between shadow-md hover:shadow-lg transition-all text-sm sm:text-base cursor-pointer"
+                                className="w-full h-12 sm:h-14 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 sm:py-4 px-6 rounded-xl flex items-center justify-between shadow-xl shadow-emerald-600/25 hover:shadow-2xl transition-all text-base sm:text-lg cursor-pointer"
                             >
                                 <span>Khám phá không gian VR 360°</span>
-                                <ArrowRight className="size-5 shrink-0" />
+                                <ArrowRight className="size-5 sm:size-6 shrink-0" />
                             </Button>
                         </div>
                     </div>
