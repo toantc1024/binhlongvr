@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { PiInfoFill } from "react-icons/pi";
 import { FiShare2 } from "react-icons/fi";
 import useVRStore from "@/store/vr.store";
+import useAssetStore from "@/store/asset.store";
 import { toast } from "sonner";
 
 const ControlBlock = ({
@@ -49,7 +50,10 @@ const ControlBlock = ({
     setCurrentHotspotById,
     setPanoramasByHotspotId,
     panoramas,
+    clearVRState,
+    selectHotspotAndPanorama,
   } = useVRStore((state) => state);
+  const { setCurrentAsset } = useAssetStore((state) => state);
   const navigate = useNavigate();
 
   const actionPills = [
@@ -215,10 +219,18 @@ const ControlBlock = ({
     const targetPanoramaId =
       mainHotspot?.click_panorama_id || "M3000_0_FLYCAM_1";
 
-    setCurrentHotspotById(mainHotspotId);
-    await setPanoramasByHotspotId(mainHotspotId);
-    setCurrentPanoramaById(targetPanoramaId);
+    setCurrentAsset(null);
+    selectHotspotAndPanorama(mainHotspotId, targetPanoramaId);
     showMedia(targetPanoramaId);
+    navigate("/app", { replace: true });
+  };
+
+  // Return to website: resets VR state to default start point and navigates to "/"
+  const handleBackToWebsite = () => {
+    setCurrentAsset(null);
+    clearVRState();
+    showMedia("M3000_0_FLYCAM_1");
+    navigate("/");
   };
 
   return (
@@ -243,7 +255,7 @@ const ControlBlock = ({
         <Button
           variant="ghost"
           className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 shadow-xs rounded-full hover:bg-emerald-50 hover:text-emerald-700 bg-white/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
-          onClick={() => navigate("/")}
+          onClick={handleBackToWebsite}
           aria-label="Trở về website"
           title="Trở về website"
         >

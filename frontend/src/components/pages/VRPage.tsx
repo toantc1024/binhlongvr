@@ -39,8 +39,20 @@ const VRPage: React.FC<VRPageProps> = ({ isActive = true }) => {
   const { currentAsset, setCurrentAsset } = useAssetStore((state) => state);
   let [searchParams, _] = useSearchParams();
 
-  // Handle direct navigation via searchParams when active
+  const prevActiveRef = React.useRef(isActive);
+  const prevSearchParamsStrRef = React.useRef(searchParams.toString());
+
+  // Handle direct navigation via searchParams when active, or reset to start point when entering cleanly
   useEffect(() => {
+    const wasInactive = !prevActiveRef.current && isActive;
+    const prevParamsStr = prevSearchParamsStrRef.current;
+    const currentParamsStr = searchParams.toString();
+    const paramsChanged = prevParamsStr !== currentParamsStr;
+
+    // Update tracking refs
+    prevActiveRef.current = isActive;
+    prevSearchParamsStrRef.current = currentParamsStr;
+
     if (!isActive) return;
 
     const hotspotIdParam = searchParams.get("hotspot_id");
@@ -56,16 +68,30 @@ const VRPage: React.FC<VRPageProps> = ({ isActive = true }) => {
       if (targetPanorama) {
         showMedia(targetPanorama);
       }
+    } else if (wasInactive || (paramsChanged && prevParamsStr !== "")) {
+      // User entered /app without specific hotspot/panorama parameters (or cleared params)
+      // Reset to root start point (Mộ 3.000 người, M3000_0_FLYCAM_1)
+      const rootHotspotId = 132;
+      const rootPanoramaId = "M3000_0_FLYCAM_1";
+      selectHotspotAndPanorama(rootHotspotId, rootPanoramaId);
+      setCurrentAsset(null);
+      showMedia(rootPanoramaId);
+
+      const timer = setTimeout(() => {
+        showMedia(rootPanoramaId);
+      }, 150);
+      return () => clearTimeout(timer);
     }
   }, [searchParams, isActive]);
 
-  // Sync mute state and viewport on active toggle
+  // Sync mute state, viewport, and drawer when active toggles
   useEffect(() => {
     if (isActive) {
       unmuteAllAudio();
       window.dispatchEvent(new Event("resize"));
     } else {
       muteAllAudio();
+      setCurrentAsset(null);
     }
   }, [isActive]);
 

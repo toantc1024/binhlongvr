@@ -173,13 +173,12 @@ const useVRStore = create<VRStore>((set, get) => ({
   },
 
   clearVRState: () => {
-    const fresh = getInitialSelection();
     set({
       currentArea: BINHLONG_AREA,
-      currentHotspot: fresh.hotspot,
-      currentPanorama: fresh.panorama,
+      currentHotspot: defaultMainHotspot,
+      currentPanorama: defaultMainPanorama,
       areaHotspots: BINHLONG_HOTSPOTS,
-      panoramas: fresh.panoramas,
+      panoramas: defaultMainPanoramas,
       isMapDialogOpen: false,
       mapDialogHotspotId: null,
     });
