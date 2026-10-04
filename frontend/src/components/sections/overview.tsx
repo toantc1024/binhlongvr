@@ -8,20 +8,24 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
+  Maximize2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { TextAnimate } from "../magicui/text-animate";
 import useVRStore from "@/store/vr.store";
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/styles.css";
 
 // 3D Custom Assets (HCMUTE Green Satin Style)
 import area3DIcon from "@/assets/3d-icons/area__binhlong-3d-icon.png";
 import population3DIcon from "@/assets/3d-icons/population__binhlong-3d-icon.png";
 import admin3DIcon from "@/assets/3d-icons/admin__binhlong-3d-icon.png";
 import highway3DIcon from "@/assets/3d-icons/highway__binhlong-3d-icon.png";
-import bannerVrVertical from "@/assets/banner_vr_vertical.jpg";
-import bannerVrHorizontal from "@/assets/banner_vr_horizontal.jpg";
+import posterQuangCaoBinhLongVR from "@/assets/poster_quang_cao_binhlong_vr.jpg";
+import posterQuangCaoDevices from "@/assets/poster_quang_cao_showcase_devices.jpg";
 
 // 4 Key Stats - Clean, no repeated labels, prominent values & 3D icons
 const STATS_DATA = [
@@ -156,6 +160,7 @@ export function OverviewSection() {
   const navigate = useNavigate();
   const { setIsLoading, setIsMapDialogOpen, selectHotspotAndPanorama } = useVRStore();
   const [currentPairIndex, setCurrentPairIndex] = useState(0);
+  const [isPosterLightboxOpen, setIsPosterLightboxOpen] = useState(false);
 
   const handlePrevPair = () => {
     setCurrentPairIndex((prev) => (prev === 0 ? PHOTO_PAIRS.length - 1 : prev - 1));
@@ -273,27 +278,27 @@ export function OverviewSection() {
               </div>
             </Card>
 
-            {/* Banner Ngang: Không Gian Bản Đồ Số & Trực Quan Hóa */}
+            {/* Banner Ngang: Không Gian Bản Đồ Số & Trực Quan Hóa (Poster Quảng Cáo Style) */}
             <div
               onClick={() => {
                 navigate("/app");
                 setIsLoading(true);
                 setTimeout(() => setIsLoading(false), 300);
               }}
-              className="group relative overflow-hidden rounded-2xl border border-border/60 shadow-lg hover:shadow-xl bg-card cursor-pointer transition-all duration-300 hover:border-emerald-500/50 min-h-[220px] sm:min-h-[240px] flex flex-col justify-end"
+              className="group relative overflow-hidden rounded-2xl border border-border/70 shadow-lg hover:shadow-2xl bg-card cursor-pointer transition-all duration-300 hover:border-emerald-500/60 min-h-[230px] sm:min-h-[250px] flex flex-col justify-end"
             >
               <img
-                src={bannerVrHorizontal}
-                alt="Bản Đồ Số Bình Long 3D"
-                className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-106"
+                src={posterQuangCaoBinhLongVR}
+                alt="Bản Đồ Số Bình Long VR"
+                className="absolute inset-0 w-full h-full object-cover object-[center_30%] transition-all duration-700 ease-out group-hover:scale-106"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/15 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/20 pointer-events-none" />
 
               {/* Top-Left Badge: Xanh chữ trắng đồng bộ */}
               <div className="absolute top-3.5 left-3.5 z-20">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-600/95 text-white text-xs font-semibold backdrop-blur-md shadow-md border border-emerald-500/40">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Bản Đồ Số Bình Long
+                  Bản Đồ Số Bình Long VR
                 </span>
               </div>
 
@@ -310,9 +315,24 @@ export function OverviewSection() {
                 <p className="text-xs sm:text-sm text-white/85 line-clamp-2 leading-relaxed drop-shadow-sm max-w-xl">
                   Trực quan hóa toàn diện hệ thống di tích và không gian đô thị Phường Bình Long qua công nghệ ảnh toàn cảnh 360° và sơ đồ di tích số.
                 </p>
-                <div className="pt-1 flex items-center gap-1.5 text-xs font-semibold text-emerald-300 group-hover:text-white transition-colors">
-                  <span>Khám phá bản đồ số</span>
-                  <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                <div className="pt-1 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-300 group-hover:text-white transition-colors">
+                    <span>Khám phá bản đồ số</span>
+                    <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsPosterLightboxOpen(true);
+                    }}
+                    className="flex items-center gap-1 text-[11px] text-white/85 hover:text-white bg-black/45 hover:bg-black/70 px-2.5 py-1 rounded-md border border-white/20 backdrop-blur-md transition-all cursor-pointer shadow-xs active:scale-95"
+                    title="Phóng to poster quảng cáo"
+                  >
+                    <Maximize2 className="w-3 h-3" />
+                    <span>Xem poster QC</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -452,12 +472,12 @@ export function OverviewSection() {
               }}
               className="group relative overflow-hidden rounded-2xl border border-border/60 shadow-lg hover:shadow-xl bg-gradient-to-br from-card via-card to-emerald-50/50 dark:to-emerald-950/30 p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-4 cursor-pointer transition-all duration-300 hover:border-emerald-500/50"
             >
-              {/* Vertical 3D Banner Art Thumbnail */}
+              {/* Vertical 3D Banner Art Thumbnail (Poster Showcase Devices) */}
               <div className="relative w-full sm:w-32 h-36 sm:h-32 rounded-xl overflow-hidden shrink-0 shadow-md border border-emerald-500/20 bg-slate-900/10">
                 <img
-                  src={bannerVrVertical}
+                  src={posterQuangCaoDevices}
                   alt="Không Gian Di Sản 3D"
-                  className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-500"
+                  className="w-full h-full object-cover object-[center_55%] group-hover:scale-108 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
                 <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-emerald-600/90 text-white text-[10px] font-semibold backdrop-blur-md">
@@ -628,6 +648,26 @@ export function OverviewSection() {
           </div>
         </div>
       </div>
+
+      {/* Lightbox Modal for Poster Quảng Cáo Bình Long VR */}
+      <Lightbox
+        open={isPosterLightboxOpen}
+        close={() => setIsPosterLightboxOpen(false)}
+        slides={[
+          {
+            src: posterQuangCaoBinhLongVR,
+            title: "Poster Quảng Cáo – Bản Đồ Số Bình Long VR",
+            description: "Khám phá di sản văn hóa trong tầm tay với công nghệ thực tế ảo 360°",
+          },
+          {
+            src: posterQuangCaoDevices,
+            title: "Showcase Đa Nền Tảng Thiết Bị",
+            description: "Trực quan hóa trên điện thoại, máy tính bảng và máy tính để bàn",
+          },
+        ] as any}
+        plugins={[Zoom]}
+        controller={{ closeOnBackdropClick: true }}
+      />
     </section>
   );
 }
