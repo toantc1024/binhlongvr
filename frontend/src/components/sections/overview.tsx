@@ -6,8 +6,9 @@ import {
   Landmark,
   ArrowUpRight,
   Navigation2,
-  Route,
   Sparkles,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +21,6 @@ import area3DIcon from "@/assets/3d-icons/area__binhlong-3d-icon.png";
 import population3DIcon from "@/assets/3d-icons/population__binhlong-3d-icon.png";
 import admin3DIcon from "@/assets/3d-icons/admin__binhlong-3d-icon.png";
 import highway3DIcon from "@/assets/3d-icons/highway__binhlong-3d-icon.png";
-import landmark3DIcon from "@/assets/3d-icons/landmark-explore__binhlong-3d-icon.png";
 import location3DIcon from "@/assets/3d-icons/location__binhlong-3d-icon.png";
 
 // 4 Key Stats - Clean, no repeated labels, prominent values & 3D icons
@@ -60,37 +60,44 @@ const GALLERY_ITEMS = [
   {
     id: "dothi",
     title: "Toàn cảnh Đô Thị Bình Long",
-    subtitle: "Không gian đô thị văn minh, hiện đại và năng động – Cửa ngõ kết nối phía Bắc",
+    subtitle: "Không gian đô thị văn minh, hiện đại – Cửa ngõ kết nối phía Bắc",
     badge: "Đô thị Bình Long",
     image: "/landmarks/do_thi_binh_long.jpg",
+    actionType: "map" as const,
   },
   {
     id: "mo3000",
     title: "Di tích Quốc gia Mộ 3.000 người",
-    subtitle: "Mộ 3000 đồng bào An Lộc bị đế quốc Mỹ tàn sát ngày 03/10/1972",
+    subtitle: "Khu tưởng niệm đồng bào An Lộc – Di tích lịch sử Quốc gia",
     badge: "Di tích Quốc gia",
     image: "/landmarks/mo_3000_tuong_niem.jpg",
+    actionType: "vr" as const,
+    hotspotId: 132,
+    panoramaId: "M3000_0_FLYCAM_2",
   },
   {
     id: "congchao",
-    title: "Trụ sở Đảng bộ – UBND Phường Bình Long",
-    subtitle: "Cổng chào Đại hội Đại biểu Đảng bộ Phường Bình Long lần thứ I, nhiệm kỳ 2025 - 2030",
+    title: "Trụ sở Đảng bộ – HĐND – UBND",
+    subtitle: "Cổng chào Đại hội Đại biểu Đảng bộ Phường Bình Long lần thứ I, nhiệm kỳ 2025 – 2030",
     badge: "Trụ sở Hành chính",
     image: "/images/phuong_binh_long/phuong_binh_long_tru_so_cong_chao.jpg",
+    actionType: "map" as const,
   },
   {
     id: "dieuhanh",
-    title: "Đoàn xe diễu hành chào mừng Đại hội",
-    subtitle: "Không khí hân hoan, rực rỡ cờ hoa trên các tuyến đại lộ Phường Bình Long",
+    title: "Đoàn xe diễu hành chào mừng",
+    subtitle: "Khí thế hân hoan, rực rỡ cờ hoa trên các đại lộ chính Phường Bình Long",
     badge: "Sự kiện lịch sử",
     image: "/images/phuong_binh_long/phuong_binh_long_dieu_hanh.jpg",
+    actionType: "map" as const,
   },
   {
     id: "hoasen",
-    title: "Tuyến phố trung tâm & Cụm Hoa sen",
-    subtitle: "Tuyến phố sầm uất với cụm biểu tượng đóa sen Bình Long vươn cao kiêu hãnh",
+    title: "Tuyến phố & Cụm Hoa sen",
+    subtitle: "Không gian thương mại trung tâm với cụm hoa sen vươn cao kiêu hãnh",
     badge: "Đô thị trung tâm",
     image: "/images/phuong_binh_long/phuong_binh_long_tuyen_pho_hoa_sen.jpg",
+    actionType: "map" as const,
   },
   {
     id: "giaolo",
@@ -98,7 +105,14 @@ const GALLERY_ITEMS = [
     subtitle: "Tuyến giao thông huyết mạch nối TP. Hồ Chí Minh với Cửa khẩu Hoa Lư",
     badge: "Huyết mạch giao thông",
     image: "/images/phuong_binh_long/phuong_binh_long_giao_lo_trung_tam.jpg",
+    actionType: "map" as const,
   },
+];
+
+const PHOTO_PAIRS = [
+  { left: GALLERY_ITEMS[0], right: GALLERY_ITEMS[1] },
+  { left: GALLERY_ITEMS[2], right: GALLERY_ITEMS[3] },
+  { left: GALLERY_ITEMS[4], right: GALLERY_ITEMS[5] },
 ];
 
 // 4 Administrative units merged
@@ -152,9 +166,25 @@ const FEATURED_SITES = [
 export function OverviewSection() {
   const navigate = useNavigate();
   const { setIsLoading, setIsMapDialogOpen, selectHotspotAndPanorama } = useVRStore();
-  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+  const [currentPairIndex, setCurrentPairIndex] = useState(0);
 
-  const activeImage = GALLERY_ITEMS[activeGalleryIndex];
+  const handlePrevPair = () => {
+    setCurrentPairIndex((prev) => (prev === 0 ? PHOTO_PAIRS.length - 1 : prev - 1));
+  };
+
+  const handleNextPair = () => {
+    setCurrentPairIndex((prev) => (prev + 1) % PHOTO_PAIRS.length);
+  };
+
+  const currentPair = PHOTO_PAIRS[currentPairIndex];
+
+  const handleCardAction = (item: (typeof GALLERY_ITEMS)[0]) => {
+    if (item.actionType === "vr" && item.hotspotId) {
+      handleOpenVRSite(item.hotspotId, item.panoramaId);
+    } else {
+      setIsMapDialogOpen(true);
+    }
+  };
 
   const handleOpenVRSite = (hotspotId: number, panoramaId?: string) => {
     selectHotspotAndPanorama(hotspotId, panoramaId || null);
@@ -328,106 +358,171 @@ export function OverviewSection() {
             </Card>
           </div>
 
-          {/* RIGHT COLUMN: LIVELY IMAGE SHOWCASE (BALANCED EQUAL HEIGHT) */}
+          {/* RIGHT COLUMN: 2 IMAGES ON TWO SIDES (2 ẢNH 2 BÊN) + 1 CARD 3D DUY NHẤT */}
           <div className="lg:col-span-6 flex flex-col justify-between gap-4">
-            {/* Primary Main Showcase Image Card */}
-            <Card className="relative overflow-hidden !p-0 border border-border/60 shadow-xl bg-card rounded-2xl group flex-1 min-h-[380px] sm:min-h-[440px] flex flex-col">
-              <CardContent className="!p-0 relative h-full w-full overflow-hidden flex flex-col justify-end">
-                <img
-                  src={activeImage.image}
-                  alt={activeImage.title}
-                  className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
-                />
+            {/* Header / Pair Navigation Bar */}
+            <div className="flex items-center justify-between px-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Hình ảnh tiêu biểu Phường Bình Long
+                </span>
+                <span className="text-[11px] text-muted-foreground/80 font-medium">
+                  ({currentPairIndex + 1}/{PHOTO_PAIRS.length})
+                </span>
+              </div>
 
-                {/* Vignette gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20 pointer-events-none" />
-
-                {/* Floating Top-Right 3D Pill Badge */}
-                <div className="absolute top-4 right-4 z-20 flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-white text-xs select-none">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center">
-                    <img
-                      src={landmark3DIcon}
-                      alt="Landmark 3D Icon"
-                      className="w-full h-full object-contain filter drop-shadow-sm"
-                    />
-                  </div>
-                  <span className="font-medium tracking-wide">Bình Long VR 360°</span>
-                </div>
-
-                {/* Floating Top-Left Tag */}
-                <div className="absolute top-4 left-4 z-20">
-                  <span className="px-3 py-1 rounded-lg bg-emerald-600/90 text-white text-xs font-semibold backdrop-blur-md shadow-md uppercase tracking-wider">
-                    {activeImage.badge}
-                  </span>
-                </div>
-
-                {/* Bottom Image Caption & Info Overlay */}
-                <div className="relative p-5 sm:p-6 z-20 text-white">
-                  <h3 className="text-xl sm:text-2xl font-bold leading-tight drop-shadow-md text-white">
-                    {activeImage.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-200/95 mt-1.5 drop-shadow-sm font-normal leading-relaxed">
-                    {activeImage.subtitle}
-                  </p>
-
-                  <div className="mt-4 pt-3 border-t border-white/20 flex items-center justify-between text-xs text-slate-300">
-                    <span className="flex items-center gap-1.5">
-                      <Route className="w-3.5 h-3.5 text-emerald-400" />
-                      Quốc lộ 13 – Tuyến huyết mạch TP.HCM – Hoa Lư
-                    </span>
+              {/* Navigation controls */}
+              <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1 mr-2">
+                  {PHOTO_PAIRS.map((_, idx) => (
                     <button
-                      onClick={() => setIsMapDialogOpen(true)}
-                      className="text-white hover:text-emerald-300 font-medium inline-flex items-center gap-1 transition-colors cursor-pointer"
-                    >
-                      Xem bản đồ <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
+                      key={idx}
+                      onClick={() => setCurrentPairIndex(idx)}
+                      className={`transition-all duration-300 rounded-full cursor-pointer ${
+                        idx === currentPairIndex
+                          ? "w-5 h-1.5 bg-emerald-500 shadow-xs"
+                          : "w-1.5 h-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/60"
+                      }`}
+                      aria-label={`Bộ ảnh ${idx + 1}`}
+                      type="button"
+                    />
+                  ))}
                 </div>
-              </CardContent>
-            </Card>
 
-            {/* Interactive Thumbnail Selector Bar */}
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-              {GALLERY_ITEMS.map((item, index) => (
                 <button
-                  key={item.id}
-                  onClick={() => setActiveGalleryIndex(index)}
-                  className={`group relative h-16 sm:h-20 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 border-2 ${
-                    activeGalleryIndex === index
-                      ? "border-primary shadow-md ring-2 ring-primary/20 scale-[1.02]"
-                      : "border-transparent opacity-70 hover:opacity-100"
-                  }`}
-                  title={item.title}
+                  onClick={handlePrevPair}
+                  className="w-7 h-7 rounded-lg bg-card hover:bg-muted text-foreground flex items-center justify-center border border-border/60 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-2xs"
+                  title="Bộ ảnh trước"
                   type="button"
                 >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-black/35 group-hover:bg-black/10 transition-colors" />
-                  <div className="absolute bottom-1 inset-x-0.5 text-[9px] sm:text-[10px] font-semibold text-white drop-shadow-md truncate text-center px-0.5">
-                    {item.title}
-                  </div>
+                  <ChevronLeft className="w-4 h-4" />
                 </button>
-              ))}
+                <button
+                  onClick={handleNextPair}
+                  className="w-7 h-7 rounded-lg bg-card hover:bg-muted text-foreground flex items-center justify-center border border-border/60 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-2xs"
+                  title="Bộ ảnh kế tiếp"
+                  type="button"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
-            {/* Highlight Card with 3D Location Icon */}
-            <Card className="border border-border/60 shadow-md bg-gradient-to-br from-card via-card to-emerald-50/30 dark:to-emerald-950/20 p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-4">
+            {/* 2 Images on Two Sides (2 ảnh 2 bên) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 flex-1 min-h-[340px] sm:min-h-[380px]">
+              {/* Left Image Card */}
+              <Card
+                onClick={() => handleCardAction(currentPair.left)}
+                className="relative overflow-hidden !p-0 border border-border/60 shadow-lg hover:shadow-xl bg-card rounded-2xl group flex flex-col justify-end min-h-[280px] sm:min-h-[340px] cursor-pointer transition-all duration-300 hover:border-emerald-500/50"
+              >
+                <CardContent className="!p-0 relative h-full w-full overflow-hidden flex flex-col justify-end">
+                  <img
+                    src={currentPair.left.image}
+                    alt={currentPair.left.title}
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-106"
+                    loading="lazy"
+                  />
+                  {/* Subtle vignette gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/15 pointer-events-none" />
+
+                  {/* Top-Left Badge */}
+                  <div className="absolute top-3 left-3 z-20">
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-600/90 text-white text-[11px] font-semibold backdrop-blur-md shadow-md uppercase tracking-wider">
+                      {currentPair.left.badge}
+                    </span>
+                  </div>
+
+                  {/* Top-Right Action Arrow */}
+                  <div className="absolute top-3 right-3 z-20 w-7 h-7 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 group-hover:border-primary transition-all">
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </div>
+
+                  {/* Bottom Image Caption & Info Overlay */}
+                  <div className="relative p-4 z-20 text-white">
+                    <h4 className="text-sm sm:text-base font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
+                      {currentPair.left.title}
+                    </h4>
+                    <p className="text-[11px] sm:text-xs text-slate-200/95 mt-1 drop-shadow-sm font-normal line-clamp-2 leading-relaxed">
+                      {currentPair.left.subtitle}
+                    </p>
+
+                    <div className="mt-2.5 pt-2 border-t border-white/20 flex items-center justify-between text-[11px] text-slate-300">
+                      <span className="text-emerald-300 font-medium inline-flex items-center gap-1">
+                        {currentPair.left.actionType === "vr" ? "Khám phá 3D" : "Xem vị trí"}
+                      </span>
+                      <span className="text-white/80 group-hover:text-white transition-colors flex items-center gap-0.5">
+                        Xem chi tiết <ArrowUpRight className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Right Image Card */}
+              <Card
+                onClick={() => handleCardAction(currentPair.right)}
+                className="relative overflow-hidden !p-0 border border-border/60 shadow-lg hover:shadow-xl bg-card rounded-2xl group flex flex-col justify-end min-h-[280px] sm:min-h-[340px] cursor-pointer transition-all duration-300 hover:border-emerald-500/50"
+              >
+                <CardContent className="!p-0 relative h-full w-full overflow-hidden flex flex-col justify-end">
+                  <img
+                    src={currentPair.right.image}
+                    alt={currentPair.right.title}
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-106"
+                    loading="lazy"
+                  />
+                  {/* Subtle vignette gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/15 pointer-events-none" />
+
+                  {/* Top-Left Badge */}
+                  <div className="absolute top-3 left-3 z-20">
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-600/90 text-white text-[11px] font-semibold backdrop-blur-md shadow-md uppercase tracking-wider">
+                      {currentPair.right.badge}
+                    </span>
+                  </div>
+
+                  {/* Top-Right Action Arrow */}
+                  <div className="absolute top-3 right-3 z-20 w-7 h-7 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 group-hover:border-primary transition-all">
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </div>
+
+                  {/* Bottom Image Caption & Info Overlay */}
+                  <div className="relative p-4 z-20 text-white">
+                    <h4 className="text-sm sm:text-base font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
+                      {currentPair.right.title}
+                    </h4>
+                    <p className="text-[11px] sm:text-xs text-slate-200/95 mt-1 drop-shadow-sm font-normal line-clamp-2 leading-relaxed">
+                      {currentPair.right.subtitle}
+                    </p>
+
+                    <div className="mt-2.5 pt-2 border-t border-white/20 flex items-center justify-between text-[11px] text-slate-300">
+                      <span className="text-emerald-300 font-medium inline-flex items-center gap-1">
+                        {currentPair.right.actionType === "vr" ? "Khám phá 3D" : "Xem vị trí"}
+                      </span>
+                      <span className="text-white/80 group-hover:text-white transition-colors flex items-center gap-0.5">
+                        Xem chi tiết <ArrowUpRight className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* 1 ẢNH 3D DUY NHẤT: Highlight Card with 3D Location Icon */}
+            <Card className="border border-border/60 shadow-md bg-gradient-to-br from-card via-card to-emerald-50/40 dark:to-emerald-950/20 p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-4 group hover:border-emerald-500/40 transition-all duration-300">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <h4 className="text-sm font-semibold text-foreground">
+                  <h4 className="text-sm sm:text-base font-semibold text-foreground tracking-tight">
                     Không Gian Số Hóa & Trải Nghiệm Tương Tác
                   </h4>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                   Trực quan hóa toàn diện hệ thống di tích và không gian đô thị Phường Bình Long qua công nghệ ảnh toàn cảnh 360° và sơ đồ di tích số.
                 </p>
               </div>
 
-              <div className="shrink-0 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center pointer-events-none">
+              {/* 3D Location Pin - 1 ảnh 3D duy nhất */}
+              <div className="shrink-0 w-14 h-14 sm:w-16 sm:h-16 group-hover:scale-108 transition-transform duration-300 flex items-center justify-center pointer-events-none">
                 <img
                   src={location3DIcon}
                   alt="3D Location Pin"
