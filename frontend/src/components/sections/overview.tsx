@@ -442,18 +442,6 @@ export function OverviewSection() {
                     <h4 className="text-sm sm:text-base font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
                       {currentPair.left.title}
                     </h4>
-                    <p className="text-[11px] sm:text-xs text-slate-200/95 mt-1 drop-shadow-sm font-normal line-clamp-2 leading-relaxed">
-                      {currentPair.left.subtitle}
-                    </p>
-
-                    <div className="mt-2.5 pt-2 border-t border-white/20 flex items-center justify-between text-[11px] text-slate-300">
-                      <span className="text-emerald-300 font-medium inline-flex items-center gap-1">
-                        {currentPair.left.actionType === "vr" ? "Khám phá 3D" : "Xem vị trí"}
-                      </span>
-                      <span className="text-white/80 group-hover:text-white transition-colors flex items-center gap-0.5">
-                        Xem chi tiết <ArrowUpRight className="w-3 h-3" />
-                      </span>
-                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -490,18 +478,6 @@ export function OverviewSection() {
                     <h4 className="text-sm sm:text-base font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
                       {currentPair.right.title}
                     </h4>
-                    <p className="text-[11px] sm:text-xs text-slate-200/95 mt-1 drop-shadow-sm font-normal line-clamp-2 leading-relaxed">
-                      {currentPair.right.subtitle}
-                    </p>
-
-                    <div className="mt-2.5 pt-2 border-t border-white/20 flex items-center justify-between text-[11px] text-slate-300">
-                      <span className="text-emerald-300 font-medium inline-flex items-center gap-1">
-                        {currentPair.right.actionType === "vr" ? "Khám phá 3D" : "Xem vị trí"}
-                      </span>
-                      <span className="text-white/80 group-hover:text-white transition-colors flex items-center gap-0.5">
-                        Xem chi tiết <ArrowUpRight className="w-3 h-3" />
-                      </span>
-                    </div>
                   </div>
                 </CardContent>
               </Card>

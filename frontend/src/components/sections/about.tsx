@@ -1,12 +1,9 @@
 import { TextAnimate } from "../magicui/text-animate";
-import { useMemo, useState, useEffect, useCallback } from "react";
-import {
-    Maximize2,
-    ChevronLeft,
-    ChevronRight,
-    X,
-    Eye,
-} from "lucide-react";
+import { useMemo, useState } from "react";
+import { Maximize2 } from "lucide-react";
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/styles.css";
 import { Badge } from "@/components/ui/badge";
 
 import historyArchive3DIcon from "@/assets/3d-icons/history-archive__binhlong-3d-icon.png";
@@ -210,30 +207,17 @@ export function AboutSection() {
         },
     ], []);
 
-    const handlePrevPhoto = useCallback(() => {
-        setLightboxIndex((prev) =>
-            prev === null ? null : (prev === 0 ? BINHLONG_SHOWCASE_PHOTOS.length - 1 : prev - 1)
-        );
-    }, []);
-
-    const handleNextPhoto = useCallback(() => {
-        setLightboxIndex((prev) =>
-            prev === null ? null : (prev === BINHLONG_SHOWCASE_PHOTOS.length - 1 ? 0 : prev + 1)
-        );
-    }, []);
-
-    useEffect(() => {
-        const onKeyDown = (e: KeyboardEvent) => {
-            if (lightboxIndex === null) return;
-            if (e.key === "ArrowLeft") handlePrevPhoto();
-            if (e.key === "ArrowRight") handleNextPhoto();
-            if (e.key === "Escape") setLightboxIndex(null);
-        };
-        window.addEventListener("keydown", onKeyDown);
-        return () => window.removeEventListener("keydown", onKeyDown);
-    }, [lightboxIndex, handlePrevPhoto, handleNextPhoto]);
-
-    const activeLightboxPhoto = lightboxIndex !== null ? BINHLONG_SHOWCASE_PHOTOS[lightboxIndex] : null;
+    const lightboxSlides = useMemo(
+        () =>
+            BINHLONG_SHOWCASE_PHOTOS.map((photo) => ({
+                src: photo.image,
+                title: photo.title,
+                subtitle: photo.subtitle,
+                description: photo.description,
+                tag: photo.tag,
+            })),
+        []
+    );
 
     return (
         <section className="py-12 sm:py-16 w-full px-4 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -298,7 +282,7 @@ export function AboutSection() {
                 </div>
 
                 {/* ================= PART 2: HÌNH ẢNH & DẤU ẤN PHƯỜNG BÌNH LONG ================= */}
-                <div className="pt-6 border-t border-border/60">
+                <div className="pt-6">
                     <div className="w-full mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
                         <div>
                             <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left">
@@ -345,13 +329,6 @@ export function AboutSection() {
                                     <h3 className="text-lg sm:text-xl font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
                                         {photo.title}
                                     </h3>
-                                    <p className="text-xs sm:text-sm text-slate-200 mt-1 line-clamp-2 drop-shadow-sm font-normal">
-                                        {photo.subtitle}
-                                    </p>
-                                    <div className="mt-2.5 flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
-                                        <Eye className="w-3.5 h-3.5" />
-                                        <span>Nhấp để phóng to ảnh chất lượng cao</span>
-                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -386,13 +363,6 @@ export function AboutSection() {
                                     <h3 className="text-base sm:text-lg font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
                                         {photo.title}
                                     </h3>
-                                    <p className="text-xs text-slate-200 mt-1 line-clamp-2 drop-shadow-sm font-normal">
-                                        {photo.subtitle}
-                                    </p>
-                                    <div className="mt-2 flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium">
-                                        <Eye className="w-3 h-3" />
-                                        <span>Xem ảnh</span>
-                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -400,81 +370,42 @@ export function AboutSection() {
                 </div>
             </div>
 
-            {/* ================= HIGH-RES LIGHTBOX MODAL ================= */}
-            {activeLightboxPhoto && (
-                <div
-                    className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
-                    onClick={() => setLightboxIndex(null)}
-                >
-                    <div
-                        className="relative w-full max-w-5xl bg-card border border-border/80 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        {/* Header bar */}
-                        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-border bg-card/95 z-10">
-                            <div className="flex items-center gap-2.5">
-                                <Badge className="bg-emerald-600 text-white text-xs">
-                                    {activeLightboxPhoto.tag}
-                                </Badge>
-                                <span className="text-xs text-muted-foreground">
-                                    Ảnh {(lightboxIndex ?? 0) + 1} / {BINHLONG_SHOWCASE_PHOTOS.length}
-                                </span>
+            {/* ================= HIGH-RES LIGHTBOX WITH FULL-WIDTH & DRAG LEFT/RIGHT ================= */}
+            <Lightbox
+                open={lightboxIndex !== null}
+                close={() => setLightboxIndex(null)}
+                index={lightboxIndex ?? 0}
+                slides={lightboxSlides}
+                plugins={[Zoom]}
+                carousel={{ finite: false }}
+                animation={{ swipe: 300 }}
+                render={{
+                    slideFooter: ({ slide }: any) => (
+                        <div className="absolute bottom-0 inset-x-0 bg-black/85 backdrop-blur-md border-t border-white/15 p-4 sm:p-6 text-white z-50 pointer-events-auto">
+                            <div className="max-w-4xl mx-auto space-y-1.5 text-left">
+                                <div className="flex items-center gap-2.5">
+                                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[11px] sm:text-xs font-semibold shadow-xs">
+                                        {slide.tag}
+                                    </span>
+                                </div>
+                                <h3 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
+                                    {slide.title}
+                                </h3>
+                                {slide.subtitle && (
+                                    <p className="text-xs sm:text-sm font-medium text-emerald-400">
+                                        {slide.subtitle}
+                                    </p>
+                                )}
+                                {slide.description && (
+                                    <p className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-0.5">
+                                        {slide.description}
+                                    </p>
+                                )}
                             </div>
-                            <button
-                                onClick={() => setLightboxIndex(null)}
-                                className="w-9 h-9 rounded-full bg-secondary hover:bg-destructive hover:text-white flex items-center justify-center transition-colors cursor-pointer"
-                                aria-label="Đóng ảnh"
-                                type="button"
-                            >
-                                <X className="w-4 h-4" />
-                            </button>
                         </div>
-
-                        {/* Image Viewer with Nav buttons */}
-                        <div className="relative flex-1 bg-black flex items-center justify-center min-h-[300px] sm:min-h-[420px] max-h-[62vh] overflow-hidden select-none">
-                            <img
-                                src={activeLightboxPhoto.image}
-                                alt={activeLightboxPhoto.title}
-                                className="max-w-full max-h-full object-contain"
-                            />
-
-                            {/* Left Chevron */}
-                            <button
-                                onClick={handlePrevPhoto}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border border-white/80 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer"
-                                aria-label="Ảnh trước"
-                                type="button"
-                            >
-                                <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
-                            </button>
-
-                            {/* Right Chevron */}
-                            <button
-                                onClick={handleNextPhoto}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white border border-white/80 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer"
-                                aria-label="Ảnh kế tiếp"
-                                type="button"
-                            >
-                                <ChevronRight className="w-6 h-6 stroke-[2.5]" />
-                            </button>
-                        </div>
-
-                        {/* Caption & Description Footer */}
-                        <div className="p-4 sm:p-5 bg-card border-t border-border">
-                            <h3 className="text-lg sm:text-xl font-bold text-foreground">
-                                {activeLightboxPhoto.title}
-                            </h3>
-                            <p className="text-xs sm:text-sm font-medium text-emerald-600 dark:text-emerald-400 mt-0.5">
-                                {activeLightboxPhoto.subtitle}
-                            </p>
-                            <p className="text-xs sm:text-sm text-muted-foreground mt-2 leading-relaxed">
-                                {activeLightboxPhoto.description}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            )}
+                    ),
+                }}
+            />
         </section>
     );
 }
-
