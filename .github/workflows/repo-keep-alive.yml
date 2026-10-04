@@ -1,0 +1,61 @@
+name: Repo Keep-Alive (Heartbeat Commit)
+
+on:
+  schedule:
+    # Runs at 00:00 UTC on the 1st and 15th of every month
+    # This guarantees the repo has commits every 15 days, safely preventing
+    # GitHub's 60-day auto-pause on scheduled workflows.
+    - cron: '0 0 1,15 * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+concurrency:
+  group: repo-keep-alive
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  heartbeat:
+    name: Commit Repository Heartbeat
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 10
+
+      - name: Configure Git Bot
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Pull Latest Changes
+        run: |
+          git pull --rebase origin main || true
+
+      - name: Append Heartbeat to Log
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          echo "${TIMESTAMP} - Heartbeat commit to keep GitHub Actions cron active" >> .github/keepalive.log
+          
+          # Maintain file size: keep header comments + last 60 entries
+          grep '^#' .github/keepalive.log > .github/keepalive.tmp || true
+          grep -v '^#' .github/keepalive.log | tail -n 60 >> .github/keepalive.tmp
+          mv .github/keepalive.tmp .github/keepalive.log
+
+      - name: Commit and Push Heartbeat
+        run: |
+          git add .github/keepalive.log
+          if git diff --staged --quiet; then
+            echo "No changes detected."
+          else
+            git commit -m "chore(keepalive): automated repository heartbeat [skip ci]"
+            # Rebase in case of any concurrent commits
+            git pull --rebase origin main || true
+            git push origin main
+            echo "Heartbeat committed and pushed successfully!"
+          fi
