@@ -5,7 +5,6 @@ import {
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
-  Maximize2,
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -344,14 +343,10 @@ export function OverviewSection() {
               </div>
             </Card>
 
-            {/* Banner Ngang: Không Gian Bản Đồ Số & Trực Quan Hóa (Pure Visual Banner - Bỏ hết chữ) */}
+            {/* Banner Ngang: Không Gian Bản Đồ Số & Trực Quan Hóa (Pure Visual Banner - Tự thích ứng tỷ lệ 16:9) */}
             <div
-              onClick={() => {
-                navigate("/app");
-                setIsLoading(true);
-                setTimeout(() => setIsLoading(false), 300);
-              }}
-              className="group relative overflow-hidden rounded-2xl border border-border/70 shadow-md hover:shadow-xl bg-card cursor-pointer transition-all duration-300 hover:border-emerald-500/60 min-h-[230px] sm:min-h-[250px] flex flex-col justify-end"
+              onClick={() => setIsPosterLightboxOpen(true)}
+              className="group relative overflow-hidden rounded-2xl border border-border/70 shadow-md hover:shadow-xl bg-card cursor-pointer transition-all duration-300 hover:border-emerald-500/60 w-full aspect-video flex flex-col justify-end"
             >
               {/* Responsive Images: Mobile 9:16 and Desktop 16:9 */}
               <picture className="absolute inset-0 w-full h-full">
@@ -362,19 +357,6 @@ export function OverviewSection() {
                   className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
                 />
               </picture>
-
-              {/* Hover Zoom Icon to open full-resolution poster */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsPosterLightboxOpen(true);
-                }}
-                className="absolute bottom-3.5 right-3.5 z-20 size-9 rounded-full bg-black/60 hover:bg-emerald-600 text-white border border-white/20 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
-                title="Xem quảng cáo"
-              >
-                <Maximize2 className="size-4" />
-              </button>
             </div>
           </div>
 
@@ -520,14 +502,11 @@ export function OverviewSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 pointer-events-none" />
 
-                {/* Top Floating Badges */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none z-10">
+                {/* Top Floating Badge */}
+                <div className="absolute top-4 left-4 pointer-events-none z-10">
                   <Badge className="bg-emerald-600/90 hover:bg-emerald-600 text-white border-0 text-xs font-semibold backdrop-blur-md shadow-md">
                     {photo.tag}
                   </Badge>
-                  <div className="w-8 h-8 rounded-lg bg-black/50 text-white backdrop-blur-md flex items-center justify-center opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
-                    <Maximize2 className="w-4 h-4" />
-                  </div>
                 </div>
 
                 {/* Bottom Content Overlay */}
@@ -554,14 +533,11 @@ export function OverviewSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 pointer-events-none" />
 
-                {/* Top Floating Badges */}
-                <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none z-10">
+                {/* Top Floating Badge */}
+                <div className="absolute top-3.5 left-3.5 pointer-events-none z-10">
                   <Badge className="bg-emerald-600/90 hover:bg-emerald-600 text-white border-0 text-[11px] font-semibold backdrop-blur-md shadow-md">
                     {photo.tag}
                   </Badge>
-                  <div className="w-7 h-7 rounded-lg bg-black/50 text-white backdrop-blur-md flex items-center justify-center opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </div>
                 </div>
 
                 {/* Bottom Content Overlay */}
