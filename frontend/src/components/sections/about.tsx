@@ -398,27 +398,14 @@ export function AboutSection() {
                         </div>
                     ),
                     slideFooter: ({ slide }: any) => (
-                        <div className="absolute bottom-0 inset-x-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent pt-16 sm:pt-24 pb-6 sm:pb-10 px-5 sm:px-10 lg:px-16 text-white z-50 pointer-events-auto select-none">
-                            <div className="w-full space-y-2 text-left">
-                                <div className="flex items-center gap-3 mb-1.5">
-                                    <span className="px-3 py-1 rounded-full bg-emerald-600 text-white text-xs sm:text-sm font-semibold shadow-md">
-                                        {slide.tag}
-                                    </span>
-                                    <span className="text-xs sm:text-sm text-slate-300 font-medium">
-                                        Phường Bình Long
-                                    </span>
-                                </div>
+                        <div className="absolute bottom-0 inset-x-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent pt-16 sm:pt-24 pb-6 sm:pb-8 px-5 sm:px-10 lg:px-16 text-white z-50 pointer-events-auto select-none">
+                            <div className="w-full space-y-1.5 text-left">
                                 <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug drop-shadow-lg">
                                     {slide.title}
                                 </h3>
                                 {slide.subtitle && (
-                                    <p className="text-sm sm:text-base lg:text-lg font-semibold text-emerald-400 drop-shadow-sm leading-relaxed">
+                                    <p className="text-sm sm:text-base lg:text-lg font-medium text-emerald-400 drop-shadow-sm leading-relaxed">
                                         {slide.subtitle}
-                                    </p>
-                                )}
-                                {slide.description && (
-                                    <p className="text-sm sm:text-base lg:text-lg text-slate-100/95 leading-relaxed font-normal pt-1 drop-shadow-sm">
-                                        {slide.description}
                                     </p>
                                 )}
                             </div>
