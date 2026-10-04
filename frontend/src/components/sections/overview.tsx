@@ -3,7 +3,6 @@ import { useNavigate, createSearchParams } from "react-router-dom";
 import {
   MapPin,
   ArrowUpRight,
-  Sparkles,
   ChevronLeft,
   ChevronRight,
   Maximize2,
@@ -25,6 +24,7 @@ import area3DIcon from "@/assets/3d-icons/area__binhlong-3d-icon.png";
 import population3DIcon from "@/assets/3d-icons/population__binhlong-3d-icon.png";
 import admin3DIcon from "@/assets/3d-icons/admin__binhlong-3d-icon.png";
 import highway3DIcon from "@/assets/3d-icons/highway__binhlong-3d-icon.png";
+import landmarkExplore3DIcon from "@/assets/3d-icons/landmark-explore__binhlong-3d-icon.png";
 import bannerQcDesktop from "@/assets/banner_qc_desktop.jpg";
 import bannerQcMobile from "@/assets/banner_qc_mobile.jpg";
 
@@ -661,8 +661,12 @@ export function OverviewSection() {
             <div className="absolute -right-12 -top-12 w-48 h-48 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
 
             <div className="flex items-start sm:items-center gap-4 relative z-10">
-              <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0">
-                <Sparkles className="w-5 h-5 text-primary" />
+              <div className="shrink-0 relative flex items-center justify-center">
+                <img
+                  src={landmarkExplore3DIcon}
+                  alt="Bản đồ số Di tích Bình Long 3D"
+                  className="w-12 h-12 sm:w-14 sm:h-14 object-contain filter drop-shadow-md select-none pointer-events-none hover:scale-105 transition-transform duration-300"
+                />
               </div>
               <div className="space-y-1 text-left">
                 <h4 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
