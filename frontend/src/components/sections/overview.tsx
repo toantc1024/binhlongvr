@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import {
   Compass,
@@ -155,7 +155,17 @@ export function OverviewSection() {
   const navigate = useNavigate();
   const { setIsLoading, setIsMapDialogOpen, selectHotspotAndPanorama } = useVRStore();
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const [isPhotoHovered, setIsPhotoHovered] = useState(false);
   const [isPosterLightboxOpen, setIsPosterLightboxOpen] = useState(false);
+
+  // Auto-play photo carousel every 4.5s (pauses on hover)
+  useEffect(() => {
+    if (isPhotoHovered) return;
+    const timer = setInterval(() => {
+      setCurrentPhotoIndex((prev) => (prev + 1) % GALLERY_ITEMS.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [isPhotoHovered]);
 
   const handlePrevPhoto = () => {
     setCurrentPhotoIndex((prev) => (prev === 0 ? GALLERY_ITEMS.length - 1 : prev - 1));
@@ -333,72 +343,61 @@ export function OverviewSection() {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: 1 IMAGE CHÍNH (THAY VÌ 2 ẢNH) + 1 BANNER DỌC */}
-          <div className="lg:col-span-6 flex flex-col justify-between gap-4">
-            {/* Header / Single Photo Navigation Bar */}
-            <div className="flex items-center justify-between px-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Hình ảnh tiêu biểu Phường Bình Long
-                </span>
-                <span className="text-[11px] text-muted-foreground/80 font-medium">
-                  ({currentPhotoIndex + 1}/{GALLERY_ITEMS.length})
-                </span>
-              </div>
+          {/* RIGHT COLUMN: 1 IMAGE CHÍNH (AUTO-PLAY, CROSSFADE) + 1 BANNER DỌC */}
+          <div className="lg:col-span-6 flex flex-col justify-between gap-5">
+            {/* 1 Single Featured Photo Card (Auto-play, không còn badge header) */}
+            <Card
+              onClick={() => handleCardAction(currentPhoto)}
+              onMouseEnter={() => setIsPhotoHovered(true)}
+              onMouseLeave={() => setIsPhotoHovered(false)}
+              className="relative overflow-hidden !p-0 border border-border/60 shadow-lg hover:shadow-xl bg-card rounded-2xl group flex flex-col justify-end min-h-[280px] sm:min-h-[330px] cursor-pointer transition-all duration-300 hover:border-emerald-500/50 flex-1"
+            >
+              <CardContent className="!p-0 relative h-full w-full overflow-hidden flex flex-col justify-end">
+                {/* Crossfading Background Photos */}
+                {GALLERY_ITEMS.map((item, idx) => (
+                  <img
+                    key={item.id}
+                    src={item.image}
+                    alt={item.title}
+                    className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-106 ${
+                      idx === currentPhotoIndex
+                        ? "opacity-100 z-10"
+                        : "opacity-0 z-0 pointer-events-none"
+                    }`}
+                    loading={idx === 0 ? "eager" : "lazy"}
+                  />
+                ))}
 
-              {/* Navigation controls */}
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center gap-1 mr-2">
-                  {GALLERY_ITEMS.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentPhotoIndex(idx)}
-                      className={`transition-all duration-300 rounded-full cursor-pointer ${
-                        idx === currentPhotoIndex
-                          ? "w-5 h-1.5 bg-emerald-500 shadow-xs"
-                          : "w-1.5 h-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/60"
-                      }`}
-                      aria-label={`Ảnh ${idx + 1}`}
-                      type="button"
-                    />
-                  ))}
-                </div>
+                {/* Subtle vignette gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/15 z-15 pointer-events-none" />
 
+                {/* Floating Left/Right Navigation Arrows */}
                 <button
-                  onClick={handlePrevPhoto}
-                  className="w-7 h-7 rounded-lg bg-card hover:bg-muted text-foreground flex items-center justify-center border border-border/60 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-2xs"
-                  title="Ảnh trước"
                   type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrevPhoto();
+                  }}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-25 w-8 h-8 rounded-full bg-black/45 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-md shadow-md"
+                  title="Ảnh trước"
+                  aria-label="Ảnh trước"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={handleNextPhoto}
-                  className="w-7 h-7 rounded-lg bg-card hover:bg-muted text-foreground flex items-center justify-center border border-border/60 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-2xs"
-                  title="Ảnh kế tiếp"
                   type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNextPhoto();
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-25 w-8 h-8 rounded-full bg-black/45 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-md shadow-md"
+                  title="Ảnh kế tiếp"
+                  aria-label="Ảnh kế tiếp"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
-              </div>
-            </div>
 
-            {/* 1 Single Featured Photo Card (Chỉ 1 ảnh to, bao quát, sắc nét) */}
-            <Card
-              onClick={() => handleCardAction(currentPhoto)}
-              className="relative overflow-hidden !p-0 border border-border/60 shadow-lg hover:shadow-xl bg-card rounded-2xl group flex flex-col justify-end min-h-[280px] sm:min-h-[330px] cursor-pointer transition-all duration-300 hover:border-emerald-500/50 flex-1"
-            >
-              <CardContent className="!p-0 relative h-full w-full overflow-hidden flex flex-col justify-end">
-                <img
-                  src={currentPhoto.image}
-                  alt={currentPhoto.title}
-                  className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-106"
-                  loading="lazy"
-                />
-                {/* Subtle vignette gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/15 pointer-events-none" />
-
-                {/* Top-Left Badge */}
+                {/* Top-Left Category Badge */}
                 <div className="absolute top-3.5 left-3.5 z-20">
                   <span className="px-2.5 py-1 rounded-lg bg-emerald-600/90 text-white text-[11px] font-semibold backdrop-blur-md shadow-md uppercase tracking-wider">
                     {currentPhoto.badge}
@@ -410,16 +409,38 @@ export function OverviewSection() {
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
 
-                {/* Bottom Image Caption & Info Overlay */}
-                <div className="relative p-5 z-20 text-white space-y-1">
-                  <h4 className="text-base sm:text-lg font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
-                    {currentPhoto.title}
-                  </h4>
-                  {currentPhoto.subtitle && (
-                    <p className="text-xs sm:text-sm text-white/80 line-clamp-1 leading-relaxed">
-                      {currentPhoto.subtitle}
-                    </p>
-                  )}
+                {/* Bottom Image Caption, Info & Navigation Dots Overlay */}
+                <div className="relative p-5 z-20 text-white flex items-end justify-between gap-4">
+                  <div className="space-y-1 flex-1">
+                    <h4 className="text-base sm:text-lg font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
+                      {currentPhoto.title}
+                    </h4>
+                    {currentPhoto.subtitle && (
+                      <p className="text-xs sm:text-sm text-white/80 line-clamp-1 leading-relaxed">
+                        {currentPhoto.subtitle}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Auto-play Dots Indicator */}
+                  <div className="shrink-0 flex items-center gap-1.5 pb-1">
+                    {GALLERY_ITEMS.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentPhotoIndex(idx);
+                        }}
+                        className={`transition-all duration-300 rounded-full cursor-pointer ${
+                          idx === currentPhotoIndex
+                            ? "w-5 h-1.5 bg-emerald-400 shadow-xs"
+                            : "w-1.5 h-1.5 bg-white/40 hover:bg-white/70"
+                        }`}
+                        aria-label={`Ảnh ${idx + 1}`}
+                        type="button"
+                      />
+                    ))}
+                  </div>
                 </div>
               </CardContent>
             </Card>
