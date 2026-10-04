@@ -1,6 +1,6 @@
 import { TextAnimate } from "../magicui/text-animate";
 import { useMemo, useState } from "react";
-import { Maximize2, Eye } from "lucide-react";
+import { Maximize2, ChevronLeft, ChevronRight, X } from "lucide-react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Counter from "yet-another-react-lightbox/plugins/counter";
@@ -331,13 +331,6 @@ export function AboutSection() {
                                     <h3 className="text-lg sm:text-xl font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
                                         {photo.title}
                                     </h3>
-                                    <p className="text-xs sm:text-sm text-slate-200 mt-1 line-clamp-2 drop-shadow-sm font-normal">
-                                        {photo.subtitle}
-                                    </p>
-                                    <div className="mt-2.5 flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
-                                        <Eye className="w-3.5 h-3.5" />
-                                        <span>Nhấp để phóng to ảnh chất lượng cao</span>
-                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -372,13 +365,6 @@ export function AboutSection() {
                                     <h3 className="text-base sm:text-lg font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
                                         {photo.title}
                                     </h3>
-                                    <p className="text-xs text-slate-200 mt-1 line-clamp-2 drop-shadow-sm font-normal">
-                                        {photo.subtitle}
-                                    </p>
-                                    <div className="mt-2 flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium">
-                                        <Eye className="w-3 h-3" />
-                                        <span>Nhấp để phóng to ảnh</span>
-                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -396,27 +382,42 @@ export function AboutSection() {
                 carousel={{ finite: false }}
                 animation={{ swipe: 300 }}
                 render={{
+                    iconPrev: () => (
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/65 hover:bg-emerald-600 text-white border border-white/25 backdrop-blur-md shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer select-none">
+                            <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 stroke-[2.5]" />
+                        </div>
+                    ),
+                    iconNext: () => (
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/65 hover:bg-emerald-600 text-white border border-white/25 backdrop-blur-md shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer select-none">
+                            <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 stroke-[2.5]" />
+                        </div>
+                    ),
+                    iconClose: () => (
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/65 hover:bg-red-600 text-white border border-white/25 backdrop-blur-md shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer select-none">
+                            <X className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
+                        </div>
+                    ),
                     slideFooter: ({ slide }: any) => (
-                        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/85 to-transparent pt-12 pb-6 px-4 sm:px-8 text-white z-50 pointer-events-auto select-none">
-                            <div className="max-w-4xl mx-auto space-y-1.5 text-left">
-                                <div className="flex items-center gap-2.5 mb-1">
-                                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[11px] sm:text-xs font-semibold shadow-xs">
+                        <div className="absolute bottom-0 inset-x-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent pt-16 sm:pt-24 pb-6 sm:pb-10 px-5 sm:px-10 lg:px-16 text-white z-50 pointer-events-auto select-none backdrop-blur-[2px]">
+                            <div className="w-full space-y-2 text-left">
+                                <div className="flex items-center gap-3 mb-1.5">
+                                    <span className="px-3 py-1 rounded-full bg-emerald-600 text-white text-xs sm:text-sm font-semibold shadow-md">
                                         {slide.tag}
                                     </span>
-                                    <span className="text-xs text-slate-300 font-medium">
+                                    <span className="text-xs sm:text-sm text-slate-300 font-medium">
                                         Phường Bình Long
                                     </span>
                                 </div>
-                                <h3 className="text-lg sm:text-2xl font-bold text-white tracking-tight leading-snug drop-shadow-md">
+                                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug drop-shadow-lg">
                                     {slide.title}
                                 </h3>
                                 {slide.subtitle && (
-                                    <p className="text-xs sm:text-sm font-semibold text-emerald-300">
+                                    <p className="text-sm sm:text-base lg:text-lg font-semibold text-emerald-400 drop-shadow-sm leading-relaxed">
                                         {slide.subtitle}
                                     </p>
                                 )}
                                 {slide.description && (
-                                    <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed font-normal max-w-3xl pt-0.5">
+                                    <p className="text-sm sm:text-base lg:text-lg text-slate-100/95 leading-relaxed font-normal pt-1 drop-shadow-sm">
                                         {slide.description}
                                     </p>
                                 )}
