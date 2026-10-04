@@ -38,6 +38,7 @@ interface MessageEventData {
 // Hook parameters interface
 interface Use3DVistaHookParams {
   ref: RefObject<IFrameElement>;
+  isActive?: boolean;
   onReadyHandler?: EventCallback;
 }
 
@@ -54,6 +55,7 @@ interface Use3DVistaHookReturn {
 
 const use3DVistaHook = ({
   ref,
+  isActive = true,
   onReadyHandler = () => {
     console.log("3DVista is ready");
   },
@@ -64,6 +66,11 @@ const use3DVistaHook = ({
   });
   const pendingMediaRef = useRef<string | null>(null);
   const isBridgeReadyRef = useRef<boolean>(false);
+  const isActiveRef = useRef<boolean>(isActive);
+
+  useEffect(() => {
+    isActiveRef.current = isActive;
+  }, [isActive]);
 
   const showMedia = (mediaName: string): void => {
     if (!mediaName) return;
@@ -211,6 +218,12 @@ const use3DVistaHook = ({
 
       if (type === "bridge_ready") {
         isBridgeReadyRef.current = true;
+        if (!isActiveRef.current) {
+          muteAllAudio();
+          stopAllAudio();
+        } else {
+          unmuteAllAudio();
+        }
         if (pendingMediaRef.current) {
           const media = pendingMediaRef.current;
           pendingMediaRef.current = null;

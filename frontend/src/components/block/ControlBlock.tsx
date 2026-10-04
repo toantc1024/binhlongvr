@@ -32,11 +32,16 @@ import { toast } from "sonner";
 
 const ControlBlock = ({
   showMedia,
+  muteAllAudio,
+  unmuteAllAudio: _unmuteAllAudio,
+  stopAllAudio,
+  getAudioState: _getAudioState,
   isActive = true,
 }: {
   showMedia: (mediaName: string) => void;
   muteAllAudio?: () => void;
   unmuteAllAudio?: () => void;
+  stopAllAudio?: () => void;
   getAudioState?: () => Promise<any>;
   isActive?: boolean;
 }) => {
@@ -153,6 +158,8 @@ const ControlBlock = ({
       }
       setIsPlayingAudio(false);
       activeAudioHotspotIdRef.current = null;
+      muteAllAudio?.();
+      stopAllAudio?.();
       return;
     }
 
@@ -227,6 +234,14 @@ const ControlBlock = ({
 
   // Return to website: resets VR state to default start point and navigates to "/"
   const handleBackToWebsite = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setIsPlayingAudio(false);
+    activeAudioHotspotIdRef.current = null;
+    muteAllAudio?.();
+    stopAllAudio?.();
     setCurrentAsset(null);
     clearVRState();
     showMedia("M3000_0_FLYCAM_1");

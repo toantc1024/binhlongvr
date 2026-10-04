@@ -69,13 +69,7 @@ const HotspotCard = ({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
-                    {/* VR 360 Badge */}
-                    <div className="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 z-10 pointer-events-none">
-                        <span className="inline-flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-medium bg-black/60 backdrop-blur-md text-emerald-300 border border-emerald-500/30 shadow-xs">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                            <span>360°</span>
-                        </span>
-                    </div>
+
                 </div>
             </div>
 

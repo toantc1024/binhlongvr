@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import VRPage from "../pages/VRPage";
 import TrackerBlock from "../block/TrackerBlock";
 import { Toaster } from "../ui/sonner";
@@ -14,8 +14,12 @@ const AppShell = () => {
   const isHome = location.pathname === "/";
   const isNotFound = !isApp && !isHome;
 
+  // Only mount VRPage once the user has entered /app
+  const [hasEnteredApp, setHasEnteredApp] = useState(isApp);
+
   useEffect(() => {
     if (isApp) {
+      setHasEnteredApp(true);
       const timer = setTimeout(() => {
         window.dispatchEvent(new Event("resize"));
       }, 100);
@@ -33,17 +37,19 @@ const AppShell = () => {
         <LandingPage />
       </div>
 
-      {/* Không gian VR 360° - Tách luồng tải 1 lần duy nhất, không reload khi chuyển trang */}
-      <div
-        className={cn(
-          "w-full h-full",
-          isApp
-            ? "relative z-10 block pointer-events-auto opacity-100 visible"
-            : "fixed inset-0 -z-50 pointer-events-none opacity-0 invisible"
-        )}
-      >
-        <VRPage isActive={isApp} />
-      </div>
+      {/* Không gian VR 360° - Chỉ tải khi người dùng vào /app, sau đó giữ trạng thái không reload */}
+      {hasEnteredApp && (
+        <div
+          className={cn(
+            "w-full h-full",
+            isApp
+              ? "relative z-10 block pointer-events-auto opacity-100 visible"
+              : "fixed inset-0 -z-50 pointer-events-none opacity-0 invisible"
+          )}
+        >
+          <VRPage isActive={isApp} />
+        </div>
+      )}
 
       {/* 404 Not Found Page */}
       {isNotFound && <NotFoundPage />}

@@ -22,9 +22,11 @@ const VRPage: React.FC<VRPageProps> = ({ isActive = true }) => {
     onMessage: registerMessageHandler,
     muteAllAudio,
     unmuteAllAudio,
+    stopAllAudio,
     getAudioState,
   } = use3DVistaHook({
     ref: iframeRef as React.RefObject<HTMLIFrameElement>,
+    isActive,
   });
   const {
     isLoading,
@@ -91,6 +93,7 @@ const VRPage: React.FC<VRPageProps> = ({ isActive = true }) => {
       window.dispatchEvent(new Event("resize"));
     } else {
       muteAllAudio();
+      stopAllAudio();
       setCurrentAsset(null);
     }
   }, [isActive]);
@@ -187,6 +190,7 @@ const VRPage: React.FC<VRPageProps> = ({ isActive = true }) => {
                 showMedia={showMedia}
                 muteAllAudio={muteAllAudio}
                 unmuteAllAudio={unmuteAllAudio}
+                stopAllAudio={stopAllAudio}
                 getAudioState={getAudioState}
                 isActive={isActive}
               />

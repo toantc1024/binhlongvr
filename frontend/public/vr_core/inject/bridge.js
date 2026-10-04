@@ -19,8 +19,50 @@ class VRTourBridge {
     this.lastNotifiedPanoramaId = null; // Track last notified panorama
     this.debounceTimeout = null; // For debouncing
 
+    // Check parent location to determine if we should start muted
+    this.isMuted = true;
+    try {
+      if (window.parent && window.parent.location) {
+        this.isMuted = window.parent.location.pathname !== "/app";
+      }
+    } catch (e) {
+      // Cross-origin fallback
+    }
+
     // Wait for tour to be initialized
     this.waitForTour();
+  }
+
+  attachAudioHooks() {
+    try {
+      if (!this.tour || !this.tour.player) return;
+      const rootPlayer = this.tour.player.getById("rootPlayer");
+      if (rootPlayer && !rootPlayer._hasAudioHook) {
+        rootPlayer._hasAudioHook = true;
+        const origPlayGlobalAudio = rootPlayer.playGlobalAudio?.bind(rootPlayer);
+        if (origPlayGlobalAudio) {
+          rootPlayer.playGlobalAudio = (...args) => {
+            if (this.isMuted) {
+              console.log("Blocking playGlobalAudio because tour is muted");
+              return null;
+            }
+            return origPlayGlobalAudio(...args);
+          };
+        }
+        const origResumeGlobalAudios = rootPlayer.resumeGlobalAudios?.bind(rootPlayer);
+        if (origResumeGlobalAudios) {
+          rootPlayer.resumeGlobalAudios = (...args) => {
+            if (this.isMuted) {
+              console.log("Blocking resumeGlobalAudios because tour is muted");
+              return null;
+            }
+            return origResumeGlobalAudios(...args);
+          };
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to attach audio hooks:", e);
+    }
   }
 
   waitForTour() {
@@ -275,46 +317,40 @@ class VRTourBridge {
 
   // Audio Control Functions
   muteAllAudio() {
+    this.isMuted = true;
     try {
-      if (!this.tour || !this.tour.player) {
-        console.warn("Tour not ready for audio control");
-        return false;
+      if (this.tour && this.tour.player) {
+        const rootPlayer = this.tour.player.getById("rootPlayer");
+        if (rootPlayer) {
+          if (rootPlayer.stopGlobalAudios) rootPlayer.stopGlobalAudios();
+          if (rootPlayer.pauseGlobalAudios) rootPlayer.pauseGlobalAudios();
+        }
       }
+      try {
+        const audios = document.querySelectorAll("audio");
+        audios.forEach((a) => {
+          a.pause();
+          a.muted = true;
+        });
+      } catch (e) {}
 
-      const rootPlayer = this.tour.player.getById("rootPlayer");
-      if (rootPlayer && rootPlayer.stopGlobalAudios) {
-        rootPlayer.stopGlobalAudios();
-        console.log("All audio muted");
-
-        // Notify parent window
-        window.parent.postMessage(
-          {
-            type: "audio_control",
-            payload: { action: "muted", success: true },
-          },
-          "*"
-        );
-        return true;
-      } else {
-        console.error("stopGlobalAudios method not available");
-        return false;
-      }
-    } catch (error) {
-      console.error("Error muting audio:", error);
-
-      // Notify parent window of error
+      console.log("All audio muted");
       window.parent.postMessage(
         {
           type: "audio_control",
-          payload: { action: "mute_error", error: error.message },
+          payload: { action: "muted", success: true },
         },
         "*"
       );
+      return true;
+    } catch (error) {
+      console.error("Error muting audio:", error);
       return false;
     }
   }
 
   unmuteAllAudio() {
+    this.isMuted = false;
     try {
       if (!this.tour || !this.tour.player) {
         console.warn("Tour not ready for audio control");
@@ -322,75 +358,76 @@ class VRTourBridge {
       }
 
       const rootPlayer = this.tour.player.getById("rootPlayer");
-      if (rootPlayer && rootPlayer.resumeGlobalAudios) {
-        rootPlayer.resumeGlobalAudios();
-        console.log("All audio unmuted");
-
-        // Notify parent window
-        window.parent.postMessage(
-          {
-            type: "audio_control",
-            payload: { action: "unmuted", success: true },
-          },
-          "*"
-        );
-        return true;
-      } else {
-        console.error("resumeGlobalAudios method not available");
-        return false;
+      if (rootPlayer) {
+        if (rootPlayer.resumeGlobalAudios) {
+          rootPlayer.resumeGlobalAudios();
+        }
+        const hasCurrentAudios =
+          window.currentGlobalAudios &&
+          Object.keys(window.currentGlobalAudios).length > 0;
+        if (
+          !hasCurrentAudios &&
+          rootPlayer.playAudioList &&
+          window.tour?.audio_921DD13B_851B_752B_41D0_730B1F509F14
+        ) {
+          rootPlayer.playAudioList(
+            [window.tour.audio_921DD13B_851B_752B_41D0_730B1F509F14],
+            true
+          );
+        }
       }
-    } catch (error) {
-      console.error("Error unmuting audio:", error);
+      try {
+        const audios = document.querySelectorAll("audio");
+        audios.forEach((a) => {
+          a.muted = false;
+        });
+      } catch (e) {}
 
-      // Notify parent window of error
+      console.log("All audio unmuted");
       window.parent.postMessage(
         {
           type: "audio_control",
-          payload: { action: "unmute_error", error: error.message },
+          payload: { action: "unmuted", success: true },
         },
         "*"
       );
+      return true;
+    } catch (error) {
+      console.error("Error unmuting audio:", error);
       return false;
     }
   }
 
   // Additional method to stop all audio (stronger than pause)
   stopAllAudio() {
+    this.isMuted = true;
     try {
-      if (!this.tour || !this.tour.player) {
-        console.warn("Tour not ready for audio control");
-        return false;
+      if (this.tour && this.tour.player) {
+        const rootPlayer = this.tour.player.getById("rootPlayer");
+        if (rootPlayer) {
+          if (rootPlayer.stopGlobalAudios) rootPlayer.stopGlobalAudios();
+          if (rootPlayer.pauseGlobalAudios) rootPlayer.pauseGlobalAudios();
+        }
       }
+      try {
+        const audios = document.querySelectorAll("audio");
+        audios.forEach((a) => {
+          a.pause();
+          a.muted = true;
+        });
+      } catch (e) {}
 
-      const rootPlayer = this.tour.player.getById("rootPlayer");
-      if (rootPlayer && rootPlayer.stopGlobalAudios) {
-        rootPlayer.stopGlobalAudios();
-        console.log("All audio stopped");
-
-        // Notify parent window
-        window.parent.postMessage(
-          {
-            type: "audio_control",
-            payload: { action: "stopped", success: true },
-          },
-          "*"
-        );
-        return true;
-      } else {
-        console.error("stopGlobalAudios method not available");
-        return false;
-      }
-    } catch (error) {
-      console.error("Error stopping audio:", error);
-
-      // Notify parent window of error
+      console.log("All audio stopped");
       window.parent.postMessage(
         {
           type: "audio_control",
-          payload: { action: "stop_error", error: error.message },
+          payload: { action: "stopped", success: true },
         },
         "*"
       );
+      return true;
+    } catch (error) {
+      console.error("Error stopping audio:", error);
       return false;
     }
   }
