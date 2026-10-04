@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import {
-  Compass,
   MapPin,
   ArrowUpRight,
   ArrowRight,
@@ -343,14 +342,14 @@ export function OverviewSection() {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: 1 IMAGE CHÍNH (AUTO-PLAY, CROSSFADE) + 1 BANNER DỌC */}
-          <div className="lg:col-span-6 flex flex-col justify-between gap-5">
-            {/* 1 Single Featured Photo Card (Auto-play, không còn badge header) */}
+          {/* RIGHT COLUMN: ẢNH TIÊU BIỂU TOÀN PHẦN (AUTO-PLAY, FULL-HEIGHT, CROSSFADE) */}
+          <div className="lg:col-span-6 flex flex-col h-full">
+            {/* 1 Single Featured Photo Card (Auto-play, tràn viền đẹp mắt) */}
             <Card
               onClick={() => handleCardAction(currentPhoto)}
               onMouseEnter={() => setIsPhotoHovered(true)}
               onMouseLeave={() => setIsPhotoHovered(false)}
-              className="relative overflow-hidden !p-0 border border-border/60 shadow-lg hover:shadow-xl bg-card rounded-2xl group flex flex-col justify-end min-h-[280px] sm:min-h-[330px] cursor-pointer transition-all duration-300 hover:border-emerald-500/50 flex-1"
+              className="relative overflow-hidden !p-0 border border-border/60 shadow-lg hover:shadow-xl bg-card rounded-2xl group flex flex-col justify-end min-h-[380px] sm:min-h-[460px] lg:min-h-full cursor-pointer transition-all duration-300 hover:border-emerald-500/50 flex-1 w-full"
             >
               <CardContent className="!p-0 relative h-full w-full overflow-hidden flex flex-col justify-end">
                 {/* Crossfading Background Photos */}
@@ -378,7 +377,7 @@ export function OverviewSection() {
                     e.stopPropagation();
                     handlePrevPhoto();
                   }}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 z-25 w-8 h-8 rounded-full bg-black/45 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-md shadow-md"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-25 w-9 h-9 rounded-full bg-black/45 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center opacity-85 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-md shadow-md"
                   title="Ảnh trước"
                   aria-label="Ảnh trước"
                 >
@@ -390,7 +389,7 @@ export function OverviewSection() {
                     e.stopPropagation();
                     handleNextPhoto();
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 z-25 w-8 h-8 rounded-full bg-black/45 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-md shadow-md"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-25 w-9 h-9 rounded-full bg-black/45 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center opacity-85 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-md shadow-md"
                   title="Ảnh kế tiếp"
                   aria-label="Ảnh kế tiếp"
                 >
@@ -398,25 +397,25 @@ export function OverviewSection() {
                 </button>
 
                 {/* Top-Left Category Badge */}
-                <div className="absolute top-3.5 left-3.5 z-20">
-                  <span className="px-2.5 py-1 rounded-lg bg-emerald-600/90 text-white text-[11px] font-semibold backdrop-blur-md shadow-md uppercase tracking-wider">
+                <div className="absolute top-4 left-4 z-20">
+                  <span className="px-3 py-1.5 rounded-lg bg-emerald-600/90 text-white text-xs font-semibold backdrop-blur-md shadow-md uppercase tracking-wider">
                     {currentPhoto.badge}
                   </span>
                 </div>
 
                 {/* Top-Right Action Arrow */}
-                <div className="absolute top-3.5 right-3.5 z-20 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 group-hover:border-primary transition-all shadow-md">
+                <div className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 group-hover:border-primary transition-all shadow-md">
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
 
                 {/* Bottom Image Caption, Info & Navigation Dots Overlay */}
-                <div className="relative p-5 z-20 text-white flex items-end justify-between gap-4">
-                  <div className="space-y-1 flex-1">
-                    <h4 className="text-base sm:text-lg font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
+                <div className="relative p-6 sm:p-7 z-20 text-white flex items-end justify-between gap-4">
+                  <div className="space-y-1.5 flex-1">
+                    <h4 className="text-lg sm:text-xl md:text-2xl font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
                       {currentPhoto.title}
                     </h4>
                     {currentPhoto.subtitle && (
-                      <p className="text-xs sm:text-sm text-white/80 line-clamp-1 leading-relaxed">
+                      <p className="text-xs sm:text-sm text-white/85 line-clamp-2 leading-relaxed max-w-xl">
                         {currentPhoto.subtitle}
                       </p>
                     )}
@@ -433,8 +432,8 @@ export function OverviewSection() {
                         }}
                         className={`transition-all duration-300 rounded-full cursor-pointer ${
                           idx === currentPhotoIndex
-                            ? "w-5 h-1.5 bg-emerald-400 shadow-xs"
-                            : "w-1.5 h-1.5 bg-white/40 hover:bg-white/70"
+                            ? "w-6 h-2 bg-emerald-400 shadow-xs"
+                            : "w-2 h-2 bg-white/40 hover:bg-white/70"
                         }`}
                         aria-label={`Ảnh ${idx + 1}`}
                         type="button"
@@ -444,53 +443,6 @@ export function OverviewSection() {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Banner Dọc: Trải Nghiệm Thực Tế Ảo 3D Di Tích */}
-            <div
-              onClick={() => {
-                navigate("/app");
-                setIsLoading(true);
-                setTimeout(() => setIsLoading(false), 300);
-              }}
-              className="group relative overflow-hidden rounded-2xl border border-border/60 shadow-lg hover:shadow-xl bg-gradient-to-br from-card via-card to-emerald-50/50 dark:to-emerald-950/30 p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-4 cursor-pointer transition-all duration-300 hover:border-emerald-500/50"
-            >
-              {/* Vertical 3D Banner Art Thumbnail (Poster Showcase Devices) */}
-              <div className="relative w-full sm:w-32 h-36 sm:h-32 rounded-xl overflow-hidden shrink-0 shadow-md border border-emerald-500/20 bg-slate-900/10">
-                <img
-                  src={posterQuangCaoDevices}
-                  alt="Không Gian Di Sản 3D"
-                  className="w-full h-full object-cover object-[center_55%] group-hover:scale-108 transition-transform duration-500"
-                />
-              </div>
-
-              {/* Information & Action */}
-              <div className="flex-1 space-y-2 text-left w-full">
-                <h4 className="text-base sm:text-lg font-bold text-foreground tracking-tight group-hover:text-primary transition-colors">
-                  Khám Phá Di Tích & Đô Thị Phường Bình Long
-                </h4>
-                <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-                  Công nghệ số hóa không gian ba chiều kết nối chiều sâu văn hóa lịch sử với nhịp sống đô thị văn minh.
-                </p>
-                <div className="pt-1 flex items-center gap-3">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsMapDialogOpen(true);
-                    }}
-                    className="h-8 rounded-lg text-xs font-semibold border-border hover:bg-secondary cursor-pointer"
-                  >
-                    <Compass className="w-3.5 h-3.5 mr-1 text-primary" />
-                    Mở sơ đồ di tích
-                  </Button>
-                  <span className="inline-flex items-center text-xs font-semibold text-primary group-hover:underline cursor-pointer">
-                    Vào không gian VR
-                    <ArrowRight className="w-3.5 h-3.5 ml-1 transform group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
