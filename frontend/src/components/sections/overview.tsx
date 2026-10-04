@@ -23,8 +23,8 @@ import area3DIcon from "@/assets/3d-icons/area__binhlong-3d-icon.png";
 import population3DIcon from "@/assets/3d-icons/population__binhlong-3d-icon.png";
 import admin3DIcon from "@/assets/3d-icons/admin__binhlong-3d-icon.png";
 import highway3DIcon from "@/assets/3d-icons/highway__binhlong-3d-icon.png";
-import posterQuangCaoBinhLongVR from "@/assets/poster_quang_cao_binhlong_vr.jpg";
-import posterQuangCaoDevices from "@/assets/poster_quang_cao_showcase_devices.jpg";
+import bannerQcDesktop from "@/assets/banner_qc_desktop.jpg";
+import bannerQcMobile from "@/assets/banner_qc_mobile.jpg";
 
 // 4 Key Stats - Clean, no repeated labels, prominent values & 3D icons
 const STATS_DATA = [
@@ -280,44 +280,45 @@ export function OverviewSection() {
               </div>
             </Card>
 
-            {/* Banner Ngang: Không Gian Bản Đồ Số & Trực Quan Hóa (Poster Quảng Cáo Style) */}
+            {/* Banner Ngang: Không Gian Bản Đồ Số & Trực Quan Hóa (Poster Quảng Cáo Style - Responsive) */}
             <div
               onClick={() => {
                 navigate("/app");
                 setIsLoading(true);
                 setTimeout(() => setIsLoading(false), 300);
               }}
-              className="group relative overflow-hidden rounded-2xl border border-border/70 shadow-lg hover:shadow-2xl bg-card cursor-pointer transition-all duration-300 hover:border-emerald-500/60 min-h-[230px] sm:min-h-[250px] flex flex-col justify-end"
+              className="group relative overflow-hidden rounded-2xl border border-border/70 shadow-md hover:shadow-xl bg-card cursor-pointer transition-all duration-300 hover:border-emerald-500/60 min-h-[230px] sm:min-h-[250px] flex flex-col justify-end"
             >
-              <img
-                src={posterQuangCaoBinhLongVR}
-                alt="Bản Đồ Số Bình Long VR"
-                className="absolute inset-0 w-full h-full object-cover object-[center_30%] transition-all duration-700 ease-out group-hover:scale-106"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/20 pointer-events-none" />
+              {/* Responsive Images: Mobile 9:16 and Desktop 16:9 */}
+              <picture className="absolute inset-0 w-full h-full">
+                <source media="(max-width: 639px)" srcSet={bannerQcMobile} />
+                <img
+                  src={bannerQcDesktop}
+                  alt="Bản Đồ Số Bình Long VR"
+                  className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
+                />
+              </picture>
+
+              {/* Gentle gradient overlay at bottom */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" />
 
               {/* Top-Left Badge: Xanh chữ trắng đồng bộ */}
               <div className="absolute top-3.5 left-3.5 z-20">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-600/95 text-white text-xs font-semibold backdrop-blur-md shadow-md border border-emerald-500/40">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-600/95 text-white text-xs font-semibold backdrop-blur-md shadow-sm border border-emerald-500/40">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   Bản Đồ Số Bình Long VR
                 </span>
               </div>
 
-              {/* Top-Right Arrow Action */}
-              <div className="absolute top-3.5 right-3.5 z-20 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 group-hover:border-primary transition-all shadow-md">
-                <ArrowUpRight className="w-4 h-4" />
-              </div>
-
-              {/* Content Overlay */}
-              <div className="relative p-5 z-20 text-white space-y-1.5">
-                <h4 className="text-base sm:text-lg font-bold drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
+              {/* Content Overlay (Ít chữ, thoáng đãng, sang trọng) */}
+              <div className="relative p-5 z-20 text-white space-y-1">
+                <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">
                   Không Gian Số Hóa & Trải Nghiệm Tương Tác
                 </h4>
-                <p className="text-xs sm:text-sm text-white/85 line-clamp-2 leading-relaxed drop-shadow-sm max-w-xl">
-                  Trực quan hóa toàn diện hệ thống di tích và không gian đô thị Phường Bình Long qua công nghệ ảnh toàn cảnh 360° và sơ đồ di tích số.
+                <p className="text-xs sm:text-sm text-white/90 line-clamp-1 leading-relaxed">
+                  Khám phá bản đồ di tích và toàn cảnh VR 360° trực quan.
                 </p>
-                <div className="pt-1 flex items-center justify-between">
+                <div className="pt-2 flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-300 group-hover:text-white transition-colors">
                     <span>Khám phá bản đồ số</span>
                     <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
@@ -329,11 +330,11 @@ export function OverviewSection() {
                       e.stopPropagation();
                       setIsPosterLightboxOpen(true);
                     }}
-                    className="flex items-center gap-1 text-[11px] text-white/85 hover:text-white bg-black/45 hover:bg-black/70 px-2.5 py-1 rounded-md border border-white/20 backdrop-blur-md transition-all cursor-pointer shadow-xs active:scale-95"
-                    title="Phóng to poster quảng cáo"
+                    className="flex items-center gap-1.5 text-xs text-white/90 hover:text-white bg-black/50 hover:bg-black/80 px-3 py-1.5 rounded-lg border border-white/20 backdrop-blur-md transition-all cursor-pointer shadow-xs active:scale-95"
+                    title="Xem quảng cáo"
                   >
-                    <Maximize2 className="w-3 h-3" />
-                    <span>Xem poster QC</span>
+                    <Maximize2 className="w-3.5 h-3.5" />
+                    <span>Xem quảng cáo</span>
                   </button>
                 </div>
               </div>
@@ -577,14 +578,14 @@ export function OverviewSection() {
         close={() => setIsPosterLightboxOpen(false)}
         slides={[
           {
-            src: posterQuangCaoBinhLongVR,
-            title: "Poster Quảng Cáo – Bản Đồ Số Bình Long VR",
-            description: "Khám phá di sản văn hóa trong tầm tay với công nghệ thực tế ảo 360°",
+            src: bannerQcDesktop,
+            title: "Bản Đồ Số Bình Long VR – Bản Rộng (Desktop)",
+            description: "Khám phá không gian thực tế ảo 360° & số hóa di tích",
           },
           {
-            src: posterQuangCaoDevices,
-            title: "Showcase Đa Nền Tảng Thiết Bị",
-            description: "Trực quan hóa trên điện thoại, máy tính bảng và máy tính để bàn",
+            src: bannerQcMobile,
+            title: "Bản Đồ Số Bình Long VR – Bản Đứng (Mobile)",
+            description: "Thiết kế tối ưu cho trải nghiệm trên thiết bị di động",
           },
         ] as any}
         plugins={[Zoom]}
