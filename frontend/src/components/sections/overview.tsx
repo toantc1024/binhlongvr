@@ -154,17 +154,15 @@ export function OverviewSection() {
   const navigate = useNavigate();
   const { setIsLoading, setIsMapDialogOpen, selectHotspotAndPanorama } = useVRStore();
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
-  const [isPhotoHovered, setIsPhotoHovered] = useState(false);
   const [isPosterLightboxOpen, setIsPosterLightboxOpen] = useState(false);
 
-  // Auto-play photo carousel every 4.5s (pauses on hover)
+  // Auto-play photo carousel reliably every 3.5s
   useEffect(() => {
-    if (isPhotoHovered) return;
     const timer = setInterval(() => {
       setCurrentPhotoIndex((prev) => (prev + 1) % GALLERY_ITEMS.length);
-    }, 4500);
+    }, 3500);
     return () => clearInterval(timer);
-  }, [isPhotoHovered]);
+  }, [currentPhotoIndex]);
 
   const handlePrevPhoto = () => {
     setCurrentPhotoIndex((prev) => (prev === 0 ? GALLERY_ITEMS.length - 1 : prev - 1));
@@ -344,12 +342,10 @@ export function OverviewSection() {
 
           {/* RIGHT COLUMN: ẢNH TIÊU BIỂU TOÀN PHẦN (AUTO-PLAY, FULL-HEIGHT, CROSSFADE) */}
           <div className="lg:col-span-6 flex flex-col h-full">
-            {/* 1 Single Featured Photo Card (Auto-play, tràn viền đẹp mắt) */}
+            {/* 1 Single Featured Photo Card (Shadow nhẹ nhàng, đồng bộ, sáng sủa) */}
             <Card
               onClick={() => handleCardAction(currentPhoto)}
-              onMouseEnter={() => setIsPhotoHovered(true)}
-              onMouseLeave={() => setIsPhotoHovered(false)}
-              className="relative overflow-hidden !p-0 border border-border/60 shadow-lg hover:shadow-xl bg-card rounded-2xl group flex flex-col justify-end min-h-[380px] sm:min-h-[460px] lg:min-h-full cursor-pointer transition-all duration-300 hover:border-emerald-500/50 flex-1 w-full"
+              className="relative overflow-hidden !p-0 border border-border/60 shadow-md hover:shadow-lg bg-card rounded-2xl group flex flex-col justify-end min-h-[380px] sm:min-h-[460px] lg:min-h-full cursor-pointer transition-all duration-300 hover:border-emerald-500/50 flex-1 w-full"
             >
               <CardContent className="!p-0 relative h-full w-full overflow-hidden flex flex-col justify-end">
                 {/* Crossfading Background Photos */}
@@ -358,7 +354,7 @@ export function OverviewSection() {
                     key={item.id}
                     src={item.image}
                     alt={item.title}
-                    className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-106 ${
+                    className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105 ${
                       idx === currentPhotoIndex
                         ? "opacity-100 z-10"
                         : "opacity-0 z-0 pointer-events-none"
@@ -367,21 +363,21 @@ export function OverviewSection() {
                   />
                 ))}
 
-                {/* Subtle vignette gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/15 z-15 pointer-events-none" />
+                {/* Gentle gradient overlay only at the bottom caption area (không làm tối ảnh) */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent z-15 pointer-events-none" />
 
-                {/* Floating Left/Right Navigation Arrows */}
+                {/* Floating Left/Right Navigation Arrows - Synchronized with feature.tsx */}
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     handlePrevPhoto();
                   }}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 z-25 w-9 h-9 rounded-full bg-black/45 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center opacity-85 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-md shadow-md"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 z-25 size-9 sm:size-10 rounded-full bg-background/90 hover:bg-background text-foreground shadow-md hover:shadow-lg border border-border/80 backdrop-blur-md flex items-center justify-center cursor-pointer transition-all active:scale-95 hover:scale-105"
                   title="Ảnh trước"
                   aria-label="Ảnh trước"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="size-4 sm:size-5 stroke-[2.5]" />
                 </button>
                 <button
                   type="button"
@@ -389,33 +385,33 @@ export function OverviewSection() {
                     e.stopPropagation();
                     handleNextPhoto();
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 z-25 w-9 h-9 rounded-full bg-black/45 hover:bg-black/80 text-white border border-white/20 flex items-center justify-center opacity-85 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-md shadow-md"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 z-25 size-9 sm:size-10 rounded-full bg-background/90 hover:bg-background text-foreground shadow-md hover:shadow-lg border border-border/80 backdrop-blur-md flex items-center justify-center cursor-pointer transition-all active:scale-95 hover:scale-105"
                   title="Ảnh kế tiếp"
                   aria-label="Ảnh kế tiếp"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="size-4 sm:size-5 stroke-[2.5]" />
                 </button>
 
                 {/* Top-Left Category Badge */}
                 <div className="absolute top-4 left-4 z-20">
-                  <span className="px-3 py-1.5 rounded-lg bg-emerald-600/90 text-white text-xs font-semibold backdrop-blur-md shadow-md uppercase tracking-wider">
+                  <span className="px-3 py-1.5 rounded-lg bg-emerald-600/95 text-white text-xs font-semibold backdrop-blur-md shadow-sm border border-emerald-500/40 uppercase tracking-wider">
                     {currentPhoto.badge}
                   </span>
                 </div>
 
-                {/* Top-Right Action Arrow */}
-                <div className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 group-hover:border-primary transition-all shadow-md">
-                  <ArrowUpRight className="w-4 h-4" />
+                {/* Top-Right Action Arrow - Synchronized with Navigation buttons */}
+                <div className="absolute top-4 right-4 z-20 size-9 sm:size-10 rounded-full bg-background/90 text-foreground border border-border/80 shadow-md backdrop-blur-md flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-105 transition-all">
+                  <ArrowUpRight className="size-4 sm:size-5 stroke-[2.5]" />
                 </div>
 
                 {/* Bottom Image Caption, Info & Navigation Dots Overlay */}
                 <div className="relative p-6 sm:p-7 z-20 text-white flex items-end justify-between gap-4">
                   <div className="space-y-1.5 flex-1">
-                    <h4 className="text-lg sm:text-xl md:text-2xl font-bold leading-snug drop-shadow-md text-white group-hover:text-emerald-300 transition-colors">
+                    <h4 className="text-lg sm:text-xl md:text-2xl font-bold leading-snug text-white group-hover:text-emerald-300 transition-colors drop-shadow-xs">
                       {currentPhoto.title}
                     </h4>
                     {currentPhoto.subtitle && (
-                      <p className="text-xs sm:text-sm text-white/85 line-clamp-2 leading-relaxed max-w-xl">
+                      <p className="text-xs sm:text-sm text-white/90 line-clamp-2 leading-relaxed max-w-xl">
                         {currentPhoto.subtitle}
                       </p>
                     )}
@@ -433,7 +429,7 @@ export function OverviewSection() {
                         className={`transition-all duration-300 rounded-full cursor-pointer ${
                           idx === currentPhotoIndex
                             ? "w-6 h-2 bg-emerald-400 shadow-xs"
-                            : "w-2 h-2 bg-white/40 hover:bg-white/70"
+                            : "w-2 h-2 bg-white/40 hover:bg-white/80"
                         }`}
                         aria-label={`Ảnh ${idx + 1}`}
                         type="button"
