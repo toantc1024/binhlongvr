@@ -1,47 +1,33 @@
 import { useEffect, useState } from "react";
 import useVRStore from "@/store/vr.store";
 import { TextAnimate } from "../magicui/text-animate";
+import AnimatedNumber from "../common/AnimatedNumber";
+import { countVisitorLogsByAreaId } from "@/services/visitor_logs.service";
+import { CURRENT_AREA_ID } from "@/constants/env.constants";
 
 import viewCountIcon from "@/assets/3d-icons/view-count__binhlong-3d-icon.png";
 import locationIcon from "@/assets/3d-icons/location__binhlong-3d-icon.png";
 import interactionIcon from "@/assets/3d-icons/interaction__binhlong-3d-icon.png";
 
-function StatNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
-  const [count, setCount] = useState(value);
-
-  useEffect(() => {
-    let startTimestamp: number | null = null;
-    const duration = 1200;
-
-    const step = (timestamp: number) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      // smooth easeOutExpo
-      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      setCount(Math.floor(ease * value));
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      } else {
-        setCount(value);
-      }
-    };
-
-    const animId = window.requestAnimationFrame(step);
-    return () => window.cancelAnimationFrame(animId);
-  }, [value]);
-
-  return (
-    <span className="tabular-nums tracking-tight">
-      {count.toLocaleString("en-US")}
-      {suffix}
-    </span>
-  );
-}
-
 export function StatsSection() {
   const { areaHotspots, panoramas } = useVRStore((state) => state);
+  const [visitorLogsCount, setVisitorLogsCount] = useState<number>(1520);
 
-  const totalVisitorLogs = 1520;
+  useEffect(() => {
+    let mounted = true;
+    countVisitorLogsByAreaId(CURRENT_AREA_ID)
+      .then((realCount) => {
+        if (mounted && realCount > 0) {
+          setVisitorLogsCount(1520 + realCount);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const totalVisitorLogs = visitorLogsCount;
   const totalHotspots = areaHotspots?.length || 5;
   const totalPanoramas = panoramas?.length || 20;
 
@@ -96,7 +82,7 @@ export function StatsSection() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <span className="text-4xl sm:text-5xl font-semibold text-foreground tracking-tight">
-                    <StatNumber value={stat.value} suffix={stat.suffix} />
+                    <AnimatedNumber value={stat.value} suffix={stat.suffix} formatStyle="en" />
                   </span>
                   <p className="mt-3 text-lg font-semibold text-emerald-600 dark:text-emerald-400">
                     {stat.label}

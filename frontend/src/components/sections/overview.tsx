@@ -5,8 +5,10 @@ import {
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
+  Eye,
   X,
 } from "lucide-react";
+import AnimatedNumber from "../common/AnimatedNumber";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -31,28 +33,32 @@ import bannerQcMobile from "@/assets/banner_qc_mobile.jpg";
 const STATS_DATA = [
   {
     title: "Diện tích",
-    value: "49,14",
+    value: 49.14,
+    displayDecimals: 2,
     unit: "km² tự nhiên",
     description: "Tổng diện tích tự nhiên sau sắp xếp",
     icon: area3DIcon,
   },
   {
     title: "Dân số",
-    value: "> 40.000",
+    prefix: "> ",
+    value: 40000,
     unit: "người",
     description: "Quy mô dân số toàn phường",
     icon: population3DIcon,
   },
   {
     title: "Hành chính",
-    value: "09",
+    value: 9,
+    padZero: true,
     unit: "Khu phố",
     description: "Hợp nhất từ 04 đơn vị hành chính",
     icon: admin3DIcon,
   },
   {
     title: "Huyết mạch",
-    value: "QL 13",
+    prefix: "QL ",
+    value: 13,
     unit: "TP.HCM - Hoa Lư",
     description: "Cửa ngõ Đông Nam Bộ – Campuchia",
     icon: highway3DIcon,
@@ -286,32 +292,45 @@ export function OverviewSection() {
           {STATS_DATA.map((stat, idx) => (
             <div
               key={idx}
-              className="relative overflow-hidden rounded-2xl border border-border/60 shadow-md bg-card p-4 sm:p-5 lg:p-6 flex flex-col justify-between group hover:shadow-xl hover:border-primary/40 transition-all duration-300"
+              className="relative overflow-hidden rounded-2xl border border-border/60 shadow-md bg-card flex flex-col justify-between group hover:shadow-xl hover:border-primary/40 transition-all duration-300"
             >
-              <div className="flex items-start justify-between gap-2 sm:gap-3">
-                <div className="flex flex-col">
-                  <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                    {stat.title}
-                  </span>
-                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight mt-1.5">
-                    {stat.value}
+              {/* Upper Card Content */}
+              <div className="p-4 sm:p-5 lg:p-6 pb-4 sm:pb-5">
+                <div className="flex items-start justify-between gap-2 sm:gap-3">
+                  <div className="flex flex-col">
+                    <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                      {stat.title}
+                    </span>
+                    <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight mt-1.5 flex items-baseline gap-1">
+                      <AnimatedNumber
+                        value={stat.value}
+                        prefix={stat.prefix}
+                        decimals={stat.displayDecimals}
+                        padZero={stat.padZero}
+                        formatStyle="vi"
+                      />
+                    </div>
+                    <span className="mt-1 text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                      {stat.unit}
+                    </span>
                   </div>
-                  <span className="mt-1 text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-                    {stat.unit}
-                  </span>
-                </div>
 
-                {/* 3D Satin-Plastic Asset */}
-                <div className="shrink-0 w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 group-hover:scale-108 transition-transform duration-300 flex items-center justify-center pointer-events-none -mr-1 -mt-1">
-                  <img
-                    src={stat.icon}
-                    alt={stat.title}
-                    className="w-full h-full object-contain filter drop-shadow-md"
-                  />
+                  {/* 3D Satin-Plastic Asset - BIGGER */}
+                  <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 group-hover:scale-110 transition-transform duration-300 flex items-center justify-center pointer-events-none -mr-2 -mt-2">
+                    <img
+                      src={stat.icon}
+                      alt={stat.title}
+                      className="w-full h-full object-contain filter drop-shadow-md"
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-3 sm:mt-4 pt-2.5 border-t border-border/40 text-[11px] sm:text-xs text-muted-foreground font-normal leading-relaxed">
+              {/* Edge-to-Edge Full-Width Divider */}
+              <div className="w-full h-px bg-border/60" />
+
+              {/* Bottom Card Footer */}
+              <div className="px-4 sm:px-5 lg:px-6 py-3 bg-muted/20 text-[11px] sm:text-xs text-muted-foreground font-normal leading-relaxed">
                 {stat.description}
               </div>
             </div>
@@ -345,11 +364,14 @@ export function OverviewSection() {
 
             {/* Banner Ngang: Không Gian Bản Đồ Số & Trực Quan Hóa (Pure Visual Banner - Tự thích ứng tỷ lệ 16:9) */}
             <div
-              onClick={() => setIsPosterLightboxOpen(true)}
-              className="group relative overflow-hidden rounded-2xl border border-border/70 shadow-md hover:shadow-xl bg-card cursor-pointer transition-all duration-300 hover:border-emerald-500/60 w-full aspect-video flex flex-col justify-end"
+              className="group relative overflow-hidden rounded-2xl border border-border/70 shadow-md hover:shadow-xl bg-card transition-all duration-300 hover:border-emerald-500/60 w-full aspect-video flex items-center justify-center"
             >
               {/* Responsive Images: Mobile 9:16 and Desktop 16:9 */}
-              <picture className="absolute inset-0 w-full h-full">
+              <picture
+                className="absolute inset-0 w-full h-full cursor-pointer"
+                onClick={() => setIsPosterLightboxOpen(true)}
+                title="Nhấp để xem ảnh quảng cáo độ phân giải cao"
+              >
                 <source media="(max-width: 639px)" srcSet={bannerQcMobile} />
                 <img
                   src={bannerQcDesktop}
@@ -357,6 +379,24 @@ export function OverviewSection() {
                   className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
                 />
               </picture>
+
+              {/* Center Action Button: Trải nghiệm thực tế ảo */}
+              <div className="relative z-10 p-4">
+                <Button
+                  size="lg"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate("/app");
+                    setIsLoading(true);
+                    setTimeout(() => setIsLoading(false), 300);
+                  }}
+                  className="rounded-xl cursor-pointer bg-emerald-600/90 hover:bg-emerald-600 text-white font-semibold text-sm sm:text-base px-5 sm:px-6 py-3 shadow-2xl backdrop-blur-md border border-white/30 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all duration-200 group/btn"
+                >
+                  <Eye className="w-5 h-5 text-white stroke-[2.2]" />
+                  <span>Trải nghiệm thực tế ảo</span>
+                  <ArrowUpRight className="w-4 h-4 text-white stroke-[2.2] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                </Button>
+              </div>
             </div>
           </div>
 

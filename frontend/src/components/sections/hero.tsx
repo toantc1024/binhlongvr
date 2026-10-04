@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { ArrowUpRight, CirclePlay, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,14 +6,32 @@ import { Card, CardContent } from "@/components/ui/card";
 import MapBlock from "../block/MapBlock";
 import BinhLongImageCarousel from "../block/BinhLongImageCarousel";
 import viewCountIcon from "@/assets/3d-icons/view-count__binhlong-3d-icon.png";
+import AnimatedNumber from "../common/AnimatedNumber";
 import { GridPattern } from "../magicui/grid-pattern";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import useVRStore from "@/store/vr.store";
+import { countVisitorLogsByAreaId } from "@/services/visitor_logs.service";
+import { CURRENT_AREA_ID } from "@/constants/env.constants";
 
 export default function HeroSection() {
   const navigate = useNavigate();
   const { setIsLoading, setIsMapDialogOpen } = useVRStore((state) => state);
+  const [visitorCount, setVisitorCount] = useState<number>(1520);
+
+  useEffect(() => {
+    let mounted = true;
+    countVisitorLogsByAreaId(CURRENT_AREA_ID)
+      .then((realCount) => {
+        if (mounted && realCount > 0) {
+          setVisitorCount(1520 + realCount);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
   return (
     <div className="relative pt-24 pb-10 w-full flex flex-col gap-6 items-center justify-center">
       <div className="top-0 z-[0] flex h-screen w-full flex-col items-center justify-center overflow-hidden absolute">
@@ -120,7 +139,7 @@ export default function HeroSection() {
                 <div className="flex-1">
                   <div className="flex items-baseline gap-2">
                     <span className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">
-                      1,520+
+                      <AnimatedNumber value={visitorCount} suffix="+" formatStyle="en" />
                     </span>
                     <span className="text-emerald-600 font-medium text-lg sm:text-xl">
                       lượt xem
