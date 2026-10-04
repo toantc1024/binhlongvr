@@ -383,22 +383,22 @@ export function AboutSection() {
                 animation={{ swipe: 300 }}
                 render={{
                     iconPrev: () => (
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/65 hover:bg-emerald-600 text-white border border-white/25 backdrop-blur-md shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer select-none">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/65 hover:bg-emerald-600 text-white border border-white/25 shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer select-none">
                             <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 stroke-[2.5]" />
                         </div>
                     ),
                     iconNext: () => (
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/65 hover:bg-emerald-600 text-white border border-white/25 backdrop-blur-md shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer select-none">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/65 hover:bg-emerald-600 text-white border border-white/25 shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer select-none">
                             <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 stroke-[2.5]" />
                         </div>
                     ),
                     iconClose: () => (
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/65 hover:bg-red-600 text-white border border-white/25 backdrop-blur-md shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer select-none">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/65 hover:bg-red-600 text-white border border-white/25 shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer select-none">
                             <X className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
                         </div>
                     ),
                     slideFooter: ({ slide }: any) => (
-                        <div className="absolute bottom-0 inset-x-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent pt-16 sm:pt-24 pb-6 sm:pb-10 px-5 sm:px-10 lg:px-16 text-white z-50 pointer-events-auto select-none backdrop-blur-[2px]">
+                        <div className="absolute bottom-0 inset-x-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent pt-16 sm:pt-24 pb-6 sm:pb-10 px-5 sm:px-10 lg:px-16 text-white z-50 pointer-events-auto select-none">
                             <div className="w-full space-y-2 text-left">
                                 <div className="flex items-center gap-3 mb-1.5">
                                     <span className="px-3 py-1 rounded-full bg-emerald-600 text-white text-xs sm:text-sm font-semibold shadow-md">
