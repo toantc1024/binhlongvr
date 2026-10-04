@@ -424,7 +424,7 @@ export function OverviewSection() {
                 ))}
 
                 {/* Gentle gradient overlay only at the bottom caption area (không làm tối ảnh) */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent z-15 pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/25 to-transparent z-15 pointer-events-none" />
 
                 {/* Floating Left/Right Navigation Arrows - Màu xanh giống Lightbox, hiện khi hover */}
                 <button
@@ -467,11 +467,11 @@ export function OverviewSection() {
                 {/* Bottom Image Caption, Info & Navigation Dots Overlay */}
                 <div className="relative p-6 sm:p-7 z-20 text-white flex items-end justify-between gap-4">
                   <div className="space-y-1.5 flex-1">
-                    <h4 className="text-lg sm:text-xl md:text-2xl font-bold leading-snug text-white group-hover:text-emerald-300 transition-colors drop-shadow-xs">
+                    <h4 className="text-lg sm:text-xl md:text-2xl font-bold leading-snug text-white [text-shadow:_0_1px_3px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.8)] group-hover:text-emerald-300 transition-colors">
                       {currentPhoto.title}
                     </h4>
                     {currentPhoto.subtitle && (
-                      <p className="text-xs sm:text-sm text-white/90 line-clamp-2 leading-relaxed max-w-xl">
+                      <p className="text-xs sm:text-sm text-white/95 [text-shadow:_0_1px_3px_rgba(0,0,0,0.9),_0_2px_6px_rgba(0,0,0,0.8)] line-clamp-2 leading-relaxed max-w-xl font-medium">
                         {currentPhoto.subtitle}
                       </p>
                     )}

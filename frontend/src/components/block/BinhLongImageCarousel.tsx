@@ -76,15 +76,15 @@ export default function BinhLongImageCarousel() {
             className="w-full h-full object-cover object-center transform scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out"
             loading="lazy"
           />
-          {/* Subtle gradient vignette overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/30 pointer-events-none" />
+          {/* Subtle gradient vignette overlay only at bottom */}
+          <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/25 to-transparent pointer-events-none" />
 
           {/* Slide caption */}
           <div className="absolute bottom-4 left-4 right-4 z-20 pointer-events-none text-white">
-            <h3 className="text-lg sm:text-xl font-semibold leading-tight drop-shadow-md text-white">
+            <h3 className="text-lg sm:text-xl font-semibold leading-tight text-white [text-shadow:_0_1px_3px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.8)]">
               {slide.title}
             </h3>
-            <p className="text-xs sm:text-sm text-slate-200/90 mt-1 line-clamp-1 drop-shadow-sm font-normal">
+            <p className="text-xs sm:text-sm text-slate-100/95 mt-1 line-clamp-1 [text-shadow:_0_1px_3px_rgba(0,0,0,0.9),_0_2px_6px_rgba(0,0,0,0.8)] font-normal">
               {slide.subtitle}
             </p>
           </div>
