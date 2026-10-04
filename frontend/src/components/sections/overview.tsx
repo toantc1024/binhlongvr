@@ -542,59 +542,61 @@ export function OverviewSection() {
             </div>
           </div>
 
-          {/* 4 Full-Width Cards Grid */}
+          {/* 4 Full-Width Cards Grid (Style matching feature.tsx: padded rounded image, clear typography, full-width divider, solid action button) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
             {FEATURED_SITES.map((site) => (
               <div
                 key={site.hotspotId}
                 onClick={() => handleOpenVRSite(site.hotspotId, site.panoramaId)}
-                className="group cursor-pointer rounded-2xl bg-card border border-border/60 hover:border-primary/50 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden"
+                className="group cursor-pointer rounded-xl sm:rounded-2xl bg-card border border-border/70 hover:border-primary/50 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden"
               >
-                {/* Image Preview with Category Badge */}
-                <div className="relative h-44 w-full overflow-hidden">
-                  <img
-                    src={site.image}
-                    alt={site.name}
-                    className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                {/* Prominent Focus Image: Padded & fully rounded (Ảnh rounded padding) */}
+                <div className="p-2.5 sm:p-3.5 pb-0 w-full">
+                  <div className="relative h-40 sm:h-48 md:h-52 w-full overflow-hidden rounded-lg sm:rounded-xl bg-slate-900 shadow-xs">
+                    <img
+                      src={site.image}
+                      alt={site.name}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
-                  {/* Top-Left Badge: Xanh chữ trắng đồng bộ */}
-                  <div className="absolute top-3 left-3 z-10">
-                    <Badge className="bg-emerald-600 hover:bg-emerald-600 text-white text-xs font-semibold shadow-md border border-emerald-500/30 backdrop-blur-md">
-                      {site.type}
-                    </Badge>
-                  </div>
+                    {/* Top-Left Category Badge */}
+                    <div className="absolute top-2.5 left-2.5 z-10">
+                      <Badge className="bg-emerald-600/95 hover:bg-emerald-600 text-white text-[11px] sm:text-xs font-semibold shadow-md border border-emerald-500/30 backdrop-blur-md px-2.5 py-0.5">
+                        {site.type}
+                      </Badge>
+                    </div>
 
-                  {/* Corner Arrow Icon */}
-                  <div className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors shadow-sm">
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
-
-                  {/* Bottom Image Label */}
-                  <div className="absolute bottom-2.5 left-3 right-3 z-10">
-                    <h4 className="text-sm sm:text-base font-bold text-white drop-shadow-md line-clamp-1 group-hover:text-emerald-300 transition-colors">
-                      {site.name}
-                    </h4>
+                    {/* Corner Arrow Icon */}
+                    <div className="absolute top-2.5 right-2.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all shadow-sm">
+                      <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </div>
                   </div>
                 </div>
 
-                {/* Content Description */}
-                <div className="p-4 flex-1 flex flex-col justify-between">
-                  <p className="text-xs sm:text-sm text-muted-foreground line-clamp-3 leading-relaxed">
-                    {site.detail}
-                  </p>
-
-                  <div className="mt-4 pt-3 border-t border-border/40">
-                    <Button
-                      size="sm"
-                      className="w-full rounded-xl cursor-pointer bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground font-semibold text-xs sm:text-sm transition-all duration-200 shadow-none flex items-center justify-center gap-1.5"
-                    >
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 group-hover:bg-white animate-pulse" />
-                      Khám phá không gian 3D
-                      <ArrowUpRight className="w-3.5 h-3.5 ml-0.5" />
-                    </Button>
+                {/* Card Body: Title & Description (Tăng cỡ chữ, rõ ràng) */}
+                <div className="p-3.5 sm:p-5 pt-3 sm:pt-3.5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h4 className="text-sm sm:text-base font-bold text-foreground line-clamp-2 sm:line-clamp-1 group-hover:text-primary transition-colors text-left leading-snug sm:leading-normal">
+                      {site.name}
+                    </h4>
+                    <p className="mt-1 sm:mt-1.5 text-xs sm:text-sm text-muted-foreground line-clamp-2 sm:line-clamp-3 font-normal leading-relaxed text-left">
+                      {site.detail}
+                    </p>
                   </div>
+                </div>
+
+                {/* Full-width Divider & Solid Action Button (Divider full width, Button rõ ràng, Bỏ left rounded ping) */}
+                <div className="w-full border-t border-border/70 p-3 sm:p-4 bg-secondary/15">
+                  <Button
+                    size="sm"
+                    className="w-full rounded-lg sm:rounded-xl bg-primary hover:bg-primary/90 text-white font-medium py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group-hover:shadow-md transition-all cursor-pointer h-10 sm:h-11"
+                  >
+                    <span className="text-xs sm:text-sm font-semibold text-white truncate">
+                      Khám phá không gian 3D
+                    </span>
+                    <ArrowUpRight className="h-4 w-4 sm:h-5 sm:w-5 text-white stroke-[2.5] shrink-0 ml-1 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </Button>
                 </div>
               </div>
             ))}
