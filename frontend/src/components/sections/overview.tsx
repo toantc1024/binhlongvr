@@ -3,7 +3,6 @@ import { useNavigate, createSearchParams } from "react-router-dom";
 import {
   MapPin,
   ArrowUpRight,
-  ArrowRight,
   Sparkles,
   ChevronLeft,
   ChevronRight,
@@ -280,7 +279,7 @@ export function OverviewSection() {
               </div>
             </Card>
 
-            {/* Banner Ngang: Không Gian Bản Đồ Số & Trực Quan Hóa (Poster Quảng Cáo Style - Responsive) */}
+            {/* Banner Ngang: Không Gian Bản Đồ Số & Trực Quan Hóa (Pure Visual Banner - Bỏ hết chữ) */}
             <div
               onClick={() => {
                 navigate("/app");
@@ -299,45 +298,18 @@ export function OverviewSection() {
                 />
               </picture>
 
-              {/* Gentle gradient overlay at bottom */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" />
-
-              {/* Top-Left Badge: Xanh chữ trắng đồng bộ */}
-              <div className="absolute top-3.5 left-3.5 z-20">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-600/95 text-white text-xs font-semibold backdrop-blur-md shadow-sm border border-emerald-500/40">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Bản Đồ Số Bình Long VR
-                </span>
-              </div>
-
-              {/* Content Overlay (Ít chữ, thoáng đãng, sang trọng) */}
-              <div className="relative p-5 z-20 text-white space-y-1">
-                <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">
-                  Không Gian Số Hóa & Trải Nghiệm Tương Tác
-                </h4>
-                <p className="text-xs sm:text-sm text-white/90 line-clamp-1 leading-relaxed">
-                  Khám phá bản đồ di tích và toàn cảnh VR 360° trực quan.
-                </p>
-                <div className="pt-2 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-300 group-hover:text-white transition-colors">
-                    <span>Khám phá bản đồ số</span>
-                    <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsPosterLightboxOpen(true);
-                    }}
-                    className="flex items-center gap-1.5 text-xs text-white/90 hover:text-white bg-black/50 hover:bg-black/80 px-3 py-1.5 rounded-lg border border-white/20 backdrop-blur-md transition-all cursor-pointer shadow-xs active:scale-95"
-                    title="Xem quảng cáo"
-                  >
-                    <Maximize2 className="w-3.5 h-3.5" />
-                    <span>Xem quảng cáo</span>
-                  </button>
-                </div>
-              </div>
+              {/* Hover Zoom Icon to open full-resolution poster */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsPosterLightboxOpen(true);
+                }}
+                className="absolute bottom-3.5 right-3.5 z-20 size-9 rounded-full bg-black/60 hover:bg-emerald-600 text-white border border-white/20 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
+                title="Xem quảng cáo"
+              >
+                <Maximize2 className="size-4" />
+              </button>
             </div>
           </div>
 
@@ -367,18 +339,18 @@ export function OverviewSection() {
                 {/* Gentle gradient overlay only at the bottom caption area (không làm tối ảnh) */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent z-15 pointer-events-none" />
 
-                {/* Floating Left/Right Navigation Arrows - Synchronized with feature.tsx */}
+                {/* Floating Left/Right Navigation Arrows - Màu xanh giống Lightbox, hiện khi hover */}
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     handlePrevPhoto();
                   }}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 z-25 size-9 sm:size-10 rounded-full bg-background/90 hover:bg-background text-foreground shadow-md hover:shadow-lg border border-border/80 backdrop-blur-md flex items-center justify-center cursor-pointer transition-all active:scale-95 hover:scale-105"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 z-25 size-10 sm:size-11 rounded-full bg-emerald-600/90 hover:bg-emerald-600 text-white border border-emerald-400/40 shadow-xl backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100 select-none"
                   title="Ảnh trước"
                   aria-label="Ảnh trước"
                 >
-                  <ChevronLeft className="size-4 sm:size-5 stroke-[2.5]" />
+                  <ChevronLeft className="size-5 sm:size-6 stroke-[2.5]" />
                 </button>
                 <button
                   type="button"
@@ -386,11 +358,11 @@ export function OverviewSection() {
                     e.stopPropagation();
                     handleNextPhoto();
                   }}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 z-25 size-9 sm:size-10 rounded-full bg-background/90 hover:bg-background text-foreground shadow-md hover:shadow-lg border border-border/80 backdrop-blur-md flex items-center justify-center cursor-pointer transition-all active:scale-95 hover:scale-105"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 z-25 size-10 sm:size-11 rounded-full bg-emerald-600/90 hover:bg-emerald-600 text-white border border-emerald-400/40 shadow-xl backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100 select-none"
                   title="Ảnh kế tiếp"
                   aria-label="Ảnh kế tiếp"
                 >
-                  <ChevronRight className="size-4 sm:size-5 stroke-[2.5]" />
+                  <ChevronRight className="size-5 sm:size-6 stroke-[2.5]" />
                 </button>
 
                 {/* Top-Left Category Badge */}
