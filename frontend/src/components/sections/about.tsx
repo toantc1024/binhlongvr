@@ -228,63 +228,8 @@ export function AboutSection() {
             <div className="absolute bottom-20 left-10 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="w-full space-y-16">
-                {/* ================= PART 1: NỀN TẢNG THỰC TẾ ẢO ================= */}
+                {/* ================= PART 1: HÌNH ẢNH & DẤU ẤN PHƯỜNG BÌNH LONG (MOVED UP) ================= */}
                 <div>
-                    {/* Header: Align Left */}
-                    <div className="w-full mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                        <div>
-                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left">
-                                <TextAnimate animation="blurIn" as="span">
-                                    Nền tảng thực tế ảo
-                                </TextAnimate>
-                            </h2>
-                            <p className="mt-2 text-base text-muted-foreground text-left font-normal max-w-2xl leading-relaxed">
-                                Khám phá không gian văn hóa - lịch sử Phường Bình Long thông qua công nghệ số hóa 3D và thực tế ảo 360° tương tác đa chiều.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Clean 4-Column Grid: 4 cards side-by-side on desktop, 2x2 on tablet, 1 column on mobile */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 w-full">
-                        {features.map((feature, idx) => (
-                            <div
-                                key={idx}
-                                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-card text-card-foreground border border-border/60 shadow-md hover:shadow-xl transition-all duration-300 p-6 sm:p-7 min-h-[300px] sm:min-h-[320px]"
-                            >
-                                {/* Simple abstract background with soft dreamy blur */}
-                                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                                    {feature.background}
-                                </div>
-
-                                {/* Content Layer */}
-                                <div className="relative z-10 flex flex-col justify-between h-full pointer-events-none">
-                                    <div>
-                                        {/* Transparent 3D Icon */}
-                                        <div className="size-20 sm:size-22 flex items-center justify-start transform-gpu transition-all duration-300 ease-in-out group-hover:scale-105 pointer-events-none -ml-2 -mt-2">
-                                            <img
-                                                src={feature.iconImage}
-                                                alt={feature.name}
-                                                className="w-full h-full object-contain filter drop-shadow-md"
-                                            />
-                                        </div>
-                                        <h3 className="mt-4 text-lg sm:text-xl font-semibold text-foreground text-left tracking-tight">
-                                            {feature.name}
-                                        </h3>
-                                        <p className="mt-2 text-sm text-muted-foreground font-normal leading-relaxed text-left">
-                                            {feature.description}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Subtle hover backlight overlay */}
-                                <div className="pointer-events-none absolute inset-0 z-10 transform-gpu transition-all duration-300 group-hover:bg-black/[.02] dark:group-hover:bg-white/[.02]" />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* ================= PART 2: HÌNH ẢNH & DẤU ẤN PHƯỜNG BÌNH LONG ================= */}
-                <div className="pt-6">
                     <div className="w-full mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
                         <div>
                             <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left">
@@ -366,6 +311,61 @@ export function AboutSection() {
                                         {photo.title}
                                     </h3>
                                 </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* ================= PART 2: NỀN TẢNG THỰC TẾ ẢO ================= */}
+                <div className="pt-6">
+                    {/* Header: Align Left */}
+                    <div className="w-full mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                        <div>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground text-left">
+                                <TextAnimate animation="blurIn" as="span">
+                                    Nền tảng thực tế ảo
+                                </TextAnimate>
+                            </h2>
+                            <p className="mt-2 text-base text-muted-foreground text-left font-normal max-w-2xl leading-relaxed">
+                                Khám phá không gian văn hóa - lịch sử Phường Bình Long thông qua công nghệ số hóa 3D và thực tế ảo 360° tương tác đa chiều.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Clean 4-Column Grid: 4 cards side-by-side on desktop, 2x2 on tablet, 1 column on mobile */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 w-full">
+                        {features.map((feature, idx) => (
+                            <div
+                                key={idx}
+                                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-card text-card-foreground border border-border/60 shadow-md hover:shadow-xl transition-all duration-300 p-6 sm:p-7 min-h-[300px] sm:min-h-[320px]"
+                            >
+                                {/* Simple abstract background with soft dreamy blur */}
+                                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                                    {feature.background}
+                                </div>
+
+                                {/* Content Layer */}
+                                <div className="relative z-10 flex flex-col justify-between h-full pointer-events-none">
+                                    <div>
+                                        {/* Transparent 3D Icon */}
+                                        <div className="size-20 sm:size-22 flex items-center justify-start transform-gpu transition-all duration-300 ease-in-out group-hover:scale-105 pointer-events-none -ml-2 -mt-2">
+                                            <img
+                                                src={feature.iconImage}
+                                                alt={feature.name}
+                                                className="w-full h-full object-contain filter drop-shadow-md"
+                                            />
+                                        </div>
+                                        <h3 className="mt-4 text-lg sm:text-xl font-semibold text-foreground text-left tracking-tight">
+                                            {feature.name}
+                                        </h3>
+                                        <p className="mt-2 text-sm text-muted-foreground font-normal leading-relaxed text-left">
+                                            {feature.description}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Subtle hover backlight overlay */}
+                                <div className="pointer-events-none absolute inset-0 z-10 transform-gpu transition-all duration-300 group-hover:bg-black/[.02] dark:group-hover:bg-white/[.02]" />
                             </div>
                         ))}
                     </div>
