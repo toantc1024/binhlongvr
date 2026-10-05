@@ -30,16 +30,11 @@ const VRPage: React.FC<VRPageProps> = ({ isActive = true }) => {
   });
   const {
     isLoading,
-    currentHotspot,
     getHotspotById,
-    setCurrentHotspotById,
-    setPanoramasByHotspotId,
-    setCurrentPanorama,
-    getPanoramaById,
     selectHotspotAndPanorama,
   } = useVRStore((state) => state);
   const { currentAsset, setCurrentAsset } = useAssetStore((state) => state);
-  let [searchParams, _] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const prevActiveRef = React.useRef(isActive);
   const prevSearchParamsStrRef = React.useRef(searchParams.toString());
