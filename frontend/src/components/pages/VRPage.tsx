@@ -78,11 +78,6 @@ const VRPage: React.FC<VRPageProps> = ({ isActive = true }) => {
       selectHotspotAndPanorama(rootHotspotId, rootPanoramaId);
       setCurrentAsset(null);
       showMedia(rootPanoramaId);
-
-      const timer = setTimeout(() => {
-        showMedia(rootPanoramaId);
-      }, 150);
-      return () => clearTimeout(timer);
     }
   }, [searchParams, isActive]);
 
@@ -111,41 +106,34 @@ const VRPage: React.FC<VRPageProps> = ({ isActive = true }) => {
     }
   }, [isLoading]);
 
-  useEffect(() => {
-    (async () => {
-      if (currentHotspot) {
-        await setPanoramasByHotspotId(currentHotspot.hotspot_id);
-      }
-    })();
-  }, [currentHotspot?.hotspot_id]);
-
+  // Synchronize 3DVista internal panorama change events with app store without infinite loops
   useEffect(() => {
     const handlePanoramaChange = async (panoramaInfo: any) => {
-      const label = panoramaInfo?.data?.label || panoramaInfo?.label || panoramaInfo?.id;
+      const label =
+        panoramaInfo?.data?.label || panoramaInfo?.label || panoramaInfo?.id;
       if (!label) return;
 
-      const panorama = await getPanoramaById(label);
-      if (panorama) {
-        if (currentHotspot?.hotspot_id !== panorama.hotspot_id) {
-          setCurrentHotspotById(panorama.hotspot_id);
-          await setPanoramasByHotspotId(panorama.hotspot_id);
-        }
-        setCurrentPanorama(panorama);
+      const store = useVRStore.getState();
+      // Guard: already on this panorama, avoid duplicate processing or re-trigger
+      if (store.currentPanorama?.panorama_id === label) return;
+
+      const panorama = await store.getPanoramaById(label);
+      if (!panorama) return;
+
+      if (store.currentPanorama?.panorama_id === panorama.panorama_id) return;
+
+      if (store.currentHotspot?.hotspot_id !== panorama.hotspot_id) {
+        store.selectHotspotAndPanorama(panorama.hotspot_id, panorama.panorama_id);
+      } else {
+        store.setCurrentPanorama(panorama);
       }
     };
 
-    registerMessageHandler("panorama_change", handlePanoramaChange);
-    const handleDirectMessage = async (event: any) => {
-      if (event.data && event.data.type === "panorama_change") {
-        const panoramaInfo = event.data.payload;
-        await handlePanoramaChange(panoramaInfo);
-      }
-    };
-    window.addEventListener("message", handleDirectMessage);
+    const unsubscribe = registerMessageHandler("panorama_change", handlePanoramaChange);
     return () => {
-      window.removeEventListener("message", handleDirectMessage);
+      unsubscribe?.();
     };
-  }, [registerMessageHandler, currentHotspot?.hotspot_id]);
+  }, [registerMessageHandler]);
 
   const assetSnapPoints = ["400px", 1];
   const [assetSnap, setAssetSnap] = useState<number | string | null>(

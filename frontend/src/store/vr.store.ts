@@ -331,7 +331,21 @@ const useVRStore = create<VRStore>((set, get) => ({
       panoramas.find((p) => p.panorama_id === panorama_id) ||
       BINHLONG_PANORAMAS.find((p) => p.panorama_id === panorama_id);
     if (currentPanorama) {
-      set({ currentPanorama });
+      const updates: Partial<VRStoreState> = { currentPanorama };
+      // If panorama belongs to another hotspot, keep currentHotspot and panoramas synced
+      if (get().currentHotspot?.hotspot_id !== currentPanorama.hotspot_id) {
+        const hotspot = get().getHotspotById(currentPanorama.hotspot_id);
+        if (hotspot) {
+          updates.currentHotspot = hotspot;
+          const relatedPanas = BINHLONG_PANORAMAS.filter(
+            (p) => p.hotspot_id === hotspot.hotspot_id
+          );
+          if (relatedPanas.length > 0) {
+            updates.panoramas = relatedPanas;
+          }
+        }
+      }
+      set(updates);
     }
   },
 
@@ -362,16 +376,31 @@ const useVRStore = create<VRStore>((set, get) => ({
           }
         }
 
-        set({ panoramas });
+        const updates: Partial<VRStoreState> = {
+          panoramas,
+          isLoadingPanoramas: false,
+        };
 
-        const currentPanorama =
-          panoramas.find(
-            (p) => p.panorama_id === hotspot.click_panorama_id
-          ) || panoramas[0];
+        // Only set default panorama if currentPanorama does not belong to this hotspot
+        const activePanorama = get().currentPanorama;
+        const belongsToHotspot =
+          activePanorama &&
+          panoramas.some((p) => p.panorama_id === activePanorama.panorama_id);
 
-        if (currentPanorama) {
-          set({ currentPanorama });
+        if (!belongsToHotspot) {
+          const defaultPanorama =
+            panoramas.find(
+              (p) => p.panorama_id === hotspot.click_panorama_id
+            ) ||
+            panoramas.find((p) => p.panorama_id === "M3000_0_FLYCAM_1") ||
+            panoramas[0];
+          if (defaultPanorama) {
+            updates.currentPanorama = defaultPanorama;
+          }
         }
+
+        set(updates);
+      } else {
         set({ isLoadingPanoramas: false });
       }
     } catch {

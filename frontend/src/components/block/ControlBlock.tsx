@@ -80,13 +80,31 @@ const ControlBlock = ({
   // Audio narration state & audio element ref
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const activeAudioHotspotIdRef = useRef<number | null>(null);
+  const activeAudioTrackRef = useRef<string | null>(null);
   const userPausedRef = useRef<boolean>(false);
   const playTimerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Check if current view is at the main entrance panorama (Flycam toàn cảnh)
+  const isMainPanorama = useMemo(() => {
+    if (!currentHotspot || currentHotspot.hotspot_id !== 132) return false;
+    const pid = currentPanorama?.panorama_id;
+    return !pid || pid === "M3000_0_FLYCAM_1" || pid === "M3000_0_FLYCAM_2";
+  }, [currentHotspot?.hotspot_id, currentPanorama?.panorama_id]);
+
   const currentAudioUrl = useMemo(() => {
+    if (isMainPanorama) {
+      // Main panorama plays the affectionate welcome & overview voice, not the war/historical text
+      return "/audio/binhlong_welcome.mp3";
+    }
     return (currentHotspot?.metadata as any)?.audio_url || null;
-  }, [currentHotspot]);
+  }, [isMainPanorama, currentHotspot]);
+
+  const activeAudioTrackKey = useMemo(() => {
+    if (isMainPanorama) {
+      return "main_welcome";
+    }
+    return currentHotspot ? `hotspot_${currentHotspot.hotspot_id}` : null;
+  }, [isMainPanorama, currentHotspot?.hotspot_id]);
 
   useEffect(() => {
     if (currentPanorama) {
@@ -147,7 +165,9 @@ const ControlBlock = ({
 
   // Unified audio controller:
   // - Plays gently ONLY when active inside /app
-  // - Plays ONCE per hotspot without duplicate or overlapping playback
+  // - At main panorama: plays warm welcome & guide voice ("/audio/binhlong_welcome.mp3")
+  // - At specific di tích spots: plays dedicated historical narration
+  // - Plays ONCE per section without duplicate or overlapping playback
   // - Instantly pauses when navigating away from /app
   // - Respects user manual pause
   useEffect(() => {
@@ -160,34 +180,31 @@ const ControlBlock = ({
         audioRef.current.pause();
       }
       setIsPlayingAudio(false);
-      activeAudioHotspotIdRef.current = null;
+      activeAudioTrackRef.current = null;
       muteAllAudio?.();
       stopAllAudio?.();
       return;
     }
 
-    if (!currentHotspot) return;
-    const currentId = currentHotspot.hotspot_id;
-
-    // If audio is already active for this hotspot, do not replay or interrupt!
-    if (activeAudioHotspotIdRef.current === currentId && isPlayingAudio) {
+    if (!activeAudioTrackKey || !currentAudioUrl) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      setIsPlayingAudio(false);
       return;
     }
 
-    if (activeAudioHotspotIdRef.current !== currentId) {
-      activeAudioHotspotIdRef.current = currentId;
-      userPausedRef.current = false; // Reset pause when entering new hotspot
+    // If audio is already active for this track/state, do not replay or interrupt!
+    if (activeAudioTrackRef.current === activeAudioTrackKey && isPlayingAudio) {
+      return;
+    }
+
+    if (activeAudioTrackRef.current !== activeAudioTrackKey) {
+      activeAudioTrackRef.current = activeAudioTrackKey;
+      userPausedRef.current = false; // Reset pause when entering new section
 
       if (playTimerRef.current) {
         clearTimeout(playTimerRef.current);
-      }
-
-      if (!currentAudioUrl) {
-        if (audioRef.current) {
-          audioRef.current.pause();
-        }
-        setIsPlayingAudio(false);
-        return;
       }
 
       // Small delay (350ms) to ensure smooth transition
@@ -201,7 +218,7 @@ const ControlBlock = ({
         }
       };
     }
-  }, [isActive, currentHotspot?.hotspot_id, currentAudioUrl]);
+  }, [isActive, activeAudioTrackKey, currentAudioUrl]);
 
   const handleToggleAudio = () => {
     if (!audioRef.current) return;
@@ -242,7 +259,7 @@ const ControlBlock = ({
       audioRef.current.currentTime = 0;
     }
     setIsPlayingAudio(false);
-    activeAudioHotspotIdRef.current = null;
+    activeAudioTrackRef.current = null;
     muteAllAudio?.();
     stopAllAudio?.();
     setCurrentAsset(null);
@@ -338,17 +355,27 @@ const ControlBlock = ({
           )}
           onClick={handleToggleAudio}
           aria-label={
-            isPlayingAudio ? "Tắt thuyết minh âm thanh" : "Bật thuyết minh âm thanh"
+            isPlayingAudio
+              ? isMainPanorama
+                ? "Tắt lời chào & hướng dẫn"
+                : "Tắt thuyết minh âm thanh"
+              : isMainPanorama
+              ? "Bật lời chào & hướng dẫn"
+              : "Bật thuyết minh âm thanh"
           }
           title={
             isPlayingAudio
-              ? "Tắt thuyết minh âm thanh (Âm lượng nhỏ 35%)"
+              ? isMainPanorama
+                ? "Tắt lời chào & hướng dẫn (Âm lượng nhỏ 35%)"
+                : "Tắt thuyết minh âm thanh (Âm lượng nhỏ 35%)"
+              : isMainPanorama
+              ? "Nghe lời chào & hướng dẫn thực tế ảo"
               : "Bật thuyết minh âm thanh"
           }
         >
           <img
             src={audioSpeakerIcon}
-            alt="Thuyết minh âm thanh"
+            alt={isMainPanorama ? "Lời chào & Hướng dẫn" : "Thuyết minh âm thanh"}
             className={cn(
               "w-full h-full object-contain group-hover:scale-110 transition-transform drop-shadow-xs pointer-events-none select-none",
               isPlayingAudio ? "scale-105 animate-pulse" : "opacity-80 grayscale-[25%]"

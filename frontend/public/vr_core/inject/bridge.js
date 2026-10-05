@@ -211,10 +211,12 @@ class VRTourBridge {
   }
 
   debouncedNotifyPanoramaChange(panoramaInfo) {
-    // Only notify if the panorama ID has actually changed
-    if (this.lastNotifiedPanoramaId === panoramaInfo.id) {
+    const key = panoramaInfo.label || panoramaInfo.id;
+    // Only notify if the panorama has actually changed
+    if (this.lastNotifiedPanoramaId === key) {
       return; // Same panorama, don't notify again
     }
+    this.lastNotifiedPanoramaId = key;
 
     // Clear any existing timeout
     if (this.debounceTimeout) {
@@ -224,8 +226,7 @@ class VRTourBridge {
     // Set a new timeout to debounce rapid changes
     this.debounceTimeout = setTimeout(() => {
       this.notifyPanoramaChange(panoramaInfo);
-      this.lastNotifiedPanoramaId = panoramaInfo.id;
-    }, 300); // 300ms debounce
+    }, 200); // 200ms debounce
   }
 
   setupPanoramaChangeListeners() {

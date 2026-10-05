@@ -11,7 +11,7 @@ import argparse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config import AUDIO_DIR, TTS_VOICE, TTS_RATE, TTS_PITCH
-from dataset import LOCATIONS_DATA
+from dataset import LOCATIONS_DATA, WELCOME_DATA
 
 try:
     import edge_tts
@@ -40,14 +40,21 @@ def generate_single_audio(code: str, info: dict, voice: str = TTS_VOICE, rate: s
 
 def main_sync(selected_code=None, voice=TTS_VOICE, rate=TTS_RATE, pitch=TTS_PITCH):
     os.makedirs(AUDIO_DIR, exist_ok=True)
-    targets = {selected_code: LOCATIONS_DATA[selected_code]} if selected_code else LOCATIONS_DATA
+    targets = {selected_code: LOCATIONS_DATA[selected_code]} if selected_code and selected_code in LOCATIONS_DATA else dict(LOCATIONS_DATA)
+    if selected_code == 'WELCOME':
+        targets = {'WELCOME': WELCOME_DATA}
+    elif not selected_code:
+        targets['WELCOME'] = WELCOME_DATA
 
     print("==================================================")
     print("BẮT ĐẦU TẠO AUDIO THUYẾT MINH DI TÍCH BÌNH LONG")
     print("==================================================")
 
     for code, info in targets.items():
-        generate_single_audio(code, info, voice=voice, rate=rate, pitch=pitch)
+        v = info.get("voice", voice)
+        r = info.get("rate", rate)
+        p = info.get("pitch", pitch)
+        generate_single_audio(code, info, voice=v, rate=r, pitch=p)
 
     print("\n==================================================")
     print(f"HOÀN THÀNH: Đã tạo thành công {len(targets)} tệp âm thanh thuyết minh!")
@@ -57,7 +64,7 @@ def main_sync(selected_code=None, voice=TTS_VOICE, rate=TTS_RATE, pitch=TTS_PITC
 
 def main():
     parser = argparse.ArgumentParser(description="Tạo audio thuyết minh tiếng Việt tự nhiên cho di tích Bình Long")
-    parser.add_argument("--code", choices=list(LOCATIONS_DATA.keys()), help="Mã di tích (DTT, M7N, M3000, HLT). Mặc định tạo toàn bộ.")
+    parser.add_argument("--code", choices=list(LOCATIONS_DATA.keys()) + ['WELCOME'], help="Mã di tích (DTT, M7N, M3000, HLT, WELCOME). Mặc định tạo toàn bộ.")
     parser.add_argument("--voice", default=TTS_VOICE, help="Tên giọng TTS (mặc định: vi-VN-HoaiMyNeural)")
     parser.add_argument("--rate", default=TTS_RATE, help="Tốc độ đọc (ví dụ: +0%, -5%)")
     parser.add_argument("--pitch", default=TTS_PITCH, help="Cao độ giọng (ví dụ: +0Hz, -2Hz)")

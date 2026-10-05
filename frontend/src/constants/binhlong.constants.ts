@@ -93,7 +93,7 @@ export const BINHLONG_HOTSPOTS: Hotspot[] = [
     website: null,
     geolocation: { lon: 106.6057461, lat: 11.6491817 },
     preview_image: "/landmarks/m3000_preview.jpg",
-    click_panorama_id: "M3000_0_FLYCAM_2",
+    click_panorama_id: "M3000_0_FLYCAM_1",
     created_at: new Date().toISOString(),
     metadata: {
       ids: [],

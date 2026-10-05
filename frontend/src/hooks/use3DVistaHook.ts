@@ -46,7 +46,7 @@ interface Use3DVistaHookParams {
 interface Use3DVistaHookReturn {
   showMedia: (mediaName: string) => void;
   sendMessage: (message: any) => void;
-  onMessage: (eventType: string, callback: EventCallback) => void;
+  onMessage: (eventType: string, callback: EventCallback) => () => void;
   muteAllAudio: () => void;
   unmuteAllAudio: () => void;
   stopAllAudio: () => void;
@@ -67,6 +67,8 @@ const use3DVistaHook = ({
   const pendingMediaRef = useRef<string | null>(null);
   const isBridgeReadyRef = useRef<boolean>(false);
   const isActiveRef = useRef<boolean>(isActive);
+  const lastShownMediaRef = useRef<string | null>(null);
+  const lastShowTimeRef = useRef<number>(0);
 
   useEffect(() => {
     isActiveRef.current = isActive;
@@ -74,6 +76,14 @@ const use3DVistaHook = ({
 
   const showMedia = (mediaName: string): void => {
     if (!mediaName) return;
+
+    const now = Date.now();
+    // Guard: Prevent rapid duplicate triggers for the exact same media within 300ms
+    if (lastShownMediaRef.current === mediaName && now - lastShowTimeRef.current < 300) {
+      return;
+    }
+    lastShownMediaRef.current = mediaName;
+    lastShowTimeRef.current = now;
 
     const iframe = ref.current || (document.getElementById("vr_core") as HTMLIFrameElement | null);
     if (iframe?.contentWindow) {
@@ -94,17 +104,19 @@ const use3DVistaHook = ({
         console.warn("Direct showMedia invocation error:", err);
       }
 
-      try {
-        iframe.contentWindow.postMessage(
-          {
-            type: "set_media",
-            payload: { name: mediaName },
-          },
-          "*"
-        );
-        dispatched = true;
-      } catch (err) {
-        console.warn("PostMessage showMedia error:", err);
+      if (!dispatched) {
+        try {
+          iframe.contentWindow.postMessage(
+            {
+              type: "set_media",
+              payload: { name: mediaName },
+            },
+            "*"
+          );
+          dispatched = true;
+        } catch (err) {
+          console.warn("PostMessage showMedia error:", err);
+        }
       }
 
       if (!isBridgeReadyRef.current && !dispatched) {
@@ -122,7 +134,7 @@ const use3DVistaHook = ({
   const registerMessageHandler = (
     eventType: string,
     callback: EventCallback
-  ): void => {
+  ): (() => void) => {
     if (!eventHandlers.current[eventType]) {
       eventHandlers.current[eventType] = [];
     }
@@ -130,6 +142,13 @@ const use3DVistaHook = ({
     if (!exists) {
       eventHandlers.current[eventType].push(callback);
     }
+    return () => {
+      if (eventHandlers.current[eventType]) {
+        eventHandlers.current[eventType] = eventHandlers.current[
+          eventType
+        ].filter((cb) => cb !== callback);
+      }
+    };
   };
 
   // Audio control functions
