@@ -83,7 +83,7 @@ const GALLERY_ITEMS = [
     image: "/landmarks/mo_3000_tuong_niem.jpg",
     actionType: "vr" as const,
     hotspotId: 132,
-    panoramaId: "M3000_0_FLYCAM_2",
+    panoramaId: "M3000_0_FLYCAM_1",
   },
   {
     id: "congchao",
@@ -177,7 +177,7 @@ const FEATURED_SITES = [
     detail: "Mộ 3000 đồng bào An Lộc bị đế quốc Mỹ tàn sát ngày 03/10/1972 (Mộ tập thể 3000 người)",
     type: "Di tích Quốc gia",
     hotspotId: 132,
-    panoramaId: "M3000_0_FLYCAM_2",
+    panoramaId: "M3000_0_FLYCAM_1",
     image: "/landmarks/mo_3000_tuong_niem.jpg",
   },
   {

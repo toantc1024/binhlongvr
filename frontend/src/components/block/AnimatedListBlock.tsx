@@ -74,7 +74,7 @@ const DEFAULT_HOTSPOTS_LIST: Item[] = [
         preview_image: "/vr_core/thumbnail.png",
     },
     {
-        name: "Di tích Lịch sử Mộ 3.000 người An Lộc",
+        name: "Di tích Lịch sử cấp Quốc gia Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (Mộ tập thể 3000 người)",
         description: "Nơi ghi dấu sự hy sinh anh dũng của hơn 3.000 đồng bào và chiến sĩ trong cuộc chiến đấu bảo vệ quê hương năm 1972. Di tích lịch sử - văn hóa cấp Quốc gia.",
         address: "Phường Bình Long, TP. Đồng Nai",
         preview_image: "/vr_core/thumbnail.png",

@@ -63,8 +63,8 @@ const TutorialDialogBlock = () => {
                                 <FiHome className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-foreground font-bold text-sm sm:text-base">Về toàn cảnh Mộ 3.000 người</p>
-                                <p className="text-muted-foreground text-xs sm:text-sm">Đưa không gian thực tế ảo trở về góc nhìn toàn cảnh Di tích Lịch sử Quốc gia Mộ 3.000 người</p>
+                                <p className="text-foreground font-bold text-sm sm:text-base">Về toàn cảnh Mộ 3.000 người (Nút Home)</p>
+                                <p className="text-muted-foreground text-xs sm:text-sm">Trở về toàn cảnh Di tích Lịch sử cấp Quốc gia Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (Mộ tập thể 3000 người)</p>
                             </div>
                         </div>
 

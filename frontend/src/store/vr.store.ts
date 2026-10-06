@@ -197,7 +197,10 @@ const useVRStore = create<VRStore>((set, get) => ({
 
   getHotspotById: (hotspot_id: number) => {
     const areaHotspots = get().areaHotspots;
-    return areaHotspots.find((hotspot) => hotspot.hotspot_id === hotspot_id);
+    return (
+      areaHotspots.find((hotspot) => hotspot.hotspot_id === hotspot_id) ||
+      BINHLONG_HOTSPOTS.find((hotspot) => hotspot.hotspot_id === hotspot_id)
+    );
   },
 
   loadData: async () => {
@@ -244,7 +247,19 @@ const useVRStore = create<VRStore>((set, get) => ({
     set({ isLoading: true });
     try {
       const currentArea = await getAreaDetailById(CURRENT_AREA_ID);
-      const areaHotspots = await getHotspotsByAreaId(CURRENT_AREA_ID);
+      const rawAreaHotspots = await getHotspotsByAreaId(CURRENT_AREA_ID);
+      const areaHotspots = rawAreaHotspots.map((ah) => {
+        const local = BINHLONG_HOTSPOTS.find((lh) => lh.hotspot_id === ah.hotspot_id);
+        if (!local) return ah;
+        return {
+          ...ah,
+          title: local.title || ah.title,
+          description: local.description || ah.description,
+          click_panorama_id: local.click_panorama_id || ah.click_panorama_id,
+          metadata: { ...ah.metadata, ...local.metadata },
+          assets: local.assets || ah.assets,
+        };
+      });
 
       let currentHotspot = get().currentHotspot;
       if (urlHotspotId) {

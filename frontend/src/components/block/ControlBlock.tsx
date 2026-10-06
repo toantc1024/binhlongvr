@@ -50,8 +50,6 @@ const ControlBlock = ({
 }) => {
   const [isBottomNavVisible, setIsBottomNavVisible] = useState(true);
   const {
-    currentArea,
-    getHotspotById,
     currentHotspot,
     currentPanorama,
     setCurrentPanoramaById,
@@ -237,14 +235,10 @@ const ControlBlock = ({
     }
   };
 
-  // Home button: Returns to main panorama of Mộ 3.000 người (Hotspot 132, M3000_0_FLYCAM_1)
+  // Home button: Returns to main panorama of Di tích Lịch sử cấp Quốc gia Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (Hotspot 132, M3000_0_FLYCAM_1)
   const handleGoToFlycamHome = async () => {
-    const mainHotspotId = currentArea?.main_hotspot_id
-      ? Number(currentArea.main_hotspot_id)
-      : 132;
-    const mainHotspot = getHotspotById(mainHotspotId);
-    const targetPanoramaId =
-      mainHotspot?.click_panorama_id || "M3000_0_FLYCAM_1";
+    const mainHotspotId = 132;
+    const targetPanoramaId = "M3000_0_FLYCAM_1";
 
     setCurrentAsset(null);
     selectHotspotAndPanorama(mainHotspotId, targetPanoramaId);
@@ -329,17 +323,17 @@ const ControlBlock = ({
           />
         </Button>
 
-        {/* Nút Home: Về toàn cảnh Mộ 3.000 người (3D Home Monument) */}
+        {/* Nút Home: Về Di tích Lịch sử cấp Quốc gia Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (3D Home Monument) */}
         <Button
           variant="ghost"
           className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 p-2 sm:p-2.5 shadow-xs rounded-full hover:bg-emerald-50 hover:border-emerald-500/50 bg-white/95 dark:bg-slate-900/95 text-foreground border border-border flex items-center justify-center cursor-pointer transition-all active:scale-95 group overflow-hidden"
           onClick={handleGoToFlycamHome}
-          aria-label="Về toàn cảnh Mộ 3.000 người"
-          title="Về toàn cảnh Mộ 3.000 người"
+          aria-label="Di tích Lịch sử cấp Quốc gia Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (Mộ tập thể 3000 người)"
+          title="Di tích Lịch sử cấp Quốc gia Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (Mộ tập thể 3000 người)"
         >
           <img
             src={homeMonumentIcon}
-            alt="Về toàn cảnh Mộ 3.000 người"
+            alt="Di tích Lịch sử cấp Quốc gia Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (Mộ tập thể 3000 người)"
             className="w-full h-full object-contain group-hover:scale-110 transition-transform drop-shadow-xs pointer-events-none select-none"
           />
         </Button>

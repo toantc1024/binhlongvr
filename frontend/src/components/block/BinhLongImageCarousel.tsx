@@ -11,7 +11,7 @@ const BINHLONG_LANDMARK_SLIDES = [
   {
     image: "/landmarks/mo_3000_tuong_niem.jpg",
     title: "Di tích Quốc gia Mộ 3.000 người",
-    subtitle: "Khu tưởng niệm cấp Quốc gia – Mộ 3.000 đồng bào An Lộc",
+    subtitle: "Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972",
     tag: "Di tích Quốc gia",
   },
   {

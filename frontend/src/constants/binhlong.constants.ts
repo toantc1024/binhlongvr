@@ -86,7 +86,7 @@ export const BINHLONG_HOTSPOTS: Hotspot[] = [
     id: "132",
     hotspot_id: 132,
     area_id: 25,
-    title: "Di tích Lịch sử cấp Quốc gia Mộ 3.000 người An Lộc",
+    title: "Di tích Lịch sử cấp Quốc gia Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (Mộ tập thể 3000 người)",
     description:
       "Di tích lịch sử Quốc gia: Mộ 3.000 đồng bào bị Đế quốc Mỹ tàn sát ngày 03/10/1972 (còn gọi là Mộ tập thể 3.000 người), tọa lạc tại Khu phố An Lộc, Phường Bình Long, Thành phố Đồng Nai. Ngày 07/04/1972, khi Lộc Ninh được hoàn toàn giải phóng, quân ta tấn công như vũ bão nhằm giải phóng Bình Long. Địch ra sức giữ Bình Long vì 'Bình Long mất, Sài Gòn không còn'. Suốt 32 ngày đêm (từ 13/04 đến 15/05/1972), chiến sự diễn ra vô cùng ác liệt. Địch tập trung mọi hỏa lực hiện có kể cả máy bay B52 thả bom rải thảm cày nát mặt đất, thả bom vào cả bệnh viện thị trấn An Lộc nơi phần lớn nhân dân tập trung tránh đạn pháo và cả lính địch bị thương đang điều trị khiến hàng ngàn người thương vong, nhà cửa đổ nát. Để giải quyết số người chết trong 32 ngày đêm đó, địch dùng xe ủi khoét bốn rãnh lớn chôn các xác chết sau khi gom lại, hình thành ngôi mộ tập thể trên 3.000 người. Với diện tích hơn 4.000m², khu di tích ngày nay được tôn tạo trang nghiêm với tượng đài tưởng niệm cao 12,6m, nhà bia lịch sử và hoa viên xanh mát. Di tích được Bộ Văn hóa công nhận là Di tích Lịch sử cấp Quốc gia vào ngày 01/04/1985, là minh chứng sâu sắc về cái giá của hòa bình và sự hy sinh to lớn của dân tộc.",
     address: "Khu phố An Lộc, Phường Bình Long, Thành phố Đồng Nai",
