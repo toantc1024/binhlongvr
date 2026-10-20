@@ -63,6 +63,8 @@
 ---
 
 ## 4. Poster Chúc Mừng 20/10 Ngày Phụ Nữ Việt Nam
-* `poster_20_10_binhlong_1.jpg`: Poster chibi 3D cặp đôi linh vật Bình Long, bạn nam tặng hoa sen hồng tươi thắm, thông điệp *"Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 - Dành tặng những người phụ nữ tuyệt vời tại Bình Long"*.
-* `poster_20_10_binhlong_2.jpg`: Poster chibi 3D bạn nữ cầm bó hoa hồng phấn cùng bạn nam vẫy tay chúc mừng, bóng bay pastel và hộp quà, thông điệp *"20/10 Ngày Phụ Nữ Việt Nam - Chúc Các Chị Em Công Tác Tại Bình Long Luôn Rạng Rỡ & Thành Công"*.
+* `poster_20_10_phuong_binhlong.jpg`: Poster chibi 3D linh vật Bình Long trên bục danh dự ngập tràn quà và bóng bay, chữ chuẩn xác: *"20/10 Ngày Phụ Nữ Việt Nam - Chúc các chị công tác ở phường Bình Long luôn xinh đẹp, hạnh phúc & thành công!"*.
+* `poster_20_10_binhlong_2.jpg`: Poster chibi 3D bạn nữ cầm bó hoa hồng phấn cùng bạn nam vẫy tay chúc mừng, bóng bay pastel và hộp quà: *"20/10 Ngày Phụ Nữ Việt Nam - Chúc Các Chị Em Công Tác Tại Bình Long Luôn Rạng Rỡ & Thành Công"*.
+* `poster_20_10_binhlong_1.jpg`: Poster chibi 3D cặp đôi linh vật Bình Long, bạn nam tặng hoa sen hồng tươi thắm.
+
 
