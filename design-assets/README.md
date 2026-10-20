@@ -29,8 +29,40 @@
 * **Trang phục**: Áo dài cách tân thanh lịch xanh lục bảo phối quần trắng, nơ cài tóc xanh, trâm cài sao vàng.
 * **Cử chỉ**: Chắp tay cung kính, nụ cười thân thiện rạng rỡ chào đón quý khách đến với Bình Long.
 
+### 2.3. Chibi Nữ - Tạo Dáng Trái Tim Hai Tay (`chibi_nu_heart_hands_transparent.png`)
+* **Tư thế**: Hai bàn tay chắp tạo dáng hình trái tim ngọt ngào trước ngực (Heart Hands Pose 🫶).
+* **Định dạng**: PNG nền trong suốt (alpha), bo viền mượt mà sắc nét.
+
+### 2.4. Chibi Nữ - Bắn Tim Ngón Tay (`chibi_nu_finger_heart_transparent.png`)
+* **Tư thế**: Bắn tim ngón tay kiểu Hàn Quốc (Finger Heart Pose 🫰) cùng các hạt tim pha lê lấp lánh bay nhẹ.
+* **Định dạng**: PNG nền trong suốt (alpha).
+
+### 2.5. Chibi Nữ - "Dạ! Cảm ơn!" (Trái Tim Hai Tay) (`chibi_nu_heart_hands_cam_on_transparent.png`)
+* **Lời thoại**: Hộp thoại 3D bóng bẩy nổi bật với nội dung *"Dạ! Cảm ơn!"*.
+* **Tư thế**: Chắp hai tay hình trái tim (Heart Hands 🫶).
+* **Định dạng**: PNG trong suốt, tối ưu làm sticker iPhone / Zalo gửi lời cảm ơn khách tham quan.
+
+### 2.7. Chibi Cặp Đôi (Nam & Nữ) - "Tụi em xin cảm ơn!" (`chibi_duo_cam_on_transparent.png`)
+* **Nội dung**: Cả hai bạn hướng dẫn viên Nam và Nữ cùng xuất hiện chung trong một ảnh duy nhất, đồng lòng gửi lời tri ân: *"Tụi em xin cảm ơn!"*.
+* **Tư thế**:
+  * Bạn Nam: Tạo dáng trái tim hai tay (Heart Hands 🫶).
+  * Bạn Nữ: Bắn tim ngón tay kiểu Hàn Quốc (Finger Heart 🫰).
+* **Định dạng**: PNG nền trong suốt (alpha), bo viền chống răng cưa mượt mà, sẵn sàng làm Sticker iPhone / Zalo và Popup cảm ơn trên website Bình Long VR.
+
 ---
 
 ## 3. Bản Sao Ảnh Gốc Chất Lượng Cao
-* `chibi_nam_binhlong.jpg`: Bản gốc nền trắng sắc nét.
-* `chibi_nu_binhlong.jpg`: Bản gốc nền trắng sắc nét.
+* `chibi_nam_binhlong.jpg`: Bản gốc nam chào đón nền trắng sắc nét.
+* `chibi_nu_binhlong.jpg`: Bản gốc nữ chào đón nền trắng sắc nét.
+* `chibi_nu_heart_hands.jpg`: Bản gốc nữ tạo dáng trái tim hai tay.
+* `chibi_nu_finger_heart.jpg`: Bản gốc nữ bắn tim ngón tay.
+* `chibi_nu_heart_hands_cam_on.jpg`: Bản gốc nữ "Dạ! Cảm ơn!" (trái tim hai tay).
+* `chibi_nu_finger_heart_cam_on.jpg`: Bản gốc nữ "Dạ! Cảm ơn!" (bắn tim ngón tay).
+* `chibi_duo_cam_on.jpg`: Bản gốc cặp đôi Nam - Nữ "Tụi em xin cảm ơn!".
+
+---
+
+## 4. Poster Chúc Mừng 20/10 Ngày Phụ Nữ Việt Nam
+* `poster_20_10_binhlong_1.jpg`: Poster chibi 3D cặp đôi linh vật Bình Long, bạn nam tặng hoa sen hồng tươi thắm, thông điệp *"Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 - Dành tặng những người phụ nữ tuyệt vời tại Bình Long"*.
+* `poster_20_10_binhlong_2.jpg`: Poster chibi 3D bạn nữ cầm bó hoa hồng phấn cùng bạn nam vẫy tay chúc mừng, bóng bay pastel và hộp quà, thông điệp *"20/10 Ngày Phụ Nữ Việt Nam - Chúc Các Chị Em Công Tác Tại Bình Long Luôn Rạng Rỡ & Thành Công"*.
+
