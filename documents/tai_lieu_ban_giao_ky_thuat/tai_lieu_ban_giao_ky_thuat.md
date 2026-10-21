@@ -14,6 +14,14 @@
 | **Đơn vị tiếp nhận** | UBND Thị xã Bình Long - Phường An Lộc |
 | **Đơn vị bàn giao** | Đội ngũ Kỹ thuật HCMUTE |
 
+#### Tài Nguyên Mã QR Trong Suốt (Dành Cho Thiết Kế & Truyền Thông)
+- **Tập tin:** `assets/qr_binhlong_transparent_logo.png`
+- **Độ phân giải:** 1024 × 1024 px (PNG kênh Alpha trong suốt, tích hợp biểu trưng Bình Long VR ở trung tâm)
+- **Chuẩn kỹ thuật:** QR Code Model 2, ECC Level H (chịu lỗi cao, quét 100% trên nền sáng/tối/ảnh chụp)
+- **Tải về trực tiếp:** [Tải mã QR trong suốt (PNG)](assets/qr_binhlong_transparent_logo.png)
+
+![Mã QR trong suốt có logo Bình Long](assets/qr_binhlong_transparent_logo.png)
+
 ---
 
 ### 2. Quy Trình Vận Hành & Khai Thác 5 Bước (Trực Quan)
