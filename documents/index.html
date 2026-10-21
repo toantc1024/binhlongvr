@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cổng Tài Liệu & Ấn Phẩm Bàn Giao - Bản Đồ Số Bình Long VR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #031710;
+      --card-bg: #06281c;
+      --primary: #10b981;
+      --primary-light: #34d399;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(16, 185, 129, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--primary);
+      color: #6ee7b7;
+      padding: 6px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 40px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #ffffff 0%, #6ee7b7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      margin-bottom: 50px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .card:hover {
+      border-color: var(--primary);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.25);
+    }
+
+    .card-thumb {
+      height: 240px;
+      position: relative;
+      background: #021a12;
+      overflow: hidden;
+    }
+
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover .card-thumb img {
+      transform: scale(1.05);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(3, 23, 16, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--primary);
+      color: #6ee7b7;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #031710;
+      font-weight: 800;
+      padding: 11px 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #64748b;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="header-badge">🏛️ Bản Đồ Số Bình Long VR</div>
+      <h1>HỆ THỐNG TÀI LIỆU, POSTER & MÃ QR</h1>
+      <p>Tổng hợp đầy đủ ấn phẩm Poster giới thiệu, bộ mã QR quét trực tiếp và tài liệu bàn giao kỹ thuật trực quan (ít chữ, nhiều hình ảnh hướng dẫn).</p>
+    </div>
+
+    <div class="grid">
+      <!-- 1. POSTER GIỚI THIỆU -->
+      <div class="card">
+        <div class="card-thumb">
+          <span class="card-badge">Mục 1 • Ấn Phẩm</span>
+          <img src="poster_intro/poster_intro_binhlong_vr.png" alt="Poster Giới Thiệu">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">1. Poster Giới Thiệu Ứng Dụng</h2>
+          <p class="card-desc">Thiết kế giới thiệu ứng dụng với ảnh chụp di tích thật kết hợp giao diện VR 360°, bản đồ số, trợ lý AI và nhân vật Chibi thanh niên chào mừng.</p>
+          <div class="card-actions">
+            <a href="poster_intro/poster_intro_app.html" class="btn">🖼️ Xem & In Poster Ngang</a>
+            <a href="poster_intro/poster_standee_vertical.html" class="btn btn-secondary">📐 Xem & In Standee Đứng</a>
+            <a href="poster_intro/poster_intro_binhlong_vr.png" class="btn btn-secondary" download>⬇️ Tải Ảnh Poster Ngang</a>
+            <a href="poster_intro/poster_standee_vertical.png" class="btn btn-secondary" download>⬇️ Tải Ảnh Standee Đứng</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. BỘ MÃ QR CODE -->
+      <div class="card">
+        <div class="card-thumb" style="display: flex; align-items: center; justify-content: center; background: #031e15; padding: 20px;">
+          <span class="card-badge">Mục 2 • Quét Mã</span>
+          <img src="qr_codes/qr_binhlong_card_dark.png" alt="Mã QR Bản Đồ Số" style="max-height: 200px; width: auto; object-fit: contain;">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">2. Bộ Mã QR Đã Kiểm Tra Quét</h2>
+          <p class="card-desc">Mã QR dẫn tới <code>binhlongvr.vercel.app</code> đầy đủ phiên bản: trong suốt (cho tài liệu/banner), bản chuẩn và thẻ in để bàn.</p>
+          <div class="card-actions">
+            <a href="qr_codes/qr_binhlong_transparent.png" class="btn" download>✨ Tải QR Nền Trong Suốt (PNG)</a>
+            <a href="qr_codes/qr_binhlong_standard.png" class="btn btn-secondary" download>🔲 Tải QR Chuẩn Có Logo</a>
+            <a href="qr_codes/qr_binhlong_card_light.png" class="btn btn-secondary" download>📑 Tải Thẻ In Quét QR Sáng</a>
+            <a href="qr_codes/qr_binhlong_card_dark.png" class="btn btn-secondary" download>🌙 Tải Thẻ In Quét QR Tối</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. TÀI LIỆU BÀN GIAO KỸ THUẬT -->
+      <div class="card">
+        <div class="card-thumb" style="background: #ffffff; padding: 16px; display: flex; align-items: center; justify-content: center;">
+          <span class="card-badge" style="background: #047857; color: #ffffff;">Mục 3 • Hướng Dẫn</span>
+          <img src="assets/ui_map_interactive.png" alt="Tài Liệu Bàn Giao" style="border-radius: 8px; border: 1px solid #e2e8f0;">
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">3. Tài Liệu Bàn Giao & HDSD</h2>
+          <p class="card-desc">Hướng dẫn vận hành hệ thống theo tiêu chí ít chữ, nhiều hình ảnh trực quan 5 bước, bảng nghiệm thu kỹ thuật và biên bản chuyển giao.</p>
+          <div class="card-actions">
+            <a href="tai_lieu_ban_giao_ky_thuat/index.html" class="btn">📖 Xem Tài Liệu Trực Quan (Web)</a>
+            <a href="tai_lieu_ban_giao_ky_thuat/tai_lieu_ban_giao_ky_thuat.pdf" class="btn btn-secondary" download>📥 Tải Bản PDF Đã Xuất Sẵn</a>
+            <a href="tai_lieu_ban_giao_ky_thuat/tai_lieu_ban_giao_ky_thuat.md" class="btn btn-secondary">📄 Đọc Bản Markdown</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      UBND Thị Xã Bình Long - Phường An Lộc & Đội Ngũ Kỹ Thuật HCMUTE © 2026
+    </div>
+  </div>
+
+</body>
+</html>
