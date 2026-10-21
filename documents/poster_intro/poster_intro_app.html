@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poster Giới Thiệu - Bản Đồ Số Bình Long VR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #031710;
+      --bg-card: rgba(6, 40, 28, 0.85);
+      --primary: #10b981;
+      --primary-light: #34d399;
+      --primary-dark: #047857;
+      --accent: #fbbf24;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(16, 185, 129, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .poster {
+      width: 1920px;
+      height: 1080px;
+      position: relative;
+      background: radial-gradient(circle at 15% 15%, #083b27 0%, #031710 70%), linear-gradient(135deg, #021e14 0%, #010c08 100%);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 100px rgba(16, 185, 129, 0.15);
+      display: flex;
+      flex-direction: column;
+      padding: 40px 56px 36px 56px;
+    }
+
+    /* Background decorative subtle grid */
+    .poster::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 85% 20%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
+        linear-gradient(to right, rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 60px 60px, 60px 60px;
+      pointer-events: none;
+    }
+
+    /* Header Bar */
+    .header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      background: #04251a;
+      border: 2px solid var(--primary);
+      padding: 6px;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.35);
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand-titles h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      line-height: 1.1;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ffffff 0%, #6ee7b7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-titles p {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary-light);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .header-tags {
+      display: flex;
+      gap: 12px;
+    }
+
+    .pill-tag {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid var(--primary);
+      color: #a7f3d0;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* Main Poster Layout Grid */
+    .content-grid {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      padding-top: 28px;
+    }
+
+    /* Left Column: UI Real Capture Showcase */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .main-showcase-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+    }
+
+    .showcase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: rgba(3, 23, 16, 0.95);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .showcase-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: #6ee7b7;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .showcase-img-wrap {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+    }
+
+    .showcase-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .showcase-overlay-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(3, 23, 16, 0.88);
+      border: 1px solid var(--primary);
+      padding: 10px 18px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+    }
+
+    .showcase-overlay-badge h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .showcase-overlay-badge p {
+      font-size: 13px;
+      color: #6ee7b7;
+      margin-top: 2px;
+    }
+
+    /* Sub UI & Real Photo Quad */
+    .quad-showcase {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .quad-card {
+      background: rgba(6, 32, 22, 0.9);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quad-thumb {
+      height: 110px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quad-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .quad-label-type {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      background: rgba(3, 23, 16, 0.85);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .quad-body {
+      padding: 8px 10px 10px 10px;
+    }
+
+    .quad-body h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .quad-body p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Feature summary bar */
+    .features-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .feature-item {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .feature-item h5 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #34d399;
+      margin-bottom: 2px;
+    }
+
+    .feature-item p {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.3;
+    }
+
+    /* Right Column: Chibi Character + QR Code + Call to Action */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+    }
+
+    /* Chibi Showcase Banner */
+    .chibi-hero-wrap {
+      position: relative;
+      background: linear-gradient(145deg, rgba(6, 44, 30, 0.9) 0%, rgba(3, 23, 16, 0.95) 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      overflow: visible;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.4);
+    }
+
+    .chibi-message {
+      max-width: 320px;
+      z-index: 5;
+    }
+
+    .chibi-badge {
+      display: inline-block;
+      background: #047857;
+      color: #ffffff;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .chibi-message h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .chibi-message p {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .chibi-image-box {
+      width: 250px;
+      height: 250px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .chibi-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.6));
+    }
+
+    /* Big QR Card Section */
+    .qr-hero-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0.25) 100%);
+      border: 2px solid var(--primary);
+      border-radius: 24px;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.2);
+    }
+
+    .qr-frame {
+      width: 200px;
+      height: 200px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      flex-shrink: 0;
+    }
+
+    .qr-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .qr-info {
+      flex: 1;
+    }
+
+    .qr-pill {
+      display: inline-block;
+      background: var(--primary);
+      color: #031710;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 4px 14px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .qr-info h3 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .qr-info p {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .qr-link-badge {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 15px;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(3, 23, 16, 0.85);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 6px 14px;
+      border-radius: 8px;
+    }
+
+    /* Footer Credits */
+    .footer {
+      position: relative;
+      z-index: 10;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(16, 185, 129, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .footer-left strong {
+      color: #cbd5e1;
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 16px;
+      color: var(--primary-light);
+      font-weight: 700;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+      }
+      .poster {
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        width: 100vw;
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="poster">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand-wrap">
+        <div class="brand-logo">
+          <img src="../assets/logo_vr.png" alt="Bình Long VR Logo">
+        </div>
+        <div class="brand-titles">
+          <h1>BẢN ĐỒ SỐ BÌNH LONG VR</h1>
+          <p>Không Gian Di Sản & Lịch Sử Số 360°</p>
+        </div>
+      </div>
+      <div class="header-tags">
+        <span class="pill-tag">Bảo tồn Di sản Số</span>
+        <span class="pill-tag">Công nghệ VR 360°</span>
+        <span class="pill-tag">Trợ lý Lịch sử AI</span>
+      </div>
+    </header>
+
+    <!-- Content Grid -->
+    <main class="content-grid">
+      <!-- Left Column: UI Real Capture Showcase -->
+      <section class="left-col">
+        <!-- Main VR Showcase -->
+        <div class="main-showcase-card">
+          <div class="showcase-header">
+            <div class="window-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="showcase-tag">Giao Diện Thực Tế Trải Nghiệm VR 360°</span>
+          </div>
+          <div class="showcase-img-wrap">
+            <img src="../assets/ui_vr_m3000.png" alt="Giao diện VR 360 Mộ 3000 Người">
+            <div class="showcase-overlay-badge">
+              <h3>Di Tích Lịch Sử Mộ 3.000 Người</h3>
+              <p>Khám phá toàn cảnh 360° chân thực • Điểm thông tin tương tác</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Sub Real Photo + App UI Cards -->
+        <div class="quad-showcase">
+          <!-- Card 1: Dinh Tinh Truong (Real Photo) -->
+          <div class="quad-card">
+            <div class="quad-thumb">
+              <span class="quad-label-type">Ảnh Thực Tế</span>
+              <img src="../assets/dinh_tinh_truong_real.jpg" alt="Dinh Tỉnh Trưởng Thực Tế">
+            </div>
+            <div class="quad-body">
+              <h4>Dinh Tỉnh Trưởng</h4>
+              <p>Di tích lịch sử kháng chiến</p>
+            </div>
+          </div>
+
+          <!-- Card 2: VR Dinh Tinh Truong UI -->
+          <div class="quad-card">
+            <div class="quad-thumb">
+              <span class="quad-label-type">Giao Diện VR</span>
+              <img src="../assets/ui_vr_dinh.png" alt="VR Dinh Tỉnh Trưởng">
+            </div>
+            <div class="quad-body">
+              <h4>Khám Phá Chi Tiết</h4>
+              <p>Tương tác điểm nhìn 360°</p>
+            </div>
+          </div>
+
+          <!-- Card 3: Mo 7 Nguoi (Real Photo) -->
+          <div class="quad-card">
+            <div class="quad-thumb">
+              <span class="quad-label-type">Ảnh Thực Tế</span>
+              <img src="../assets/mo_7_nguoi_real.jpg" alt="Tượng Đài Mộ 7 Người">
+            </div>
+            <div class="quad-body">
+              <h4>Tượng Đài Mộ 7 Người</h4>
+              <p>Dấu ấn oai hùng Bình Long</p>
+            </div>
+          </div>
+
+          <!-- Card 4: AI & Map UI -->
+          <div class="quad-card">
+            <div class="quad-thumb">
+              <span class="quad-label-type">Trợ Lý AI</span>
+              <img src="../assets/ui_ai_chatbot.png" alt="Chatbot AI Bản Đồ Số">
+            </div>
+            <div class="quad-body">
+              <h4>Thuyết Minh AI</h4>
+              <p>Hỏi đáp lịch sử tự động</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature Bar -->
+        <div class="features-strip">
+          <div class="feature-item">
+            <h5>VR 360° Không Gian</h5>
+            <p>Trải nghiệm chân thực từng góc nhìn di tích với âm thanh thuyết minh sống động.</p>
+          </div>
+          <div class="feature-item">
+            <h5>Bản Đồ Số Tương Tác</h5>
+            <p>Định vị GPS chuẩn xác, dẫn đường và gợi ý hành trình khám phá di tích thuận tiện.</p>
+          </div>
+          <div class="feature-item">
+            <h5>Trợ Lý AI Tự Động</h5>
+            <p>Tra cứu kiến thức lịch sử, tài liệu lưu trữ và giải đáp mọi câu hỏi trực quan.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Chibi Mascot + QR Hero Block -->
+      <section class="right-col">
+        <!-- Chibi Mascot Card -->
+        <div class="chibi-hero-wrap">
+          <div class="chibi-message">
+            <span class="chibi-badge">Đoàn Thanh Niên Bình Long</span>
+            <h2>Chào Mừng Đến Với Di Tích Bình Long</h2>
+            <p>Ứng dụng Bản đồ số hỗ trợ bạn tham quan không gian thực tế ảo mọi lúc, mọi nơi ngay trên điện thoại và máy tính bảng!</p>
+          </div>
+          <div class="chibi-image-box">
+            <img src="../assets/chibi_duo.png" alt="Chibi Thanh Niên Bình Long">
+          </div>
+        </div>
+
+        <!-- Big QR Card for Instant Mobile Scanning -->
+        <div class="qr-hero-card">
+          <div class="qr-frame">
+            <img src="../qr_codes/qr_binhlong_standard.png" alt="Mã QR Bản Đồ Số Bình Long VR">
+          </div>
+          <div class="qr-info">
+            <span class="qr-pill">Quét Mã Trải Nghiệm</span>
+            <h3>Bắt Đầu Tham Quan Ngay Hôm Nay</h3>
+            <p>Mở camera điện thoại quét mã QR hoặc truy cập trực tiếp qua trình duyệt web không cần cài đặt ứng dụng.</p>
+            <div class="qr-link-badge">https://binhlongvr.vercel.app/</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-left">
+        <strong>UBND Thị xã Bình Long - Phường An Lộc</strong> đồng hành cùng <strong>Đội ngũ Kỹ thuật HCMUTE</strong>
+      </div>
+      <div class="footer-right">
+        <span>Chuyển Đổi Số Di Sản</span>
+        <span>•</span>
+        <span>Tự Hào Truyền Thống Dân Tộc</span>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
