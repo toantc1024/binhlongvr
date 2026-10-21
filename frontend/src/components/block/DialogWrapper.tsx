@@ -49,6 +49,10 @@ interface DialogWrapperProps {
 
     // Custom close
     customClose?: boolean
+
+    // Controlled state
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
 }
 
 const DialogWrapper = ({
@@ -70,6 +74,8 @@ const DialogWrapper = ({
     className = '',
     contentClassName = '',
     useCustomScrollbar = false,
+    open,
+    onOpenChange,
 }: DialogWrapperProps) => {
 
     const getSizeClasses = () => {
@@ -100,10 +106,12 @@ const DialogWrapper = ({
     const scrollbarClass = useCustomScrollbar ? 'hotspot-dialog-scroll' : 'scrollbar-hide'
 
     return (
-        <Dialog >
-            <DialogTrigger asChild>
-                {trigger}
-            </DialogTrigger>
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            {trigger && (
+                <DialogTrigger asChild>
+                    {trigger}
+                </DialogTrigger>
+            )}
 
 
             <DialogContent

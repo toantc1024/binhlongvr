@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tài Liệu Bàn Giao Kỹ Thuật & Hướng Dẫn Sử Dụng - Bản Đồ Số Bình Long VR</title>
+  <title>Tài Liệu Bàn Giao Kỹ Thuật & Hướng Dẫn Vận Hành - Bản Đồ Số Bình Long VR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,11 +13,11 @@
       --primary-dark: #064e3b;
       --primary-light: #10b981;
       --accent: #f59e0b;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
+      --bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #64748b;
+      --text-muted: #475569;
       --border: #e2e8f0;
+      --surface: #f8fafc;
     }
 
     * {
@@ -27,134 +27,156 @@
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      padding: 32px 16px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: var(--card-bg);
-      border-radius: 24px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-      border: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    /* Header Banner */
-    .header-banner {
-      background: linear-gradient(135deg, #031710 0%, #064e3b 100%);
-      color: #ffffff;
-      padding: 40px 48px;
-      position: relative;
-    }
-
-    .header-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    .national-crest {
-      font-size: 13px;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: #a7f3d0;
-      letter-spacing: 0.5px;
-    }
-
-    .version-badge {
-      background: rgba(16, 185, 129, 0.2);
-      border: 1px solid #10b981;
-      color: #6ee7b7;
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .header-title-box {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .app-logo {
-      width: 80px;
-      height: 80px;
-      border-radius: 20px;
-      background: #021e14;
-      border: 2px solid #10b981;
-      padding: 8px;
-      flex-shrink: 0;
-    }
-
-    .app-logo img {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .header-titles h1 {
-      font-size: 28px;
-      font-weight: 900;
-      color: #ffffff;
-      line-height: 1.25;
-      margin-bottom: 6px;
-    }
-
-    .header-titles p {
-      font-size: 15px;
-      color: #cbd5e1;
-    }
-
-    /* Print action bar */
-    .action-bar {
+    /* Full Width Container */
+    .page-wrapper {
+      width: 100%;
+      min-height: 100vh;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 48px;
+      flex-direction: column;
+    }
+
+    /* Top Action Bar (Web Only) */
+    .top-action-bar {
+      width: 100%;
       background: #f1f5f9;
       border-bottom: 1px solid var(--border);
+      padding: 12px clamp(16px, 4vw, 48px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
     }
 
-    .action-info {
+    .top-action-meta {
       font-size: 13px;
       color: var(--text-muted);
       font-weight: 600;
     }
 
+    .top-action-meta strong {
+      color: var(--text);
+    }
+
     .btn-print {
       background: var(--primary);
       color: #ffffff;
-      padding: 8px 18px;
-      border-radius: 10px;
+      padding: 9px 20px;
+      border-radius: 8px;
       font-weight: 700;
       font-size: 13px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       border: none;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: background 0.2s ease, transform 0.1s ease;
+      white-space: nowrap;
     }
 
     .btn-print:hover {
       background: var(--primary-light);
+      transform: translateY(-1px);
     }
 
-    /* Main Document Body */
-    .doc-body {
-      padding: 40px 48px;
+    /* Header Banner - Full Width */
+    .header-banner {
+      width: 100%;
+      background: linear-gradient(135deg, #022416 0%, #064e3b 50%, #032b1d 100%);
+      color: #ffffff;
+      padding: clamp(28px, 4vw, 48px) clamp(16px, 4vw, 48px);
+      border-bottom: 3px solid var(--primary-light);
     }
 
+    .header-content {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand-logo-img {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      background: #ffffff;
+      flex-shrink: 0;
+    }
+
+    .header-titles h1 {
+      font-size: clamp(22px, 2.5vw, 32px);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.25;
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+      text-wrap: balance;
+    }
+
+    .header-titles p {
+      font-size: clamp(14px, 1.2vw, 16px);
+      color: #a7f3d0;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .header-badge-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .header-tag {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--primary-light);
+      color: #6ee7b7;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .header-org-text {
+      font-size: 13px;
+      color: #cbd5e1;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* Main Container */
+    .main-content {
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: clamp(24px, 3.5vw, 44px) clamp(16px, 4vw, 48px);
+      flex: 1;
+    }
+
+    /* Section Headers */
     .section-title {
-      font-size: 20px;
+      font-size: clamp(18px, 1.6vw, 22px);
       font-weight: 800;
       color: var(--primary-dark);
       display: flex;
@@ -162,7 +184,7 @@
       gap: 12px;
       margin: 36px 0 20px 0;
       padding-bottom: 10px;
-      border-bottom: 2px solid #e2e8f0;
+      border-bottom: 2px solid var(--border);
     }
 
     .section-title:first-of-type {
@@ -172,86 +194,121 @@
     .num-pill {
       background: var(--primary);
       color: #ffffff;
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       border-radius: 8px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
+      flex-shrink: 0;
     }
 
-    /* System Quick Access Summary Table */
+    /* Section 1: System Specs Cards */
     .specs-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 28px;
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+
+    @media (max-width: 1024px) {
+      .specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .specs-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .spec-card {
-      background: #f8fafc;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 16px;
+      padding: 18px 20px;
+      transition: border-color 0.2s ease;
+    }
+
+    .spec-card:hover {
+      border-color: var(--primary-light);
     }
 
     .spec-label {
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
       font-weight: 700;
       color: var(--text-muted);
       letter-spacing: 0.5px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      white-space: nowrap;
     }
 
     .spec-val {
       font-size: 15px;
       font-weight: 800;
       color: var(--text);
-      word-break: break-all;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .spec-val a {
+    .system-link {
       color: var(--primary);
-      text-decoration: none;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: color 0.15s ease;
     }
 
-    /* 5-Step Visual Workflow */
+    .system-link:hover {
+      color: var(--primary-dark);
+    }
+
+    /* Section 2: 5-Step Visual Workflow */
     .step-card {
       background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 16px;
       overflow: hidden;
-      margin-bottom: 32px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      margin-bottom: 28px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
     }
 
     .step-header {
-      background: #f8fafc;
-      padding: 14px 20px;
+      background: var(--surface);
+      padding: 14px 24px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
     .step-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 15px;
+      gap: 12px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--primary-dark);
+      white-space: nowrap;
     }
 
-    .step-badge span {
+    .step-badge-tag {
       background: var(--primary);
       color: #ffffff;
-      padding: 2px 10px;
+      padding: 4px 12px;
       border-radius: 6px;
       font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
     .step-summary {
@@ -262,9 +319,9 @@
 
     .step-content {
       display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 24px;
-      padding: 20px;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 28px;
+      padding: 24px;
       align-items: center;
     }
 
@@ -272,78 +329,104 @@
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--border);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      position: relative;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      background: #021a12;
+      height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .step-visual img {
       width: 100%;
-      height: auto;
+      height: 100%;
       display: block;
       object-fit: cover;
+    }
+
+    .step-visual.contain-img img {
+      object-fit: contain;
     }
 
     .step-instructions {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
     .action-point {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      background: #f8fafc;
-      padding: 10px 14px;
+      gap: 14px;
+      background: var(--surface);
+      padding: 12px 16px;
       border-radius: 10px;
-      border-left: 3px solid var(--primary);
+      border-left: 4px solid var(--primary);
     }
 
     .action-num {
       background: var(--primary-dark);
       color: #ffffff;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
     .action-text {
-      font-size: 13px;
+      font-size: 14px;
       color: #334155;
+      line-height: 1.5;
     }
 
     .action-text strong {
       color: var(--text);
+      font-weight: 700;
+      display: inline;
+      margin-right: 4px;
     }
 
-    /* Handover Checklist Table */
+    /* Section 3: Checklist Table */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
     .checklist-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 14px;
-      font-size: 13px;
+      font-size: 14px;
+      background: #ffffff;
+      text-align: left;
     }
 
     .checklist-table th {
-      background: #f1f5f9;
+      background: var(--surface);
       color: #334155;
       font-weight: 800;
-      text-align: left;
-      padding: 10px 14px;
+      padding: 14px 18px;
       border-bottom: 2px solid var(--border);
+      white-space: nowrap;
     }
 
     .checklist-table td {
-      padding: 10px 14px;
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       color: #475569;
+      line-height: 1.5;
+    }
+
+    .checklist-table tr:last-child td {
+      border-bottom: none;
     }
 
     .status-ok {
@@ -351,121 +434,166 @@
       background: #dcfce7;
       color: #166534;
       font-weight: 800;
-      font-size: 11px;
-      padding: 3px 10px;
+      font-size: 12px;
+      padding: 4px 12px;
       border-radius: 20px;
+      white-space: nowrap;
     }
 
-    /* Sign-off Handover Box */
+    /* Section 4: Sign-off Box */
     .signoff-box {
       margin-top: 40px;
-      padding: 24px;
-      background: #f8fafc;
+      padding: 32px 36px;
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 16px;
+    }
+
+    .signoff-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+
+    .signoff-subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
     }
 
     .signoff-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 32px;
+      gap: 40px;
       text-align: center;
-      margin-top: 20px;
     }
 
     .sign-party h4 {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--text);
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .sign-party p {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
-      font-style: italic;
-      margin-bottom: 70px;
+      margin-bottom: 80px;
     }
 
     .sign-name {
       font-weight: 800;
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text);
       border-top: 1px dashed #cbd5e1;
       display: inline-block;
-      padding-top: 6px;
-      min-width: 200px;
+      padding-top: 8px;
+      min-width: 240px;
     }
 
     /* Footer */
     .doc-footer {
+      width: 100%;
       background: #031710;
       color: #94a3b8;
       text-align: center;
-      padding: 24px;
-      font-size: 12px;
+      padding: 24px clamp(16px, 4vw, 48px);
+      font-size: 13px;
+      border-top: 1px solid rgba(16, 185, 129, 0.2);
     }
 
-    /* Print Styles */
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .step-content {
+        grid-template-columns: 1fr;
+      }
+      .signoff-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .sign-party p {
+        margin-bottom: 50px;
+      }
+    }
+
+    /* Print & PDF Export Optimization */
     @media print {
       body {
         background: #ffffff;
         padding: 0;
+        margin: 0;
       }
-      .container {
-        border: none;
-        box-shadow: none;
-        border-radius: 0;
+      .top-action-bar {
+        display: none !important;
+      }
+      .header-banner {
+        padding: 24px;
+        background: #022416 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .main-content {
+        padding: 24px;
         max-width: 100%;
-      }
-      .action-bar {
-        display: none;
       }
       .step-card {
         page-break-inside: avoid;
         box-shadow: none;
-        border: 1px solid #ccc;
+        border: 1px solid #cbd5e1;
         margin-bottom: 20px;
       }
       .signoff-box {
         page-break-inside: avoid;
+        border: 1px solid #cbd5e1;
+      }
+      .spec-card {
+        border: 1px solid #cbd5e1;
+      }
+      a {
+        text-decoration: underline !important;
+        color: #059669 !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Header Banner -->
-    <header class="header-banner">
-      <div class="header-meta">
-        <div class="national-crest">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM • ĐỘC LẬP - TỰ DO - HẠNH PHÚC</div>
-        <div class="version-badge">Phiên Bản 2.0 • 2026</div>
-      </div>
-      <div class="header-title-box">
-        <div class="app-logo">
-          <img src="../assets/logo_vr.png" alt="Bình Long VR">
-        </div>
-        <div class="header-titles">
-          <h1>TÀI LIỆU BÀN GIAO KỸ THUẬT & HƯỚNG DẪN VẬN HÀNH</h1>
-          <p>Hệ Thống Bản Đồ Số & Không Gian Di Tích Lịch Sử VR 360° Thị Xã Bình Long</p>
-        </div>
-      </div>
-    </header>
-
-    <!-- Action Bar -->
-    <div class="action-bar">
-      <div class="action-info">
-        Đơn vị thụ hưởng: <strong>UBND Thị xã Bình Long - Phường An Lộc</strong> • Đơn vị kỹ thuật: <strong>HCMUTE</strong>
+  <div class="page-wrapper">
+    <!-- Top Action Bar -->
+    <div class="top-action-bar">
+      <div class="top-action-meta">
+        Đơn vị thụ hưởng: <strong>UBND Thị xã Bình Long - Phường An Lộc</strong> &bull; Đơn vị kỹ thuật: <strong>HCMUTE</strong>
       </div>
       <button class="btn-print" onclick="window.print()">
         🖨️ In / Xuất PDF Bàn Giao
       </button>
     </div>
 
-    <!-- Document Body -->
-    <main class="doc-body">
+    <!-- Full-Width Header Banner -->
+    <header class="header-banner">
+      <div class="header-content">
+        <div class="header-brand">
+          <img src="assets/logo_vr.png" alt="Logo Bình Long VR" class="brand-logo-img">
+          <div class="header-titles">
+            <h1>TÀI LIỆU BÀN GIAO KỸ THUẬT & HƯỚNG DẪN VẬN HÀNH</h1>
+            <p>Hệ Thống Bản Đồ Số & Không Gian Di Tích Lịch Sử VR 360° Bình Long</p>
+          </div>
+        </div>
+
+        <div class="header-badge-box">
+          <span class="header-tag">Phiên Bản 2.0 &bull; 2026</span>
+          <div class="header-org-text">Công trình Chuyển đổi số Di sản</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
       <!-- Section 1: Thông tin hạ tầng -->
       <h2 class="section-title">
         <span class="num-pill">1</span>
@@ -475,23 +603,34 @@
       <div class="specs-grid">
         <div class="spec-card">
           <div class="spec-label">Địa Chỉ Trực Tuyến</div>
-          <div class="spec-val"><a href="https://binhlongvr.vercel.app/" target="_blank">binhlongvr.vercel.app</a></div>
+          <div class="spec-val">
+            <a href="https://binhlongvr.vercel.app/" target="_blank" rel="noopener noreferrer" class="system-link">
+              binhlongvr.vercel.app &nearr;
+            </a>
+          </div>
         </div>
+
         <div class="spec-card">
-          <div class="spec-label">Nền Tảng Triển Khai</div>
-          <div class="spec-val">Vercel Cloud Edge</div>
+          <div class="spec-label">Loại Ứng Dụng</div>
+          <div class="spec-val">Bản Đồ Số & Thực Tế Ảo 360°</div>
         </div>
+
         <div class="spec-card">
-          <div class="spec-label">Kho Mã Nguồn</div>
-          <div class="spec-val">toantc1024/binhlongvr</div>
+          <div class="spec-label">Phạm Vi Số Hóa</div>
+          <div class="spec-val">4 Cụm Di Tích Lịch Sử</div>
         </div>
+
         <div class="spec-card">
-          <div class="spec-label">Công Nghệ Cốt Lõi</div>
-          <div class="spec-val">React • 360 VR • AI</div>
+          <div class="spec-label">Kho Mã Nguồn Bàn Giao</div>
+          <div class="spec-val">
+            <a href="https://github.com/toantc1024/binhlongvr" target="_blank" rel="noopener noreferrer" class="system-link">
+              github.com/toantc1024/binhlongvr &nearr;
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Section 2: Hướng dẫn sử dụng 5 bước trực quan -->
+      <!-- Section 2: Hướng dẫn 5 bước trực quan -->
       <h2 class="section-title">
         <span class="num-pill">2</span>
         Hướng Dẫn Vận Hành & Khai Thác 5 Bước (Trực Quan)
@@ -501,27 +640,33 @@
       <div class="step-card">
         <div class="step-header">
           <div class="step-badge">
-            <span>BƯỚC 1</span>
+            <span class="step-badge-tag">BƯỚC 1</span>
             Quét Mã QR Hoặc Truy Cập Trực Tuyến
           </div>
           <div class="step-summary">Hoạt động tức thì trên mọi thiết bị thông minh</div>
         </div>
         <div class="step-content">
           <div class="step-visual">
-            <img src="../poster_intro/poster_intro_binhlong_vr.png" alt="Quét QR truy cập">
+            <img src="assets/poster_qc.jpg" alt="Quét QR truy cập ứng dụng">
           </div>
           <div class="step-instructions">
             <div class="action-point">
               <span class="action-num">1</span>
-              <div class="action-text"><strong>Mở máy ảnh điện thoại:</strong> Hướng camera về mã QR đặt tại bảng chỉ dẫn di tích hoặc ấn phẩm in.</div>
+              <div class="action-text">
+                <strong>Mở máy ảnh điện thoại:</strong> Hướng camera về mã QR đặt tại bảng chỉ dẫn di tích hoặc ấn phẩm in truyền thông.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">2</span>
-              <div class="action-text"><strong>Truy cập trình duyệt:</strong> Hệ thống tự động mở website mà không cần cài đặt thêm bất kỳ ứng dụng nào.</div>
+              <div class="action-text">
+                <strong>Mở đường dẫn trực tiếp:</strong> Hệ thống tự động mở website trên trình duyệt mà không cần cài đặt thêm ứng dụng.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">3</span>
-              <div class="action-text"><strong>Tương thích đa thiết bị:</strong> Tối ưu cho điện thoại Android, iOS, iPad và màn hình cảm ứng công cộng.</div>
+              <div class="action-text">
+                <strong>Tương thích đa nền tảng:</strong> Tối ưu hiển thị cho điện thoại Android, iPhone, iPad và màn hình cảm ứng công cộng.
+              </div>
             </div>
           </div>
         </div>
@@ -531,27 +676,33 @@
       <div class="step-card">
         <div class="step-header">
           <div class="step-badge">
-            <span>BƯỚC 2</span>
+            <span class="step-badge-tag">BƯỚC 2</span>
             Bản Đồ Số GIS & Chọn Điểm Di Tích
           </div>
-          <div class="step-summary">Định vị tọa độ và dẫn đường thông minh</div>
+          <div class="step-summary">Định vị tọa độ và dẫn đường tham quan</div>
         </div>
         <div class="step-content">
           <div class="step-visual">
-            <img src="../assets/ui_map_interactive.png" alt="Giao diện bản đồ số">
+            <img src="assets/ui_map_interactive.png" alt="Giao diện bản đồ số tương tác">
           </div>
           <div class="step-instructions">
             <div class="action-point">
               <span class="action-num">1</span>
-              <div class="action-text"><strong>Mở bản đồ số:</strong> Nhấn biểu tượng Bản đồ trên thanh điều khiển để xem toàn cảnh các di tích Bình Long.</div>
+              <div class="action-text">
+                <strong>Mở bản đồ số:</strong> Nhấn biểu tượng Bản đồ trên thanh điều khiển để quan sát toàn cảnh các di tích tại Bình Long.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">2</span>
-              <div class="action-text"><strong>Chọn di tích:</strong> Chạm vào các điểm ghim (Mộ 3.000 người, Dinh Tỉnh Trưởng, Mộ 7 người, Phật Quốc Vạn Thành).</div>
+              <div class="action-text">
+                <strong>Chọn di tích cần đến:</strong> Chạm vào điểm ghim: Dinh Tỉnh Trưởng, Mộ 3.000 người, Mộ 7 người, Phật Quốc Vạn Thành.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">3</span>
-              <div class="action-text"><strong>Xem tóm tắt:</strong> Đọc bảng thông tin nhanh, tọa độ và bấm "Tham quan ngay" để chuyển vào không gian 360°.</div>
+              <div class="action-text">
+                <strong>Xem tóm tắt & tọa độ:</strong> Đọc bảng thông tin nhanh và bấm nút Khám phá để chuyển ngay vào không gian 360°.
+              </div>
             </div>
           </div>
         </div>
@@ -561,27 +712,33 @@
       <div class="step-card">
         <div class="step-header">
           <div class="step-badge">
-            <span>BƯỚC 3</span>
+            <span class="step-badge-tag">BƯỚC 3</span>
             Trải Nghiệm Toàn Cảnh VR 360°
           </div>
-          <div class="step-summary">Xoay chuyển không gian và thu phóng chi tiết</div>
+          <div class="step-summary">Xoay chuyển không gian đa chiều và thu phóng chi tiết</div>
         </div>
         <div class="step-content">
           <div class="step-visual">
-            <img src="../assets/ui_vr_m3000.png" alt="Trải nghiệm VR 360">
+            <img src="assets/ui_vr_m3000.png" alt="Trải nghiệm toàn cảnh VR 360">
           </div>
           <div class="step-instructions">
             <div class="action-point">
               <span class="action-num">1</span>
-              <div class="action-text"><strong>Điều hướng không gian:</strong> Vuốt màn hình hoặc rê chuột để xoay 360 độ ngắm nhìn toàn bộ khuôn viên di tích.</div>
+              <div class="action-text">
+                <strong>Điều hướng không gian:</strong> Vuốt màn hình hoặc rê chuột để xoay 360 độ ngắm nhìn toàn cảnh khuôn viên di tích.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">2</span>
-              <div class="action-text"><strong>Thu phóng linh hoạt:</strong> Dùng hai ngón tay hoặc cuộn chuột để soi cận cảnh các văn bia, hiện vật lịch sử.</div>
+              <div class="action-text">
+                <strong>Thu phóng linh hoạt:</strong> Dùng hai ngón tay hoặc cuộn chuột để quan sát cận cảnh các văn bia, hiện vật lịch sử.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">3</span>
-              <div class="action-text"><strong>Chế độ toàn màn hình:</strong> Nhấn nút phóng to góc màn hình để trải nghiệm góc nhìn rộng tối đa.</div>
+              <div class="action-text">
+                <strong>Góc nhìn toàn màn hình:</strong> Nhấn nút phóng to góc màn hình để trải nghiệm góc nhìn rộng và chân thực nhất.
+              </div>
             </div>
           </div>
         </div>
@@ -591,27 +748,33 @@
       <div class="step-card">
         <div class="step-header">
           <div class="step-badge">
-            <span>BƯỚC 4</span>
-            Khám Phá Địa Đạo & Điểm Thông Tin
+            <span class="step-badge-tag">BƯỚC 4</span>
+            Khám Phá Cận Cảnh Không Gian Di Tích & Điểm Tương Tác
           </div>
-          <div class="step-summary">Khám phá tư liệu lưu trữ và chuyển cảnh hầm bí mật</div>
+          <div class="step-summary">Di chuyển vào sâu bên trong khuôn viên và xem điểm chỉ dẫn</div>
         </div>
         <div class="step-content">
           <div class="step-visual">
-            <img src="../assets/ui_tunnel.png" alt="Khám phá địa đạo ngầm">
+            <img src="assets/step4_monument.jpg" alt="Không gian cận cảnh di tích">
           </div>
           <div class="step-instructions">
             <div class="action-point">
               <span class="action-num">1</span>
-              <div class="action-text"><strong>Chạm điểm tương tác:</strong> Nhấn vào các biểu tượng nhấp nháy trên màn hình để mở hộp thoại ảnh tư liệu và văn bản.</div>
+              <div class="action-text">
+                <strong>Chuyển điểm quan sát:</strong> Chạm nút "Vào trong" hoặc các mũi tên điều hướng để tiến gần hơn vào khu vực chính điện và văn bia.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">2</span>
-              <div class="action-text"><strong>Chuyển cảnh hầm ngầm:</strong> Bấm vào điểm điều hướng địa đạo để đi sâu vào hệ thống công sự bí mật.</div>
+              <div class="action-text">
+                <strong>Điểm tương tác không gian:</strong> Chạm các biểu tượng Hotspot để xem bảng tư liệu ảnh, sơ đồ và thông tin sự kiện lịch sử.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">3</span>
-              <div class="action-text"><strong>Xem tư liệu lịch sử:</strong> Xem ảnh phục dựng và chi tiết cấu trúc chiến hào thời kỳ kháng chiến.</div>
+              <div class="action-text">
+                <strong>Thanh chọn góc nhìn nhanh:</strong> Chọn các góc nhìn toàn cảnh khác nhau qua thanh ảnh thu nhỏ bên dưới màn hình.
+              </div>
             </div>
           </div>
         </div>
@@ -621,100 +784,108 @@
       <div class="step-card">
         <div class="step-header">
           <div class="step-badge">
-            <span>BƯỚC 5</span>
+            <span class="step-badge-tag">BƯỚC 5</span>
             Thuyết Minh Âm Thanh & Trợ Lý Lịch Sử AI
           </div>
-          <div class="step-summary">Giọng đọc tự động và giải đáp hỏi đáp chuyên sâu</div>
+          <div class="step-summary">Giọng đọc tự động và tra cứu hỏi đáp thông minh</div>
         </div>
         <div class="step-content">
-          <div class="step-visual">
-            <img src="../assets/ui_ai_chatbot.png" alt="Trợ lý AI thuyết minh">
+          <div class="step-visual contain-img">
+            <img src="assets/step5_chatbot.jpg" alt="Trợ lý AI thuyết minh hỏi đáp">
           </div>
           <div class="step-instructions">
             <div class="action-point">
               <span class="action-num">1</span>
-              <div class="action-text"><strong>Bật thuyết minh âm thanh:</strong> Nhấn biểu tượng loa để nghe giọng đọc truyền cảm về lịch sử hình thành di tích.</div>
+              <div class="action-text">
+                <strong>Bật thuyết minh âm thanh:</strong> Nhấn biểu tượng loa để nghe giọng đọc truyền cảm về ý nghĩa lịch sử của di tích.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">2</span>
-              <div class="action-text"><strong>Mở Trợ lý Lịch sử AI:</strong> Nhấn nút Trò chuyện AI ở góc màn hình để mở giao diện hỏi đáp.</div>
+              <div class="action-text">
+                <strong>Mở Trợ lý Lịch sử AI:</strong> Nhấn biểu tượng Hỏi đáp AI trên màn hình để kích hoạt trợ lý tra cứu thông tin thông minh.
+              </div>
             </div>
             <div class="action-point">
               <span class="action-num">3</span>
-              <div class="action-text"><strong>Đặt câu hỏi tra cứu:</strong> Gõ câu hỏi về sự kiện lịch sử Bình Long để nhận câu trả lời chính xác, tức thì.</div>
+              <div class="action-text">
+                <strong>Tra cứu tức thì:</strong> Nhập câu hỏi về trận đánh Bình Long, nhân vật và sự kiện lịch sử để nhận phản hồi nhanh chóng, chính xác.
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Section 3: Bàn Giao Hạng Mục Kỹ Thuật -->
+      <!-- Section 3: Nghiệm thu bàn giao -->
       <h2 class="section-title">
         <span class="num-pill">3</span>
         Danh Mục Hạng Mục Nghiệm Thu Bàn Giao
       </h2>
 
-      <table class="checklist-table">
-        <thead>
-          <tr>
-            <th style="width: 50px;">STT</th>
-            <th>Hạng Mục Bàn Giao</th>
-            <th>Mô Tả & Trạng Thái Kỹ Thuật</th>
-            <th style="width: 120px;">Đánh Giá</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>01</strong></td>
-            <td><strong>Hệ thống Web App Bản Đồ Số</strong></td>
-            <td>Hoàn thiện giao diện responsive, tương thích 100% điện thoại và máy tính.</td>
-            <td><span class="status-ok">Đạt Chuẩn</span></td>
-          </tr>
-          <tr>
-            <td><strong>02</strong></td>
-            <td><strong>Không gian VR 360° 4 Di Tích</strong></td>
-            <td>Mộ 3.000 người, Dinh Tỉnh Trưởng, Mộ 7 người, Chùa Phật Quốc Vạn Thành.</td>
-            <td><span class="status-ok">Đạt Chuẩn</span></td>
-          </tr>
-          <tr>
-            <td><strong>03</strong></td>
-            <td><strong>Hệ thống Thuyết Minh & Trợ Lý AI</strong></td>
-            <td>Thuyết minh audio hoàn chỉnh, Chatbot AI tra cứu lịch sử tự động.</td>
-            <td><span class="status-ok">Đạt Chuẩn</span></td>
-          </tr>
-          <tr>
-            <td><strong>04</strong></td>
-            <td><strong>Bộ Mã QR Bản Đồ Số</strong></td>
-            <td>Phiên bản trong suốt & chuẩn card in ấn, kiểm tra quét thành công 100%.</td>
-            <td><span class="status-ok">Đạt Chuẩn</span></td>
-          </tr>
-          <tr>
-            <td><strong>05</strong></td>
-            <td><strong>Bộ Poster & Standee Truyền Thông</strong></td>
-            <td>Poster giới thiệu ngang và Standee đứng chất lượng cao kết hợp Chibi.</td>
-            <td><span class="status-ok">Đạt Chuẩn</span></td>
-          </tr>
-          <tr>
-            <td><strong>06</strong></td>
-            <td><strong>Mã Nguồn & Tài Liệu Vận Hành</strong></td>
-            <td>Mã nguồn trên GitHub, hướng dẫn sử dụng trực quan ít chữ nhiều hình ảnh.</td>
-            <td><span class="status-ok">Đạt Chuẩn</span></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-container">
+        <table class="checklist-table">
+          <thead>
+            <tr>
+              <th style="width: 60px;">STT</th>
+              <th>Hạng Mục Bàn Giao</th>
+              <th>Mô Tả & Trạng Thái Kỹ Thuật</th>
+              <th style="width: 130px; text-align: center;">Đánh Giá</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>01</strong></td>
+              <td><strong>Hệ thống Web App Bản Đồ Số</strong></td>
+              <td>Giao diện chuẩn responsive, tương thích mượt mà trên điện thoại và máy tính.</td>
+              <td style="text-align: center;"><span class="status-ok">ĐẠT CHUẨN</span></td>
+            </tr>
+            <tr>
+              <td><strong>02</strong></td>
+              <td><strong>Dữ liệu VR 360° 4 Cụm Di Tích</strong></td>
+              <td>Dinh Tỉnh Trưởng, Mộ 3.000 người, Mộ 7 người, Phật Quốc Vạn Thành.</td>
+              <td style="text-align: center;"><span class="status-ok">ĐẠT CHUẨN</span></td>
+            </tr>
+            <tr>
+              <td><strong>03</strong></td>
+              <td><strong>Thuyết Minh Âm Thanh & AI Hỏi Đáp</strong></td>
+              <td>Audio thuyết minh chuẩn và Trợ lý AI tra cứu sự kiện lịch sử tự động.</td>
+              <td style="text-align: center;"><span class="status-ok">ĐẠT CHUẨN</span></td>
+            </tr>
+            <tr>
+              <td><strong>04</strong></td>
+              <td><strong>Bộ Mã QR Bản Đồ Số</strong></td>
+              <td>Bộ mã QR định dạng chuẩn in ấn và trong suốt, đã kiểm tra quét thực tế 100%.</td>
+              <td style="text-align: center;"><span class="status-ok">ĐẠT CHUẨN</span></td>
+            </tr>
+            <tr>
+              <td><strong>05</strong></td>
+              <td><strong>Bộ Poster & Standee Quảng Bá</strong></td>
+              <td>Poster tiếp thị mạng xã hội 16:9 và Standee đứng 9:16 có mã QR và màn hình trực quan.</td>
+              <td style="text-align: center;"><span class="status-ok">ĐẠT CHUẨN</span></td>
+            </tr>
+            <tr>
+              <td><strong>06</strong></td>
+              <td><strong>Mã Nguồn & Tài Liệu Vận Hành</strong></td>
+              <td>Toàn bộ mã nguồn trên GitHub kèm tài liệu hướng dẫn vận hành chi tiết.</td>
+              <td style="text-align: center;"><span class="status-ok">ĐẠT CHUẨN</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <!-- Signoff section -->
+      <!-- Section 4: Xác nhận bàn giao -->
       <div class="signoff-box">
-        <h3 style="text-align: center; font-size: 16px; font-weight: 800; text-transform: uppercase; color: #064e3b; margin-bottom: 6px;">
+        <h3 class="signoff-title">
           XÁC NHẬN BÀN GIAO & TIẾP NHẬN HỆ THỐNG KỸ THUẬT
         </h3>
-        <p style="text-align: center; font-size: 13px; color: #64748b;">
+        <p class="signoff-subtitle">
           Hai bên thống nhất nghiệm thu và chuyển giao toàn bộ quyền vận hành hệ thống.
         </p>
         <div class="signoff-grid">
           <div class="sign-party">
             <h4>ĐẠI DIỆN ĐỘI NGŨ KỸ THUẬT</h4>
             <p>Trường Đại Học Sư Phạm Kỹ Thuật TP.HCM (HCMUTE)</p>
-            <div class="sign-name">Đội Ngũ Phát Triển Dự Án</div>
+            <div class="sign-name">Đội Ngũ Kỹ Thuật HCMUTE</div>
           </div>
           <div class="sign-party">
             <h4>ĐẠI DIỆN ĐƠN VỊ TIẾP NHẬN</h4>
@@ -727,7 +898,7 @@
 
     <!-- Footer -->
     <footer class="doc-footer">
-      Bản Quyền Hệ Thống Thuộc UBND Thị Xã Bình Long & Đội Ngũ Kỹ Thuật HCMUTE © 2026
+      Bản Quyền Hệ Thống Thuộc UBND Thị Xã Bình Long & Đội Ngũ Kỹ Thuật HCMUTE &copy; 2026
     </footer>
   </div>
 

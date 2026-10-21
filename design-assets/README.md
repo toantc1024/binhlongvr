@@ -16,6 +16,28 @@
 
 ---
 
+## 1.1. Poster Tiếp Thị Mạng Xã Hội (Có Màn Hình VR 360° & Mã QR Quét Ngay)
+* **Tên tệp**: `poster_marketing_network_binhlong_vr.jpg` (có tại `qc/`, `tai_lieu_ban_giao/`, `design-assets/`)
+* **Tỷ lệ**: 16:9 (1920 × 1080)
+* **Điểm nổi bật**:
+  * Tích hợp khung màn hình tablet hiển thị không gian di tích VR 360° thực tế oai hùng.
+  * Tích hợp mã QR công nghệ khung vàng viền ngọc lục bảo sắc nét, quét trực tiếp chuyển thẳng về website `https://binhlongvr.vercel.app/`.
+  * Sa bàn 3D isometric chuẩn nhận diện Bình Long VR.
+  * Phong cách ánh sáng studio emerald gold sang trọng, tối ưu đăng Facebook, Zalo, cổng thông tin.
+
+---
+
+## 1.2. Standee Đứng Roll-Up Quảng Bá Di Sản (Có Màn Hình VR & Mã QR Quét Ngay)
+* **Tên tệp**: `standee_marketing_binhlong_vr.jpg` (có tại `qc/`, `tai_lieu_ban_giao/`, `design-assets/`)
+* **Tỷ lệ**: 9:16 (1080 × 1920) chuẩn standee cuộn triển lãm, hội nghị
+* **Điểm nổi bật**:
+  * Phần đầu: Vòng hào quang kim loại vàng gold uy nghi cùng tiêu đề "BẢN ĐỒ SỐ BÌNH LONG VR - Khám Phá Di Tích Không Gian 360°".
+  * Phần giữa: Mô hình sa bàn 3D di tích kết hợp màn hình mô phỏng thực tế ảo sống động.
+  * Khối tính năng cốt lõi: 01. Tham quan thực tế ảo 360° • 02. Bản đồ số định vị tọa độ • 03. Thuyết minh âm thanh tự động.
+  * Phần chân standee: Huy hiệu mã QR quét trải nghiệm ngay trên điện thoại không cần cài đặt.
+
+---
+
 ## 2. Bộ Sticker Chibi 3D Đón Tiếp (Avatar Set - Trong Suốt Cho iPhone)
 Được thiết kế 3D vinyl siêu đáng yêu, đã tách nền trong suốt (`transparent PNG alpha`), hỗ trợ chạm giữ tạo Sticker trực tiếp trên iPhone (iOS) và dùng cho Zalo/Facebook/Telegram.
 

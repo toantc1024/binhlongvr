@@ -28,7 +28,13 @@ import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { Spinner } from '../ui/shadcn-io/spinner'
 
-const ChatbotDialogBlock = () => {
+interface ChatbotDialogBlockProps {
+    trigger?: React.ReactNode;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
+}
+
+const ChatbotDialogBlock: React.FC<ChatbotDialogBlockProps> = ({ trigger, open, onOpenChange }) => {
     const { currentArea, currentHotspot, currentPanorama } = useVRStore();
     const [threadId] = useState(() => uuidv4());
 
@@ -137,12 +143,17 @@ const ChatbotDialogBlock = () => {
 
     return (
         <DialogWrapper
-
             trigger={
-                <Button variant="outline" className="w-12 h-12 xl:w-16 xl:h-16 shadow-lg rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border backdrop-blur-md flex items-center justify-center cursor-pointer">
-                    <RiChatAiFill className="!size-6 sm:!size-7 xl:!size-9 text-primary" />
-                </Button>
+                trigger !== undefined ? (
+                    trigger
+                ) : (
+                    <Button variant="outline" className="w-12 h-12 xl:w-16 xl:h-16 shadow-lg rounded-full bg-white/95 hover:bg-secondary text-foreground border border-border backdrop-blur-md flex items-center justify-center cursor-pointer">
+                        <RiChatAiFill className="!size-6 sm:!size-7 xl:!size-9 text-primary" />
+                    </Button>
+                )
             }
+            open={open}
+            onOpenChange={onOpenChange}
             showHeader={true}
             headerIcon={<FiMessageSquare className='text-primary' />}
             title="Chatbot AI"

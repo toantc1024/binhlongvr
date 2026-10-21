@@ -230,18 +230,20 @@
 <body>
 
   <div class="top-actions">
-    <button class="btn tab-btn active" onclick="switchPoster('devices', this)">📱 Poster Thiết Bị Mockup</button>
-    <button class="btn tab-btn btn-secondary" onclick="switchPoster('features', this)">✨ Poster Tính Năng Đột Phá</button>
+    <button class="btn tab-btn active" onclick="switchPoster('network', this)">🌐 Poster Mạng Xã Hội (16:9)</button>
+    <button class="btn tab-btn btn-secondary" onclick="switchPoster('standee', this)">🏛️ Standee Đứng (9:16)</button>
+    <button class="btn tab-btn btn-secondary" onclick="switchPoster('devices', this)">📱 Poster Thiết Bị Mockup</button>
+    <button class="btn tab-btn btn-secondary" onclick="switchPoster('features', this)">🔥 Poster Tính Năng Di Sản</button>
     <button class="btn tab-btn btn-secondary" onclick="switchPoster('hero', this)">🌟 Poster Heroic 3D</button>
     <button class="btn" onclick="window.print()">🖨️ In / Tải PDF Poster</button>
   </div>
 
-  <div class="poster-canvas">
+  <div class="poster-canvas" id="poster-canvas" style="width: 1280px; height: 720px;">
     <div class="poster-img-container">
-      <img id="poster-img" src="poster_quang_cao_showcase_devices.jpg" alt="Poster Bản Đồ Số Bình Long VR">
+      <img id="poster-img" src="poster_marketing_network_binhlong_vr.jpg" alt="Poster Tiếp Thị Mạng Xã Hội Bình Long VR">
     </div>
 
-    <div class="poster-overlay">
+    <div class="poster-overlay" id="poster-overlay" style="display: none;">
       <div class="poster-header">
         <div class="org-badge">
           <img src="assets/logo_binhlong_3d.png" alt="Logo Bình Long">
@@ -274,7 +276,7 @@
           </svg>
           <div class="qr-text">
             <div class="cta">Quét QR Trải Nghiệm</div>
-            <div class="domain">bandosobinhlong.yhcmute.com</div>
+            <div class="domain">binhlongvr.vercel.app</div>
           </div>
         </div>
       </div>
@@ -310,12 +312,34 @@
       btn.classList.remove('btn-secondary');
 
       const img = document.getElementById('poster-img');
-      if (type === 'devices') {
+      const canvas = document.getElementById('poster-canvas');
+      const overlay = document.getElementById('poster-overlay');
+
+      if (type === 'network') {
+        img.src = 'poster_marketing_network_binhlong_vr.jpg';
+        canvas.style.width = '1280px';
+        canvas.style.height = '720px';
+        overlay.style.display = 'none';
+      } else if (type === 'standee') {
+        img.src = 'standee_marketing_binhlong_vr.jpg';
+        canvas.style.width = '648px';
+        canvas.style.height = '1152px';
+        overlay.style.display = 'none';
+      } else if (type === 'devices') {
         img.src = 'poster_quang_cao_showcase_devices.jpg';
+        canvas.style.width = '840px';
+        canvas.style.height = '1188px';
+        overlay.style.display = 'flex';
       } else if (type === 'features') {
         img.src = 'poster_tinh_nang_quang_cao.jpg';
+        canvas.style.width = '840px';
+        canvas.style.height = '1188px';
+        overlay.style.display = 'flex';
       } else if (type === 'hero') {
         img.src = 'poster_quang_cao_binhlong_vr.jpg';
+        canvas.style.width = '840px';
+        canvas.style.height = '1188px';
+        overlay.style.display = 'flex';
       }
     }
   </script>
