@@ -3,16 +3,14 @@
 
 ---
 
-### 1. Thông Tin Nhận Diện & Hạ Tầng Kỹ Thuật
+### 1. Thông Tin Nhận Diện & Truy Cập Hệ Thống
 
 | Hạng mục | Chi tiết kỹ thuật |
 | :--- | :--- |
 | **Website chính thức** | [https://binhlongvr.vercel.app/](https://binhlongvr.vercel.app/) |
 | **Loại ứng dụng** | Bản đồ số GIS & Không gian thực tế ảo 360° đa nền tảng |
-| **Hạ tầng lưu trữ** | Vercel Global Edge Network (Bảo mật SSL/TLS 1.3) |
-| **Kho mã nguồn GitHub** | [https://github.com/toantc1024/binhlongvr](https://github.com/toantc1024/binhlongvr) |
 | **Đơn vị tiếp nhận** | UBND Thị xã Bình Long - Phường An Lộc |
-| **Đơn vị bàn giao** | Đội ngũ Kỹ thuật HCMUTE |
+| **Tiếp nhận phản hồi & Hỗ trợ kỹ thuật** | **KS. Trần Công Toản** - 0769394157 |
 
 #### Nhận Diện Biểu Trưng & Mã QR Trực Tuyến
 - **Logo chính thức:** `assets/logo_vr.png`
@@ -33,10 +31,11 @@
 ### 3. Quy Trình Vận Hành & Khai Thác 5 Bước (Trực Quan)
 
 #### Bước 1: Quét mã QR hoặc truy cập trực tuyến
-![Poster tiếp thị và mã QR truy cập](assets/poster_qc.jpg)
-- **1. Mở máy ảnh điện thoại:** Hướng camera về mã QR đặt tại bảng chỉ dẫn di tích hoặc ấn phẩm in truyền thông.
-- **2. Mở đường dẫn trực tiếp:** Hệ thống tự động mở website trên trình duyệt mà không cần cài đặt thêm ứng dụng bên ngoài.
-- **3. Tương thích đa nền tảng:** Tối ưu hiển thị cho điện thoại iOS, Android, máy tính bảng và màn hình cảm ứng công cộng.
+![Banner quảng bá Bình Long VR](assets/banner_marketing.jpg)
+- **Mã QR truy cập trực tiếp:** Quét mã QR đính kèm hoặc chạm vào liên kết [https://binhlongvr.vercel.app/](https://binhlongvr.vercel.app/)
+- **1. Quét mã QR hoặc mở liên kết:** Dùng máy ảnh điện thoại hướng vào mã QR hoặc nhấn trực tiếp vào liên kết website.
+- **2. Khởi chạy tức thì trên trình duyệt:** Không cần cài đặt ứng dụng từ kho ứng dụng, website tự động tải mượt mà chỉ sau 1 giây.
+- **3. Tương thích đa nền tảng:** Tối ưu hoàn hảo cho điện thoại iOS, Android, máy tính bảng và màn hình cảm ứng công cộng.
 
 ---
 
@@ -89,13 +88,4 @@
 | **03** | Thuyết Minh Âm Thanh & AI Hỏi Đáp | Audio thuyết minh chất lượng cao, Chatbot AI phản hồi ổn định | **ĐẠT CHUẨN** |
 | **04** | Bộ Mã QR Bản Đồ Số | Bộ mã QR file trong suốt và thẻ in ấn đã kiểm tra quét thực tế 100% | **ĐẠT CHUẨN** |
 | **05** | Bộ Poster Tiếp Thị Có Chibi | Poster tiếp thị 16:9 và Standee 9:16 có mã QR và nhân vật chibi hướng dẫn | **ĐẠT CHUẨN** |
-| **06** | Mã Nguồn & Tài Liệu Vận Hành | Toàn bộ mã nguồn trên GitHub kèm hướng dẫn vận hành chi tiết | **ĐẠT CHUẨN** |
-
----
-
-### 6. Xác Nhận Nghiệm Thu & Tiếp Nhận Hệ Thống
-
-| ĐẠI DIỆN ĐỘI NGŨ KỸ THUẬT (HCMUTE) | ĐẠI DIỆN ĐƠN VỊ TIẾP NHẬN (UBND BÌNH LONG) |
-| :---: | :---: |
-| *(Ký và ghi rõ họ tên)* | *(Ký và đóng dấu)* |
-| <br><br><br>**Đội Ngũ Kỹ Thuật HCMUTE** | <br><br><br>**Ban Quản Lý & Vận Hành Di Tích** |
+| **06** | Tài Liệu Hướng Dẫn Vận Hành | Bộ tài liệu quy trình vận hành và đầu mối hỗ trợ kỹ thuật trực tiếp | **ĐẠT CHUẨN** |
