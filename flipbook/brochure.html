@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tờ Bướm Gập - Bản Đồ Số Bình Long VR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #021a12;
+      --bg-card: rgba(4, 34, 23, 0.88);
+      --primary: #10b981;
+      --primary-light: #34d399;
+      --primary-dark: #047857;
+      --gold: #f59e0b;
+      --gold-light: #fbbf24;
+      --text-main: #ffffff;
+      --text-sub: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-emerald: rgba(16, 185, 129, 0.4);
+      --border-gold: rgba(245, 158, 11, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #010a07;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      padding: 40px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Page container: A5 Standard Proportion (1240px x 1754px) */
+    .page {
+      width: 1240px;
+      height: 1754px;
+      position: relative;
+      background: radial-gradient(circle at 50% 12%, #083c27 0%, #021a12 55%, #010d09 100%);
+      border: 3px solid rgba(16, 185, 129, 0.5);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 80px rgba(16, 185, 129, 0.2);
+      display: flex;
+      flex-direction: column;
+      padding: 48px 52px;
+      page-break-after: always;
+    }
+
+    /* Ambient background grid */
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(245, 158, 11, 0.08) 0%, transparent 45%),
+        linear-gradient(to right, rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+      pointer-events: none;
+    }
+
+    /* Common Header Components */
+    .brand-header {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1.5px solid rgba(16, 185, 129, 0.3);
+      margin-bottom: 24px;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand-logo-img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+    }
+
+    .brand-text-block h3 {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    .brand-text-block p {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-light);
+      letter-spacing: 0.5px;
+      margin-top: 3px;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.3) 100%);
+      border: 1.5px solid var(--gold);
+      color: #fef3c7;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Common Card / Box */
+    .card {
+      position: relative;
+      z-index: 5;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-emerald);
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Section Title */
+    .section-title-wrap {
+      position: relative;
+      z-index: 5;
+      margin-bottom: 18px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--primary);
+      color: #6ee7b7;
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 34px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.25;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ffffff 0%, #a7f3d0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-sub);
+      line-height: 1.55;
+      margin-top: 6px;
+    }
+
+    /* Blank / User Fillable Note Box */
+    .note-fill-box {
+      position: relative;
+      z-index: 5;
+      background: rgba(2, 23, 16, 0.75);
+      border: 1.5px dashed rgba(245, 158, 11, 0.6);
+      border-radius: 16px;
+      padding: 16px 22px;
+      margin-top: auto;
+    }
+
+    .note-fill-box .note-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .note-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .note-line {
+      height: 1px;
+      background: rgba(148, 163, 184, 0.25);
+      width: 100%;
+    }
+
+    /* Footer Navigation */
+    .page-footer {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1.5px solid rgba(16, 185, 129, 0.25);
+      margin-top: 20px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .page-num-pill {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--primary);
+      color: #6ee7b7;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    /* ========================================= */
+    /* PAGE 1: TRANG BÌA (FRONT COVER)           */
+    /* ========================================= */
+    .p1-hero-container {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 24px;
+    }
+
+    .p1-hero-art {
+      width: 100%;
+      height: 640px;
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 2px solid var(--border-gold);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    }
+
+    .p1-hero-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .p1-hero-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px;
+      background: linear-gradient(180deg, transparent 0%, rgba(2, 26, 18, 0.95) 75%);
+    }
+
+    .p1-hero-tag {
+      display: inline-block;
+      background: var(--gold);
+      color: #021a12;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 5px 14px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .p1-hero-title {
+      font-size: 32px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Page 1 Landmark Grid */
+    .p1-landmarks-grid {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .p1-landmark-card {
+      background: rgba(3, 30, 20, 0.9);
+      border: 1.5px solid rgba(16, 185, 129, 0.35);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .p1-landmark-thumb {
+      width: 86px;
+      height: 86px;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1.5px solid var(--gold);
+    }
+
+    .p1-landmark-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .p1-landmark-info h4 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .p1-landmark-info p {
+      font-size: 13px;
+      color: var(--primary-light);
+      font-weight: 600;
+    }
+
+    .p1-landmark-info span {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ========================================= */
+    /* PAGE 2: GIỚI THIỆU (INSIDE LEFT)          */
+    /* ========================================= */
+    .p2-intro-card {
+      background: rgba(3, 32, 22, 0.95);
+      border: 1.5px solid rgba(16, 185, 129, 0.4);
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin-bottom: 22px;
+      line-height: 1.65;
+      font-size: 16px;
+      color: #e2e8f0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .p2-intro-highlight {
+      color: var(--gold-light);
+      font-weight: 800;
+    }
+
+    .p2-landmarks-list {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .p2-landmark-item {
+      background: rgba(2, 24, 16, 0.92);
+      border: 1.5px solid rgba(16, 185, 129, 0.3);
+      border-radius: 18px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .p2-item-img {
+      width: 130px;
+      height: 105px;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1.5px solid var(--primary-dark);
+    }
+
+    .p2-item-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .p2-item-content {
+      flex: 1;
+    }
+
+    .p2-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .p2-item-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .p2-item-rank {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--gold-light);
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--gold);
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .p2-item-desc {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    .p2-item-addr {
+      font-size: 12px;
+      color: var(--primary-light);
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    /* ========================================= */
+    /* PAGE 3: SỐ HÓA & QR CODE (INSIDE RIGHT)  */
+    /* ========================================= */
+    .p3-features-grid {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .p3-feature-box {
+      background: rgba(3, 30, 20, 0.9);
+      border: 1.5px solid rgba(16, 185, 129, 0.35);
+      border-radius: 16px;
+      padding: 18px 20px;
+    }
+
+    .p3-feature-badge {
+      display: inline-block;
+      background: #047857;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .p3-feature-box h4 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .p3-feature-box p {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.45;
+    }
+
+    /* Main QR Hero Card */
+    .p3-qr-hero-card {
+      position: relative;
+      z-index: 5;
+      background: linear-gradient(135deg, rgba(6, 44, 30, 0.95) 0%, rgba(2, 23, 16, 0.98) 100%);
+      border: 2.5px solid var(--gold);
+      border-radius: 24px;
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 50px rgba(245, 158, 11, 0.2);
+      margin-bottom: 24px;
+    }
+
+    .p3-qr-frame-wrap {
+      width: 330px;
+      height: 330px;
+      flex-shrink: 0;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.7));
+    }
+
+    .p3-qr-frame-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .p3-qr-instructions {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .p3-cta-tag {
+      display: inline-block;
+      background: var(--gold);
+      color: #021a12;
+      font-size: 14px;
+      font-weight: 900;
+      padding: 6px 18px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+
+    .p3-qr-instructions h3 {
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .p3-qr-instructions p {
+      font-size: 15px;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    .p3-domain-box {
+      background: rgba(1, 15, 10, 0.95);
+      border: 1.5px solid var(--primary);
+      padding: 12px 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .p3-domain-text {
+      font-family: monospace;
+      font-size: 20px;
+      font-weight: 800;
+      color: #34d399;
+      letter-spacing: 1px;
+    }
+
+    .p3-domain-note {
+      font-size: 12px;
+      color: var(--gold-light);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* Screen Preview Bar */
+    .p3-preview-row {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .p3-preview-item {
+      flex: 1;
+      height: 150px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1.5px solid rgba(16, 185, 129, 0.35);
+      position: relative;
+    }
+
+    .p3-preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .p3-preview-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 6px 12px;
+      background: rgba(1, 15, 10, 0.85);
+      font-size: 12px;
+      font-weight: 700;
+      color: #6ee7b7;
+      text-align: center;
+    }
+
+    /* ========================================= */
+    /* PAGE 4: ĐIỀU THÚ VỊ & BÌNH LONG (BACK)   */
+    /* ========================================= */
+    .p4-scenic-art {
+      width: 100%;
+      height: 520px;
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 2px solid var(--border-gold);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      margin-bottom: 22px;
+      z-index: 5;
+    }
+
+    .p4-scenic-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .p4-scenic-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 28px;
+      background: linear-gradient(180deg, transparent 0%, rgba(1, 18, 12, 0.95) 75%);
+    }
+
+    .p4-scenic-overlay h3 {
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .p4-scenic-overlay p {
+      font-size: 14px;
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    /* 4 Fun Facts Grid */
+    .p4-facts-grid {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .p4-fact-card {
+      background: rgba(3, 30, 20, 0.9);
+      border: 1.5px solid rgba(16, 185, 129, 0.3);
+      border-radius: 16px;
+      padding: 16px 18px;
+    }
+
+    .p4-fact-card h4 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .p4-fact-card p {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    /* Welcome Chibi Banner */
+    .p4-chibi-banner {
+      position: relative;
+      z-index: 5;
+      background: linear-gradient(135deg, rgba(6, 44, 30, 0.95) 0%, rgba(2, 23, 16, 0.98) 100%);
+      border: 1.5px solid var(--primary);
+      border-radius: 20px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    .p4-chibi-img {
+      width: 130px;
+      height: 110px;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.4));
+    }
+
+    .p4-chibi-text h4 {
+      font-size: 20px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .p4-chibi-text p {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.45;
+    }
+
+    /* Back Page Organization Details */
+    .p4-org-box {
+      position: relative;
+      z-index: 5;
+      background: rgba(2, 17, 12, 0.95);
+      border: 1.5px solid rgba(16, 185, 129, 0.35);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13.5px;
+      color: var(--text-sub);
+    }
+
+    .p4-org-box strong {
+      color: #ffffff;
+    }
+
+    /* Print media optimization */
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+        gap: 0;
+      }
+      .page {
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        height: 100%;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================== -->
+  <!-- TRANG 1: TRANG BÌA (FRONT COVER)                                -->
+  <!-- ============================================================== -->
+  <div class="page" id="trang-1">
+    <!-- Brand Header -->
+    <header class="brand-header">
+      <div class="brand-left">
+        <img class="brand-logo-img" src="assets/logo_binh_long_3d.png" alt="Logo Bình Long">
+        <div class="brand-text-block">
+          <h3>Ủy Ban Nhân Dân Phường Bình Long</h3>
+          <p>Phường Bình Long, tỉnh Đồng Nai</p>
+        </div>
+      </div>
+      <div class="brand-badge">Ấn Phẩm Số Hóa</div>
+    </header>
+
+    <!-- Main Title Wrap -->
+    <div class="section-title-wrap">
+      <span class="section-tag">Không Gian Di Sản & Du Lịch Số</span>
+      <h1 class="section-title">BẢN ĐỒ SỐ BÌNH LONG VR</h1>
+      <p class="section-desc">Khám phá toàn cảnh di tích lịch sử và văn hóa hào hùng qua công nghệ thực tế ảo 360°</p>
+    </div>
+
+    <!-- Hero AI Diorama Art -->
+    <div class="p1-hero-container">
+      <div class="p1-hero-art">
+        <img src="assets/cover_ai.jpg" alt="Sa bàn di tích Bình Long AI">
+        <div class="p1-hero-overlay">
+          <span class="p1-hero-tag">Mô Phỏng Không Gian 3D</span>
+          <h2 class="p1-hero-title">Quần Thể Di Tích Lịch Sử Bình Long</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Landmarks Grid -->
+    <div class="p1-landmarks-grid">
+      <!-- Landmark 1 -->
+      <div class="p1-landmark-card">
+        <div class="p1-landmark-thumb">
+          <img src="assets/dtt_real.jpg" alt="Dinh Tỉnh Trưởng">
+        </div>
+        <div class="p1-landmark-info">
+          <h4>Dinh Tỉnh Trưởng Bình Long</h4>
+          <p>Di tích Nhà & Đường hầm An Lộc</p>
+          <span>Kiến trúc Pháp 1920 • Khu phố Phú Đức</span>
+        </div>
+      </div>
+
+      <!-- Landmark 2 -->
+      <div class="p1-landmark-card">
+        <div class="p1-landmark-thumb">
+          <img src="assets/m3000_real.jpg" alt="Mộ 3000 Người">
+        </div>
+        <div class="p1-landmark-info">
+          <h4>Mộ 3.000 Đồng Bào</h4>
+          <p>Di tích Lịch sử cấp Quốc gia</p>
+          <span>Khắc ghi dấu ấn 1972 • Khu phố An Lộc</span>
+        </div>
+      </div>
+
+      <!-- Landmark 3 -->
+      <div class="p1-landmark-card">
+        <div class="p1-landmark-thumb">
+          <img src="assets/m7n_real.jpg" alt="Mộ 7 Người">
+        </div>
+        <div class="p1-landmark-info">
+          <h4>Mộ Lực Lượng An Ninh An Lộc</h4>
+          <p>Di tích Mộ 7 Người anh dũng</p>
+          <span>Khí phách kiên trung • Khu phố Bình An</span>
+        </div>
+      </div>
+
+      <!-- Landmark 4 -->
+      <div class="p1-landmark-card">
+        <div class="p1-landmark-thumb">
+          <img src="assets/hlt_real.jpg" alt="Hưng Lập Tự">
+        </div>
+        <div class="p1-landmark-info">
+          <h4>Chùa Hưng Lập Tự</h4>
+          <p>Di tích Lịch sử - Văn hóa</p>
+          <span>Y đức bốc thuốc cứu người • Phú Đức</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dedicated Note Fill Area -->
+    <div class="note-fill-box">
+      <div class="note-title">
+        <span>Kính gửi: Quý Khách Tham Quan & Đồng Bào</span>
+        <span>Lưu niệm hành trình di sản</span>
+      </div>
+      <div class="note-lines">
+        <div class="note-line"></div>
+        <div class="note-line"></div>
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="page-footer">
+      <span>UBND Phường Bình Long, tỉnh Đồng Nai • Bản quyền thuộc dự án Bản Đồ Số</span>
+      <span class="page-num-pill">Trang 01 / 04</span>
+    </footer>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- TRANG 2: GIỚI THIỆU (INSIDE LEFT)                              -->
+  <!-- ============================================================== -->
+  <div class="page" id="trang-2">
+    <!-- Brand Header -->
+    <header class="brand-header">
+      <div class="brand-left">
+        <img class="brand-logo-img" src="assets/logo_binh_long_3d.png" alt="Logo Bình Long">
+        <div class="brand-text-block">
+          <h3>Vùng Đất Kiên Cường & Nghĩa Tình</h3>
+          <p>Phường Bình Long, tỉnh Đồng Nai</p>
+        </div>
+      </div>
+      <div class="brand-badge">Trang Di Sản</div>
+    </header>
+
+    <!-- Section Title -->
+    <div class="section-title-wrap">
+      <span class="section-tag">Địa Danh & Dấu Ấn Lịch Sử</span>
+      <h2 class="section-title">HÀO KHÍ BÌNH LONG QUA CÁC THỜI KỲ</h2>
+      <p class="section-desc">Vùng đất lưu giữ những chứng tích bi tráng của dân tộc và sức sống quật khởi kiên cường</p>
+    </div>
+
+    <!-- Overview Paragraph Card -->
+    <div class="p2-intro-card">
+      <p>
+        Nằm trên vùng đất đỏ miền Đông trù phú, <strong class="p2-intro-highlight">Phường Bình Long</strong> là địa bàn chiến lược đặc biệt quan trọng trong các cuộc kháng chiến vệ quốc. Nơi đây từng chứng kiến 32 ngày đêm chiến sự An Lộc lịch sử đầy cam go, tôi luyện nên ý chí gang thép của quân và dân ta. Ngày nay, Bình Long phát triển mạnh mẽ, trở thành đô thị văn minh, bình yên, nâng niu từng di tích lịch sử để giáo dục truyền thống cho muôn đời sau.
+      </p>
+    </div>
+
+    <!-- Detailed Landmarks List -->
+    <div class="p2-landmarks-list">
+      <!-- Item 1 -->
+      <div class="p2-landmark-item">
+        <div class="p2-item-img">
+          <img src="assets/dtt_real.jpg" alt="Dinh Tỉnh Trưởng Bình Long">
+        </div>
+        <div class="p2-item-content">
+          <div class="p2-item-header">
+            <h4 class="p2-item-title">Dinh Tỉnh Trưởng Bình Long</h4>
+            <span class="p2-item-rank">Di tích Lịch sử cấp Tỉnh</span>
+          </div>
+          <p class="p2-item-desc">
+            Xây dựng từ năm 1920 mang phong cách kiến trúc Pháp cổ điển. Từng là đầu não chỉ huy quân sự kiên cố với hệ thống boong-ke, hầm ngầm bê tông cốt thép dày kiên cố xuyên qua lòng đất.
+          </p>
+          <div class="p2-item-addr">Khu phố Phú Đức, Phường Bình Long, tỉnh Đồng Nai</div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="p2-landmark-item">
+        <div class="p2-item-img">
+          <img src="assets/m3000_real.jpg" alt="Mộ 3.000 Đồng Bào">
+        </div>
+        <div class="p2-item-content">
+          <div class="p2-item-header">
+            <h4 class="p2-item-title">Mộ 3.000 Đồng Bào Tử Nạn Năm 1972</h4>
+            <span class="p2-item-rank">Di tích Lịch sử cấp Quốc gia</span>
+          </div>
+          <p class="p2-item-desc">
+            Khu tưởng niệm trang nghiêm rộng hơn 4.000m² với đài tưởng niệm cao 12,6m. Nơi an nghỉ của hơn 3.000 đồng bào và chiến sĩ ngã xuống trong 32 ngày đêm mùa hè 1972, khắc ghi khát vọng hòa bình.
+          </p>
+          <div class="p2-item-addr">Khu phố An Lộc, Phường Bình Long, tỉnh Đồng Nai</div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="p2-landmark-item">
+        <div class="p2-item-img">
+          <img src="assets/m7n_real.jpg" alt="Mộ 7 Người Liệt Sĩ">
+        </div>
+        <div class="p2-item-content">
+          <div class="p2-item-header">
+            <h4 class="p2-item-title">Mộ Tập Thể Lực Lượng An Ninh An Lộc</h4>
+            <span class="p2-item-rank">Di tích Lịch sử cấp Tỉnh</span>
+          </div>
+          <p class="p2-item-desc">
+            Thường được gọi thân thương là Di tích Mộ 7 Người. Tưởng niệm tấm gương chiến đấu mưu trí, bất khuất của các chiến sĩ an ninh vũ trang bám trụ địa bàn, hy sinh trọn đời vì non sông thống nhất.
+          </p>
+          <div class="p2-item-addr">Khu phố Bình An, Phường Bình Long, tỉnh Đồng Nai</div>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="p2-landmark-item">
+        <div class="p2-item-img">
+          <img src="assets/hlt_real.jpg" alt="Chùa Hưng Lập Tự">
+        </div>
+        <div class="p2-item-content">
+          <div class="p2-item-header">
+            <h4 class="p2-item-title">Chùa Hưng Lập Tự (Chi Hội Hưng Lập Tự)</h4>
+            <span class="p2-item-rank">Di tích Lịch sử - Văn hóa</span>
+          </div>
+          <p class="p2-item-desc">
+            Ngôi chùa cổ kính xây dựng năm 1958 thuộc Tịnh độ Cư sĩ Phật hội Việt Nam. Nổi danh với tôn chỉ Phước Huệ Song Tu, duy trì phòng khám Đông y và phát thuốc nam miễn phí cho nhân dân suốt nhiều thập kỷ.
+          </p>
+          <div class="p2-item-addr">Khu phố Phú Đức, Phường Bình Long, tỉnh Đồng Nai</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fillable Note Box -->
+    <div class="note-fill-box">
+      <div class="note-title">
+        <span>Ghi Chú Cảm Tưởng / Dấu Ấn Tham Quan</span>
+        <span>Phường Bình Long</span>
+      </div>
+      <div class="note-lines">
+        <div class="note-line"></div>
+        <div class="note-line"></div>
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="page-footer">
+      <span>Di tích Lịch sử - Văn hóa Phường Bình Long, tỉnh Đồng Nai</span>
+      <span class="page-num-pill">Trang 02 / 04</span>
+    </footer>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- TRANG 3: SỐ HÓA & QR CODE (INSIDE RIGHT)                        -->
+  <!-- ============================================================== -->
+  <div class="page" id="trang-3">
+    <!-- Brand Header -->
+    <header class="brand-header">
+      <div class="brand-left">
+        <img class="brand-logo-img" src="assets/logo_binh_long_3d.png" alt="Logo Bình Long">
+        <div class="brand-text-block">
+          <h3>Chuyển Đổi Số Di Sản Văn Hóa</h3>
+          <p>Phường Bình Long, tỉnh Đồng Nai</p>
+        </div>
+      </div>
+      <div class="brand-badge">Trải Nghiệm 360°</div>
+    </header>
+
+    <!-- Section Title -->
+    <div class="section-title-wrap">
+      <span class="section-tag">Công Nghệ Thực Tế Ảo Tân Tiến</span>
+      <h2 class="section-title">BẢN ĐỒ THỰC TẾ ẢO & TRỢ LÝ SỐ</h2>
+      <p class="section-desc">Đưa di tích Bình Long đến gần hơn với nhân dân và du khách trên toàn thế giới</p>
+    </div>
+
+    <!-- 4 Features Grid -->
+    <div class="p3-features-grid">
+      <div class="p3-feature-box">
+        <span class="p3-feature-badge">Tính Năng 01</span>
+        <h4>Toàn Cảnh VR 360°</h4>
+        <p>Góc nhìn Flycam từ trên cao kết hợp ảnh toàn cảnh chi tiết, khám phá từng góc di tích sống động như đang hiện diện.</p>
+      </div>
+
+      <div class="p3-feature-box">
+        <span class="p3-feature-badge">Tính Năng 02</span>
+        <h4>Thuyết Minh Tự Động</h4>
+        <p>Giọng đọc truyền cảm tự động phát theo từng địa điểm, cung cấp tư liệu lịch sử đầy đủ, chính xác và truyền cảm.</p>
+      </div>
+
+      <div class="p3-feature-box">
+        <span class="p3-feature-badge">Tính Năng 03</span>
+        <h4>Bản Đồ Định Vị GIS</h4>
+        <p>Tích hợp tọa độ vệ tinh dẫn đường chính xác, chỉ dẫn lộ trình tham quan thuận tiện ngay trên điện thoại thông minh.</p>
+      </div>
+
+      <div class="p3-feature-box">
+        <span class="p3-feature-badge">Tính Năng 04</span>
+        <h4>Trợ Lý Lịch Sử AI</h4>
+        <p>Trực tiếp tra cứu, hỏi đáp thông minh về các sự kiện, nhân vật và di tích lịch sử Bình Long 24/7 mọi lúc mọi nơi.</p>
+      </div>
+    </div>
+
+    <!-- Main QR Hero Card with Composite Frame -->
+    <div class="p3-qr-hero-card">
+      <div class="p3-qr-frame-wrap">
+        <img src="assets/qr_frame_composite.png" alt="Mã QR Bản Đồ Số Bình Long VR">
+      </div>
+      <div class="p3-qr-instructions">
+        <span class="p3-cta-tag">Quét Mã Trải Nghiệm Ngay</span>
+        <h3>QUÉT MÃ QR BẰNG ĐIỆN THOẠI</h3>
+        <p>Mở camera hoặc ứng dụng Zalo trên điện thoại quét mã QR để bắt đầu chuyến tham quan thực tế ảo 360° không cần cài đặt phần mềm.</p>
+        <div class="p3-domain-box">
+          <span class="p3-domain-text">binhlongvr.vercel.app</span>
+          <span class="p3-domain-note">Truy cập tức thì</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real UI Screenshots Preview Bar -->
+    <div class="p3-preview-row">
+      <div class="p3-preview-item">
+        <img src="assets/ui_vr_dinh.png" alt="Giao diện VR Dinh Tỉnh Trưởng">
+        <div class="p3-preview-label">Không Gian Thực Tế Ảo 360°</div>
+      </div>
+      <div class="p3-preview-item">
+        <img src="assets/ui_map_interactive.png" alt="Sa bàn bản đồ số">
+        <div class="p3-preview-label">Sa Bàn Số & Định Vị Tọa Độ</div>
+      </div>
+    </div>
+
+    <!-- Fillable Note Box -->
+    <div class="note-fill-box">
+      <div class="note-title">
+        <span>Thông Tin Chuyến Tham Quan / Đoàn Học Tập</span>
+        <span>Mã số: BL-VR-2026</span>
+      </div>
+      <div class="note-lines">
+        <div class="note-line"></div>
+        <div class="note-line"></div>
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="page-footer">
+      <span>Cổng thông tin số hóa: binhlongvr.vercel.app</span>
+      <span class="page-num-pill">Trang 03 / 04</span>
+    </footer>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- TRANG 4: ĐIỀU THÚ VỊ & BÌNH LONG (BACK COVER)                   -->
+  <!-- ============================================================== -->
+  <div class="page" id="trang-4">
+    <!-- Brand Header -->
+    <header class="brand-header">
+      <div class="brand-left">
+        <img class="brand-logo-img" src="assets/logo_binh_long_3d.png" alt="Logo Bình Long">
+        <div class="brand-text-block">
+          <h3>Bình Long Điểm Hẹn Tương Lai</h3>
+          <p>Phường Bình Long, tỉnh Đồng Nai</p>
+        </div>
+      </div>
+      <div class="brand-badge">Trải Nghiệm Thú Vị</div>
+    </header>
+
+    <!-- Section Title -->
+    <div class="section-title-wrap">
+      <span class="section-tag">Khám Phá Sắc Màu Đô Thị</span>
+      <h2 class="section-title">VẺ ĐẸP ĐẶC SẮC CỦA ĐẤT & NGƯỜI BÌNH LONG</h2>
+      <p class="section-desc">Thiên nhiên tươi đẹp, ẩm thực độc đáo và lòng hiếu khách nồng hậu</p>
+    </div>
+
+    <!-- Scenic AI Art Card -->
+    <div class="p4-scenic-art">
+      <img src="assets/scenic_ai.jpg" alt="Rừng cao su Bình Long mùa thay lá">
+      <div class="p4-scenic-overlay">
+        <h3>Mùa Cao Su Thay Lá Bình Long</h3>
+        <p>Bức tranh thiên nhiên thơ mộng với những dải rừng bạt ngàn chuyển sắc vàng đỏ rực rỡ</p>
+      </div>
+    </div>
+
+    <!-- 4 Fun Facts Grid -->
+    <div class="p4-facts-grid">
+      <div class="p4-fact-card">
+        <h4>Rừng Cao Su Mùa Lá Đỏ</h4>
+        <p>Cứ mỗi độ chuyển mùa, những con đường rợp bóng cao su Bình Long biến thành dải lụa đỏ rực rỡ thu hút du khách yêu thiên nhiên và nhiếp ảnh.</p>
+      </div>
+
+      <div class="p4-fact-card">
+        <h4>Ngã Năm Đô Thị Nhộn Nhịp</h4>
+        <p>Giao lộ trung tâm mang nhịp sống sôi động với các hàng quán ẩm thực trứ danh miền Đông, đậm đà bản sắc địa phương.</p>
+      </div>
+
+      <div class="p4-fact-card">
+        <h4>Chiêm Bái Phật Quốc Vạn Thành</h4>
+        <p>Quần thể tâm linh uy nghiêm với tượng Phật ngồi cao nhất khu vực, điểm đến chiêm bái và cầu nguyện bình an cho muôn phương.</p>
+      </div>
+
+      <div class="p4-fact-card">
+        <h4>Con Người Nghĩa Tình Đôn Hậu</h4>
+        <p>Người dân Bình Long mộc mạc, hào sảng và mến khách, luôn chào đón du khách bằng nụ cười thân thiện và tình cảm nồng ấm.</p>
+      </div>
+    </div>
+
+    <!-- Welcome Chibi Mascot Banner -->
+    <div class="p4-chibi-banner">
+      <img class="p4-chibi-img" src="assets/chibi_duo.png" alt="Chibi Bình Long VR">
+      <div class="p4-chibi-text">
+        <h4>Dạ! Bình Long Xin Chào & Hẹn Gặp Lại!</h4>
+        <p>Kính chúc Quý khách có chuyến hành trình khám phá di sản lịch sử nhiều niềm vui, ý nghĩa và những kỷ niệm đáng nhớ tại quê hương Bình Long kiên cường!</p>
+      </div>
+    </div>
+
+    <!-- Back Page Organization Info Box -->
+    <div class="p4-org-box">
+      <div>
+        <strong>ỦY BAN NHÂN DÂN PHƯỜNG BÌNH LONG</strong><br>
+        Địa chỉ: Phường Bình Long, tỉnh Đồng Nai • Website: <strong>binhlongvr.vercel.app</strong>
+      </div>
+      <div style="text-align: right;">
+        Đơn vị đồng hành công nghệ: <strong>HCMUTE</strong><br>
+        Bản quyền thuộc <strong>UBND Phường Bình Long</strong>
+      </div>
+    </div>
+
+    <!-- Fillable Note Box -->
+    <div class="note-fill-box" style="margin-top: 14px;">
+      <div class="note-title">
+        <span>Lời Nhắn Gửi Hoặc Dấu Mộc Lưu Niệm Chuyến Đi</span>
+        <span>Phường Bình Long, tỉnh Đồng Nai</span>
+      </div>
+      <div class="note-lines">
+        <div class="note-line"></div>
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="page-footer" style="margin-top: 14px;">
+      <span>Bản Đồ Số Di Tích Lịch Sử & Văn Hóa Phường Bình Long, tỉnh Đồng Nai</span>
+      <span class="page-num-pill">Trang 04 / 04</span>
+    </footer>
+  </div>
+
+</body>
+</html>

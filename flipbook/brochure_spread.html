@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bản In 2 Mặt Khổ A4 - Tờ Bướm Gập Bình Long VR</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #010a07;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 30px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Spread Sheet: A4 Landscape Proportion (2480px x 1754px) */
+    .sheet {
+      width: 2480px;
+      height: 1754px;
+      display: flex;
+      position: relative;
+      background: #021a12;
+      border: 3px solid rgba(16, 185, 129, 0.4);
+      border-radius: 20px;
+      overflow: hidden;
+      page-break-after: always;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.85);
+    }
+
+    /* Fold guideline down the center */
+    .sheet::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: rgba(245, 158, 11, 0.35);
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .half-page {
+      width: 1240px;
+      height: 1754px;
+      position: relative;
+    }
+
+    .half-page img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+        gap: 0;
+      }
+      .sheet {
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        width: 100vw;
+        height: 100vh;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TỜ 1 (MẶT NGOÀI): TRANG 4 (BÌA SAU) + TRANG 1 (BÌA TRƯỚC) -->
+  <div class="sheet" id="sheet-1">
+    <div class="half-page">
+      <img src="trang_4_thuvibinhlong.png" alt="Trang 4 - Bìa Sau">
+    </div>
+    <div class="half-page">
+      <img src="trang_1_bia.png" alt="Trang 1 - Bìa Trước">
+    </div>
+  </div>
+
+  <!-- TỜ 2 (MẶT TRONG): TRANG 2 (GIỚI THIỆU) + TRANG 3 (SỐ HÓA & QR) -->
+  <div class="sheet" id="sheet-2">
+    <div class="half-page">
+      <img src="trang_2_gioithieu.png" alt="Trang 2 - Giới Thiệu">
+    </div>
+    <div class="half-page">
+      <img src="trang_3_sohoa_qr.png" alt="Trang 3 - Số Hóa và QR Code">
+    </div>
+  </div>
+
+</body>
+</html>

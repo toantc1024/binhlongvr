@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import {
   ChevronLeft,
@@ -181,24 +181,18 @@ export default function WelcomePlacesDialogBlock({
             "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
           )}
         >
-          {/* Top Header: Authority, Title, Close Button */}
-          <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center text-center shrink-0 pt-2 pb-3">
+          {/* Top Header: Title & Close Button (Badge removed as requested) */}
+          <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center text-center shrink-0 pt-2 pb-2">
             {/* Close (X) button top right */}
             <button
               onClick={() => setOpen(false)}
-              className="absolute top-0 right-0 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 shadow-lg"
+              className="absolute top-0 right-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20 shadow-lg"
               title="Đóng hộp thoại"
               aria-label="Đóng hộp thoại"
               type="button"
             >
-              <X className="w-6 h-6 stroke-[2.5]" />
+              <X className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5]" />
             </button>
-
-            {/* Small Top Pill */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs sm:text-sm font-bold uppercase tracking-wider mb-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              Phường Bình Long, Tỉnh Đồng Nai
-            </div>
 
             {/* Big, Clear, Bold Title */}
             <DialogPrimitive.Title className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight uppercase">
@@ -206,54 +200,56 @@ export default function WelcomePlacesDialogBlock({
             </DialogPrimitive.Title>
 
             {/* Clear Subtitle for seniors and general public */}
-            <DialogPrimitive.Description className="text-sm sm:text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto mt-1.5">
+            <DialogPrimitive.Description className="text-sm sm:text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto mt-2">
               Nhấn vào hình ảnh bên dưới để vào tham quan thực tế ảo 360°
             </DialogPrimitive.Description>
           </div>
 
-          {/* Middle: 4 Landmark Boxes (To, vuông vắn, rõ ràng, không bị overflow) */}
-          <div className="relative w-full max-w-7xl mx-auto flex-1 flex flex-col justify-center my-2 sm:my-4">
-            {/* Left Scroll Button */}
+          {/* Middle: 4 Landmark Boxes with Chevrons that only show on hover and do not overlay cards */}
+          <div className="group/carousel relative w-full max-w-7xl mx-auto flex-1 flex flex-col justify-center my-2 sm:my-4 px-2 sm:px-12 md:px-16">
+            {/* Left Scroll Button: Shows only on hover, positioned outside cards to prevent overlay */}
             <button
               onClick={handlePrev}
               disabled={!canScrollLeft && activeIndex === 0}
               className={cn(
-                "hidden sm:flex absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20",
-                "w-12 h-12 md:w-14 md:h-14 rounded-full bg-slate-900/90 text-white",
-                "border border-emerald-500/40 shadow-2xl items-center justify-center transition-all cursor-pointer",
-                "hover:bg-emerald-600 hover:scale-105 active:scale-95",
+                "hidden sm:flex absolute left-0 md:left-2 top-1/2 -translate-y-1/2 z-30",
+                "w-13 h-13 md:w-15 md:h-15 rounded-full bg-slate-900/95 text-white",
+                "border-2 border-emerald-500/50 shadow-2xl items-center justify-center cursor-pointer",
+                "opacity-0 group-hover/carousel:opacity-100 transition-all duration-300",
+                "hover:bg-emerald-600 hover:scale-110 active:scale-95",
                 (!canScrollLeft && activeIndex === 0) &&
-                  "opacity-20 cursor-not-allowed hover:scale-100 hover:bg-slate-900/90"
+                  "opacity-0 group-hover/carousel:opacity-25 cursor-not-allowed hover:scale-100 hover:bg-slate-900/95"
               )}
               title="Xem địa điểm trước"
               type="button"
             >
-              <ChevronLeft className="w-7 h-7 stroke-[3]" />
+              <ChevronLeft className="w-8 h-8 stroke-[3]" />
             </button>
 
-            {/* Right Scroll Button */}
+            {/* Right Scroll Button: Shows only on hover, positioned outside cards to prevent overlay */}
             <button
               onClick={handleNext}
               disabled={!canScrollRight && activeIndex === FEATURED_PLACES.length - 1}
               className={cn(
-                "hidden sm:flex absolute -right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20",
-                "w-12 h-12 md:w-14 md:h-14 rounded-full bg-slate-900/90 text-white",
-                "border border-emerald-500/40 shadow-2xl items-center justify-center transition-all cursor-pointer",
-                "hover:bg-emerald-600 hover:scale-105 active:scale-95",
+                "hidden sm:flex absolute right-0 md:right-2 top-1/2 -translate-y-1/2 z-30",
+                "w-13 h-13 md:w-15 md:h-15 rounded-full bg-slate-900/95 text-white",
+                "border-2 border-emerald-500/50 shadow-2xl items-center justify-center cursor-pointer",
+                "opacity-0 group-hover/carousel:opacity-100 transition-all duration-300",
+                "hover:bg-emerald-600 hover:scale-110 active:scale-95",
                 (!canScrollRight && activeIndex === FEATURED_PLACES.length - 1) &&
-                  "opacity-20 cursor-not-allowed hover:scale-100 hover:bg-slate-900/90"
+                  "opacity-0 group-hover/carousel:opacity-25 cursor-not-allowed hover:scale-100 hover:bg-slate-900/95"
               )}
               title="Xem địa điểm kế tiếp"
               type="button"
             >
-              <ChevronRight className="w-7 h-7 stroke-[3]" />
+              <ChevronRight className="w-8 h-8 stroke-[3]" />
             </button>
 
             {/* Scrollable Track / Grid */}
             <div
               ref={scrollContainerRef}
               className={cn(
-                "flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-2 px-1 sm:px-4",
+                "flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-2 px-1 sm:px-2",
                 "w-full items-stretch no-scrollbar"
               )}
             >
@@ -265,9 +261,9 @@ export default function WelcomePlacesDialogBlock({
                     onClick={() => handleSelectPlace(place.hotspot_id, place.panorama_id)}
                     className={cn(
                       "snap-center shrink-0 flex flex-col justify-between",
-                      // Responsive card width: fits 4 comfortably on large desktop, slides on mobile/tablets
+                      // Responsive card width
                       "w-[270px] sm:w-[300px] md:w-[320px] lg:flex-1 lg:min-w-0",
-                      "bg-slate-900/85 hover:bg-slate-800/95 border-2 border-slate-700/80 hover:border-emerald-400 rounded-3xl p-3 sm:p-4",
+                      "bg-slate-900/85 hover:bg-slate-800/95 border-2 border-slate-700/80 hover:border-emerald-400 rounded-3xl p-3.5 sm:p-4",
                       "cursor-pointer group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 relative",
                       isSelected && "border-emerald-500 ring-2 ring-emerald-500/50"
                     )}
@@ -305,31 +301,31 @@ export default function WelcomePlacesDialogBlock({
                     </div>
 
                     {/* Information Text (Big, clean, never overflowing) */}
-                    <div className="pt-3.5 pb-1 flex flex-col flex-1 justify-between text-center gap-3">
+                    <div className="pt-4 pb-1 flex flex-col flex-1 justify-between text-center gap-3">
                       <div>
                         {/* Big Name */}
-                        <h3 className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-emerald-400 transition-colors leading-snug">
+                        <h3 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-400 transition-colors leading-snug">
                           {place.shortName}
                         </h3>
 
                         {/* Address */}
-                        <div className="flex items-center justify-center gap-1.5 text-xs sm:text-sm text-slate-300 mt-1 font-medium">
-                          <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <div className="flex items-center justify-center gap-1.5 text-xs sm:text-sm text-slate-300 mt-1.5 font-medium">
+                          <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
                           <span className="truncate">{place.address}</span>
                         </div>
                       </div>
 
-                      {/* Big Click Button */}
+                      {/* Big Click Button (Tăng kích thước 10-15%) */}
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleSelectPlace(place.hotspot_id, place.panorama_id);
                         }}
-                        className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg group-hover:shadow-emerald-500/30 transition-all cursor-pointer active:scale-95"
+                        className="w-full py-3.5 sm:py-4 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-base sm:text-lg flex items-center justify-center gap-2.5 shadow-xl group-hover:shadow-emerald-500/30 transition-all cursor-pointer active:scale-95"
                       >
                         <span>Vào tham quan</span>
-                        <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
                       </button>
                     </div>
                   </div>
@@ -342,7 +338,7 @@ export default function WelcomePlacesDialogBlock({
               <button
                 onClick={handlePrev}
                 disabled={!canScrollLeft && activeIndex === 0}
-                className="p-2 rounded-full bg-slate-800 text-white disabled:opacity-30"
+                className="p-2.5 rounded-full bg-slate-800 text-white disabled:opacity-30"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -361,21 +357,21 @@ export default function WelcomePlacesDialogBlock({
               <button
                 onClick={handleNext}
                 disabled={!canScrollRight && activeIndex === FEATURED_PLACES.length - 1}
-                className="p-2 rounded-full bg-slate-800 text-white disabled:opacity-30"
+                className="p-2.5 rounded-full bg-slate-800 text-white disabled:opacity-30"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
           </div>
 
-          {/* Bottom Center Button: Khám phá website */}
+          {/* Bottom Center Button: Khám phá website (Tăng kích thước 10-15%) */}
           <div className="pt-2 pb-4 sm:pb-6 flex flex-col items-center justify-center shrink-0">
             <button
               onClick={() => setOpen(false)}
-              className="px-8 sm:px-12 py-3.5 sm:py-4 rounded-full border-2 border-emerald-400/60 bg-emerald-950/80 hover:bg-emerald-600 text-white text-base sm:text-lg font-bold flex items-center gap-3 shadow-2xl hover:shadow-emerald-600/40 transition-all active:scale-95 cursor-pointer backdrop-blur-md"
+              className="px-10 sm:px-14 py-4 sm:py-4.5 rounded-full border-2 border-emerald-400/60 bg-emerald-950/90 hover:bg-emerald-600 text-white text-lg sm:text-xl font-black flex items-center gap-3 shadow-2xl hover:shadow-emerald-600/40 transition-all active:scale-95 cursor-pointer backdrop-blur-md"
               type="button"
             >
-              <Globe className="w-5 h-5 text-emerald-400 stroke-[2.5]" />
+              <Globe className="w-6 h-6 text-emerald-400 stroke-[2.5]" />
               <span>Khám phá website</span>
             </button>
           </div>

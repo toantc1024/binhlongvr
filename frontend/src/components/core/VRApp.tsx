@@ -4,6 +4,7 @@ import TrackerBlock from "../block/TrackerBlock";
 import { Toaster } from "../ui/sonner";
 import NotFoundPage from "../pages/NotFoundPage";
 import LandingPage from "../pages/LandingPage";
+import BrochurePage from "../pages/BrochurePage";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import useVRStore from "@/store/vr.store";
 import { cn } from "@/lib/utils";
@@ -12,7 +13,11 @@ const AppShell = () => {
   const location = useLocation();
   const isApp = location.pathname === "/app";
   const isHome = location.pathname === "/";
-  const isNotFound = !isApp && !isHome;
+  const isFlipbook =
+    location.pathname === "/flipbook" ||
+    location.pathname === "/brochure" ||
+    location.pathname === "/to-gap";
+  const isNotFound = !isApp && !isHome && !isFlipbook;
 
   // Only mount VRPage once the user has entered /app
   const [hasEnteredApp, setHasEnteredApp] = useState(isApp);
@@ -36,6 +41,13 @@ const AppShell = () => {
       <div className={cn("w-full min-h-screen", isHome ? "block" : "hidden")}>
         <LandingPage />
       </div>
+
+      {/* Trang Flipbook / Tờ gấp 4 trang */}
+      {isFlipbook && (
+        <div className="w-full min-h-screen">
+          <BrochurePage />
+        </div>
+      )}
 
       {/* Không gian VR 360° - Chỉ tải khi người dùng vào /app, sau đó giữ trạng thái không reload */}
       {hasEnteredApp && (

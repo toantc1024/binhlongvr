@@ -605,4 +605,13 @@
     visibility: hidden !important;
     pointer-events: none !important;
   }
+
+  /* Custom scrollbar hiding */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
