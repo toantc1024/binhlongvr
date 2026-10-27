@@ -16,7 +16,7 @@ import { CURRENT_AREA_ID } from "@/constants/env.constants";
 
 export default function HeroSection() {
   const navigate = useNavigate();
-  const { setIsLoading, setIsMapDialogOpen } = useVRStore((state) => state);
+  const { setIsLoading, setIsMapDialogOpen, setIsWelcomeDialogOpen } = useVRStore((state) => state);
   const [visitorCount, setVisitorCount] = useState<number>(1520);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function HeroSection() {
           setVisitorCount(1520 + realCount);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
     return () => {
       mounted = false;
     };
@@ -65,10 +65,22 @@ export default function HeroSection() {
         <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground font-normal text-left sm:text-center">
           Khám phá truyền thống - Lịch sử - văn hoá bằng Công nghệ Số.
         </p>
-        <div className="mt-6 flex flex-row items-center z-[30] justify-start sm:justify-center gap-3 sm:gap-4 w-full">
+        <div className="mt-6 flex flex-row flex-wrap items-center z-[30] justify-start sm:justify-center gap-3 sm:gap-4 w-full">
           <Button
             size="lg"
-            className="rounded-xl cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-xs w-auto min-w-[130px] sm:min-w-[140px]"
+            className="rounded-xl cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md w-auto min-w-[140px] sm:min-w-[160px] flex items-center gap-2"
+            onClick={() => {
+              setIsWelcomeDialogOpen(true);
+            }}
+          >
+            <span>Chọn điểm tham quan</span>
+            <ArrowUpRight className="!h-5 !w-5" />
+          </Button>
+
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-xl cursor-pointer backdrop-blur-xl border-0 bg-secondary/80 hover:bg-secondary text-foreground text-sm sm:text-base font-medium shadow-xs w-auto min-w-[120px] sm:min-w-[140px] flex items-center gap-2"
             onClick={() => {
               navigate("/app");
               setIsLoading(true);
@@ -77,20 +89,8 @@ export default function HeroSection() {
               }, 300);
             }}
           >
-            Bắt đầu <ArrowUpRight className="!h-5 !w-5" />
-          </Button>
-
-          <Button
-            variant="outline"
-            size="lg"
-            className="rounded-xl cursor-pointer backdrop-blur-xl border-0 bg-secondary/80 hover:bg-secondary text-foreground text-sm sm:text-base font-normal shadow-xs w-auto min-w-[120px] sm:min-w-[130px]"
-            onClick={() => {
-              navigate("/app");
-            }}
-          >
             <CirclePlay className="!h-5 !w-5 text-primary" />
-            <span className="hidden sm:inline">Video 360</span>
-            <span className="sm:hidden">Video</span>
+            <span>Vào không gian 360°</span>
           </Button>
         </div>
       </div>
@@ -105,8 +105,8 @@ export default function HeroSection() {
               <CardContent className="h-full w-full !p-0 relative">
                 <MapBlock
                   opened={true}
-                  setOpened={() => {}}
-                  showMedia={() => {}}
+                  setOpened={() => { }}
+                  showMedia={() => { }}
                   className="rounded-xl h-full w-full"
                   onSelectHotspot={(hotspot) => {
                     setIsMapDialogOpen(true, hotspot.hotspot_id);

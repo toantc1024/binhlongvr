@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
 import { NavMenu } from "./nav-menu";
-import { Search } from "lucide-react";
+import { Search, Compass } from "lucide-react";
 import MapDialogBlock from "../MapDialogBlock";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import useVRStore from "@/store/vr.store";
@@ -20,6 +20,7 @@ const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
     setIsMapDialogOpen,
     mapDialogHotspotId,
     selectHotspotAndPanorama,
+    setIsWelcomeDialogOpen,
   } = useVRStore((state) => state);
   return (
     <>
@@ -56,17 +57,28 @@ const Navbar = ({ ref, activeSection, onNavigate }: NavbarProps) => {
             onNavigate={onNavigate}
           />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Button
+              onClick={() => setIsWelcomeDialogOpen(true)}
+              variant="outline"
+              size="lg"
+              className="px-3 sm:px-4 cursor-pointer rounded-lg border-border hover:bg-secondary text-foreground text-sm font-semibold shadow-xs transition-all flex items-center gap-1.5"
+            >
+              <Compass className="!h-4 !w-4 text-emerald-600" />
+              <span className="hidden sm:inline">Điểm tham quan</span>
+              <span className="sm:hidden">Địa điểm</span>
+            </Button>
+
             <Button
               onClick={() => setIsMapDialogOpen(true)}
               size="lg"
-              className="px-4 cursor-pointer rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-medium shadow-xs transition-all"
+              className="px-3.5 sm:px-4 cursor-pointer rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-medium shadow-xs transition-all"
             >
               <div className="hidden sm:flex items-center gap-2">
-                Tìm kiếm địa điểm <Search className="!h-4 !w-4" />
+                Tìm kiếm <Search className="!h-4 !w-4" />
               </div>
               <div className="sm:hidden flex items-center gap-2">
-                Tìm kiếm <Search className="!h-4 !w-4" />
+                <Search className="!h-4 !w-4" />
               </div>
             </Button>
           </div>

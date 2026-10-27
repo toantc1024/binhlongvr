@@ -26,6 +26,7 @@ interface VRStoreState {
   isLoadingPanoramas: boolean;
   isMapDialogOpen: boolean;
   mapDialogHotspotId: number | null;
+  isWelcomeDialogOpen: boolean;
 }
 
 interface VRStoreActions {
@@ -42,6 +43,7 @@ interface VRStoreActions {
   setCurrentPanoramaById: (panorama_id: string) => void;
   getPanoramaById: (panorama_id: string) => Promise<Panorama | undefined>;
   setIsMapDialogOpen: (open: boolean, hotspotId?: number | null) => void;
+  setIsWelcomeDialogOpen: (open: boolean) => void;
   selectHotspotAndPanorama: (hotspotId?: number | null, panoramaId?: string | null) => void;
 }
 
@@ -117,12 +119,15 @@ const useVRStore = create<VRStore>((set, get) => ({
   isLoadingPanoramas: false,
   isMapDialogOpen: false,
   mapDialogHotspotId: null,
+  isWelcomeDialogOpen: true,
 
   setIsMapDialogOpen: (open, hotspotId = null) =>
     set({
       isMapDialogOpen: open,
       mapDialogHotspotId: open ? (hotspotId ?? null) : null,
     }),
+
+  setIsWelcomeDialogOpen: (open: boolean) => set({ isWelcomeDialogOpen: open }),
 
   setCurrentArea: (area) => set({ currentArea: area }),
   setCurrentHotspot: (hotspot) => set({ currentHotspot: hotspot }),

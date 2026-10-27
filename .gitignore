@@ -49,3 +49,26 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Large media, video exports & presentations
+*.mp4
+*.mov
+*.avi
+*.pptx
+*.key
+
+# Automation screenshot outputs & video production
+automation/output_screenshots/
+automation/screenshots_flow/
+automation/video_production/
+automation/temp/
+automation/capture_*.cjs
+automation/generate_*.py
+
+# PNPM store & local package caches
+.pnpm-store/
+frontend/.pnpm-store/
+pnpm-workspace.yaml
+frontend/pnpm-workspace.yaml
+
+

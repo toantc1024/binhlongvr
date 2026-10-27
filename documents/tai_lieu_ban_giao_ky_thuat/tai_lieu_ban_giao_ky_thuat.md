@@ -10,7 +10,7 @@
 | **Website chính thức** | [https://binhlongvr.vercel.app/](https://binhlongvr.vercel.app/) |
 | **Loại ứng dụng** | Bản đồ số GIS & Không gian thực tế ảo 360° đa nền tảng |
 | **Đơn vị tiếp nhận** | UBND Thị xã Bình Long - Phường An Lộc |
-| **Tiếp nhận phản hồi & Hỗ trợ kỹ thuật** | **KS. Trần Công Toản** - 0769394157 |
+| **Tiếp nhận phản hồi & Hỗ trợ kỹ thuật** | **KS. Trần Công Toản** - 0769394157 - [tctoan1024@gmail.com](mailto:tctoan1024@gmail.com) |
 
 #### Nhận Diện Biểu Trưng & Mã QR Trực Tuyến
 - **Logo chính thức:** `assets/logo_vr.png`
