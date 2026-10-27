@@ -5,6 +5,7 @@ import { Toaster } from "../ui/sonner";
 import NotFoundPage from "../pages/NotFoundPage";
 import LandingPage from "../pages/LandingPage";
 import BrochurePage from "../pages/BrochurePage";
+import WelcomePlacesDialogBlock from "../block/WelcomePlacesDialogBlock";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import useVRStore from "@/store/vr.store";
 import { cn } from "@/lib/utils";
@@ -59,6 +60,7 @@ const AppShell = () => {
               : "fixed inset-0 -z-50 pointer-events-none opacity-0 invisible"
           )}
         >
+          {isApp && <WelcomePlacesDialogBlock />}
           <VRPage isActive={isApp} />
         </div>
       )}

@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tờ Gấp Giới Thiệu Phường Bình Long - Khổ A5 Chuẩn In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-light: #34d399;
+      --primary-dark: #047857;
+      --gold: #f59e0b;
+      --gold-light: #fef08a;
+      --text: #ffffff;
+      --text-muted: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #060e0a;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Print Setup for A5 Portrait: 148mm x 210mm */
+    @page {
+      size: 148mm 210mm;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .page {
+        page-break-after: always !important;
+        break-after: page !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+    }
+
+    /* Top Floating Print Bar */
+    .print-bar {
+      position: sticky;
+      top: 12px;
+      z-index: 100;
+      background: rgba(2, 23, 16, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 10px 22px;
+      border-radius: 40px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    .btn-print {
+      background: var(--primary);
+      color: #021710;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 8px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-print:hover {
+      background: var(--primary-light);
+      transform: scale(1.03);
+    }
+
+    /* Exact A5 Page Container: 148mm x 210mm */
+    .page {
+      width: 148mm;
+      height: 210mm;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14mm 13mm 12mm 13mm;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Background Full Bleed Overlays */
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(2, 23, 16, 0.82) 0%, rgba(2, 23, 16, 0.65) 50%, rgba(2, 23, 16, 0.92) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .page > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Header component */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid rgba(16, 185, 129, 0.45);
+      padding-bottom: 7px;
+      margin-bottom: 8px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: drop-shadow(0 3px 8px rgba(0,0,0,0.5));
+    }
+
+    .brand-text h2 {
+      font-size: 8.5px;
+      font-weight: 800;
+      color: #a7f3d0;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .brand-text h1 {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      line-height: 1.2;
+    }
+
+    .page-badge {
+      background: rgba(16, 185, 129, 0.25);
+      border: 1px solid var(--primary);
+      color: var(--primary-light);
+      padding: 3.5px 9px;
+      border-radius: 12px;
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+
+    /* Page Footer */
+    .page-footer {
+      border-top: 1.5px solid rgba(16, 185, 129, 0.45);
+      padding-top: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .footer-highlight {
+      color: var(--primary-light);
+      font-weight: 800;
+    }
+
+    /* ======================================================= */
+    /* PAGE 1: BÌA TRƯỚC (ARTISTIC HERO COVER)                 */
+    /* ======================================================= */
+    #page-1 {
+      background-image: url('assets/art_page1_cover.jpg');
+    }
+
+    #page-1::before {
+      background: linear-gradient(180deg, rgba(2, 23, 16, 0.75) 0%, rgba(2, 23, 16, 0.3) 40%, rgba(2, 23, 16, 0.95) 85%);
+    }
+
+    .cover-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+      padding-top: 8px;
+    }
+
+    .cover-top-box {
+      text-align: center;
+    }
+
+    .cover-pill {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.25);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-size: 8.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 12px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .cover-title {
+      font-size: 19px;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 1.25;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.8);
+      letter-spacing: -0.3px;
+    }
+
+    .cover-title span {
+      display: block;
+      color: var(--primary-light);
+      font-size: 16.5px;
+      margin-top: 2px;
+    }
+
+    .cover-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* 4 Landmark Cards on Page 1 */
+    .cover-landmarks-box {
+      background: rgba(2, 23, 16, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(16, 185, 129, 0.45);
+      border-radius: 14px;
+      padding: 9px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+
+    .cover-landmarks-box h4 {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--primary-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      text-align: center;
+      margin-bottom: 7px;
+    }
+
+    .landmarks-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .landmark-mini-card {
+      background: rgba(6, 42, 29, 0.9);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 8px;
+      padding: 4px;
+      text-align: center;
+    }
+
+    .landmark-mini-card .img-thumb {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+
+    .landmark-mini-card .img-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .landmark-mini-card p.name {
+      font-size: 8px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .landmark-mini-card p.tag {
+      font-size: 7px;
+      font-weight: 700;
+      color: var(--primary-light);
+    }
+
+    /* ======================================================= */
+    /* PAGE 2: GIỚI THIỆU DI TÍCH (ARTISTIC HERITAGE)          */
+    /* ======================================================= */
+    #page-2 {
+      background-image: url('assets/art_page2_history.jpg');
+    }
+
+    #page-2::before {
+      background: linear-gradient(180deg, rgba(2, 23, 16, 0.88) 0%, rgba(2, 23, 16, 0.8) 50%, rgba(2, 23, 16, 0.94) 100%);
+    }
+
+    .intro-card {
+      background: rgba(2, 23, 16, 0.85);
+      border-left: 3px solid var(--primary);
+      padding: 7px 10px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 7px;
+    }
+
+    .intro-card h3 {
+      font-size: 11px;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .intro-card p {
+      font-size: 8.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+      text-align: justify;
+    }
+
+    .relics-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      margin-bottom: 7px;
+    }
+
+    .relic-box {
+      display: flex;
+      gap: 9px;
+      background: rgba(4, 34, 23, 0.88);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 10px;
+      padding: 6px 8px;
+      align-items: center;
+    }
+
+    .relic-box .thumb {
+      width: 48px;
+      height: 48px;
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(16, 185, 129, 0.5);
+    }
+
+    .relic-box .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .relic-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .relic-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+
+    .badge-pill-red {
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 7px;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-pill-green {
+      background: #059669;
+      color: #ffffff;
+      font-size: 7px;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-pill-amber {
+      background: #d97706;
+      color: #ffffff;
+      font-size: 7px;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .relic-content h4 {
+      font-size: 10px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .relic-content p.desc {
+      font-size: 8px;
+      color: var(--text-muted);
+      line-height: 1.3;
+      margin-top: 1.5px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .relic-content p.loc {
+      font-size: 7.5px;
+      color: var(--primary-light);
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .stat-row-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: rgba(2, 23, 16, 0.8);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 8px;
+      padding: 6px;
+      text-align: center;
+    }
+
+    .stat-row-3 h5 {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--primary-light);
+    }
+
+    .stat-row-3 p {
+      font-size: 7px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* ======================================================= */
+    /* PAGE 3: SỐ HÓA & MÃ QR (ARTISTIC DIGITAL VR)            */
+    /* ======================================================= */
+    #page-3 {
+      background-image: url('assets/art_page3_digital_vr.jpg');
+    }
+
+    #page-3::before {
+      background: linear-gradient(180deg, rgba(2, 23, 16, 0.85) 0%, rgba(2, 23, 16, 0.72) 40%, rgba(2, 23, 16, 0.94) 85%);
+    }
+
+    .tech-title-box {
+      text-align: center;
+      margin-bottom: 7px;
+    }
+
+    .tech-title-box h2 {
+      font-size: 15px;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 1.25;
+    }
+
+    .tech-title-box p {
+      font-size: 8.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .tech-grid-2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .tech-feature-card {
+      background: rgba(4, 34, 23, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 9px;
+      padding: 6px 8px;
+    }
+
+    .tech-feature-card h5 {
+      font-size: 8px;
+      font-weight: 800;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5px;
+    }
+
+    .tech-feature-card h4 {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 1.5px;
+    }
+
+    .tech-feature-card p {
+      font-size: 7.5px;
+      color: var(--text-muted);
+      line-height: 1.25;
+    }
+
+    /* PROMINENT QR CONTAINER */
+    .qr-large-card {
+      background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.25) 0%, rgba(4, 34, 23, 0.95) 100%);
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.7), 0 0 30px rgba(16, 185, 129, 0.25);
+    }
+
+    .qr-badge {
+      background: var(--gold);
+      color: #021710;
+      font-size: 8px;
+      font-weight: 900;
+      text-transform: uppercase;
+      padding: 3px 12px;
+      border-radius: 14px;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+
+    .qr-image-wrapper {
+      width: 105px;
+      height: 105px;
+      background: #ffffff;
+      padding: 6px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .qr-large-card h3 {
+      font-size: 11px;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .qr-large-card p {
+      font-size: 8px;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .qr-link-pill {
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      color: var(--primary-light);
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ======================================================= */
+    /* PAGE 4: BÌA SAU - KHÁM PHÁ THÚ VỊ (ARTISTIC FOREST)     */
+    /* ======================================================= */
+    #page-4 {
+      background-image: url('assets/art_page4_rubber_forest.jpg');
+    }
+
+    #page-4::before {
+      background: linear-gradient(180deg, rgba(2, 23, 16, 0.78) 0%, rgba(2, 23, 16, 0.45) 40%, rgba(2, 23, 16, 0.94) 85%);
+    }
+
+    .back-top-box {
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .back-top-box h2 {
+      font-size: 16px;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 1.25;
+    }
+
+    .back-top-box p {
+      font-size: 8.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .scenic-highlight-box {
+      background: rgba(2, 23, 16, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(16, 185, 129, 0.45);
+      border-radius: 12px;
+      padding: 8px 10px;
+      margin-bottom: 7px;
+    }
+
+    .scenic-highlight-box p.tag {
+      font-size: 7.5px;
+      font-weight: 800;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .scenic-highlight-box h3 {
+      font-size: 12px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .scenic-highlight-box p.desc {
+      font-size: 8px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .features-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 7px;
+    }
+
+    .feat-card-sm {
+      background: rgba(4, 34, 23, 0.85);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 9px;
+      padding: 6px 8px;
+    }
+
+    .feat-card-sm h4 {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--primary-light);
+      margin-bottom: 2px;
+    }
+
+    .feat-card-sm p {
+      font-size: 7.5px;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .quote-banner {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--primary);
+      border-radius: 10px;
+      padding: 7px 10px;
+      text-align: center;
+      margin-bottom: 7px;
+    }
+
+    .quote-banner p.main {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .quote-banner p.sub {
+      font-size: 7.5px;
+      color: var(--primary-light);
+      margin-top: 1px;
+    }
+
+    .contact-block {
+      background: rgba(2, 23, 16, 0.9);
+      border: 1.5px solid rgba(16, 185, 129, 0.5);
+      border-radius: 12px;
+      padding: 8px 10px;
+    }
+
+    .contact-block h5 {
+      font-size: 7.5px;
+      font-weight: 800;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 2px;
+    }
+
+    .contact-block h4 {
+      font-size: 10.5px;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px 8px;
+      font-size: 7.5px;
+      color: var(--text-muted);
+    }
+
+    .contact-info-grid strong {
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Action Bar (Hidden when printing or exporting) -->
+  <div class="print-bar no-print">
+    <div>
+      <h3 style="font-size: 14px; font-weight: 800; color: #fff;">Tờ Gấp Giới Thiệu Phường Bình Long (Khổ A5 Chuẩn In)</h3>
+      <p style="font-size: 11px; color: var(--text-muted);">4 Trang Nghệ Thuật Toàn Diện • Đầy Đặn Tỉ Lệ Chuẩn A5</p>
+    </div>
+    <button class="btn-print" onclick="window.print()">
+      🖨️ Xuất File PDF / In A5 Ngay
+    </button>
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- TRANG 1: BÌA TRƯỚC (ARTISTIC HERO COVER)                            -->
+  <!-- =================================================================== -->
+  <section class="page" id="page-1">
+    <div class="page-header">
+      <div class="brand-group">
+        <img src="assets/logo_binh_long_3d.png" alt="Logo Bình Long" class="brand-logo" onerror="this.src='assets/LOGO_VR.png'">
+        <div class="brand-text">
+          <h2>Ủy Ban Nhân Dân Phường Bình Long</h2>
+          <h1>Phường Bình Long, Tỉnh Đồng Nai</h1>
+        </div>
+      </div>
+      <div class="page-badge">Trang 01 • Bìa Trước</div>
+    </div>
+
+    <div class="cover-content">
+      <div class="cover-top-box">
+        <div class="cover-pill">Di Sản & Lịch Sử Hào Hùng</div>
+        <h2 class="cover-title">
+          BẢN ĐỒ SỐ DI TÍCH LỊCH SỬ
+          <span>HÀNH TRÌNH VỀ VÙNG ĐẤT ANH HÙNG</span>
+        </h2>
+        <p class="cover-sub">Không gian trải nghiệm di tích và danh thắng thực tế ảo 360°</p>
+      </div>
+
+      <div class="cover-landmarks-box">
+        <h4>Hệ Thống Di Tích Tiêu Biểu Tại Địa Phương</h4>
+        <div class="landmarks-grid-4">
+          <div class="landmark-mini-card">
+            <div class="img-thumb">
+              <img src="assets/m3000_preview.jpg" alt="Mộ 3.000 người">
+            </div>
+            <p class="name">Mộ 3.000 Người</p>
+            <p class="tag">Di tích Quốc gia</p>
+          </div>
+          <div class="landmark-mini-card">
+            <div class="img-thumb">
+              <img src="assets/dtt_preview.jpg" alt="Dinh Tỉnh Trưởng">
+            </div>
+            <p class="name">Dinh Tỉnh Trưởng</p>
+            <p class="tag">Nhà & Đường hầm</p>
+          </div>
+          <div class="landmark-mini-card">
+            <div class="img-thumb">
+              <img src="assets/m7n_preview.jpg" alt="Mộ 7 Người">
+            </div>
+            <p class="name">Mộ 7 Người</p>
+            <p class="tag">An ninh An Lộc</p>
+          </div>
+          <div class="landmark-mini-card">
+            <div class="img-thumb">
+              <img src="assets/hlt_preview.jpg" alt="Hưng Lập Tự">
+            </div>
+            <p class="name">Hưng Lập Tự</p>
+            <p class="tag">Di tích Văn hóa</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>Ủy ban Nhân dân Phường Bình Long, Tỉnh Đồng Nai</span>
+      <span class="footer-highlight">bandosobinhlong.vn</span>
+    </div>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- TRANG 2: TRANG GIỚI THIỆU (ARTISTIC HERITAGE STORY)                 -->
+  <!-- =================================================================== -->
+  <section class="page" id="page-2">
+    <div class="page-header">
+      <div class="brand-group">
+        <img src="assets/logo_binh_long_3d.png" alt="Logo Bình Long" class="brand-logo" onerror="this.src='assets/LOGO_VR.png'">
+        <div class="brand-text">
+          <h2>Ủy Ban Nhân Dân Phường Bình Long</h2>
+          <h1>Phường Bình Long, Tỉnh Đồng Nai</h1>
+        </div>
+      </div>
+      <div class="page-badge">Trang 02 • Giới Thiệu</div>
+    </div>
+
+    <div class="intro-card">
+      <h3>Bình Long — Vùng Đất Anh Hùng & Kiên Cường</h3>
+      <p>
+        Bình Long là vùng đất giàu truyền thống cách mạng vẻ vang, gắn liền với những mốc son lịch sử hào hùng trong cuộc kháng chiến chống Mỹ cứu nước và chiến sự mùa hè 1972 oanh liệt. Mỗi tấc đất di tích nơi đây là minh chứng sâu sắc về lòng yêu nước và khát vọng hòa bình của dân tộc.
+      </p>
+    </div>
+
+    <div class="relics-container">
+      <div class="relic-box">
+        <div class="thumb">
+          <img src="assets/m3000_preview.jpg" alt="Mộ 3000 người">
+        </div>
+        <div class="relic-content">
+          <div class="relic-header-row">
+            <h4>Di tích Lịch sử Mộ 3.000 Người</h4>
+            <span class="badge-pill-red">Cấp Quốc Gia</span>
+          </div>
+          <p class="desc">
+            Khuôn viên hơn 4.000m² với tượng đài cao 12,6m, lưu dấu 4 hào rãnh mộ tập thể hơn 3.000 đồng bào tử nạn năm 1972.
+          </p>
+          <p class="loc">📍 Khu phố An Lộc, Phường Bình Long</p>
+        </div>
+      </div>
+
+      <div class="relic-box">
+        <div class="thumb">
+          <img src="assets/dtt_exterior.jpg" alt="Dinh Tỉnh Trưởng">
+        </div>
+        <div class="relic-content">
+          <div class="relic-header-row">
+            <h4>Dinh Tỉnh Trưởng Bình Long</h4>
+            <span class="badge-pill-green">Cấp Tỉnh (1980)</span>
+          </div>
+          <p class="desc">
+            Kiến trúc Pháp xây dựng năm 1920, từng là cơ quan chỉ huy then chốt qua 8 đời tỉnh trưởng với hệ thống đường hầm ngầm kiên cố.
+          </p>
+          <p class="loc">📍 Khu phố Phú Đức, Phường Bình Long</p>
+        </div>
+      </div>
+
+      <div class="relic-box">
+        <div class="thumb">
+          <img src="assets/m7n_preview.jpg" alt="Mộ 7 Người">
+        </div>
+        <div class="relic-content">
+          <div class="relic-header-row">
+            <h4>Mộ 7 Cán Bộ An Ninh An Lộc</h4>
+            <span class="badge-pill-green">Cấp Tỉnh (2011)</span>
+          </div>
+          <p class="desc">
+            Nơi an nghỉ của 7 chiến sĩ thuộc Đội An ninh vũ trang An Lộc kiên cường bám trụ địa bàn và anh dũng hy sinh năm 1970.
+          </p>
+          <p class="loc">📍 Khu phố Bình An, Phường Bình Long</p>
+        </div>
+      </div>
+
+      <div class="relic-box">
+        <div class="thumb">
+          <img src="assets/hlt_preview.jpg" alt="Chùa Hưng Lập Tự">
+        </div>
+        <div class="relic-content">
+          <div class="relic-header-row">
+            <h4>Chùa Hưng Lập Tự</h4>
+            <span class="badge-pill-amber">Di Tích Văn Hóa</span>
+          </div>
+          <p class="desc">
+            Ngôi chùa xây dựng năm 1958, nơi che chở nhân dân trong chiến tranh và duy trì bốc thuốc nam khám chữa bệnh từ thiện.
+          </p>
+          <p class="loc">📍 Khu phố Phú Đức, Phường Bình Long</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-row-3">
+      <div>
+        <h5>04</h5>
+        <p>Di tích trọng điểm</p>
+      </div>
+      <div>
+        <h5>1972</h5>
+        <p>Chiến sự lịch sử</p>
+      </div>
+      <div>
+        <h5>100%</h5>
+        <p>Số hóa dữ liệu</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>Giữ gìn và phát huy di sản văn hóa dân tộc</span>
+      <span class="footer-highlight">bandosobinhlong.vn</span>
+    </div>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- TRANG 3: ỨNG DỤNG SỐ HÓA & MÃ QR Ở DƯỚI (ARTISTIC VR & QR)          -->
+  <!-- =================================================================== -->
+  <section class="page" id="page-3">
+    <div class="page-header">
+      <div class="brand-group">
+        <img src="assets/logo_binh_long_3d.png" alt="Logo Bình Long" class="brand-logo" onerror="this.src='assets/LOGO_VR.png'">
+        <div class="brand-text">
+          <h2>Ủy Ban Nhân Dân Phường Bình Long</h2>
+          <h1>Phường Bình Long, Tỉnh Đồng Nai</h1>
+        </div>
+      </div>
+      <div class="page-badge">Trang 03 • Ứng Dụng Số Hóa</div>
+    </div>
+
+    <div class="tech-title-box">
+      <h2>KHÁM PHÁ BẢN ĐỒ SỐ THỰC TẾ ẢO 360°</h2>
+      <p>Ứng dụng công nghệ chuyển đổi số đưa di sản lịch sử Bình Long đến gần hơn với nhân dân</p>
+    </div>
+
+    <div class="tech-grid-2x2">
+      <div class="tech-feature-card">
+        <h5>Tính Năng 01</h5>
+        <h4>Flycam Toàn Cảnh 360°</h4>
+        <p>Góc nhìn không gian đa chiều từ trên cao và mặt đất sắc nét.</p>
+      </div>
+      <div class="tech-feature-card">
+        <h5>Tính Năng 02</h5>
+        <h4>Thuyết Minh Tự Động</h4>
+        <p>Âm thanh lời bình truyền cảm theo từng điểm chạm di tích.</p>
+      </div>
+      <div class="tech-feature-card">
+        <h5>Tính Năng 03</h5>
+        <h4>Định Vị Thông Minh</h4>
+        <p>Bản đồ số định vị GIS dẫn đường và tra cứu tọa độ chuẩn xác.</p>
+      </div>
+      <div class="tech-feature-card">
+        <h5>Tính Năng 04</h5>
+        <h4>Mở Trên Mọi Thiết Bị</h4>
+        <p>Trải nghiệm mượt mà trên điện thoại không cần tải ứng dụng.</p>
+      </div>
+    </div>
+
+    <!-- PROMINENT QR CODE AT BOTTOM -->
+    <div class="qr-large-card">
+      <div class="qr-badge">Quét Mã Trải Nghiệm Ngay</div>
+      <div class="qr-image-wrapper">
+        <img src="assets/qr_bandoso.png" alt="Mã QR Bản đồ số Bình Long">
+      </div>
+      <h3>Dùng Camera Hoặc Zalo Quét Mã QR</h3>
+      <p>Chỉ cần đưa điện thoại lên quét mã để bước vào không gian thực tế ảo 360° ngay lập tức</p>
+      <div class="qr-link-pill">🌐 https://bandosobinhlong.vn</div>
+    </div>
+
+    <div class="page-footer">
+      <span>Trải nghiệm hoàn toàn miễn phí • Tốc độ cao</span>
+      <span class="footer-highlight">bandosobinhlong.vn</span>
+    </div>
+  </section>
+
+  <!-- =================================================================== -->
+  <!-- TRANG 4: BÌA SAU - THÚ VỊ & HÌNH ẢNH ĐẶC SẮC (ARTISTIC SCENIC)      -->
+  <!-- =================================================================== -->
+  <section class="page" id="page-4">
+    <div class="page-header">
+      <div class="brand-group">
+        <img src="assets/logo_binh_long_3d.png" alt="Logo Bình Long" class="brand-logo" onerror="this.src='assets/LOGO_VR.png'">
+        <div class="brand-text">
+          <h2>Ủy Ban Nhân Dân Phường Bình Long</h2>
+          <h1>Phường Bình Long, Tỉnh Đồng Nai</h1>
+        </div>
+      </div>
+      <div class="page-badge">Trang 04 • Bìa Sau</div>
+    </div>
+
+    <div class="back-top-box">
+      <h2>BÌNH LONG HÔM NAY — SỨC SỐNG MỚI</h2>
+      <p>Hòa cùng nhịp thở đổi mới, Bình Long vươn mình mạnh mẽ với diện mạo đô thị xanh tươi, trù phú</p>
+    </div>
+
+    <div class="scenic-highlight-box">
+      <p class="tag">Đặc trưng thiên nhiên & kinh tế di sản</p>
+      <h3>Rừng Cao Su Bạt Ngàn Đón Ánh Bình Minh</h3>
+      <p class="desc">
+        Những cánh rừng cao su ngút ngàn với vòm lá xanh mướt reo trong gió mai là biểu tượng gắn bó keo sơn với bao thế hệ người dân Bình Long anh hùng.
+      </p>
+    </div>
+
+    <div class="features-2col">
+      <div class="feat-card-sm">
+        <h4>🌿 Đô Thị Sinh Thái Xanh</h4>
+        <p>Những tuyến đường rợp bóng mát, phố hoa rực rỡ và nhịp sống văn minh.</p>
+      </div>
+      <div class="feat-card-sm">
+        <h4>🕊️ Điểm Đến Tâm Linh</h4>
+        <p>Tượng Phật Chùa Phật Quốc Vạn Thành uy nghiêm cùng nếp sống đôn hậu.</p>
+      </div>
+    </div>
+
+    <div class="quote-banner">
+      <p class="main">"Tự hào truyền thống vẻ vang — Chung tay kiến tạo tương lai phồn vinh"</p>
+      <p class="sub">Giáo dục truyền thống cách mạng gắn liền chuyển đổi số hiện đại</p>
+    </div>
+
+    <div class="contact-block">
+      <h5>Đơn Vị Chỉ Đạo & Thực Hiện</h5>
+      <h4>ỦY BAN NHÂN DÂN PHƯỜNG BÌNH LONG, TỈNH ĐỒNG NAI</h4>
+      <div class="contact-info-grid">
+        <div>📍 Địa chỉ: <strong>Phường Bình Long, Tỉnh Đồng Nai</strong></div>
+        <div>🌐 Trang web: <strong>bandosobinhlong.vn</strong></div>
+        <div>✉️ Thư điện tử: <strong>lienhe@bandosobinhlong.vn</strong></div>
+        <div>📱 Hỗ trợ du lịch: <strong>Dự án Chuyển đổi số Di tích</strong></div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>Ấn phẩm tuyên truyền và quảng bá di tích lịch sử</span>
+      <span class="footer-highlight">Năm 2026</span>
+    </div>
+  </section>
+
+</body>
+</html>

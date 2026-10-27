@@ -7,7 +7,6 @@ import { SectionWrapper } from '../wrappers/SectionWrapper'
 import { useScrollSpy } from '@/hooks/useScrollSpy'
 import useVRStore from '@/store/vr.store'
 import LoaderBlock from '../block/LoaderBlock'
-import WelcomePlacesDialogBlock from '../block/WelcomePlacesDialogBlock'
 
 const LandingPage = () => {
     const navbarRef = useRef<HTMLElement | null>(null)
@@ -29,7 +28,6 @@ const LandingPage = () => {
                 isLoading &&
                 <LoaderBlock />
             }
-            <WelcomePlacesDialogBlock />
             <div ref={scrollContainerRef} className='bg-background text-foreground w-full h-screen overflow-x-hidden overflow-y-auto'>
                 <Navbar
                     ref={navbarRef}

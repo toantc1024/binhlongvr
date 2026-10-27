@@ -12,6 +12,10 @@ import {
 import { useNavigate, createSearchParams } from "react-router-dom";
 import useVRStore from "@/store/vr.store";
 import { cn } from "@/lib/utils";
+import vrAiTechIcon from "@/assets/3d-icons/vr-ai-tech__binhlong-3d-icon.png";
+import landmarkIcon from "@/assets/3d-icons/landmark-explore__binhlong-3d-icon.png";
+import monumentIcon from "@/assets/3d-icons/home-monument__binhlong-3d-icon.png";
+import historyIcon from "@/assets/3d-icons/history-archive__binhlong-3d-icon.png";
 
 export interface FeaturedPlace {
   hotspot_id: number;
@@ -177,12 +181,36 @@ export default function WelcomePlacesDialogBlock({
             "fixed inset-0 z-[101] w-full h-full max-w-none m-0",
             "bg-gradient-to-b from-[#021710] via-[#05281c] to-[#010d09] text-white",
             "flex flex-col justify-between overflow-x-hidden overflow-y-auto select-none focus:outline-none",
-            "p-4 sm:p-6 md:p-8",
+            "p-4 sm:p-6 md:p-8 relative",
             "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
           )}
         >
+          {/* Ambient 3D floating background images */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <img
+              src={vrAiTechIcon}
+              alt=""
+              className="absolute -top-12 -left-12 w-52 sm:w-72 h-52 sm:h-72 object-contain opacity-25 filter blur-[0.5px] rotate-[-12deg]"
+            />
+            <img
+              src={monumentIcon}
+              alt=""
+              className="absolute -top-12 -right-12 w-52 sm:w-72 h-52 sm:h-72 object-contain opacity-25 filter blur-[0.5px] rotate-[15deg]"
+            />
+            <img
+              src={landmarkIcon}
+              alt=""
+              className="absolute -bottom-16 -left-16 w-60 sm:w-80 h-60 sm:h-80 object-contain opacity-20 filter blur-[0.5px] rotate-[8deg]"
+            />
+            <img
+              src={historyIcon}
+              alt=""
+              className="absolute -bottom-16 -right-16 w-60 sm:w-80 h-60 sm:h-80 object-contain opacity-20 filter blur-[0.5px] rotate-[-10deg]"
+            />
+          </div>
+
           {/* Top Header: Title & Close Button (Badge removed as requested) */}
-          <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center text-center shrink-0 pt-2 pb-2">
+          <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center shrink-0 pt-2 pb-2">
             {/* Close (X) button top right */}
             <button
               onClick={() => setOpen(false)}
